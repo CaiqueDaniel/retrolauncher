@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Nintendo Entretainement System",
+    "extensions": [
+      "nes"
+    ],
+    "coresAlias": [
+      "mesen"
+    ]
+  },
+  {
+    "name": "Super Nintendo Entretainement System",
+    "extensions": [
+      "sfc"
+    ],
+    "coresAlias": [
+      "snes"
+    ]
+  },
+  {
+    "name": "Nintendo 64",
+    "extensions": [
+      "n64",
+      "z64"
+    ],
+    "coresAlias": [
+      "mupen"
+    ]
+  }
+]
