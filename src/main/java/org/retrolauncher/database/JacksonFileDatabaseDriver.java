@@ -1,16 +1,20 @@
 package org.retrolauncher.database;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.retrolauncher.app._shared.infrastructure.database.jackson.model.Model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class JacksonFileDatabaseDriver<M extends Model> implements FileDatabaseDriver<Map<String, M>> {
     private static final ObjectMapper mapper = new ObjectMapper();
+    private final Class<M> modelType;
+
+    public JacksonFileDatabaseDriver(Class<M> modelType) {
+        this.modelType = modelType;
+    }
 
     @Override
     public void write(Map<String, M> content, String path) {
@@ -26,13 +30,11 @@ public class JacksonFileDatabaseDriver<M extends Model> implements FileDatabaseD
     @Override
     public Map<String, M> read(String path) {
         File storage = this.openStorage(path);
+        JavaType type = JacksonFileDatabaseDriver.mapper.getTypeFactory().
+                constructMapType(HashMap.class, String.class, this.modelType);
 
         try {
-            return JacksonFileDatabaseDriver.mapper.readValue(
-                    storage,
-                    new TypeReference<>() {
-                    }
-            );
+            return JacksonFileDatabaseDriver.mapper.readValue(storage, type);
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
