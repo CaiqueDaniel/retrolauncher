@@ -3,15 +3,11 @@ package org.retrolauncher.app.games.infrastructure.database.jackson.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.UUID;
+import org.retrolauncher.app._shared.infrastructure.database.jackson.model.Model;
 
 @Getter
 @Setter
-public class GameModel {
-    @JsonProperty
-    private UUID id;
-
+public class GameModel extends Model {
     @JsonProperty
     private String name;
 
