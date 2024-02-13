@@ -3,7 +3,7 @@ package integration;
 import org.junit.jupiter.api.*;
 import org.retrolauncher.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.app.games.infrastructure.database.jackson.repositories.MemoryGameRepository;
-import org.retrolauncher.app.games.usecases.UpdateGamesListUseCase;
+import org.retrolauncher.app.games.application.usecases.UpdateGamesListUseCase;
 import org.retrolauncher.app.platforms.domain.entities.Platform;
 import org.retrolauncher.app.platforms.domain.repositories.PlatformRepository;
 import org.retrolauncher.app.platforms.infrastructure.database.jackson.repositories.MemoryPlatformRepository;

@@ -1,4 +1,4 @@
-package org.retrolauncher.app.games.usecases;
+package org.retrolauncher.app.games.application.usecases;
 
 import org.retrolauncher.app.games.domain.entities.Game;
 import org.retrolauncher.app.games.domain.repositories.GameRepository;
