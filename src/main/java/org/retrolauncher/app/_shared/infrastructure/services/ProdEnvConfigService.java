@@ -1,9 +1,6 @@
 package org.retrolauncher.app._shared.infrastructure.services;
 
 import org.retrolauncher.app._shared.application.services.EnvConfigService;
-
-import java.io.FileInputStream;
-import java.util.Objects;
 import java.util.Properties;
 
 public class ProdEnvConfigService implements EnvConfigService {
@@ -30,14 +27,8 @@ public class ProdEnvConfigService implements EnvConfigService {
 
     private Properties loadConfig() {
         try {
-            String configFilePath = Objects.requireNonNull(
-                    Thread.currentThread()
-                            .getContextClassLoader()
-                            .getResource("env.properties")
-            ).getPath();
-
             Properties config = new Properties();
-            config.load(new FileInputStream(configFilePath));
+            config.load(this.getClass().getClassLoader().getResourceAsStream("env.properties"));
             return config;
         } catch (Exception exception) {
             throw new RuntimeException(exception);
