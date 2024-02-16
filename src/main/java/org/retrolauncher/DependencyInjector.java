@@ -3,6 +3,7 @@ package org.retrolauncher;
 import lombok.Getter;
 import org.retrolauncher.app._shared.application.services.EnvConfigService;
 import org.retrolauncher.app._shared.infrastructure.services.ProdEnvConfigService;
+import org.retrolauncher.app.games.application.usecases.ListGamesUseCase;
 import org.retrolauncher.app.games.application.usecases.StartGameUseCase;
 import org.retrolauncher.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.app.games.infrastructure.database.jackson.models.GameModel;
@@ -25,6 +26,7 @@ public class DependencyInjector {
     private final UpdatePlatformsListUseCase updatePlatformsListUseCase;
     private final UpdateGamesListUseCase updateGamesListUseCase;
     private final StartGameUseCase startGameUseCase;
+    private final ListGamesUseCase listGamesUseCase;
 
     public DependencyInjector() {
         this.configService = new ProdEnvConfigService();
@@ -41,5 +43,6 @@ public class DependencyInjector {
         );
         this.updateGamesListUseCase = new UpdateGamesListUseCase(this.gameRepository, this.platformRepository);
         this.startGameUseCase = new StartGameUseCase(this.gameRepository, this.configService);
+        this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);
     }
 }
