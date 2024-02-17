@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UpdateGamesListUseCaseIntegrationTests {
-    private final String testFile = "./test-folder/game.test";
+    private final String testFile = "test-folder/game.test";
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
     private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final UpdateGamesListUseCase sut = new UpdateGamesListUseCase(repository, this.platformRepository);
@@ -52,5 +52,12 @@ public class UpdateGamesListUseCaseIntegrationTests {
     @Test
     public void it_should_not_save_games_given_folder_do_not_exists() {
         assertThrows(FileNotFoundException.class, () -> sut.execute("./invalid-folder"));
+    }
+
+    @Test
+    public void it_should_not_duplicate_games() throws FileNotFoundException {
+        sut.execute("./test-folder");
+        sut.execute("./test-folder");
+        assertEquals(1, repository.listAll().size());
     }
 }

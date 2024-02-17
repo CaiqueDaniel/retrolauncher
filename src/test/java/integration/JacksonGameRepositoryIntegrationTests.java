@@ -60,14 +60,14 @@ public class JacksonGameRepositoryIntegrationTests {
     @Test
     public void itShouldConfirmThatAGameWasAddedGivenThePath() {
         sut.save(game);
-        boolean result = sut.existsByGamePath(game.getPath());
+        boolean result = sut.existsByPath(game.getPath());
         assertTrue(result);
     }
 
     @Test
     public void itShouldNotConfirmThatAGameWasAddedGivenAPathThatNotExists() {
         sut.save(game);
-        boolean result = sut.existsByGamePath("invalid-path");
+        boolean result = sut.existsByPath("invalid-path");
         assertFalse(result);
     }
 }

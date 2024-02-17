@@ -23,7 +23,7 @@ public class UpdateGamesListUseCase {
 
     public void execute(String folderPath) throws FileNotFoundException {
         List<Platform> platforms = this.platformRepository.listAll();
-        List<File> gamesFiles = this.getGames(folderPath);
+        List<File> gamesFiles = this.getGamesFiles(folderPath);
 
         List<Game> games = gamesFiles.stream().map((gameFile) -> {
             Optional<Platform> gamePlatform = platforms.stream()
@@ -35,13 +35,13 @@ public class UpdateGamesListUseCase {
             if (gamePlatform.isEmpty())
                 return null;
 
-            return new Game(gameFile.getName(), gameFile.getPath(), "", gamePlatform.get());
+            return new Game(gameFile.getName(), gameFile.getAbsolutePath(), "", gamePlatform.get());
         }).filter(Objects::nonNull).toList();
 
         games.forEach(this.repository::save);
     }
 
-    private List<File> getGames(String folderPath) throws FileNotFoundException {
+    private List<File> getGamesFiles(String folderPath) throws FileNotFoundException {
         File folder = new File(folderPath);
 
         if (!folder.exists() || !folder.isDirectory())
@@ -56,9 +56,12 @@ public class UpdateGamesListUseCase {
 
         for (File item : items) {
             if (item.isDirectory()) {
-                games.addAll(this.getGames(item.getAbsolutePath()));
+                games.addAll(this.getGamesFiles(item.getAbsolutePath()));
                 continue;
             }
+
+            if (this.repository.existsByPath(item.getAbsolutePath()))
+                continue;
 
             games.add(item);
         }

@@ -47,7 +47,7 @@ public class MemoryGameRepository implements GameRepository {
     }
 
     @Override
-    public boolean existsByGamePath(String gamePath) {
-        return this.storedData.values().stream().anyMatch((game) -> game.getPath().equals(gamePath));
+    public boolean existsByPath(String path) {
+        return this.storedData.values().stream().anyMatch((game) -> game.getPath().equals(path));
     }
 }
