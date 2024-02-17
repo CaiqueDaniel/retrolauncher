@@ -10,8 +10,7 @@ import org.retrolauncher.database.MemoryFileDatabaseDriver;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class JacksonGameRepositoryIntegrationTests {
@@ -56,5 +55,19 @@ public class JacksonGameRepositoryIntegrationTests {
         sut.save(game);
         assertTrue(sut.findById(game.getId()).isPresent());
         assertEquals(game.getId(), sut.findById(game.getId()).get().getId());
+    }
+
+    @Test
+    public void itShouldConfirmThatAGameWasAddedGivenThePath() {
+        sut.save(game);
+        boolean result = sut.existsByGamePath(game.getPath());
+        assertTrue(result);
+    }
+
+    @Test
+    public void itShouldNotConfirmThatAGameWasAddedGivenAPathThatNotExists() {
+        sut.save(game);
+        boolean result = sut.existsByGamePath("invalid-path");
+        assertFalse(result);
     }
 }

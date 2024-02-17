@@ -79,4 +79,16 @@ public class JacksonGameRepository implements GameRepository {
             throw new RuntimeException(exception);
         }
     }
+
+    @Override
+    public boolean existsByGamePath(String gamePath) {
+        try {
+            return this.driver.read(JacksonGameRepository.filePath)
+                    .values()
+                    .stream()
+                    .anyMatch((game) -> game.getPath().equals(gamePath));
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
 }

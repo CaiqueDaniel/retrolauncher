@@ -45,4 +45,9 @@ public class MemoryGameRepository implements GameRepository {
                 .filter(Objects::nonNull)
                 .toList();
     }
+
+    @Override
+    public boolean existsByGamePath(String gamePath) {
+        return this.storedData.values().stream().anyMatch((game) -> game.getPath().equals(gamePath));
+    }
 }
