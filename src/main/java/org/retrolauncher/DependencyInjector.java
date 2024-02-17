@@ -5,7 +5,7 @@ import org.retrolauncher.app._shared.application.services.EnvConfigService;
 import org.retrolauncher.app._shared.application.services.ShortcutService;
 import org.retrolauncher.app._shared.infrastructure.services.ProdEnvConfigService;
 import org.retrolauncher.app._shared.infrastructure.services.ShellLinkShortcutService;
-import org.retrolauncher.app.games.application.usecases.CreateGameShortcut;
+import org.retrolauncher.app.games.application.usecases.CreateGameShortcutUseCase;
 import org.retrolauncher.app.games.application.usecases.ListGamesUseCase;
 import org.retrolauncher.app.games.application.usecases.StartGameUseCase;
 import org.retrolauncher.app.games.domain.repositories.GameRepository;
@@ -31,7 +31,7 @@ public class DependencyInjector {
     private final UpdateGamesListUseCase updateGamesListUseCase;
     private final StartGameUseCase startGameUseCase;
     private final ListGamesUseCase listGamesUseCase;
-    private final CreateGameShortcut createGameShortcut;
+    private final CreateGameShortcutUseCase createGameShortcutUseCase;
 
     public DependencyInjector() {
         this.configService = new ProdEnvConfigService();
@@ -50,6 +50,6 @@ public class DependencyInjector {
         this.updateGamesListUseCase = new UpdateGamesListUseCase(this.gameRepository, this.platformRepository);
         this.startGameUseCase = new StartGameUseCase(this.gameRepository, this.configService);
         this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);
-        this.createGameShortcut = new CreateGameShortcut(this.gameRepository, this.shortcutService);
+        this.createGameShortcutUseCase = new CreateGameShortcutUseCase(this.gameRepository, this.shortcutService);
     }
 }

@@ -12,11 +12,11 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
-public class CreateGameShortcut {
+public class CreateGameShortcutUseCase {
     private final GameRepository repository;
     private final ShortcutService shortcutService;
 
-    public CreateGameShortcut(GameRepository repository, ShortcutService shortcutService) {
+    public CreateGameShortcutUseCase(GameRepository repository, ShortcutService shortcutService) {
         this.repository = repository;
         this.shortcutService = shortcutService;
     }
@@ -28,15 +28,27 @@ public class CreateGameShortcut {
             throw new GameNotFoundException();
 
         Game game = result.get();
-        String appPath = new StringBuilder(Paths.get("").toAbsolutePath().toString())
-                .append("/retrolauncher.exe")
-                .toString();
-        Shortcut shortcut = new Shortcut(game.getName(), appPath, game.getId().toString(), game.getIconPath());
+        String args = this.getArgs(game);
+        String appPath = this.getAppPath();
+        Shortcut shortcut = new Shortcut(game.getName(), appPath, args, game.getIconPath());
 
         try {
             this.shortcutService.create(shortcut);
         } catch (IOException exception) {
             throw new ShortcutNotCreatedException(exception);
         }
+    }
+
+    private String getArgs(Game game) {
+        return new StringBuilder("game:start")
+                .append(" ")
+                .append(game.getId().toString())
+                .toString();
+    }
+
+    private String getAppPath() {
+        return new StringBuilder(Paths.get("").toAbsolutePath().toString())
+                .append("/retrolauncher.exe")
+                .toString();
     }
 }

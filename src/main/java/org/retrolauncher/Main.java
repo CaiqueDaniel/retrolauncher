@@ -17,7 +17,6 @@ public class Main {
 
     private static void startup() throws Exception {
         EnvConfigService configService = Main.dependencyInjector.getConfigService();
-        System.out.println(configService.getCoresPath());
         Main.dependencyInjector.getUpdatePlatformsListUseCase().execute(configService.getCoresPath());
         Main.dependencyInjector.getUpdateGamesListUseCase().execute(configService.getRomsPath());
     }

@@ -1,6 +1,7 @@
 package org.retrolauncher.config;
 
 import org.retrolauncher.DependencyInjector;
+import org.retrolauncher.app.games.infrastructure.cli.commands.CreateShortcutCommand;
 import org.retrolauncher.app.games.infrastructure.cli.commands.ListGamesCommand;
 import picocli.CommandLine;
 
@@ -13,7 +14,8 @@ public class CommandsHandler implements Runnable {
     public CommandsHandler(DependencyInjector dependencyInjector, String[] args) {
         this.args = new LinkedList<>(List.of(args));
         this.commands = List.of(
-                new CommandLine(new ListGamesCommand(dependencyInjector.getListGamesUseCase()))
+                new CommandLine(new ListGamesCommand(dependencyInjector.getListGamesUseCase())),
+                new CommandLine(new CreateShortcutCommand(dependencyInjector.getCreateGameShortcutUseCase()))
         );
     }
 
