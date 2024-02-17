@@ -2,7 +2,10 @@ package org.retrolauncher;
 
 import lombok.Getter;
 import org.retrolauncher.app._shared.application.services.EnvConfigService;
+import org.retrolauncher.app._shared.application.services.ShortcutService;
 import org.retrolauncher.app._shared.infrastructure.services.ProdEnvConfigService;
+import org.retrolauncher.app._shared.infrastructure.services.ShellLinkShortcutService;
+import org.retrolauncher.app.games.application.usecases.CreateGameShortcut;
 import org.retrolauncher.app.games.application.usecases.ListGamesUseCase;
 import org.retrolauncher.app.games.application.usecases.StartGameUseCase;
 import org.retrolauncher.app.games.domain.repositories.GameRepository;
@@ -23,13 +26,16 @@ public class DependencyInjector {
     private final GameRepository gameRepository;
     private final PlatformsResourceConfigService platformsResourceConfigService;
     private final EnvConfigService configService;
+    private final ShortcutService shortcutService;
     private final UpdatePlatformsListUseCase updatePlatformsListUseCase;
     private final UpdateGamesListUseCase updateGamesListUseCase;
     private final StartGameUseCase startGameUseCase;
     private final ListGamesUseCase listGamesUseCase;
+    private final CreateGameShortcut createGameShortcut;
 
     public DependencyInjector() {
         this.configService = new ProdEnvConfigService();
+        this.shortcutService = new ShellLinkShortcutService();
         this.platformRepository = new JacksonPlatformRepository(new JacksonFileDatabaseDriver<>(PlatformModel.class));
         this.gameRepository = new JacksonGameRepository(
                 new JacksonFileDatabaseDriver<>(GameModel.class),
@@ -44,5 +50,6 @@ public class DependencyInjector {
         this.updateGamesListUseCase = new UpdateGamesListUseCase(this.gameRepository, this.platformRepository);
         this.startGameUseCase = new StartGameUseCase(this.gameRepository, this.configService);
         this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);
+        this.createGameShortcut = new CreateGameShortcut(this.gameRepository, this.shortcutService);
     }
 }
