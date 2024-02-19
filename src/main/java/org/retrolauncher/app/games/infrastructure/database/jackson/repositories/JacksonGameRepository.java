@@ -12,7 +12,7 @@ import java.util.*;
 
 public class JacksonGameRepository implements GameRepository {
     private final FileDatabaseDriver<Map<String, GameModel>> driver;
-    private static final String filePath = new StringBuilder(System.getProperty("user.home"))
+    private static final String FILE_PATH = new StringBuilder(System.getProperty("user.home"))
             .append("/retro-launcher")
             .append("/data")
             .append("/games.json")
@@ -30,9 +30,9 @@ public class JacksonGameRepository implements GameRepository {
     @Override
     public void save(Game entity) {
         try {
-            Map<String, GameModel> storedData = this.driver.read(JacksonGameRepository.filePath);
+            Map<String, GameModel> storedData = this.driver.read(JacksonGameRepository.FILE_PATH);
             storedData.put(entity.getId().toString(), JacksonGameMapper.fromDomain(entity));
-            this.driver.write(storedData, JacksonGameRepository.filePath);
+            this.driver.write(storedData, JacksonGameRepository.FILE_PATH);
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
@@ -41,7 +41,7 @@ public class JacksonGameRepository implements GameRepository {
     @Override
     public void clear() {
         try {
-            this.driver.clear(JacksonGameRepository.filePath);
+            this.driver.clear(JacksonGameRepository.FILE_PATH);
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
@@ -50,7 +50,7 @@ public class JacksonGameRepository implements GameRepository {
     @Override
     public Optional<Game> findById(UUID id) {
         try {
-            Map<String, GameModel> storedData = this.driver.read(JacksonGameRepository.filePath);
+            Map<String, GameModel> storedData = this.driver.read(JacksonGameRepository.FILE_PATH);
             GameModel model = storedData.get(id.toString());
 
             if (model == null)
@@ -67,7 +67,7 @@ public class JacksonGameRepository implements GameRepository {
     @Override
     public List<Game> listAll() {
         try {
-            return this.driver.read(JacksonGameRepository.filePath)
+            return this.driver.read(JacksonGameRepository.FILE_PATH)
                     .values()
                     .stream()
                     .map((model) -> this.platformRepository.findById(UUID.fromString(model.getPlatformId()))
@@ -83,7 +83,7 @@ public class JacksonGameRepository implements GameRepository {
     @Override
     public boolean existsByPath(String path) {
         try {
-            return this.driver.read(JacksonGameRepository.filePath)
+            return this.driver.read(JacksonGameRepository.FILE_PATH)
                     .values()
                     .stream()
                     .anyMatch((game) -> game.getPath().equals(path));
