@@ -1,7 +1,8 @@
 package org.retrolauncher.app.games.application.usecases;
 
-import org.retrolauncher.app._shared.application.services.EnvConfigService;
+import org.retrolauncher.app._shared.application.services.ProcessRunnerService;
 import org.retrolauncher.app.games.application.exceptions.GameNotFoundException;
+import org.retrolauncher.app.games.application.exceptions.NotAbleToStartGameException;
 import org.retrolauncher.app.games.domain.entities.Game;
 import org.retrolauncher.app.games.domain.repositories.GameRepository;
 
@@ -10,34 +11,23 @@ import java.util.UUID;
 
 public class StartGameUseCase {
     private final GameRepository repository;
-    private final EnvConfigService configService;
+    private final ProcessRunnerService processRunnerService;
 
-    public StartGameUseCase(GameRepository repository, EnvConfigService configService) {
+    public StartGameUseCase(GameRepository repository, ProcessRunnerService processRunnerService) {
         this.repository = repository;
-        this.configService = configService;
+        this.processRunnerService = processRunnerService;
     }
 
     public void execute(String gameId) {
-        Optional<Game> game = this.repository.findById(UUID.fromString(gameId));
+        Optional<Game> result = this.repository.findById(UUID.fromString(gameId));
 
-        if (game.isEmpty())
+        if (result.isEmpty())
             throw new GameNotFoundException();
 
         try {
-            this.startGameProcess(game.get());
+            this.processRunnerService.startGame(result.get()).waitFor();
         } catch (Exception exception) {
-            throw new RuntimeException(exception);
+            throw new NotAbleToStartGameException(exception);
         }
-    }
-
-    private void startGameProcess(Game game) throws Exception {
-        new ProcessBuilder()
-                .command(
-                        this.configService.getRetroArchPath(),
-                        "-L",
-                        game.getPlatform().getCorePath(),
-                        game.getPath()
-                ).start()
-                .waitFor();
     }
 }
