@@ -8,7 +8,7 @@ import java.util.UUID;
 public abstract class Entity {
     protected final UUID id;
 
-    public Entity(UUID id) {
+    protected Entity(UUID id) {
         this.id = id;
     }
 }

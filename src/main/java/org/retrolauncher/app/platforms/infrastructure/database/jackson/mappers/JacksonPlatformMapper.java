@@ -4,6 +4,9 @@ import org.retrolauncher.app.platforms.domain.entities.Platform;
 import org.retrolauncher.app.platforms.infrastructure.database.jackson.models.PlatformModel;
 
 public class JacksonPlatformMapper {
+    private JacksonPlatformMapper() {
+    }
+
     public static PlatformModel fromDomain(Platform entity) {
         PlatformModel model = new PlatformModel();
         model.setId(entity.getId());

@@ -5,6 +5,9 @@ import org.retrolauncher.app.games.infrastructure.database.jackson.models.GameMo
 import org.retrolauncher.app.platforms.domain.entities.Platform;
 
 public class JacksonGameMapper {
+    private JacksonGameMapper() {
+    }
+
     public static GameModel fromDomain(Game entity) {
         GameModel model = new GameModel();
         model.setId(entity.getId());
