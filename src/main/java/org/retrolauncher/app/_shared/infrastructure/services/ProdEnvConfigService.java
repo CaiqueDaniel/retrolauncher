@@ -1,5 +1,6 @@
 package org.retrolauncher.app._shared.infrastructure.services;
 
+import org.retrolauncher.app._shared.application.exceptions.NotAbleToLoadEnvPropertiesException;
 import org.retrolauncher.app._shared.application.services.EnvConfigService;
 import java.util.Properties;
 
@@ -27,11 +28,11 @@ public class ProdEnvConfigService implements EnvConfigService {
 
     private Properties loadConfig() {
         try {
-            Properties config = new Properties();
-            config.load(this.getClass().getClassLoader().getResourceAsStream("env.properties"));
-            return config;
+            Properties envConfigProperties = new Properties();
+            envConfigProperties.load(this.getClass().getClassLoader().getResourceAsStream("env.properties"));
+            return envConfigProperties;
         } catch (Exception exception) {
-            throw new RuntimeException(exception);
+            throw new NotAbleToLoadEnvPropertiesException(exception);
         }
     }
 }
