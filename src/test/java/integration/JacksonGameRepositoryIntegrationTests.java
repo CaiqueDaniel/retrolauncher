@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class JacksonGameRepositoryIntegrationTests {
+class JacksonGameRepositoryIntegrationTests {
     private JacksonGameRepository sut;
     Platform platform;
     private Game game;
 
     @BeforeAll
-    public void beforeAll() {
+    void beforeAll() {
         PlatformRepository platformRepository = new JacksonPlatformRepository(new MemoryFileDatabaseDriver<>());
         sut = new JacksonGameRepository(new MemoryFileDatabaseDriver<>(), platformRepository);
         platform = new Platform("Nintendo 64", "path", new ArrayList<>());
@@ -27,23 +27,23 @@ public class JacksonGameRepositoryIntegrationTests {
     }
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         game = new Game("Teste", "teste.test", "icon.png", platform);
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         sut.clear();
     }
 
     @Test
-    public void itShouldBeAbleToSave() {
+    void itShouldBeAbleToSave() {
         sut.save(game);
         assertEquals(1, sut.listAll().size());
     }
 
     @Test
-    public void itShouldBeAbleToClear() {
+    void itShouldBeAbleToClear() {
         sut.save(game);
         assertEquals(1, sut.listAll().size());
         sut.clear();
@@ -51,21 +51,21 @@ public class JacksonGameRepositoryIntegrationTests {
     }
 
     @Test
-    public void itShouldBeAbleToFindAGameById() {
+    void itShouldBeAbleToFindAGameById() {
         sut.save(game);
         assertTrue(sut.findById(game.getId()).isPresent());
         assertEquals(game.getId(), sut.findById(game.getId()).get().getId());
     }
 
     @Test
-    public void itShouldConfirmThatAGameWasAddedGivenThePath() {
+    void itShouldConfirmThatAGameWasAddedGivenThePath() {
         sut.save(game);
         boolean result = sut.existsByPath(game.getPath());
         assertTrue(result);
     }
 
     @Test
-    public void itShouldNotConfirmThatAGameWasAddedGivenAPathThatNotExists() {
+    void itShouldNotConfirmThatAGameWasAddedGivenAPathThatNotExists() {
         sut.save(game);
         boolean result = sut.existsByPath("invalid-path");
         assertFalse(result);

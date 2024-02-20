@@ -12,9 +12,9 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class JacksonGameMapperUnitTests {
+class JacksonGameMapperUnitTests {
     @Test
-    public void itShouldBeAbleToCreateAModel() {
+    void itShouldBeAbleToCreateAModel() {
         Platform platform = new Platform(UUID.randomUUID(), "Nintendo 64", "path", new ArrayList<>());
         Game game = new Game(UUID.randomUUID(), "Super Mario 64", "path", "icon", platform);
         GameModel result = JacksonGameMapper.fromDomain(game);
@@ -26,7 +26,7 @@ public class JacksonGameMapperUnitTests {
     }
 
     @Test
-    public void itShouldBeAbleToCreateAEntity() {
+    void itShouldBeAbleToCreateAEntity() {
         Platform platform = new Platform(UUID.randomUUID(), "Nintendo 64", "path", new ArrayList<>());
         Game game = new Game(UUID.randomUUID(), "Super Mario 64", "path", "icon", platform);
         GameModel model = JacksonGameMapper.fromDomain(game);

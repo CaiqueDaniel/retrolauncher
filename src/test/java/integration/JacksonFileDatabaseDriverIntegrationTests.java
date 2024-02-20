@@ -16,19 +16,19 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class JacksonFileDatabaseDriverIntegrationTests {
+class JacksonFileDatabaseDriverIntegrationTests {
     private final TestRepository sut = new TestRepository(
             new JacksonFileDatabaseDriver<>(TestModel.class),
             "./test.json"
     );
 
     @AfterEach
-    public void afterEach() throws IOException {
+    void afterEach() throws IOException {
         sut.clear();
     }
 
     @Test
-    public void it_should_be_able_to_write_data() throws IOException {
+    void it_should_be_able_to_write_data() throws IOException {
         TestModel model = new TestModel(UUID.randomUUID(), "Teste");
 
         sut.save(model);

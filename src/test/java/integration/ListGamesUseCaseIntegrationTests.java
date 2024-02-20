@@ -15,19 +15,19 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ListGamesUseCaseIntegrationTests {
+class ListGamesUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
     private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final ListGamesUseCase sut = new ListGamesUseCase(repository);
     private final Platform platform = new Platform("Test", "test", List.of("test"));
 
     @BeforeAll
-    public void beforeAll() {
+    void beforeAll() {
         platformRepository.save(platform);
     }
 
     @Test()
-    public void it_should_be_able_to_list_games() {
+    void it_should_be_able_to_list_games() {
         repository.save(new Game("test", "testpath", "icon.png", platform));
         List<GameInfoOutputDto> result = sut.execute();
         assertEquals(1, result.size());

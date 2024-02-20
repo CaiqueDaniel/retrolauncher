@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class StartGameUseCaseIntegrationTests {
+class StartGameUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
     private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final ProcessRunnerService processRunnerService = mock(ProcessRunnerService.class);
@@ -37,12 +37,12 @@ public class StartGameUseCaseIntegrationTests {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         repository.clear();
     }
 
     @Test
-    public void it_should_start_game() {
+    void it_should_start_game() {
         Game game = new Game("test", "testpath", "icon.png", platform);
         repository.save(game);
 
@@ -51,7 +51,7 @@ public class StartGameUseCaseIntegrationTests {
     }
 
     @Test
-    public void it_should_not_start_game_when_game_does_not_exist() {
+    void it_should_not_start_game_when_game_does_not_exist() {
         assertThrows(GameNotFoundException.class, () -> sut.execute(UUID.randomUUID().toString()));
     }
 }

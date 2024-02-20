@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
-public class JacksonPlatformMapperUnitTests {
+class JacksonPlatformMapperUnitTests {
     @Test
-    public void itShouldBeAbleToCreateAModel() {
+    void itShouldBeAbleToCreateAModel() {
         Platform platform = new Platform("Nintendo 64", "path", new ArrayList<>());
         PlatformModel result = JacksonPlatformMapper.fromDomain(platform);
 
@@ -22,7 +22,7 @@ public class JacksonPlatformMapperUnitTests {
     }
 
     @Test
-    public void itShouldBeAbleToCreateAEntity() {
+    void itShouldBeAbleToCreateAEntity() {
         Platform platform = new Platform("Nintendo 64", "path", new ArrayList<>());
         PlatformModel model = JacksonPlatformMapper.fromDomain(platform);
         Platform result = JacksonPlatformMapper.toDomain(model);

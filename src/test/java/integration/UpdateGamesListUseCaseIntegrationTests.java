@@ -17,14 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class UpdateGamesListUseCaseIntegrationTests {
+class UpdateGamesListUseCaseIntegrationTests {
     private final String testFile = "test-folder/game.test";
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
     private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final UpdateGamesListUseCase sut = new UpdateGamesListUseCase(repository, this.platformRepository);
 
     @BeforeAll
-    public void beforeAll() throws IOException {
+    void beforeAll() throws IOException {
         platformRepository.save(new Platform("Test", "test", List.of("test")));
         File folder = new File(testFile);
         folder.getParentFile().mkdirs();
@@ -32,30 +32,30 @@ public class UpdateGamesListUseCaseIntegrationTests {
     }
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         repository.clear();
     }
 
     @AfterAll
-    public void afterAll() {
+    void afterAll() {
         File file = new File(testFile);
         file.delete();
         file.getParentFile().delete();
     }
 
     @Test()
-    public void it_should_be_able_to_save_games() throws Exception {
+    void it_should_be_able_to_save_games() throws Exception {
         sut.execute("./test-folder");
         assertEquals(1, repository.listAll().size());
     }
 
     @Test
-    public void it_should_not_save_games_given_folder_do_not_exists() {
+    void it_should_not_save_games_given_folder_do_not_exists() {
         assertThrows(FileNotFoundException.class, () -> sut.execute("./invalid-folder"));
     }
 
     @Test
-    public void it_should_not_duplicate_games() throws FileNotFoundException {
+    void it_should_not_duplicate_games() throws FileNotFoundException {
         sut.execute("./test-folder");
         sut.execute("./test-folder");
         assertEquals(1, repository.listAll().size());
