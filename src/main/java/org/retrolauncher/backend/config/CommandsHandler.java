@@ -1,6 +1,5 @@
 package org.retrolauncher.backend.config;
 
-import org.retrolauncher.DependencyInjector;
 import org.retrolauncher.backend.app.games.infrastructure.cli.commands.CreateShortcutCommand;
 import org.retrolauncher.backend.app.games.infrastructure.cli.commands.ListGamesCommand;
 import org.retrolauncher.backend.app.games.infrastructure.cli.commands.StartGameCommand;

@@ -1,4 +1,4 @@
-package org.retrolauncher;
+package org.retrolauncher.backend.config;
 
 import lombok.Getter;
 import org.retrolauncher.backend.app._shared.application.services.EnvConfigService;
@@ -14,6 +14,7 @@ import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.models.GameModel;
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.repositories.JacksonGameRepository;
 import org.retrolauncher.backend.app.games.application.usecases.UpdateGamesListUseCase;
+import org.retrolauncher.backend.app.games.infrastructure.desktop.controllers.GamesController;
 import org.retrolauncher.backend.app.platforms.application.services.PlatformsResourceConfigService;
 import org.retrolauncher.backend.app.platforms.application.usecases.UpdatePlatformsListUseCase;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
@@ -35,6 +36,7 @@ public class DependencyInjector {
     private final StartGameUseCase startGameUseCase;
     private final ListGamesUseCase listGamesUseCase;
     private final CreateGameShortcutUseCase createGameShortcutUseCase;
+    private final GamesController gamesController;
 
     public DependencyInjector() {
         this.configService = new ProdEnvConfigService();
@@ -55,5 +57,6 @@ public class DependencyInjector {
         this.startGameUseCase = new StartGameUseCase(this.gameRepository, this.processRunnerService);
         this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);
         this.createGameShortcutUseCase = new CreateGameShortcutUseCase(this.gameRepository, this.shortcutService);
+        this.gamesController = new GamesController(this.listGamesUseCase);
     }
 }
