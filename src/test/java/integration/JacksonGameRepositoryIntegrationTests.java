@@ -1,12 +1,12 @@
 package integration;
 
 import org.junit.jupiter.api.*;
-import org.retrolauncher.app.games.domain.entities.Game;
-import org.retrolauncher.app.games.infrastructure.database.jackson.repositories.JacksonGameRepository;
-import org.retrolauncher.app.platforms.domain.entities.Platform;
-import org.retrolauncher.app.platforms.domain.repositories.PlatformRepository;
-import org.retrolauncher.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
-import org.retrolauncher.database.MemoryFileDatabaseDriver;
+import org.retrolauncher.backend.app.games.domain.entities.Game;
+import org.retrolauncher.backend.app.games.infrastructure.database.jackson.repositories.JacksonGameRepository;
+import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
+import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
+import org.retrolauncher.backend.database.MemoryFileDatabaseDriver;
 
 import java.util.ArrayList;
 

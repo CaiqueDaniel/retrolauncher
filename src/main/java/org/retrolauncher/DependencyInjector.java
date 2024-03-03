@@ -1,26 +1,26 @@
 package org.retrolauncher;
 
 import lombok.Getter;
-import org.retrolauncher.app._shared.application.services.EnvConfigService;
-import org.retrolauncher.app._shared.application.services.ProcessRunnerService;
-import org.retrolauncher.app._shared.application.services.ShortcutService;
-import org.retrolauncher.app._shared.infrastructure.services.DefaultProcessRunnerService;
-import org.retrolauncher.app._shared.infrastructure.services.ProdEnvConfigService;
-import org.retrolauncher.app._shared.infrastructure.services.ShellLinkShortcutService;
-import org.retrolauncher.app.games.application.usecases.CreateGameShortcutUseCase;
-import org.retrolauncher.app.games.application.usecases.ListGamesUseCase;
-import org.retrolauncher.app.games.application.usecases.StartGameUseCase;
-import org.retrolauncher.app.games.domain.repositories.GameRepository;
-import org.retrolauncher.app.games.infrastructure.database.jackson.models.GameModel;
-import org.retrolauncher.app.games.infrastructure.database.jackson.repositories.JacksonGameRepository;
-import org.retrolauncher.app.games.application.usecases.UpdateGamesListUseCase;
-import org.retrolauncher.app.platforms.application.services.PlatformsResourceConfigService;
-import org.retrolauncher.app.platforms.application.usecases.UpdatePlatformsListUseCase;
-import org.retrolauncher.app.platforms.domain.repositories.PlatformRepository;
-import org.retrolauncher.app.platforms.infrastructure.database.jackson.models.PlatformModel;
-import org.retrolauncher.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
-import org.retrolauncher.app.platforms.infrastructure.services.FilePlatformResourceConfigService;
-import org.retrolauncher.database.JacksonFileDatabaseDriver;
+import org.retrolauncher.backend.app._shared.application.services.EnvConfigService;
+import org.retrolauncher.backend.app._shared.application.services.ProcessRunnerService;
+import org.retrolauncher.backend.app._shared.application.services.ShortcutService;
+import org.retrolauncher.backend.app._shared.infrastructure.services.DefaultProcessRunnerService;
+import org.retrolauncher.backend.app._shared.infrastructure.services.ProdEnvConfigService;
+import org.retrolauncher.backend.app._shared.infrastructure.services.ShellLinkShortcutService;
+import org.retrolauncher.backend.app.games.application.usecases.CreateGameShortcutUseCase;
+import org.retrolauncher.backend.app.games.application.usecases.ListGamesUseCase;
+import org.retrolauncher.backend.app.games.application.usecases.StartGameUseCase;
+import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
+import org.retrolauncher.backend.app.games.infrastructure.database.jackson.models.GameModel;
+import org.retrolauncher.backend.app.games.infrastructure.database.jackson.repositories.JacksonGameRepository;
+import org.retrolauncher.backend.app.games.application.usecases.UpdateGamesListUseCase;
+import org.retrolauncher.backend.app.platforms.application.services.PlatformsResourceConfigService;
+import org.retrolauncher.backend.app.platforms.application.usecases.UpdatePlatformsListUseCase;
+import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.models.PlatformModel;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.services.FilePlatformResourceConfigService;
+import org.retrolauncher.backend.database.JacksonFileDatabaseDriver;
 
 @Getter
 public class DependencyInjector {

@@ -1,12 +1,12 @@
 package integration;
 
 import org.junit.jupiter.api.*;
-import org.retrolauncher.app.platforms.application.exceptions.CoreFolderNotFoundException;
-import org.retrolauncher.app.platforms.application.services.PlatformsResourceConfigService;
-import org.retrolauncher.app.platforms.application.usecases.UpdatePlatformsListUseCase;
-import org.retrolauncher.app.platforms.domain.repositories.PlatformRepository;
-import org.retrolauncher.app.platforms.infrastructure.database.jackson.repositories.MemoryPlatformRepository;
-import org.retrolauncher.app.platforms.infrastructure.services.FilePlatformResourceConfigService;
+import org.retrolauncher.backend.app.platforms.application.exceptions.CoreFolderNotFoundException;
+import org.retrolauncher.backend.app.platforms.application.services.PlatformsResourceConfigService;
+import org.retrolauncher.backend.app.platforms.application.usecases.UpdatePlatformsListUseCase;
+import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.MemoryPlatformRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.services.FilePlatformResourceConfigService;
 
 import java.io.File;
 import java.io.IOException;

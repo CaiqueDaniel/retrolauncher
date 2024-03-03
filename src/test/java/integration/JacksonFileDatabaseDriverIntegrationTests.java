@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.junit.jupiter.api.*;
-import org.retrolauncher.app._shared.infrastructure.database.jackson.model.Model;
-import org.retrolauncher.database.FileDatabaseDriver;
-import org.retrolauncher.database.JacksonFileDatabaseDriver;
+import org.retrolauncher.backend.app._shared.infrastructure.database.jackson.model.Model;
+import org.retrolauncher.backend.database.FileDatabaseDriver;
+import org.retrolauncher.backend.database.JacksonFileDatabaseDriver;
 
 import java.io.IOException;
 import java.util.Map;

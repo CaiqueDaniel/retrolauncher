@@ -1,7 +1,7 @@
 package org.retrolauncher;
 
-import org.retrolauncher.app._shared.application.services.EnvConfigService;
-import org.retrolauncher.config.CommandsHandler;
+import org.retrolauncher.backend.app._shared.application.services.EnvConfigService;
+import org.retrolauncher.backend.config.CommandsHandler;
 
 public class Main {
     private static final DependencyInjector dependencyInjector = new DependencyInjector();

@@ -1,8 +1,8 @@
 package unit;
 
-import org.retrolauncher.app.platforms.domain.entities.Platform;
-import org.retrolauncher.app.platforms.infrastructure.database.jackson.models.PlatformModel;
-import org.retrolauncher.app.platforms.infrastructure.database.jackson.mappers.JacksonPlatformMapper;
+import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.models.PlatformModel;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.mappers.JacksonPlatformMapper;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

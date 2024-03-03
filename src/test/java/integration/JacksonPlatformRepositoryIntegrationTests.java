@@ -1,10 +1,10 @@
 package integration;
 
 import org.junit.jupiter.api.*;
-import org.retrolauncher.app.platforms.domain.entities.Platform;
-import org.retrolauncher.app.platforms.infrastructure.database.jackson.models.PlatformModel;
-import org.retrolauncher.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
-import org.retrolauncher.database.FileDatabaseDriver;
+import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.models.PlatformModel;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
+import org.retrolauncher.backend.database.FileDatabaseDriver;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,10 +1,10 @@
 package unit;
 
-import org.retrolauncher.app.games.domain.entities.Game;
+import org.retrolauncher.backend.app.games.domain.entities.Game;
 
-import org.retrolauncher.app.games.infrastructure.database.jackson.mappers.JacksonGameMapper;
-import org.retrolauncher.app.games.infrastructure.database.jackson.models.GameModel;
-import org.retrolauncher.app.platforms.domain.entities.Platform;
+import org.retrolauncher.backend.app.games.infrastructure.database.jackson.mappers.JacksonGameMapper;
+import org.retrolauncher.backend.app.games.infrastructure.database.jackson.models.GameModel;
+import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
