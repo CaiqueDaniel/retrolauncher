@@ -1,27 +1,29 @@
 package org.retrolauncher;
 
-import org.retrolauncher.backend.app._shared.application.services.EnvConfigService;
-import org.retrolauncher.backend.config.CommandsHandler;
+import org.retrolauncher.backend.Backend;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import org.retrolauncher.backend.config.DependencyInjector;
 
-public class Main {
+public class Main extends Application {
     private static final DependencyInjector dependencyInjector = new DependencyInjector();
 
     public static void main(String[] args) {
-        try {
-            Main.startup();
-            Main.registerCommands(args);
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
-        }
+        Backend.main(args);
+        launch();
     }
 
-    private static void startup() throws Exception {
-        EnvConfigService configService = Main.dependencyInjector.getConfigService();
-        Main.dependencyInjector.getUpdatePlatformsListUseCase().execute(configService.getCoresPath());
-        Main.dependencyInjector.getUpdateGamesListUseCase().execute(configService.getRomsPath());
-    }
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("views/pages/MainMenuPage.fxml"));
+        Scene scene = new Scene(root);
 
-    private static void registerCommands(String[] args) {
-        new CommandsHandler(Main.dependencyInjector, args).run();
+        stage.setTitle("JavaFX");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 }
