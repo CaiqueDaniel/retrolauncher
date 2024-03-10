@@ -10,7 +10,7 @@ import java.util.UUID;
 public class Game extends Entity {
     private final String name;
     private final String path;
-    private final String iconPath;
+    private String iconPath;
     private final Platform platform;
 
     public Game(String name, String path, String iconPath, Platform platform) {
@@ -27,5 +27,9 @@ public class Game extends Entity {
         this.path = path;
         this.iconPath = iconPath;
         this.platform = platform;
+    }
+
+    public void uploadIcon(String path) {
+        this.iconPath = path;
     }
 }
