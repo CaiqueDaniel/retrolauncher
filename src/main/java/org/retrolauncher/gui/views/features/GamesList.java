@@ -6,21 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.components.GameItem;
+import org.retrolauncher.gui.contexts.SelectedGameContext;
+import org.retrolauncher.gui.models.Game;
 import org.retrolauncher.gui.viewmodels.GamesListViewModel;
 
 import java.util.List;
 
 public class GamesList extends ListView<GameItem> {
 
-    public GamesList(){
+    public GamesList() {
         this.load();
-    }
-
-    @FXML
-    public void initialize() {
-        GamesListViewModel viewModel = new GamesListViewModel();
-        List<GameItem> gameItemList = viewModel.listAll().stream().map(GameItem::new).toList();
-        this.getItems().addAll(gameItemList);
     }
 
     private void load() {
@@ -32,5 +27,19 @@ public class GamesList extends ListView<GameItem> {
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    @FXML
+    private void initialize() {
+        GamesListViewModel viewModel = new GamesListViewModel();
+        List<GameItem> gameItemList = viewModel.listAll()
+                .stream()
+                .map((game) -> new GameItem(game, this::onSelectGameItem))
+                .toList();
+        this.getItems().addAll(gameItemList);
+    }
+
+    private void onSelectGameItem(Game game) {
+        SelectedGameContext.dispatch(game);
     }
 }

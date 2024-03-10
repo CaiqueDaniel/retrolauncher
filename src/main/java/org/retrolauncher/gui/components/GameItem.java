@@ -7,13 +7,17 @@ import javafx.scene.layout.HBox;
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.models.Game;
 
+import java.util.function.Consumer;
+
 public class GameItem extends HBox {
     private final Game game;
+    private final Consumer<Game> onClick;
     @FXML()
     private Label label;
 
-    public GameItem(Game game) {
+    public GameItem(Game game, Consumer<Game> onClick) {
         this.game = game;
+        this.onClick = onClick;
         this.load();
     }
 
@@ -35,9 +39,7 @@ public class GameItem extends HBox {
         this.setEventListeners();
     }
 
-    private void setEventListeners(){
-        this.setOnMouseClicked((evt)->{
-
-        });
+    private void setEventListeners() {
+        this.setOnMouseClicked((evt) -> this.onClick.accept(this.game));
     }
 }
