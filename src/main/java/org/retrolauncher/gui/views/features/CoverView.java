@@ -10,6 +10,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.contexts.SelectedGameContext;
+import org.retrolauncher.gui.gateways.GamesGateway;
+import org.retrolauncher.gui.models.Game;
+import org.retrolauncher.gui.viewmodels.CoverViewViewModel;
 
 import java.io.File;
 
@@ -26,7 +29,12 @@ public class CoverView extends Pane {
     @FXML
     private Pane gameCoverPane;
 
+    private Game selectedGame;
+
+    private CoverViewViewModel coverViewViewModel;
+
     public CoverView() {
+        this.coverViewViewModel = new CoverViewViewModel(new GamesGateway());
         this.load();
     }
 
@@ -46,6 +54,7 @@ public class CoverView extends Pane {
         SelectedGameContext.subscribe((game) -> {
             this.selectGameLbl.setVisible(false);
             this.gameCoverPane.setVisible(true);
+            this.selectedGame = game;
         });
 
         this.setEventListeners();
@@ -56,6 +65,7 @@ public class CoverView extends Pane {
             FileChooser fileChooser = new FileChooser();
             File image = fileChooser.showOpenDialog(this.getScene().getWindow());
             this.imgGameCover.setImage(new Image(image.toURI().toString()));
+            this.coverViewViewModel.saveCover(this.selectedGame.id(), image);
         });
     }
 }
