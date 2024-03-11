@@ -14,4 +14,8 @@ public class CoverViewViewModel {
     public void saveCover(String id, File icon) {
         this.gateway.saveCover(id, icon);
     }
+
+    public void createShortcut(String id) {
+        this.gateway.createShortcut(id);
+    }
 }

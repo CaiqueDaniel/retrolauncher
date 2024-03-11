@@ -24,6 +24,9 @@ public class CoverView extends Pane {
     private Button btnAddCover;
 
     @FXML
+    private Button btnAddShortcut;
+
+    @FXML
     private ImageView imgGameCover;
 
     @FXML
@@ -31,7 +34,7 @@ public class CoverView extends Pane {
 
     private Game selectedGame;
 
-    private CoverViewViewModel coverViewViewModel;
+    private final CoverViewViewModel coverViewViewModel;
 
     public CoverView() {
         this.coverViewViewModel = new CoverViewViewModel(new GamesGateway());
@@ -66,6 +69,11 @@ public class CoverView extends Pane {
             File image = fileChooser.showOpenDialog(this.getScene().getWindow());
             this.imgGameCover.setImage(new Image(image.toURI().toString()));
             this.coverViewViewModel.saveCover(this.selectedGame.id(), image);
+            this.btnAddCover.setText("Alterar capa");
+        });
+
+        this.btnAddShortcut.setOnMouseClicked((evt) -> {
+            this.coverViewViewModel.createShortcut(this.selectedGame.id());
         });
     }
 }

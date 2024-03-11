@@ -16,4 +16,9 @@ public class GamesFacadeImpl implements GamesFacade {
     public void saveCover(SaveGameCoverDto dto) {
         Backend.getDependencies().getGamesController().saveCover(dto);
     }
+
+    @Override
+    public void createShortcut(String id) {
+        Backend.getDependencies().getGamesController().createShortcut(id);
+    }
 }

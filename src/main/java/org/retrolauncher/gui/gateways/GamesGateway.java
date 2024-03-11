@@ -25,4 +25,8 @@ public class GamesGateway {
     public void saveCover(String id, File icon) {
         this.gamesFacade.saveCover(new SaveGameCoverDto(id, icon));
     }
+
+    public void createShortcut(String id) {
+        this.gamesFacade.createShortcut(id);
+    }
 }

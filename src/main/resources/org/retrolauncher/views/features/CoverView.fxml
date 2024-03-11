@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
 
-<fx:root type="Pane" xmlns="http://javafx.com/javafx"
-         xmlns:fx="http://javafx.com/fxml"
-         prefHeight="400.0" prefWidth="600.0">
+<fx:root prefHeight="400.0" prefWidth="600.0" type="Pane" xmlns="http://javafx.com/javafx/11.0.14-internal"
+         xmlns:fx="http://javafx.com/fxml/1">
     <Pane fx:id="gameCoverPane" prefHeight="407.0" prefWidth="189.0" visible="false">
-        <Button layoutX="47.0" layoutY="192.0" text="Adicionar capa" fx:id="btnAddCover">Adicionar capa</Button>
-        <ImageView fitHeight="128.0" fitWidth="148.0" layoutX="21.0" layoutY="51.0" fx:id="imgGameCover"/>
+        <ImageView fx:id="imgGameCover" fitHeight="152.0" fitWidth="119.0" layoutX="35.0" layoutY="24.0"/>
+        <Button fx:id="btnAddCover" layoutX="44.0" layoutY="191.0" prefHeight="25.0" prefWidth="103.0"
+                text="Adicionar capa">Adicionar capa
+        </Button>
+        <Button fx:id="btnAddShortcut" layoutX="44.0" layoutY="229.0" mnemonicParsing="false" text="Adicionar atalho"/>
     </Pane>
-    <Label fx:id="selectGameLbl" alignment="CENTER" layoutX="15.0" layoutY="195.0" prefHeight="25.0"
-           prefWidth="161.0" text="Selecione um jogo"/>
+    <Label fx:id="selectGameLbl" alignment="CENTER" layoutX="15.0" layoutY="195.0" prefHeight="25.0" prefWidth="161.0"
+           text="Selecione um jogo"/>
 </fx:root>

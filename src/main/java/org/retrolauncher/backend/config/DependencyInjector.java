@@ -57,6 +57,10 @@ public class DependencyInjector {
         this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);
         this.createGameShortcutUseCase = new CreateGameShortcutUseCase(this.gameRepository, this.shortcutService);
         this.saveGameCoverUseCase = new SaveGameCoverUseCase(this.gameRepository, new CoverUploaderService());
-        this.gamesController = new GamesController(this.listGamesUseCase, this.saveGameCoverUseCase);
+        this.gamesController = new GamesController(
+                this.listGamesUseCase,
+                this.saveGameCoverUseCase,
+                this.createGameShortcutUseCase
+        );
     }
 }

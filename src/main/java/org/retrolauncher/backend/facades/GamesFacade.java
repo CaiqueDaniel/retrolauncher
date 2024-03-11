@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface GamesFacade {
     List<GameInfoOutputDto> listAll();
+
     void saveCover(SaveGameCoverDto dto);
+
+    void createShortcut(String id);
 }

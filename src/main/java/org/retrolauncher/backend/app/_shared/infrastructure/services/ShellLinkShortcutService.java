@@ -18,6 +18,7 @@ public class ShellLinkShortcutService implements ShortcutService {
         new ShellLink()
                 .setTarget(shortcut.targetPath())
                 .setCMDArgs(shortcut.args())
+                .setIconLocation(shortcut.iconPath())
                 .saveTo(shortcutRelativePath);
     }
 }
