@@ -44,7 +44,7 @@ public class GamesList extends ListView<GameItem> {
                 .stream()
                 .map((game) -> new GameItem(game, this::onSelectGameItem))
                 .toList();
-        this.getItems().addAll(gameItemList);
+        this.getItems().setAll(gameItemList);
     }
 
     private void onSelectGameItem(Game game) {
