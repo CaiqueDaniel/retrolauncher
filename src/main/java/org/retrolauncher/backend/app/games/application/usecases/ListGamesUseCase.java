@@ -15,7 +15,10 @@ public class ListGamesUseCase {
     public List<GameInfoOutputDto> execute() {
         return this.repository.listAll()
                 .stream()
-                .map((game) -> new GameInfoOutputDto(game.getId().toString(), game.getName()))
-                .toList();
+                .map((game) -> new GameInfoOutputDto(
+                        game.getId().toString(),
+                        game.getName(),
+                        game.getIconPath())
+                ).toList();
     }
 }

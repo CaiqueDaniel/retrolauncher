@@ -23,7 +23,7 @@ public class SaveGameCoverUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
     private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final Platform platform = new Platform("Test", "test", List.of("test"));
-    private final Game game = new Game(UUID.randomUUID().toString(), "path", "path", platform);
+    private final Game game = new Game(UUID.randomUUID().toString(), "path", platform);
     private final SaveGameCoverUseCase sut = new SaveGameCoverUseCase(repository, new CoverUploaderService());
 
     @BeforeAll
@@ -37,7 +37,7 @@ public class SaveGameCoverUseCaseIntegrationTests {
     @BeforeEach
     void beforeEach() {
         repository.listAll().forEach((game) -> {
-            new File(game.getIconPath()).delete();
+            new File(game.getIconPath().orElseThrow()).delete();
         });
         repository.save(game);
     }

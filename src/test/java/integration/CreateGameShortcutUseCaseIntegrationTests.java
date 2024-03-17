@@ -42,7 +42,7 @@ class CreateGameShortcutUseCaseIntegrationTests {
 
     @Test
     void it_should_create_a_shortcut() throws IOException {
-        Game game = new Game("test", "testpath", "icon.png", platform);
+        Game game = new Game("test", "testpath", platform);
         repository.save(game);
 
         sut.execute(game.getId().toString());

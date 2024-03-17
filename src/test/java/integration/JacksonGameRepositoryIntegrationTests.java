@@ -28,7 +28,7 @@ class JacksonGameRepositoryIntegrationTests {
 
     @BeforeEach
     void beforeEach() {
-        game = new Game("Teste", "teste.test", "icon.png", platform);
+        game = new Game("Teste", "teste.test", platform);
     }
 
     @AfterEach

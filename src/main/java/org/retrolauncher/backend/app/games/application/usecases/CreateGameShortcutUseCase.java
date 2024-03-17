@@ -30,7 +30,7 @@ public class CreateGameShortcutUseCase {
         Game game = result.get();
         String args = this.getArgs(game);
         String appPath = this.getAppPath();
-        Shortcut shortcut = new Shortcut(game.getName(), appPath, args, game.getIconPath());
+        Shortcut shortcut = new Shortcut(game.getName(), appPath, args, game.getIconPath().orElse(""));
 
         try {
             this.shortcutService.create(shortcut);

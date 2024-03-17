@@ -13,7 +13,7 @@ public class JacksonGameMapper {
         model.setId(entity.getId());
         model.setName(entity.getName());
         model.setPath(entity.getPath());
-        model.setIconPath(entity.getIconPath());
+        model.setIconPath(entity.getIconPath().orElse(null));
         model.setPlatformId(entity.getPlatform().getId().toString());
         return model;
     }

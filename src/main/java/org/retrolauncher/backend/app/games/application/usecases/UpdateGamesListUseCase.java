@@ -35,7 +35,7 @@ public class UpdateGamesListUseCase {
             if (gamePlatform.isEmpty())
                 return null;
 
-            return new Game(gameFile.getName(), gameFile.getAbsolutePath(), "", gamePlatform.get());
+            return new Game(gameFile.getName(), gameFile.getAbsolutePath(), gamePlatform.get());
         }).filter(Objects::nonNull).toList();
 
         games.forEach(this.repository::save);

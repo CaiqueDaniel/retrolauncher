@@ -11,6 +11,7 @@ import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepos
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.MemoryPlatformRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -26,10 +27,28 @@ class ListGamesUseCaseIntegrationTests {
         platformRepository.save(platform);
     }
 
+    @AfterEach
+    void afterEach() {
+        repository.clear();
+    }
+
     @Test()
     void it_should_be_able_to_list_games() {
-        repository.save(new Game("test", "testpath", "icon.png", platform));
+        repository.save(new Game("test", "testpath", platform));
         List<GameInfoOutputDto> result = sut.execute();
         assertEquals(1, result.size());
+        assertEquals("test", result.get(0).name());
+        assertEquals(Optional.empty(), result.get(0).iconPath());
+    }
+
+    @Test()
+    void it_should_be_able_to_list_games_with_icon() {
+        Game game = new Game("test", "testpath", platform);
+        game.uploadIcon("icon.png");
+        repository.save(game);
+        List<GameInfoOutputDto> result = sut.execute();
+        assertEquals(1, result.size());
+        assertEquals("test", result.get(0).name());
+        assertEquals("icon.png", result.get(0).iconPath().get());
     }
 }

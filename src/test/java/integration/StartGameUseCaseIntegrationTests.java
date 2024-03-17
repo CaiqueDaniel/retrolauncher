@@ -43,7 +43,7 @@ class StartGameUseCaseIntegrationTests {
 
     @Test
     void it_should_start_game() {
-        Game game = new Game("test", "testpath", "icon.png", platform);
+        Game game = new Game("test", "testpath", platform);
         repository.save(game);
 
         sut.execute(game.getId().toString());

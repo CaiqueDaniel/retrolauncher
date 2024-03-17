@@ -21,7 +21,7 @@ class JacksonGameMapperUnitTests {
 
         assertEquals(result.getId(), game.getId());
         assertEquals(result.getName(), game.getName());
-        assertEquals(result.getIconPath(), game.getIconPath());
+        assertEquals(result.getIconPath(), game.getIconPath().get());
         assertEquals(result.getPlatformId(), game.getPlatform().getId().toString());
     }
 
