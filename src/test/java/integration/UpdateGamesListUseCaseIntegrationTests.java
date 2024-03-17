@@ -1,6 +1,7 @@
 package integration;
 
 import org.junit.jupiter.api.*;
+import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.repositories.MemoryGameRepository;
 import org.retrolauncher.backend.app.games.application.usecases.UpdateGamesListUseCase;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -46,6 +48,9 @@ class UpdateGamesListUseCaseIntegrationTests {
     @Test()
     void it_should_be_able_to_save_games() throws Exception {
         sut.execute("./test-folder");
+        Game result = repository.listAll().get(0);
+        assertEquals("game", result.getName());
+        assertEquals(Optional.empty(), result.getIconPath());
         assertEquals(1, repository.listAll().size());
     }
 
