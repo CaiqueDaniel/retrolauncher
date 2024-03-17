@@ -27,7 +27,6 @@ public class GameItem extends HBox {
             fxmlLoader.setRoot(this);
             fxmlLoader.setController(this);
             fxmlLoader.load();
-            this.getStylesheets().add(Main.class.getResource("styles/game-item.css").toExternalForm());
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
