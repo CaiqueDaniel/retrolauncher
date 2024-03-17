@@ -13,7 +13,7 @@ public class GUI extends Application {
         Parent root = FXMLLoader.load(Main.class.getResource("views/pages/MainMenuPage.fxml"));
         Scene scene = new Scene(root);
 
-        stage.setTitle("JavaFX");
+        stage.setTitle("Retro Launcher");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
