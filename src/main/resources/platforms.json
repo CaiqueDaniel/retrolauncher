@@ -9,6 +9,16 @@
     ]
   },
   {
+    "name": "Game Boy/Color",
+    "extensions": [
+      "gb",
+      "gbc"
+    ],
+    "coresAlias": [
+      "sameboy"
+    ]
+  },
+  {
     "name": "Super Nintendo Entretainement System",
     "extensions": [
       "sfc"
