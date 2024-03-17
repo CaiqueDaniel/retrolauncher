@@ -1,7 +1,7 @@
 package integration;
 
+import fixtures.StubCoverUploaderService;
 import org.junit.jupiter.api.*;
-import org.retrolauncher.backend.app._shared.infrastructure.services.CoverUploaderService;
 import org.retrolauncher.backend.app.games.application.dtos.SaveGameCoverInputDto;
 import org.retrolauncher.backend.app.games.application.usecases.SaveGameCoverUseCase;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
@@ -14,6 +14,7 @@ import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.r
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,42 +24,57 @@ public class SaveGameCoverUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
     private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final Platform platform = new Platform("Test", "test", List.of("test"));
-    private final Game game = new Game(UUID.randomUUID().toString(), "path", platform);
-    private final SaveGameCoverUseCase sut = new SaveGameCoverUseCase(repository, new CoverUploaderService());
+    private final SaveGameCoverUseCase sut = new SaveGameCoverUseCase(repository, new StubCoverUploaderService());
 
     @BeforeAll
     void beforeAll() throws IOException {
         platformRepository.save(platform);
-        File folder = new File("test-folder/game.png");
+        File folder = new File("test/game.png");
         folder.getParentFile().mkdirs();
         folder.createNewFile();
     }
 
-    @BeforeEach
-    void beforeEach() {
+    @AfterEach
+    void afterEach() {
         repository.listAll().forEach((game) -> {
             new File(game.getIconPath().orElseThrow()).delete();
         });
-        repository.save(game);
-    }
 
-    @AfterEach
-    void afterEach() {
         repository.clear();
     }
 
     @AfterAll
     void afterAll() {
-        new File("test-folder/game.png").delete();
+        new File("test/game.png").delete();
     }
 
     @Test
     void it_should_be_able_to_save_a_cover_within_a_game() {
-        String baseDir = new StringBuilder(System.getProperty("user.home"))
-                .append("/retro-launcher")
-                .append("/covers").toString();
-        File icon = new File("test-folder/game.png");
+        Game game = new Game(UUID.randomUUID().toString(), "path", platform);
+        String regex = "^test\\\\([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})\\.ico";
+        File icon = new File("test/game.png");
+
+        repository.save(game);
         sut.execute(new SaveGameCoverInputDto(game.getId().toString(), icon));
-        assertNotEquals("", repository.listAll().get(0).getIconPath());
+
+        Optional<String> result = repository.listAll().get(0).getIconPath();
+
+        assertTrue(result.isPresent());
+        assertTrue(result.get().matches(regex));
+    }
+
+    @Test
+    void it_should_be_able_to_replace_a_existent_cover_within_a_game() {
+        Game game = new Game(UUID.randomUUID().toString(), "path", platform);
+        File icon = new File("test/game.png");
+
+        game.uploadIcon("test/test.ico");
+        repository.save(game);
+        sut.execute(new SaveGameCoverInputDto(game.getId().toString(), icon));
+
+        Optional<String> result = repository.listAll().get(0).getIconPath();
+
+        assertTrue(result.isPresent());
+        assertTrue(result.get().matches("test/test.ico"));
     }
 }

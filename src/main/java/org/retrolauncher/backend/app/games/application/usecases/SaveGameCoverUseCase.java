@@ -6,6 +6,7 @@ import org.retrolauncher.backend.app.games.application.exceptions.GameNotFoundEx
 import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,7 +26,19 @@ public class SaveGameCoverUseCase {
             throw new GameNotFoundException();
 
         Game game = result.get();
+
+        if (game.getIconPath().isPresent()) {
+            this.uploaderService.upload(input.icon(), this.getIconName(game.getIconPath().get()));
+            return;
+        }
+
         game.uploadIcon(this.uploaderService.upload(input.icon()));
         this.repository.save(game);
+    }
+
+    private String getIconName(String fullpath) {
+        Path path = Path.of(fullpath);
+        String fileName = path.getFileName().toString();
+        return fileName.substring(0, fileName.lastIndexOf('.'));
     }
 }
