@@ -9,7 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import org.retrolauncher.Main;
-import org.retrolauncher.gui.contexts.SelectedGameContext;
+import org.retrolauncher.gui.events.EventManager;
+import org.retrolauncher.gui.events.EventType;
 import org.retrolauncher.gui.gateways.GamesGateway;
 import org.retrolauncher.gui.models.Game;
 import org.retrolauncher.gui.viewmodels.CoverViewViewModel;
@@ -54,10 +55,13 @@ public class CoverView extends Pane {
 
     @FXML
     private void initialize() {
-        SelectedGameContext.subscribe((game) -> {
+        EventManager.getInstance().subscribe(EventType.GAME_SELECTED, (evt) -> {
+            if (evt.isEmpty())
+                return;
+
             this.selectGameLbl.setVisible(false);
             this.gameCoverPane.setVisible(true);
-            this.selectedGame = game;
+            this.selectedGame = (Game) evt.get();
         });
 
         this.setEventListeners();
@@ -70,6 +74,7 @@ public class CoverView extends Pane {
             this.imgGameCover.setImage(new Image(image.toURI().toString()));
             this.coverViewViewModel.saveCover(this.selectedGame.id(), image);
             this.btnAddCover.setText("Alterar capa");
+            EventManager.getInstance().notify(EventType.FETCH_GAME_LIST);
         });
 
         this.btnAddShortcut.setOnMouseClicked((evt) -> {
