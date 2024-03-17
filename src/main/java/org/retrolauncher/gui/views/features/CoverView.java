@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -59,9 +58,14 @@ public class CoverView extends Pane {
             if (evt.isEmpty())
                 return;
 
+            this.selectedGame = (Game) evt.get();
             this.selectGameLbl.setVisible(false);
             this.gameCoverPane.setVisible(true);
-            this.selectedGame = (Game) evt.get();
+
+            if (this.selectedGame.iconPath().isPresent())
+                this.btnAddCover.setText("Alterar capa");
+            else
+                this.btnAddCover.setText("Adicionar capa");
         });
 
         this.setEventListeners();
@@ -71,7 +75,10 @@ public class CoverView extends Pane {
         this.btnAddCover.setOnMouseClicked((evt) -> {
             FileChooser fileChooser = new FileChooser();
             File image = fileChooser.showOpenDialog(this.getScene().getWindow());
-            this.imgGameCover.setImage(new Image(image.toURI().toString()));
+
+            if (image == null)
+                return;
+
             this.coverViewViewModel.saveCover(this.selectedGame.id(), image);
             this.btnAddCover.setText("Alterar capa");
             EventManager.getInstance().notify(EventType.FETCH_GAME_LIST);
