@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 public class CoverUploaderService implements UploaderService {
-    private final static String[] ACCEPTED_EXTENSIONS = {"png", "jpg", "jpeg"};
+    private final static String[] ACCEPTED_EXTENSIONS = {".png", ".jpg", ".jpeg"};
 
     private final static String COVERS_DIRECTORY = new StringBuilder(System.getProperty("user.home"))
             .append("/retro-launcher")
@@ -28,7 +28,7 @@ public class CoverUploaderService implements UploaderService {
 
     @Override
     public String upload(File file, String filename) {
-        if (this.isValidFormat(file))
+        if (!this.isValidFormat(file))
             throw new CoverUploadedIsNotImageException();
 
         try {
@@ -50,10 +50,6 @@ public class CoverUploaderService implements UploaderService {
 
     private boolean isValidFormat(File file) {
         return Arrays.stream(ACCEPTED_EXTENSIONS)
-                .anyMatch((extension) -> this.getExtension(file.getName()).contains(extension));
-    }
-
-    private String getExtension(String fileName) {
-        return fileName.substring(fileName.lastIndexOf('.'));
+                .anyMatch((extension) -> file.getName().contains(extension));
     }
 }
