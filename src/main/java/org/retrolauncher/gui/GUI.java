@@ -10,12 +10,13 @@ import org.retrolauncher.Main;
 public class GUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(Main.class.getResource("views/pages/MainMenuPage.fxml"));
+        //Parent root = FXMLLoader.load(Main.class.getResource("views/pages/MainMenuPage.fxml"));
+        Parent root = FXMLLoader.load(Main.class.getResource("views/pages/SetupPage.fxml"));
         Scene scene = new Scene(root);
 
         stage.setTitle("Retro Launcher");
         stage.setScene(scene);
-        stage.setResizable(false);
+        //stage.setResizable(false);
         stage.show();
     }
 }
