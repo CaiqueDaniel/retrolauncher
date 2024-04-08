@@ -19,7 +19,7 @@ import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepos
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.models.PlatformModel;
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
 import org.retrolauncher.backend.app.platforms.infrastructure.services.FilePlatformResourceConfigService;
-import org.retrolauncher.backend.app.settings.application.SaveSettingsUseCase;
+import org.retrolauncher.backend.app.settings.application.usecases.SaveSettingsUseCase;
 import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
 import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.model.SettingModel;
 import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.repositories.JacksonSettingRepository;

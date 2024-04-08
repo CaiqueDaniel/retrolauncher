@@ -1,4 +1,4 @@
-package org.retrolauncher.backend.app.settings.dtos;
+package org.retrolauncher.backend.app.settings.application.dtos;
 
 public record SaveSettingsInputDto(
         String romsFolderPath,

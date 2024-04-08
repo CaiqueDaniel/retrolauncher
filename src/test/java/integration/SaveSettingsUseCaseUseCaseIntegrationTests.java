@@ -2,10 +2,10 @@ package integration;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.retrolauncher.backend.app.settings.application.SaveSettingsUseCase;
+import org.retrolauncher.backend.app.settings.application.dtos.SaveSettingsInputDto;
+import org.retrolauncher.backend.app.settings.application.usecases.SaveSettingsUseCase;
 import org.retrolauncher.backend.app.settings.domain.entities.Setting;
 import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
-import org.retrolauncher.backend.app.settings.dtos.SaveSettingsInputDto;
 
 import java.util.Optional;
 
