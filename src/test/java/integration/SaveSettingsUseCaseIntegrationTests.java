@@ -7,6 +7,8 @@ import org.retrolauncher.backend.app.settings.domain.entities.Setting;
 import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
 import org.retrolauncher.backend.app.settings.dtos.SaveSettingsInputDto;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -18,9 +20,9 @@ public class SaveSettingsUseCaseIntegrationTests {
     void it_should_be_able_to_save_settings() {
         SaveSettingsInputDto dto = new SaveSettingsInputDto("C:/roms", "C:/retroarch");
         saveSettings.execute(dto);
-        Setting result = repository.get();
-        assertTrue(result.getRomsFolderPath().toString().equals("C:\\roms"));
-        assertTrue(result.getRetroarchFolderPath().toString().equals("C:\\retroarch"));
+        Optional<Setting> result = repository.get();
+        assertTrue(result.get().getRomsFolderPath().toString().equals("C:\\roms"));
+        assertTrue(result.get().getRetroarchFolderPath().toString().equals("C:\\retroarch"));
     }
 }
 
@@ -32,7 +34,7 @@ class StubSettingRepository implements SettingRepository {
         this.setting = entity;
     }
 
-    public Setting get() {
-        return this.setting;
+    public Optional<Setting> get() {
+        return Optional.of(this.setting);
     }
 }
