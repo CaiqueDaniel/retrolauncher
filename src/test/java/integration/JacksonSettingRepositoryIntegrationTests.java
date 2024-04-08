@@ -7,6 +7,8 @@ import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.re
 import org.retrolauncher.backend.database.FileDatabaseDriver;
 
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,21 +40,22 @@ class JacksonSettingRepositoryIntegrationTests {
     }
 }
 
-class StubFileDatabaseDriver implements FileDatabaseDriver<SettingModel> {
-    private SettingModel storedData = null;
+class StubFileDatabaseDriver implements FileDatabaseDriver<Map<String, SettingModel>> {
+    private Map<String, SettingModel> storedData = new HashMap<>();
 
     @Override
-    public void write(SettingModel content, String path) {
+    public void write(Map<String, SettingModel> content, String path) {
         this.storedData = content;
     }
 
+
     @Override
-    public SettingModel read(String path) {
+    public Map<String, SettingModel> read(String path) {
         return this.storedData;
     }
 
     @Override
     public void clear(String path) {
-        this.storedData = null;
+        this.storedData.clear();
     }
 }

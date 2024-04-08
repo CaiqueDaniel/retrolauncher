@@ -19,22 +19,31 @@ import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepos
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.models.PlatformModel;
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
 import org.retrolauncher.backend.app.platforms.infrastructure.services.FilePlatformResourceConfigService;
+import org.retrolauncher.backend.app.settings.application.SaveSettingsUseCase;
+import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
+import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.model.SettingModel;
+import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.repositories.JacksonSettingRepository;
 import org.retrolauncher.backend.database.JacksonFileDatabaseDriver;
 
 @Getter
 public class DependencyInjector {
     private final PlatformRepository platformRepository;
     private final GameRepository gameRepository;
+    private final SettingRepository settingRepository;
+
     private final PlatformsResourceConfigService platformsResourceConfigService;
     private final EnvConfigService configService;
     private final ShortcutService shortcutService;
     private final ProcessRunnerService processRunnerService;
+
     private final UpdatePlatformsListUseCase updatePlatformsListUseCase;
     private final UpdateGamesListUseCase updateGamesListUseCase;
     private final StartGameUseCase startGameUseCase;
     private final ListGamesUseCase listGamesUseCase;
     private final CreateGameShortcutUseCase createGameShortcutUseCase;
     private final SaveGameCoverUseCase saveGameCoverUseCase;
+    private final SaveSettingsUseCase saveSettingsUseCase;
+
     private final GamesController gamesController;
 
     public DependencyInjector() {
@@ -46,6 +55,7 @@ public class DependencyInjector {
                 new JacksonFileDatabaseDriver<>(GameModel.class),
                 this.platformRepository
         );
+        this.settingRepository = new JacksonSettingRepository(new JacksonFileDatabaseDriver<>(SettingModel.class));
         this.platformsResourceConfigService = new FilePlatformResourceConfigService();
 
         this.updatePlatformsListUseCase = new UpdatePlatformsListUseCase(
@@ -57,6 +67,7 @@ public class DependencyInjector {
         this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);
         this.createGameShortcutUseCase = new CreateGameShortcutUseCase(this.gameRepository, this.shortcutService);
         this.saveGameCoverUseCase = new SaveGameCoverUseCase(this.gameRepository, new CoverUploaderService());
+        this.saveSettingsUseCase = new SaveSettingsUseCase(this.settingRepository);
         this.gamesController = new GamesController(
                 this.listGamesUseCase,
                 this.saveGameCoverUseCase,

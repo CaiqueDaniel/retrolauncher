@@ -4,10 +4,10 @@ import org.retrolauncher.backend.app.settings.domain.entities.Setting;
 import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
 import org.retrolauncher.backend.app.settings.dtos.SaveSettingsInputDto;
 
-public class SaveSettings {
+public class SaveSettingsUseCase {
     private final SettingRepository repository;
 
-    public SaveSettings(SettingRepository repository) {
+    public SaveSettingsUseCase(SettingRepository repository) {
         this.repository = repository;
     }
 
