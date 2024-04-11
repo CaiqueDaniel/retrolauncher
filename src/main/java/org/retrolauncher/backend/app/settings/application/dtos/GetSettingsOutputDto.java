@@ -1,6 +1,6 @@
 package org.retrolauncher.backend.app.settings.application.dtos;
 
-public record SettingsOutputDto(
+public record GetSettingsOutputDto(
         String romsFolderPath,
         String retroarchFolderPath
 ) {

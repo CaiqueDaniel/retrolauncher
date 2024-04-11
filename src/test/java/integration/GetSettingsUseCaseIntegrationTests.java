@@ -2,7 +2,7 @@ package integration;
 
 import fixtures.StubSettingRepository;
 import org.junit.jupiter.api.*;
-import org.retrolauncher.backend.app.settings.application.dtos.SettingsOutputDto;
+import org.retrolauncher.backend.app.settings.application.dtos.GetSettingsOutputDto;
 import org.retrolauncher.backend.app.settings.application.exceptions.SettingNotFoundException;
 import org.retrolauncher.backend.app.settings.application.usecases.GetSettingsUseCase;
 import org.retrolauncher.backend.app.settings.domain.entities.Setting;
@@ -22,7 +22,7 @@ public class GetSettingsUseCaseIntegrationTests {
     @Test
     void it_should_be_able_to_get_settings() {
         repository.save(new Setting("C:/roms", "C:/retroarch"));
-        SettingsOutputDto result = sut.execute();
+        GetSettingsOutputDto result = sut.execute();
         assertEquals("C:\\roms", result.romsFolderPath());
         assertEquals("C:\\retroarch", result.retroarchFolderPath());
     }
