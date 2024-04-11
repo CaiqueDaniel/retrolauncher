@@ -38,6 +38,10 @@ public class DirectoryField extends VBox {
         this.lblError.setVisible(true);
     }
 
+    public void setValue(String value) {
+        this.txtDirPath.setText(value);
+    }
+
     public Optional<String> getValue() {
         String value = this.txtDirPath.getText();
         return Optional.ofNullable(value.isEmpty() ? null : value);

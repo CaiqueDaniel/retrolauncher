@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import org.retrolauncher.Main;
+import org.retrolauncher.gui.Routes;
 import org.retrolauncher.gui.components.DirectoryField;
 import org.retrolauncher.gui.models.Setup;
 import org.retrolauncher.gui.viewmodels.SetupViewModel;
@@ -44,7 +45,17 @@ public class SetupForm extends VBox {
         this.txtRomsPath.setLabel("Selecione a localização das ROMs:");
         this.txtRetroarchPath.setLabel("Selecione a localização do RetroArch:");
 
+        this.fillForm();
         this.addEventListeners();
+    }
+
+    private void fillForm() {
+        Optional<Setup> settings = this.viewModel.get();
+
+        settings.ifPresent((data) -> {
+            this.txtRomsPath.setValue(data.romPath());
+            this.txtRetroarchPath.setValue(data.retroarchPath());
+        });
     }
 
     private void addEventListeners() {
@@ -58,7 +69,9 @@ public class SetupForm extends VBox {
         if (romsPath.isEmpty()) this.txtRomsPath.setError("Campo obrigatório");
         if (retroarchPath.isEmpty()) this.txtRetroarchPath.setError("Campo obrigatório");
 
-        if (romsPath.isPresent() && retroarchPath.isPresent())
+        if (romsPath.isPresent() && retroarchPath.isPresent()) {
             this.viewModel.save(new Setup(romsPath.get(), retroarchPath.get()));
+            Routes.getInstance().switchToHome();
+        }
     }
 }

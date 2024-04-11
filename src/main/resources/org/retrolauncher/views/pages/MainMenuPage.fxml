@@ -5,8 +5,7 @@
 <?import org.retrolauncher.gui.views.features.*?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-           prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="org.retrolauncher.gui.views.pages.MainMenuPage">
+           prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal">
     <SplitPane dividerPositions="0.6789297658862876" prefHeight="402.0" prefWidth="603.0">
         <AnchorPane prefWidth="100.0">
             <GamesList/>
