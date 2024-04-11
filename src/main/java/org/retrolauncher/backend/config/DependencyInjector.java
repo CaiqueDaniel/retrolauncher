@@ -19,6 +19,7 @@ import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepos
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.models.PlatformModel;
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
 import org.retrolauncher.backend.app.platforms.infrastructure.services.FilePlatformResourceConfigService;
+import org.retrolauncher.backend.app.settings.application.usecases.GetSettingsUseCase;
 import org.retrolauncher.backend.app.settings.application.usecases.SaveSettingsUseCase;
 import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
 import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.model.SettingModel;
@@ -44,6 +45,7 @@ public class DependencyInjector {
     private final CreateGameShortcutUseCase createGameShortcutUseCase;
     private final SaveGameCoverUseCase saveGameCoverUseCase;
     private final SaveSettingsUseCase saveSettingsUseCase;
+    private final GetSettingsUseCase getSettingsUseCase;
 
     private final GamesController gamesController;
     private final SettingController settingController;
@@ -70,11 +72,12 @@ public class DependencyInjector {
         this.createGameShortcutUseCase = new CreateGameShortcutUseCase(this.gameRepository, this.shortcutService);
         this.saveGameCoverUseCase = new SaveGameCoverUseCase(this.gameRepository, new CoverUploaderService());
         this.saveSettingsUseCase = new SaveSettingsUseCase(this.settingRepository);
+        this.getSettingsUseCase = new GetSettingsUseCase(this.settingRepository);
         this.gamesController = new GamesController(
                 this.listGamesUseCase,
                 this.saveGameCoverUseCase,
                 this.createGameShortcutUseCase
         );
-        this.settingController = new SettingController(this.saveSettingsUseCase);
+        this.settingController = new SettingController(this.saveSettingsUseCase, this.getSettingsUseCase);
     }
 }
