@@ -1,11 +1,11 @@
 package integration;
 
+import fixtures.StubSettingRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.retrolauncher.backend.app.settings.application.dtos.SaveSettingsInputDto;
 import org.retrolauncher.backend.app.settings.application.usecases.SaveSettingsUseCase;
 import org.retrolauncher.backend.app.settings.domain.entities.Setting;
-import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
 
 import java.util.Optional;
 
@@ -23,18 +23,5 @@ public class SaveSettingsUseCaseUseCaseIntegrationTests {
         Optional<Setting> result = repository.get();
         assertTrue(result.get().getRomsFolderPath().toString().equals("C:\\roms"));
         assertTrue(result.get().getRetroarchFolderPath().toString().equals("C:\\retroarch"));
-    }
-}
-
-class StubSettingRepository implements SettingRepository {
-    private Setting setting;
-
-    @Override
-    public void save(Setting entity) {
-        this.setting = entity;
-    }
-
-    public Optional<Setting> get() {
-        return Optional.of(this.setting);
     }
 }
