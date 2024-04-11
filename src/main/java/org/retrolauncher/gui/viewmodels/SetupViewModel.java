@@ -1,16 +1,16 @@
 package org.retrolauncher.gui.viewmodels;
 
-import org.retrolauncher.gui.gateways.SetupGateway;
+import org.retrolauncher.gui.gateways.SettingGateway;
 import org.retrolauncher.gui.models.Setup;
 
 public class SetupViewModel {
-    private final SetupGateway setupGateway;
+    private final SettingGateway settingGateway;
 
     public SetupViewModel() {
-        this.setupGateway = new SetupGateway();
+        this.settingGateway = new SettingGateway();
     }
 
     public void save(Setup setup) {
-        this.setupGateway.save(setup);
+        this.settingGateway.save(setup);
     }
 }
