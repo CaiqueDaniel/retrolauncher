@@ -23,6 +23,7 @@ import org.retrolauncher.backend.app.settings.application.usecases.SaveSettingsU
 import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
 import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.model.SettingModel;
 import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.repositories.JacksonSettingRepository;
+import org.retrolauncher.backend.app.settings.infrastructure.desktop.controllers.SettingController;
 import org.retrolauncher.backend.database.JacksonFileDatabaseDriver;
 
 @Getter
@@ -45,6 +46,7 @@ public class DependencyInjector {
     private final SaveSettingsUseCase saveSettingsUseCase;
 
     private final GamesController gamesController;
+    private final SettingController settingController;
 
     public DependencyInjector() {
         this.configService = new ProdEnvConfigService();
@@ -73,5 +75,6 @@ public class DependencyInjector {
                 this.saveGameCoverUseCase,
                 this.createGameShortcutUseCase
         );
+        this.settingController = new SettingController(this.saveSettingsUseCase);
     }
 }
