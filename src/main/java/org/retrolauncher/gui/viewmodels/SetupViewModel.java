@@ -1,7 +1,7 @@
 package org.retrolauncher.gui.viewmodels;
 
 import org.retrolauncher.gui.gateways.SettingGateway;
-import org.retrolauncher.gui.models.Setup;
+import org.retrolauncher.gui.models.Setting;
 
 import java.util.Optional;
 
@@ -12,11 +12,11 @@ public class SetupViewModel {
         this.settingGateway = new SettingGateway();
     }
 
-    public void save(Setup setup) {
-        this.settingGateway.save(setup);
+    public void save(Setting setting) {
+        this.settingGateway.save(setting);
     }
 
-    public Optional<Setup> get() {
+    public Optional<Setting> get() {
         return this.settingGateway.get();
     }
 }
