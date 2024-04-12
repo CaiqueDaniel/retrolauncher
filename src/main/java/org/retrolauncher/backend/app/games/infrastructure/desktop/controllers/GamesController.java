@@ -5,6 +5,7 @@ import org.retrolauncher.backend.app.games.application.dtos.SaveGameCoverInputDt
 import org.retrolauncher.backend.app.games.application.usecases.CreateGameShortcutUseCase;
 import org.retrolauncher.backend.app.games.application.usecases.ListGamesUseCase;
 import org.retrolauncher.backend.app.games.application.usecases.SaveGameCoverUseCase;
+import org.retrolauncher.backend.app.games.application.usecases.UpdateGamesListUseCase;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.SaveGameCoverDto;
 
 import java.util.List;
@@ -14,15 +15,18 @@ public class GamesController {
     private final SaveGameCoverUseCase saveGameCoverUseCase;
 
     private final CreateGameShortcutUseCase createGameShortcutUseCase;
+    private final UpdateGamesListUseCase updateGamesListUseCase;
 
     public GamesController(
             ListGamesUseCase listGamesUseCase,
             SaveGameCoverUseCase saveGameCoverUseCase,
-            CreateGameShortcutUseCase createGameShortcutUseCase
+            CreateGameShortcutUseCase createGameShortcutUseCase,
+            UpdateGamesListUseCase updateGamesListUseCase
     ) {
         this.listGamesUseCase = listGamesUseCase;
         this.saveGameCoverUseCase = saveGameCoverUseCase;
         this.createGameShortcutUseCase = createGameShortcutUseCase;
+        this.updateGamesListUseCase = updateGamesListUseCase;
     }
 
     public List<GameInfoOutputDto> listAll() {
@@ -35,5 +39,13 @@ public class GamesController {
 
     public void createShortcut(String id) {
         this.createGameShortcutUseCase.execute(id);
+    }
+
+    public void updateList() {
+        try {
+            this.updateGamesListUseCase.execute();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
     }
 }

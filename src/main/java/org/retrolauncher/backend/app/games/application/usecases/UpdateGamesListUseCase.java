@@ -4,9 +4,13 @@ import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
+import org.retrolauncher.backend.app.settings.application.exceptions.SettingNotFoundException;
+import org.retrolauncher.backend.app.settings.domain.entities.Setting;
+import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,15 +19,26 @@ import java.util.Optional;
 public class UpdateGamesListUseCase {
     private final GameRepository repository;
     private final PlatformRepository platformRepository;
+    private final SettingRepository settingRepository;
 
-    public UpdateGamesListUseCase(GameRepository repository, PlatformRepository platformRepository) {
+    public UpdateGamesListUseCase(
+            GameRepository repository,
+            PlatformRepository platformRepository,
+            SettingRepository settingRepository
+    ) {
         this.repository = repository;
         this.platformRepository = platformRepository;
+        this.settingRepository = settingRepository;
     }
 
-    public void execute(String folderPath) throws FileNotFoundException {
+    public void execute() throws FileNotFoundException {
+        Optional<Setting> setting = this.settingRepository.get();
+
+        if (setting.isEmpty())
+            throw new SettingNotFoundException();
+
         List<Platform> platforms = this.platformRepository.listAll();
-        List<File> gamesFiles = this.getGamesFiles(folderPath);
+        List<File> gamesFiles = this.getGamesFiles(setting.get().getRomsFolderPath());
 
         List<Game> games = gamesFiles.stream().map((gameFile) -> {
             Optional<Platform> gamePlatform = platforms.stream()
@@ -41,8 +56,8 @@ public class UpdateGamesListUseCase {
         games.forEach(this.repository::save);
     }
 
-    private List<File> getGamesFiles(String folderPath) throws FileNotFoundException {
-        File folder = new File(folderPath);
+    private List<File> getGamesFiles(Path folderPath) throws FileNotFoundException {
+        File folder = folderPath.toFile();
 
         if (!folder.exists() || !folder.isDirectory())
             throw new FileNotFoundException();
@@ -56,7 +71,7 @@ public class UpdateGamesListUseCase {
 
         for (File item : items) {
             if (item.isDirectory()) {
-                games.addAll(this.getGamesFiles(item.getAbsolutePath()));
+                games.addAll(this.getGamesFiles(Path.of(item.getAbsolutePath())));
                 continue;
             }
 

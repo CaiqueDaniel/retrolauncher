@@ -66,7 +66,11 @@ public class DependencyInjector {
                 this.platformRepository,
                 this.platformsResourceConfigService
         );
-        this.updateGamesListUseCase = new UpdateGamesListUseCase(this.gameRepository, this.platformRepository);
+        this.updateGamesListUseCase = new UpdateGamesListUseCase(
+                this.gameRepository,
+                this.platformRepository,
+                this.settingRepository
+        );
         this.startGameUseCase = new StartGameUseCase(this.gameRepository, this.processRunnerService);
         this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);
         this.createGameShortcutUseCase = new CreateGameShortcutUseCase(this.gameRepository, this.shortcutService);
@@ -76,7 +80,8 @@ public class DependencyInjector {
         this.gamesController = new GamesController(
                 this.listGamesUseCase,
                 this.saveGameCoverUseCase,
-                this.createGameShortcutUseCase
+                this.createGameShortcutUseCase,
+                this.updateGamesListUseCase
         );
         this.settingController = new SettingController(this.saveSettingsUseCase, this.getSettingsUseCase);
     }

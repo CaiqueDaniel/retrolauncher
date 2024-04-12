@@ -11,4 +11,6 @@ public interface GamesFacade {
     void saveCover(SaveGameCoverDto dto);
 
     void createShortcut(String id);
+
+    void updateList();
 }

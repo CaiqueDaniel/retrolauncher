@@ -21,4 +21,9 @@ public class GamesFacadeImpl implements GamesFacade {
     public void createShortcut(String id) {
         Backend.getDependencies().getGamesController().createShortcut(id);
     }
+
+    @Override
+    public void updateList() {
+        Backend.getDependencies().getGamesController().updateList();
+    }
 }

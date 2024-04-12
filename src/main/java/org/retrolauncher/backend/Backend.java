@@ -23,7 +23,7 @@ public class Backend {
     private static void startup() throws Exception {
         EnvConfigService configService = Backend.dependencyInjector.getConfigService();
         Backend.dependencyInjector.getUpdatePlatformsListUseCase().execute(configService.getCoresPath());
-        Backend.dependencyInjector.getUpdateGamesListUseCase().execute(configService.getRomsPath());
+        Backend.dependencyInjector.getUpdateGamesListUseCase().execute();
     }
 
     private static void registerCommands(String[] args) {
