@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.Routes;
 import org.retrolauncher.gui.components.DirectoryField;
-import org.retrolauncher.gui.models.Setup;
+import org.retrolauncher.gui.models.Setting;
 import org.retrolauncher.gui.viewmodels.SetupViewModel;
 
 import java.util.Optional;
@@ -50,7 +50,7 @@ public class SetupForm extends VBox {
     }
 
     private void fillForm() {
-        Optional<Setup> settings = this.viewModel.get();
+        Optional<Setting> settings = this.viewModel.get();
 
         settings.ifPresent((data) -> {
             this.txtRomsPath.setValue(data.romPath());
@@ -70,7 +70,7 @@ public class SetupForm extends VBox {
         if (retroarchPath.isEmpty()) this.txtRetroarchPath.setError("Campo obrigatório");
 
         if (romsPath.isPresent() && retroarchPath.isPresent()) {
-            this.viewModel.save(new Setup(romsPath.get(), retroarchPath.get()));
+            this.viewModel.save(new Setting(romsPath.get(), retroarchPath.get()));
             Routes.getInstance().switchToHome();
         }
     }

@@ -4,7 +4,7 @@ import org.retrolauncher.backend.app.settings.infrastructure.desktop.dtos.SaveSe
 import org.retrolauncher.backend.app.settings.infrastructure.desktop.dtos.SettingsOutputDto;
 import org.retrolauncher.backend.facades.SettingFacade;
 import org.retrolauncher.backend.facades.SettingFacadeImpl;
-import org.retrolauncher.gui.models.Setup;
+import org.retrolauncher.gui.models.Setting;
 
 import java.util.Optional;
 
@@ -15,14 +15,14 @@ public class SettingGateway {
         this.settingFacade = new SettingFacadeImpl();
     }
 
-    public void save(Setup setup) {
-        this.settingFacade.save(new SaveSettingsDto(setup.romPath(), setup.retroarchPath()));
+    public void save(Setting setting) {
+        this.settingFacade.save(new SaveSettingsDto(setting.romPath(), setting.retroarchPath()));
     }
 
-    public Optional<Setup> get() {
+    public Optional<Setting> get() {
         try {
             SettingsOutputDto dto = this.settingFacade.get();
-            return Optional.of(new Setup(dto.romsFolderPath(), dto.retroarchFolderPath()));
+            return Optional.of(new Setting(dto.romsFolderPath(), dto.retroarchFolderPath()));
         } catch (Exception e) {
             e.printStackTrace();
             return Optional.empty();

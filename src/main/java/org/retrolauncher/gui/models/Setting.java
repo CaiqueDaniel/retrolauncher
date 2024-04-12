@@ -1,6 +1,6 @@
 package org.retrolauncher.gui.models;
 
-public record Setup(
+public record Setting(
         String romPath,
         String retroarchPath
 ) {
