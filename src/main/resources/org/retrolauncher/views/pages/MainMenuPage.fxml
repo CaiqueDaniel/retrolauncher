@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import org.retrolauncher.gui.views.features.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-           prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal">
-    <SplitPane dividerPositions="0.6789297658862876" prefHeight="402.0" prefWidth="603.0">
-        <AnchorPane prefWidth="100.0">
-            <GamesList/>
-        </AnchorPane>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+
+    <SplitPane fx:id="mainPane" dividerPositions="0.6789297658862876" prefHeight="402.0" prefWidth="603.0">
+        <VBox prefHeight="200.0" prefWidth="100.0">
+            <GamesList />
+        </VBox>
 
         <AnchorPane id="gameControls" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-           <CoverView/>
+            <CoverView />
         </AnchorPane>
     </SplitPane>
+
+    <FlowPane fx:id="noSettingsPane" alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" visible="false">
+        <Label text="Nenhuma configuração encontrada. Clique aqui para configurar.">
+            <FlowPane.margin>
+                <Insets bottom="8.0" />
+            </FlowPane.margin>
+            <font>
+                <Font name="Segoe UI" size="18.0" />
+            </font>
+        </Label>
+        <Button fx:id="btnGotoSettings" mnemonicParsing="false" text="Ir para configuração">
+            <font>
+                <Font name="Segoe UI" size="14.0" />
+            </font>
+        </Button>
+    </FlowPane>
 </StackPane>

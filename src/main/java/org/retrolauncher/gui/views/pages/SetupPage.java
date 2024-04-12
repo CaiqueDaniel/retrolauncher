@@ -10,17 +10,20 @@ public class SetupPage {
 
     public SetupPage(Stage stage) {
         this.stage = stage;
-        this.stage.setResizable(false);
         this.load();
     }
 
     private void load() {
         try {
+            this.stage.hide();
+            this.stage.setResizable(false);
+
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/pages/SetupPage.fxml"));
             loader.setController(this);
             loader.load();
 
             this.stage.setScene(new Scene(loader.getRoot()));
+            this.stage.show();
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
