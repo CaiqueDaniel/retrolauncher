@@ -16,9 +16,9 @@ import java.util.UUID;
 public class CoverUploaderService implements UploaderService {
     private final static String[] ACCEPTED_EXTENSIONS = {".png", ".jpg", ".jpeg"};
 
-    private final static String COVERS_DIRECTORY = new StringBuilder(System.getProperty("user.home"))
-            .append("/retro-launcher")
-            .append("/covers")
+    private final static String COVERS_DIRECTORY = Path.of(System.getProperty("user.home"))
+            .resolve("retro-launcher")
+            .resolve("covers")
             .toString();
 
     @Override
@@ -32,24 +32,43 @@ public class CoverUploaderService implements UploaderService {
             throw new CoverUploadedIsNotImageException();
 
         try {
-            Files.createDirectories(Path.of(COVERS_DIRECTORY));
-            String uploadedFilePath = new StringBuilder(COVERS_DIRECTORY)
-                    .append('\\')
-                    .append(filename)
-                    .append(".ico")
-                    .toString();
-            BufferedImage bufferedImage = ImageIO.read(file);
-            File outputFile = new File(uploadedFilePath);
-            ICOEncoder.write(bufferedImage, outputFile);
-
-            return uploadedFilePath;
+            this.saveIcon(file, filename);
+            return this.saveImage(file, filename).toString();
         } catch (IOException exception) {
             throw new NotAbleToUploadCoverException(exception);
         }
     }
 
+    private Path saveImage(File file, String filename) throws IOException {
+        Path path = Path.of(COVERS_DIRECTORY);
+        Files.createDirectories(path);
+        Path uploadedFilePath = path.resolve(filename + this.getExtension(file.getName()));
+        InputStream in = new BufferedInputStream(new FileInputStream(file));
+        OutputStream out = new BufferedOutputStream(new FileOutputStream(uploadedFilePath.toFile()));
+
+        byte[] buffer = new byte[1024];
+        int lengthRead;
+        while ((lengthRead = in.read(buffer)) > 0) {
+            out.write(buffer, 0, lengthRead);
+            out.flush();
+        }
+        return uploadedFilePath;
+    }
+
+    private void saveIcon(File file, String filename) throws IOException {
+        Path path = Path.of(COVERS_DIRECTORY);
+        Files.createDirectories(path);
+        BufferedImage bufferedImage = ImageIO.read(file);
+        File outputFile = path.resolve(filename + ".ico").toFile();
+        ICOEncoder.write(bufferedImage, outputFile);
+    }
+
     private boolean isValidFormat(File file) {
         return Arrays.stream(ACCEPTED_EXTENSIONS)
                 .anyMatch((extension) -> file.getName().contains(extension));
+    }
+
+    private String getExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf('.'));
     }
 }
