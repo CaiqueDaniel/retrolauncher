@@ -1,15 +1,16 @@
 package org.retrolauncher.backend;
 
-import org.retrolauncher.backend.app._shared.application.services.EnvConfigService;
 import org.retrolauncher.backend.config.CommandsHandler;
 import org.retrolauncher.backend.config.DependencyInjector;
+import org.retrolauncher.backend.events.DefaultEventManager;
+import org.retrolauncher.backend.events.EventsRegister;
 
 public class Backend {
     private static final DependencyInjector dependencyInjector = new DependencyInjector();
 
     public static void main(String[] args) {
         try {
-            Backend.startup();
+            Backend.registerEvents();
             Backend.registerCommands(args);
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
@@ -20,13 +21,15 @@ public class Backend {
         return Backend.dependencyInjector;
     }
 
-    private static void startup() throws Exception {
-        EnvConfigService configService = Backend.dependencyInjector.getConfigService();
-        Backend.dependencyInjector.getUpdatePlatformsListUseCase().execute(configService.getCoresPath());
-        Backend.dependencyInjector.getUpdateGamesListUseCase().execute(configService.getRomsPath());
-    }
-
     private static void registerCommands(String[] args) {
         new CommandsHandler(Backend.dependencyInjector, args).run();
+    }
+
+    private static void registerEvents() {
+        EventsRegister eventsRegister = new EventsRegister(
+                Backend.dependencyInjector,
+                DefaultEventManager.getInstance()
+        );
+        eventsRegister.register();
     }
 }
