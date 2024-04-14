@@ -15,6 +15,14 @@ public class EventsRegister {
     }
 
     public void register() {
+        eventManager.subscribe(EventType.RETROARCH_FOLDER_UPDATED.name(), (data) -> {
+            try {
+                dependencyInjector.getUpdatePlatformsListUseCase().execute();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         eventManager.subscribe(EventType.ROMS_FOLDER_UPDATED.name(), (data) -> {
             try {
                 dependencyInjector.getUpdateGamesListUseCase().execute();
