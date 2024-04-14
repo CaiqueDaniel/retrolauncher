@@ -1,5 +1,6 @@
 package integration;
 
+import fixtures.StubSettingRepository;
 import org.junit.jupiter.api.*;
 import org.retrolauncher.backend.app.platforms.application.exceptions.CoreFolderNotFoundException;
 import org.retrolauncher.backend.app.platforms.application.services.PlatformsResourceConfigService;
@@ -7,18 +8,25 @@ import org.retrolauncher.backend.app.platforms.application.usecases.UpdatePlatfo
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.MemoryPlatformRepository;
 import org.retrolauncher.backend.app.platforms.infrastructure.services.FilePlatformResourceConfigService;
+import org.retrolauncher.backend.app.settings.domain.entities.Setting;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UpdatePlatformsListUseCaseIntegrationTests {
-    private final String testFile = "./test-folder/mesen.test";
+    private final String testFile = "./test-folder/cores/mesen.test";
     private final PlatformRepository repository = new MemoryPlatformRepository();
+    private final StubSettingRepository settingRepository = new StubSettingRepository();
     private final PlatformsResourceConfigService resourceConfigService = new FilePlatformResourceConfigService();
-    private final UpdatePlatformsListUseCase sut = new UpdatePlatformsListUseCase(repository, resourceConfigService);
+    private final UpdatePlatformsListUseCase sut = new UpdatePlatformsListUseCase(
+            repository,
+            settingRepository,
+            resourceConfigService
+    );
 
     @BeforeAll
     void beforeAll() throws IOException {
@@ -40,13 +48,22 @@ class UpdatePlatformsListUseCaseIntegrationTests {
     }
 
     @Test()
-    void it_should_be_able_to_save_cores_given_list_of_platforms() throws Exception {
-        sut.execute("./test-folder");
+    void it_should_be_able_to_save_cores_given_retroarch_folder() throws Exception {
+        settingRepository.save(new Setting(Path.of("test-folder2"), Path.of("test-folder")));
+        sut.execute();
+        assertEquals(1, repository.listAll().size());
+    }
+
+    @Test()
+    void it_should_be_able_to_save_cores_given_retroarch_cores_folder() throws Exception {
+        settingRepository.save(new Setting(Path.of("test-folder2"), Path.of("test-folder/cores")));
+        sut.execute();
         assertEquals(1, repository.listAll().size());
     }
 
     @Test
     void it_should_not_save_cores_given_folder_do_not_exists() {
-        assertThrows(CoreFolderNotFoundException.class, () -> sut.execute("./invalid-folder"));
+        settingRepository.save(new Setting(Path.of("invalid-folder"), Path.of("test-folder2")));
+        assertThrows(CoreFolderNotFoundException.class, sut::execute);
     }
 }

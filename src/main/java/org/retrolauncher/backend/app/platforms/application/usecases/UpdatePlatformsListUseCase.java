@@ -5,31 +5,45 @@ import org.retrolauncher.backend.app.platforms.application.exceptions.CoreFolder
 import org.retrolauncher.backend.app.platforms.application.services.PlatformsResourceConfigService;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
+import org.retrolauncher.backend.app.settings.application.exceptions.SettingNotFoundException;
+import org.retrolauncher.backend.app.settings.domain.entities.Setting;
+import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.*;
 
 public class UpdatePlatformsListUseCase {
     private final PlatformRepository repository;
+    private final SettingRepository settingRepository;
     private final PlatformsResourceConfigService platformsResourceConfigService;
 
     public UpdatePlatformsListUseCase(
             PlatformRepository repository,
+            SettingRepository settingRepository,
             PlatformsResourceConfigService platformsResourceConfigService
     ) {
         this.repository = repository;
+        this.settingRepository = settingRepository;
         this.platformsResourceConfigService = platformsResourceConfigService;
     }
 
-    public void execute(String coreFolderPath) throws CoreFolderNotFoundException {
-        List<File> cores = this.getCores(coreFolderPath);
+    public void execute() throws CoreFolderNotFoundException {
+        Optional<Setting> setting = this.settingRepository.get();
+
+        if (setting.isEmpty())
+            throw new SettingNotFoundException();
+
+        List<File> cores = this.getCores(setting.get().getRetroarchFolderPath());
         List<Platform> platforms = this.getPlatforms(cores);
 
         platforms.forEach(this.repository::save);
     }
 
-    private List<File> getCores(String coreFolderPath) throws CoreFolderNotFoundException {
-        File file = new File(coreFolderPath);
+    private List<File> getCores(Path coreFolderPath) throws CoreFolderNotFoundException {
+        File file = coreFolderPath.endsWith("cores") ?
+                coreFolderPath.toFile() :
+                Path.of(coreFolderPath + "/cores").toFile();
 
         if (!file.exists() || !file.isDirectory())
             throw new CoreFolderNotFoundException();
