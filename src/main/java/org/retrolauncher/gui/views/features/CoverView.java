@@ -5,7 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.events.EventManager;
@@ -16,7 +17,7 @@ import org.retrolauncher.gui.viewmodels.CoverViewViewModel;
 
 import java.io.File;
 
-public class CoverView extends Pane {
+public class CoverView extends AnchorPane {
     @FXML
     private Label selectGameLbl;
 
@@ -30,7 +31,7 @@ public class CoverView extends Pane {
     private ImageView imgGameCover;
 
     @FXML
-    private Pane gameCoverPane;
+    private VBox gameCoverPane;
 
     private Game selectedGame;
 

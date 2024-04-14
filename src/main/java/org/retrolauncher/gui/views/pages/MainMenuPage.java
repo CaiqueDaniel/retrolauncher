@@ -40,7 +40,7 @@ public class MainMenuPage {
             loader.setController(this);
             loader.load();
 
-            this.stage.setResizable(false);
+            this.stage.setResizable(true);
             this.stage.setScene(new Scene(loader.getRoot()));
         } catch (Exception exception) {
             throw new RuntimeException(exception);
