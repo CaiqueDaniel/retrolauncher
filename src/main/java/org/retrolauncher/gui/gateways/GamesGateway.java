@@ -29,4 +29,8 @@ public class GamesGateway {
     public void createShortcut(String id) {
         this.gamesFacade.createShortcut(id);
     }
+
+    public void updateList() {
+        this.gamesFacade.updateList();
+    }
 }

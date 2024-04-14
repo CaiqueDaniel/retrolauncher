@@ -6,31 +6,34 @@
 <?import javafx.scene.text.*?>
 <?import org.retrolauncher.gui.views.features.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-           prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox prefHeight="200.0" prefWidth="100.0">
+        <Header prefHeight="35.0" VBox.vgrow="NEVER" />
 
-    <SplitPane fx:id="mainPane" dividerPositions="0.6789297658862876" prefHeight="402.0" prefWidth="603.0">
-        <VBox prefHeight="200.0" prefWidth="100.0">
-            <GamesList VBox.vgrow="ALWAYS"/>
+        <VBox prefHeight="445.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+            <SplitPane fx:id="mainPane" dividerPositions="0.6789297658862876" prefHeight="402.0" prefWidth="603.0" VBox.vgrow="ALWAYS">
+                <VBox prefHeight="200.0" prefWidth="100.0">
+                    <GamesList VBox.vgrow="ALWAYS" />
+                </VBox>
+                <VBox alignment="CENTER" maxWidth="300.0" minWidth="180.0">
+                    <CoverView VBox.vgrow="ALWAYS" />
+                </VBox>
+            </SplitPane>
         </VBox>
-        <VBox alignment="CENTER" maxWidth="300.0" minWidth="180.0">
-            <CoverView VBox.vgrow="ALWAYS"/>
-        </VBox>
-    </SplitPane>
+    </VBox>
 
-    <FlowPane fx:id="noSettingsPane" alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL"
-              prefHeight="200.0" prefWidth="200.0" visible="false">
+    <FlowPane fx:id="noSettingsPane" alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" visible="false">
         <Label text="Nenhuma configuração encontrada. Clique aqui para configurar.">
             <FlowPane.margin>
-                <Insets bottom="8.0"/>
+                <Insets bottom="8.0" />
             </FlowPane.margin>
             <font>
-                <Font name="Segoe UI" size="18.0"/>
+                <Font name="Segoe UI" size="18.0" />
             </font>
         </Label>
         <Button fx:id="btnGotoSettings" mnemonicParsing="false" text="Ir para configuração">
             <font>
-                <Font name="Segoe UI" size="14.0"/>
+                <Font name="Segoe UI" size="14.0" />
             </font>
         </Button>
     </FlowPane>
