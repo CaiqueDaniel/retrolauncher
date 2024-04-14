@@ -16,6 +16,7 @@ import org.retrolauncher.backend.app.platforms.application.usecases.UpdatePlatfo
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.models.PlatformModel;
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.desktop.controllers.PlatformController;
 import org.retrolauncher.backend.app.platforms.infrastructure.services.FilePlatformResourceConfigService;
 import org.retrolauncher.backend.app.settings.application.usecases.GetSettingsUseCase;
 import org.retrolauncher.backend.app.settings.application.usecases.SaveSettingsUseCase;
@@ -47,6 +48,7 @@ public class DependencyInjector {
     private final SaveSettingsUseCase saveSettingsUseCase;
     private final GetSettingsUseCase getSettingsUseCase;
 
+    private final PlatformController platformController;
     private final GamesController gamesController;
     private final SettingController settingController;
 
@@ -79,6 +81,7 @@ public class DependencyInjector {
         this.saveGameCoverUseCase = new SaveGameCoverUseCase(this.gameRepository, new CoverUploaderService());
         this.saveSettingsUseCase = new SaveSettingsUseCase(this.settingRepository, this.eventDispatcherService);
         this.getSettingsUseCase = new GetSettingsUseCase(this.settingRepository);
+        this.platformController = new PlatformController(this.updatePlatformsListUseCase);
         this.gamesController = new GamesController(
                 this.listGamesUseCase,
                 this.saveGameCoverUseCase,
