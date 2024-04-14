@@ -5,19 +5,20 @@ import org.retrolauncher.backend.app._shared.application.services.EnvConfigServi
 import org.retrolauncher.backend.app._shared.application.services.ProcessRunnerService;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
 
+import java.nio.file.Path;
+
 public class DefaultProcessRunnerService implements ProcessRunnerService {
-    private final EnvConfigService configService;
-
-    public DefaultProcessRunnerService(EnvConfigService configService) {
-        this.configService = configService;
-    }
-
     @Override
     public Process startGame(Game game) throws NotAbleToLaunchProcessException {
         try {
+            Path retroarchPath = Path.of(game.getPlatform().getCorePath())
+                    .getParent()
+                    .getParent()
+                    .resolve("retroarch.exe");
+
             return new ProcessBuilder()
                     .command(
-                            this.configService.getRetroArchPath(),
+                            retroarchPath.toString(),
                             "-L",
                             game.getPlatform().getCorePath(),
                             game.getPath()

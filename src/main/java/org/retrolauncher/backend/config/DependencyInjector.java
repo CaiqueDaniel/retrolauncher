@@ -53,7 +53,7 @@ public class DependencyInjector {
     public DependencyInjector() {
         this.configService = new ProdEnvConfigService();
         this.shortcutService = new ShellLinkShortcutService();
-        this.processRunnerService = new DefaultProcessRunnerService(this.configService);
+        this.processRunnerService = new DefaultProcessRunnerService();
         this.eventDispatcherService = new DefaultEventDispatcherService(DefaultEventManager.getInstance());
         this.platformRepository = new JacksonPlatformRepository(new JacksonFileDatabaseDriver<>(PlatformModel.class));
         this.gameRepository = new JacksonGameRepository(

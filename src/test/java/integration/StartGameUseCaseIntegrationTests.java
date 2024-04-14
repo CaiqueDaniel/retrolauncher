@@ -32,7 +32,7 @@ class StartGameUseCaseIntegrationTests {
     @BeforeAll
     public void beforeAll() throws IOException {
         when(processRunnerService.startGame(any()))
-                .thenReturn(new ProcessBuilder().command("bash", "echo", "\"test\"").start());
+                .thenReturn(new ProcessBuilder().command("cmd", "/c", "echo", "\"test\"").start());
         platformRepository.save(platform);
     }
 
