@@ -24,7 +24,6 @@ public class SettingGateway {
             SettingsOutputDto dto = this.settingFacade.get();
             return Optional.of(new Setting(dto.romsFolderPath(), dto.retroarchFolderPath()));
         } catch (Exception e) {
-            e.printStackTrace();
             return Optional.empty();
         }
     }
