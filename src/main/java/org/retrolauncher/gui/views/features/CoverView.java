@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -16,6 +17,7 @@ import org.retrolauncher.gui.models.Game;
 import org.retrolauncher.gui.viewmodels.CoverViewViewModel;
 
 import java.io.File;
+import java.util.Optional;
 
 public class CoverView extends AnchorPane {
     @FXML
@@ -55,6 +57,8 @@ public class CoverView extends AnchorPane {
 
     @FXML
     private void initialize() {
+        final String NO_COVER_RESOURCE = "assets/no-cover.png";
+
         EventManager.getInstance().subscribe(EventType.GAME_SELECTED, (evt) -> {
             if (evt.isEmpty())
                 return;
@@ -63,10 +67,13 @@ public class CoverView extends AnchorPane {
             this.selectGameLbl.setVisible(false);
             this.gameCoverPane.setVisible(true);
 
-            if (this.selectedGame.iconPath().isPresent())
+            if (this.selectedGame.iconPath().isPresent()) {
                 this.btnAddCover.setText("Alterar capa");
-            else
+            } else {
                 this.btnAddCover.setText("Adicionar capa");
+                Optional.ofNullable(Main.class.getResourceAsStream(NO_COVER_RESOURCE))
+                        .ifPresent((stream) -> this.imgGameCover.setImage(new Image(stream)));
+            }
         });
 
         this.setEventListeners();
@@ -85,8 +92,6 @@ public class CoverView extends AnchorPane {
             EventManager.getInstance().notify(EventType.FETCH_GAME_LIST);
         });
 
-        this.btnAddShortcut.setOnMouseClicked((evt) -> {
-            this.coverViewViewModel.createShortcut(this.selectedGame.id());
-        });
+        this.btnAddShortcut.setOnMouseClicked((evt) -> this.coverViewViewModel.createShortcut(this.selectedGame.id()));
     }
 }
