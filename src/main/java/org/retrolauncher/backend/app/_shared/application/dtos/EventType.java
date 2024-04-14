@@ -1,5 +1,6 @@
 package org.retrolauncher.backend.app._shared.application.dtos;
 
 public enum EventType {
-    SETTINGS_UPDATED
+    RETROARCH_FOLDER_UPDATED,
+    ROMS_FOLDER_UPDATED
 }
