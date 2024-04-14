@@ -17,6 +17,7 @@ import org.retrolauncher.gui.models.Game;
 import org.retrolauncher.gui.viewmodels.CoverViewViewModel;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Optional;
 
 public class CoverView extends AnchorPane {
@@ -69,6 +70,7 @@ public class CoverView extends AnchorPane {
 
             if (this.selectedGame.iconPath().isPresent()) {
                 this.btnAddCover.setText("Alterar capa");
+                this.imgGameCover.setImage(new Image(Path.of(this.selectedGame.iconPath().get()).toUri().toString()));
             } else {
                 this.btnAddCover.setText("Adicionar capa");
                 Optional.ofNullable(Main.class.getResourceAsStream(NO_COVER_RESOURCE))
