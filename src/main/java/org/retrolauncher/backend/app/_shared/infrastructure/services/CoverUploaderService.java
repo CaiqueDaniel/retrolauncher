@@ -22,18 +22,18 @@ public class CoverUploaderService implements UploaderService {
             .toString();
 
     @Override
-    public String upload(File file) {
+    public Path upload(File file) {
         return this.upload(file, UUID.randomUUID().toString());
     }
 
     @Override
-    public String upload(File file, String filename) {
+    public Path upload(File file, String filename) {
         if (!this.isValidFormat(file))
             throw new CoverUploadedIsNotImageException();
 
         try {
             this.saveIcon(file, filename);
-            return this.saveImage(file, filename).toString();
+            return this.saveImage(file, filename);
         } catch (IOException exception) {
             throw new NotAbleToUploadCoverException(exception);
         }

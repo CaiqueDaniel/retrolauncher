@@ -8,6 +8,7 @@ import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,7 +31,7 @@ public class CreateGameShortcutUseCase {
         Game game = result.get();
         String args = this.getArgs(game);
         String appPath = this.getAppPath();
-        Shortcut shortcut = new Shortcut(game.getName(), appPath, args, game.getIconPath().orElse(""));
+        Shortcut shortcut = new Shortcut(game.getName(), appPath, args, game.getIconPath().orElse(Path.of("")));
 
         try {
             this.shortcutService.create(shortcut);

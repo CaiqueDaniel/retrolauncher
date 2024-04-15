@@ -8,6 +8,7 @@ import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepos
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
 import org.retrolauncher.backend.database.MemoryFileDatabaseDriver;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +29,7 @@ class JacksonGameRepositoryIntegrationTests {
 
     @BeforeEach
     void beforeEach() {
-        game = new Game("Teste", "teste.test", platform);
+        game = new Game("Teste", Path.of("teste.test"), platform);
     }
 
     @AfterEach
@@ -60,7 +61,7 @@ class JacksonGameRepositoryIntegrationTests {
     @Test
     void itShouldConfirmThatAGameWasAddedGivenThePath() {
         sut.save(game);
-        boolean result = sut.existsByPath(game.getPath());
+        boolean result = sut.existsByPath(game.getPath().toString());
         assertTrue(result);
     }
 

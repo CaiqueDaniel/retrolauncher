@@ -50,7 +50,7 @@ public class UpdateGamesListUseCase {
             if (gamePlatform.isEmpty())
                 return null;
 
-            return new Game(gameFile.getName().substring(0, gameFile.getName().lastIndexOf('.')), gameFile.getAbsolutePath(), gamePlatform.get());
+            return new Game(gameFile.getName().substring(0, gameFile.getName().lastIndexOf('.')), gameFile.toPath(), gamePlatform.get());
         }).filter(Objects::nonNull).toList();
 
         games.forEach(this.repository::save);

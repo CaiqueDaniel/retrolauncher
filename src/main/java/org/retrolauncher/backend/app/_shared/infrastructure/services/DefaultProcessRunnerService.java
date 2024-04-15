@@ -1,7 +1,6 @@
 package org.retrolauncher.backend.app._shared.infrastructure.services;
 
 import org.retrolauncher.backend.app._shared.application.exceptions.NotAbleToLaunchProcessException;
-import org.retrolauncher.backend.app._shared.application.services.EnvConfigService;
 import org.retrolauncher.backend.app._shared.application.services.ProcessRunnerService;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
 
@@ -21,7 +20,7 @@ public class DefaultProcessRunnerService implements ProcessRunnerService {
                             retroarchPath.toString(),
                             "-L",
                             game.getPlatform().getCorePath(),
-                            game.getPath()
+                            game.getPath().toString()
                     ).start();
         } catch (Exception exception) {
             throw new NotAbleToLaunchProcessException(exception);

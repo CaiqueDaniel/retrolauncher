@@ -6,6 +6,7 @@ import org.retrolauncher.backend.app.games.infrastructure.database.jackson.mappe
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.models.GameModel;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
 
+import java.nio.file.Path;
 import java.util.*;
 
 public class MemoryGameRepository implements GameRepository {
@@ -48,6 +49,7 @@ public class MemoryGameRepository implements GameRepository {
 
     @Override
     public boolean existsByPath(String path) {
-        return this.storedData.values().stream().anyMatch((game) -> game.getPath().equals(path));
+        return this.storedData.values().stream()
+                .anyMatch((game) -> Path.of(game.getPath()).toAbsolutePath().toString().equals(path));
     }
 }

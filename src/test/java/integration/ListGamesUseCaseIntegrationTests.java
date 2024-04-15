@@ -10,6 +10,7 @@ import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.MemoryPlatformRepository;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ class ListGamesUseCaseIntegrationTests {
 
     @Test()
     void it_should_be_able_to_list_games() {
-        repository.save(new Game("test", "testpath", platform));
+        repository.save(new Game("test", Path.of("testpath"), platform));
         List<GameInfoOutputDto> result = sut.execute();
         assertEquals(1, result.size());
         assertEquals("test", result.get(0).name());
@@ -43,12 +44,12 @@ class ListGamesUseCaseIntegrationTests {
 
     @Test()
     void it_should_be_able_to_list_games_with_icon() {
-        Game game = new Game("test", "testpath", platform);
-        game.uploadIcon("icon.png");
+        Game game = new Game("test", Path.of("testpath"), platform);
+        game.uploadIcon(Path.of("icon.png"));
         repository.save(game);
         List<GameInfoOutputDto> result = sut.execute();
         assertEquals(1, result.size());
         assertEquals("test", result.get(0).name());
-        assertEquals("icon.png", result.get(0).iconPath().get());
+        assertEquals(Path.of("icon.png").toAbsolutePath(), result.get(0).iconPath().get().toAbsolutePath());
     }
 }

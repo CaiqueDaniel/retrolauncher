@@ -4,6 +4,8 @@ import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.models.GameModel;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 
+import java.nio.file.Path;
+
 public class JacksonGameMapper {
     private JacksonGameMapper() {
     }
@@ -12,8 +14,8 @@ public class JacksonGameMapper {
         GameModel model = new GameModel();
         model.setId(entity.getId());
         model.setName(entity.getName());
-        model.setPath(entity.getPath());
-        model.setIconPath(entity.getIconPath().orElse(null));
+        model.setPath(entity.getPath().toString());
+        entity.getIconPath().ifPresent((path) -> model.setIconPath(path.toAbsolutePath().toString()));
         model.setPlatformId(entity.getPlatform().getId().toString());
         return model;
     }
@@ -22,8 +24,8 @@ public class JacksonGameMapper {
         return new Game(
                 model.getId(),
                 model.getName(),
-                model.getPath(),
-                model.getIconPath(),
+                Path.of(model.getPath()),
+                model.getIconPath() != null ? Path.of(model.getIconPath()) : null,
                 platform
         );
     }

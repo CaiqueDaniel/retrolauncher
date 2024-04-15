@@ -36,8 +36,7 @@ public class SaveGameCoverUseCase {
         this.repository.save(game);
     }
 
-    private String getIconName(String fullpath) {
-        Path path = Path.of(fullpath);
+    private String getIconName(Path path) {
         String fileName = path.getFileName().toString();
         return fileName.substring(0, fileName.lastIndexOf('.'));
     }

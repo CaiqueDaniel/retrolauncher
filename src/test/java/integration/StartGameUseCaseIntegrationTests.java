@@ -15,6 +15,7 @@ import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepos
 import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.MemoryPlatformRepository;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,7 +44,7 @@ class StartGameUseCaseIntegrationTests {
 
     @Test
     void it_should_start_game() {
-        Game game = new Game("test", "testpath", platform);
+        Game game = new Game("test", Path.of("testpath"), platform);
         repository.save(game);
 
         sut.execute(game.getId().toString());

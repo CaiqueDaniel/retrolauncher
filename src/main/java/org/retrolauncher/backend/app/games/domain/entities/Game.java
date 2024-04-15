@@ -4,24 +4,25 @@ import lombok.Getter;
 import org.retrolauncher.backend.app._shared.domain.entities.Entity;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.UUID;
 
 @Getter
 public class Game extends Entity {
     private final String name;
-    private final String path;
-    private String iconPath;
+    private final Path path;
+    private Path iconPath;
     private final Platform platform;
 
-    public Game(String name, String path, Platform platform) {
+    public Game(String name, Path path, Platform platform) {
         super(UUID.randomUUID());
         this.name = name;
         this.path = path;
         this.platform = platform;
     }
 
-    public Game(UUID id, String name, String path, String iconPath, Platform platform) {
+    public Game(UUID id, String name, Path path, Path iconPath, Platform platform) {
         super(id);
         this.name = name;
         this.path = path;
@@ -29,11 +30,11 @@ public class Game extends Entity {
         this.platform = platform;
     }
 
-    public void uploadIcon(String path) {
+    public void uploadIcon(Path path) {
         this.iconPath = path;
     }
 
-    public Optional<String> getIconPath() {
+    public Optional<Path> getIconPath() {
         return Optional.ofNullable(this.iconPath);
     }
 }

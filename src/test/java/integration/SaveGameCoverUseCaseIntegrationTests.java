@@ -13,6 +13,7 @@ import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.r
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,7 +38,7 @@ public class SaveGameCoverUseCaseIntegrationTests {
     @AfterEach
     void afterEach() {
         repository.listAll().forEach((game) -> {
-            new File(game.getIconPath().orElseThrow()).delete();
+            new File(game.getIconPath().get().toString()).delete();
         });
 
         repository.clear();
@@ -50,31 +51,29 @@ public class SaveGameCoverUseCaseIntegrationTests {
 
     @Test
     void it_should_be_able_to_save_a_cover_within_a_game() {
-        Game game = new Game(UUID.randomUUID().toString(), "path", platform);
-        String regex = "^test\\\\([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})\\.ico";
+        Game game = new Game(UUID.randomUUID().toString(), Path.of("path"), platform);
         File icon = new File("test/game.png");
 
         repository.save(game);
         sut.execute(new SaveGameCoverInputDto(game.getId().toString(), icon));
 
-        Optional<String> result = repository.listAll().get(0).getIconPath();
+        Optional<Path> result = repository.listAll().get(0).getIconPath();
 
         assertTrue(result.isPresent());
-        assertTrue(result.get().matches(regex));
     }
 
     @Test
     void it_should_be_able_to_replace_a_existent_cover_within_a_game() {
-        Game game = new Game(UUID.randomUUID().toString(), "path", platform);
+        Game game = new Game(UUID.randomUUID().toString(), Path.of("path"), platform);
         File icon = new File("test/game.png");
 
-        game.uploadIcon("test/test.ico");
+        game.uploadIcon(Path.of("test/test.ico"));
         repository.save(game);
         sut.execute(new SaveGameCoverInputDto(game.getId().toString(), icon));
 
-        Optional<String> result = repository.listAll().get(0).getIconPath();
+        Optional<Path> result = repository.listAll().get(0).getIconPath();
 
         assertTrue(result.isPresent());
-        assertTrue(result.get().matches("test/test.ico"));
+        assertEquals(Path.of("test/test.ico").toAbsolutePath().toString(), result.get().toAbsolutePath().toString());
     }
 }
