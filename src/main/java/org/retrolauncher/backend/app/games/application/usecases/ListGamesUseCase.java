@@ -3,6 +3,7 @@ package org.retrolauncher.backend.app.games.application.usecases;
 import org.retrolauncher.backend.app.games.application.dtos.GameInfoOutputDto;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ListGamesUseCase {
@@ -19,6 +20,7 @@ public class ListGamesUseCase {
                         game.getId().toString(),
                         game.getName(),
                         game.getIconPath())
-                ).toList();
+                ).sorted(Comparator.comparing(GameInfoOutputDto::name))
+                .toList();
     }
 }
