@@ -2,11 +2,11 @@ package org.retrolauncher.gui.views.pages;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.FlowPane;
-import javafx.stage.Stage;
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.Routes;
 import org.retrolauncher.gui.models.Setting;
@@ -23,28 +23,10 @@ public class MainMenuPage {
 
     @FXML
     private Button btnGotoSettings;
-
-    private final Stage stage;
     private final SetupViewModel setupViewModel;
 
-    public MainMenuPage(Stage stage) {
-        this.stage = stage;
+    private MainMenuPage() {
         this.setupViewModel = new SetupViewModel();
-
-        this.load();
-    }
-
-    private void load() {
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/pages/MainMenuPage.fxml"));
-            loader.setController(this);
-            loader.load();
-
-            this.stage.setResizable(true);
-            this.stage.setScene(new Scene(loader.getRoot()));
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
     }
 
     @FXML
@@ -63,5 +45,20 @@ public class MainMenuPage {
         this.btnGotoSettings.setOnMouseClicked((evt) -> {
             Routes.getInstance().switchToSettings();
         });
+    }
+
+    public static Scene createScene() {
+        return new Scene(MainMenuPage.load(new MainMenuPage()));
+    }
+
+    private static Parent load(MainMenuPage instance) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/pages/MainMenuPage.fxml"));
+            loader.setController(instance);
+            loader.load();
+            return loader.getRoot();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
     }
 }

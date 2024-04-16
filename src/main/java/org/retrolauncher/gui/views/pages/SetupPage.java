@@ -1,29 +1,22 @@
 package org.retrolauncher.gui.views.pages;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import org.retrolauncher.Main;
 
 public class SetupPage {
-    private final Stage stage;
 
-    public SetupPage(Stage stage) {
-        this.stage = stage;
-        this.load();
+    public static Scene createScene() {
+        return new Scene(SetupPage.load());
     }
 
-    private void load() {
+    private static Parent load() {
         try {
-            this.stage.hide();
-            this.stage.setResizable(false);
-
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/pages/SetupPage.fxml"));
-            loader.setController(this);
+            loader.setController(new SetupPage());
             loader.load();
-
-            this.stage.setScene(new Scene(loader.getRoot()));
-            this.stage.show();
+            return loader.getRoot();
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
