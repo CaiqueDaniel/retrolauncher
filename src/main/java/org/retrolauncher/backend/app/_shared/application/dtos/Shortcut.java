@@ -4,7 +4,7 @@ import java.nio.file.Path;
 
 public record Shortcut(
         String title,
-        String targetPath,
+        Path targetPath,
         String args,
         Path iconPath
 ) {

@@ -29,9 +29,7 @@ public class CreateGameShortcutUseCase {
             throw new GameNotFoundException();
 
         Game game = result.get();
-        String args = this.getArgs(game);
-        String appPath = this.getAppPath();
-        Shortcut shortcut = new Shortcut(game.getName(), appPath, args, game.getIconPath().orElse(Path.of("")));
+        Shortcut shortcut = new Shortcut(game.getName(), this.getAppPath(), this.getArgs(game), this.getIconPath(game));
 
         try {
             this.shortcutService.create(shortcut);
@@ -47,9 +45,19 @@ public class CreateGameShortcutUseCase {
                 .toString();
     }
 
-    private String getAppPath() {
-        return new StringBuilder(Paths.get("").toAbsolutePath().toString())
-                .append("/retrolauncher.exe")
-                .toString();
+    private Path getAppPath() {
+        return Paths.get("").resolve("retrolauncher.exe").toAbsolutePath();
+    }
+
+    private Path getIconPath(Game game) {
+        Optional<Path> iconPath = game.getIconPath();
+
+        if (iconPath.isEmpty())
+            return Path.of("");
+
+        String iconAbsolutePath = iconPath.get().toAbsolutePath().toString();
+        String extension = iconAbsolutePath.substring(iconAbsolutePath.lastIndexOf('.'));
+
+        return Path.of(iconAbsolutePath.replace(extension, ".ico"));
     }
 }
