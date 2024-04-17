@@ -1,6 +1,6 @@
 package org.retrolauncher.backend.app.games.application.usecases;
 
-import org.retrolauncher.backend.app.games.application.dtos.GameInfoOutputDto;
+import org.retrolauncher.backend.app.games.application.dtos.ListGamesUseCaseOutput;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 
 import java.util.Comparator;
@@ -13,14 +13,15 @@ public class ListGamesUseCase {
         this.repository = repository;
     }
 
-    public List<GameInfoOutputDto> execute() {
+    public List<ListGamesUseCaseOutput> execute() {
         return this.repository.listAll()
                 .stream()
-                .map((game) -> new GameInfoOutputDto(
+                .map((game) -> new ListGamesUseCaseOutput(
                         game.getId().toString(),
                         game.getName(),
-                        game.getIconPath())
-                ).sorted(Comparator.comparing(GameInfoOutputDto::name))
+                        game.getPlatform().getName(),
+                        game.getIconPath().orElse(null)
+                )).sorted(Comparator.comparing(ListGamesUseCaseOutput::name))
                 .toList();
     }
 }

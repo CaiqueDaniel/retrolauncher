@@ -66,6 +66,7 @@ public class CoverView extends AnchorPane {
             this.selectedGame = (Game) evt.get();
             this.selectGameLbl.setVisible(false);
             this.gameCoverPane.setVisible(true);
+            handleClickedShortcutBtn();
 
             if (this.selectedGame.iconPath().isPresent()) {
                 this.btnAddCover.setText("Alterar capa");
@@ -88,11 +89,24 @@ public class CoverView extends AnchorPane {
             if (image == null)
                 return;
 
-            this.coverViewViewModel.saveCover(this.selectedGame.id(), image);
-            this.btnAddCover.setText("Alterar capa");
+            coverViewViewModel.saveCover(this.selectedGame.id(), image);
+            btnAddCover.setText("Alterar capa");
             EventManager.getInstance().notify(EventType.FETCH_GAME_LIST);
         });
 
-        this.btnAddShortcut.setOnMouseClicked((evt) -> this.coverViewViewModel.createShortcut(this.selectedGame.id()));
+        this.btnAddShortcut.setOnMouseClicked((evt) -> {
+            coverViewViewModel.createShortcut(this.selectedGame.id());
+            handleResetShortcutBtn();
+        });
+    }
+
+    private void handleClickedShortcutBtn() {
+        btnAddShortcut.setDisable(false);
+        btnAddShortcut.setText("Adicionar atalho");
+    }
+
+    private void handleResetShortcutBtn() {
+        btnAddShortcut.setText("Atalho adicionado");
+        btnAddShortcut.setDisable(true);
     }
 }

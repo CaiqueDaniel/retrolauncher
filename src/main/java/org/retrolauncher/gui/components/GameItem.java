@@ -34,7 +34,7 @@ public class GameItem extends HBox {
 
     @FXML
     private void initialize() {
-        this.label.setText(this.game.name());
+        this.label.setText(game.name() + " (" + game.platformName() + ")");
         this.setEventListeners();
     }
 

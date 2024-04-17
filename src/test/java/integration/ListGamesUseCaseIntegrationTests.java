@@ -1,7 +1,7 @@
 package integration;
 
 import org.junit.jupiter.api.*;
-import org.retrolauncher.backend.app.games.application.dtos.GameInfoOutputDto;
+import org.retrolauncher.backend.app.games.application.dtos.ListGamesUseCaseOutput;
 import org.retrolauncher.backend.app.games.application.usecases.ListGamesUseCase;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
@@ -36,7 +36,7 @@ class ListGamesUseCaseIntegrationTests {
     @Test()
     void it_should_be_able_to_list_games() {
         repository.save(new Game("test", Path.of("testpath"), platform));
-        List<GameInfoOutputDto> result = sut.execute();
+        List<ListGamesUseCaseOutput> result = sut.execute();
         assertEquals(1, result.size());
         assertEquals("test", result.get(0).name());
         assertEquals(Optional.empty(), result.get(0).iconPath());
@@ -47,7 +47,7 @@ class ListGamesUseCaseIntegrationTests {
         Game game = new Game("test", Path.of("testpath"), platform);
         game.uploadIcon(Path.of("icon.png"));
         repository.save(game);
-        List<GameInfoOutputDto> result = sut.execute();
+        List<ListGamesUseCaseOutput> result = sut.execute();
         assertEquals(1, result.size());
         assertEquals("test", result.get(0).name());
         assertEquals(Path.of("icon.png").toAbsolutePath(), result.get(0).iconPath().get().toAbsolutePath());

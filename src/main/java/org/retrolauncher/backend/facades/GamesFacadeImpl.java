@@ -1,14 +1,14 @@
 package org.retrolauncher.backend.facades;
 
 import org.retrolauncher.backend.Backend;
-import org.retrolauncher.backend.app.games.application.dtos.GameInfoOutputDto;
+import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.ListGameResponse;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.SaveGameCoverDto;
 
 import java.util.List;
 
 public class GamesFacadeImpl implements GamesFacade {
     @Override
-    public List<GameInfoOutputDto> listAll() {
+    public List<ListGameResponse> listAll() {
         return Backend.getDependencies().getGamesController().listAll();
     }
 

@@ -18,7 +18,7 @@ public class GamesGateway {
     public List<Game> listAll() {
         return this.gamesFacade.listAll()
                 .stream()
-                .map((game) -> new Game(game.id(), game.name(), game.iconPath()))
+                .map((game) -> new Game(game.id(), game.name(), game.platformName(), game.iconPath().orElse(null)))
                 .toList();
     }
 
