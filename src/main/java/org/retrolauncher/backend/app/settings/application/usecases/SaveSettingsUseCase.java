@@ -1,10 +1,13 @@
 package org.retrolauncher.backend.app.settings.application.usecases;
 
+import org.retrolauncher.backend.app._shared.application.exceptions.RetroarchNotFoundException;
 import org.retrolauncher.backend.app._shared.application.services.EventDispatcherService;
 import org.retrolauncher.backend.app.settings.domain.entities.Setting;
 import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
 import org.retrolauncher.backend.app.settings.application.dtos.SaveSettingsInputDto;
 import org.retrolauncher.backend.app._shared.application.dtos.EventType;
+
+import java.nio.file.Path;
 
 public class SaveSettingsUseCase {
     private final SettingRepository repository;
@@ -16,9 +19,15 @@ public class SaveSettingsUseCase {
     }
 
     public void execute(SaveSettingsInputDto dto) {
+        if (!isRetroarchInstalled(Path.of(dto.retroarchFolderPath())))
+            throw new RetroarchNotFoundException();
         Setting setting = new Setting(dto.romsFolderPath(), dto.retroarchFolderPath());
-        this.repository.save(setting);
-        this.eventDispatcherService.dispatch(EventType.RETROARCH_FOLDER_UPDATED);
-        this.eventDispatcherService.dispatch(EventType.ROMS_FOLDER_UPDATED);
+        repository.save(setting);
+        eventDispatcherService.dispatch(EventType.RETROARCH_FOLDER_UPDATED);
+        eventDispatcherService.dispatch(EventType.ROMS_FOLDER_UPDATED);
+    }
+
+    private boolean isRetroarchInstalled(Path retroarchFolderPath) {
+        return retroarchFolderPath.toAbsolutePath().resolve("retroarch.exe").toFile().exists();
     }
 }
