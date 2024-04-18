@@ -2,15 +2,13 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
-<?import org.retrolauncher.gui.views.features.SetupForm?>
+<?import org.retrolauncher.gui.views.features.*?>
 
-<AnchorPane maxHeight="400.0" maxWidth="600.0" prefHeight="400.0" prefWidth="600.0"
-            style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="400.0" maxWidth="600.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
 
-    <SetupForm/>
+    <SetupForm />
 
     <padding>
-        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
+        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
     </padding>
 </AnchorPane>

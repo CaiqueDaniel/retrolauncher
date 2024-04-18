@@ -22,6 +22,9 @@ public class SetupForm extends VBox {
     @FXML
     private Button btnSubmit;
 
+    @FXML
+    private Button btnGoBack;
+
     private final SetupViewModel viewModel;
 
     public SetupForm() {
@@ -59,7 +62,8 @@ public class SetupForm extends VBox {
     }
 
     private void addEventListeners() {
-        this.btnSubmit.setOnMouseClicked((evt) -> this.onSubmit());
+        btnSubmit.setOnMouseClicked((evt) -> this.onSubmit());
+        btnGoBack.setOnMouseClicked((evt) -> Routes.getInstance().switchToHome());
     }
 
     private void onSubmit() {
