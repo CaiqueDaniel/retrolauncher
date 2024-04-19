@@ -47,10 +47,11 @@ public class UpdateGamesListUseCase {
                             .stream()
                             .anyMatch((extension) -> gameFile.getName().contains(extension))).findFirst();
 
-            if (gamePlatform.isEmpty())
-                return null;
-
-            return new Game(gameFile.getName().substring(0, gameFile.getName().lastIndexOf('.')), gameFile.toPath(), gamePlatform.get());
+            return gamePlatform.map(platform -> new Game(
+                    getNameWithoutExtension(gameFile),
+                    gameFile.toPath(),
+                    platform
+            )).orElse(null);
         }).filter(Objects::nonNull).toList();
 
         games.forEach(this.repository::save);
@@ -70,17 +71,16 @@ public class UpdateGamesListUseCase {
         List<File> games = new ArrayList<>();
 
         for (File item : items) {
-            if (item.isDirectory()) {
-                games.addAll(this.getGamesFiles(Path.of(item.getAbsolutePath())));
-                continue;
-            }
-
-            if (this.repository.existsByPath(item.getAbsolutePath()))
-                continue;
+            if (item.isDirectory()) continue;
+            if (this.repository.existsByPath(item.getAbsolutePath())) continue;
 
             games.add(item);
         }
 
         return games;
+    }
+
+    private String getNameWithoutExtension(File file) {
+        return file.getName().substring(0, file.getName().lastIndexOf('.'));
     }
 }
