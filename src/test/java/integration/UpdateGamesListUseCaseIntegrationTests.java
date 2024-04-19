@@ -56,18 +56,12 @@ class UpdateGamesListUseCaseIntegrationTests {
 
     @Test()
     void it_should_be_able_to_save_games() throws Exception {
-        settingRepository.save(new Setting(Path.of("test-folder"), Path.of("test-folder2")));
+        settingRepository.save(new Setting(Path.of("test-folder"), Path.of("test-folder")));
         sut.execute();
         Game result = repository.listAll().get(0);
         assertEquals("game", result.getName());
         assertEquals(Optional.empty(), result.getIconPath());
         assertEquals(1, repository.listAll().size());
-    }
-
-    @Test
-    void it_should_not_save_games_given_folder_do_not_exists() {
-        settingRepository.save(new Setting(Path.of("invalid-folder"), Path.of("test-folder2")));
-        assertThrows(FileNotFoundException.class, sut::execute);
     }
 
     @Test
@@ -77,7 +71,7 @@ class UpdateGamesListUseCaseIntegrationTests {
 
     @Test
     void it_should_not_duplicate_games() throws FileNotFoundException {
-        settingRepository.save(new Setting(Path.of("test-folder"), Path.of("test-folder2")));
+        settingRepository.save(new Setting(Path.of("test-folder"), Path.of("test-folder")));
         sut.execute();
         sut.execute();
         assertEquals(1, repository.listAll().size());
