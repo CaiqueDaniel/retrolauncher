@@ -1,5 +1,7 @@
 package org.retrolauncher.backend.app.games.application.usecases;
 
+import org.retrolauncher.backend.app._shared.application.exceptions.FileCouldNotBeDeletedException;
+import org.retrolauncher.backend.app._shared.application.services.FileManagerService;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
@@ -21,15 +23,18 @@ public class UpdateGamesListUseCase {
     private final GameRepository repository;
     private final PlatformRepository platformRepository;
     private final SettingRepository settingRepository;
+    private final FileManagerService fileManagerService;
 
     public UpdateGamesListUseCase(
             GameRepository repository,
             PlatformRepository platformRepository,
-            SettingRepository settingRepository
+            SettingRepository settingRepository,
+            FileManagerService fileManagerService
     ) {
         this.repository = repository;
         this.platformRepository = platformRepository;
         this.settingRepository = settingRepository;
+        this.fileManagerService = fileManagerService;
     }
 
     public void execute() throws FileNotFoundException {
@@ -38,12 +43,13 @@ public class UpdateGamesListUseCase {
         if (setting.isEmpty())
             throw new SettingNotFoundException();
 
-        List<Game> indexedGames = this.getIndexedGames(setting.get());
-        List<Game> gamesToBeSaved = this.getGamesToBeSaved(indexedGames);
-        List<Game> gamesToBeRemoved = this.getGamesToBeRemoved(gamesToBeSaved);
+        List<Game> indexedGames = getIndexedGames(setting.get());
+        List<Game> gamesToBeSaved = getGamesToBeSaved(indexedGames);
+        List<Game> gamesToBeRemoved = getGamesToBeRemoved(gamesToBeSaved);
 
         gamesToBeSaved.forEach(this.repository::save);
-        gamesToBeRemoved.forEach(this.repository::delete);
+
+        removeGames(gamesToBeRemoved);
     }
 
     private List<Game> getIndexedGames(Setting setting) throws FileNotFoundException {
@@ -112,5 +118,17 @@ public class UpdateGamesListUseCase {
 
     private String getNameWithoutExtension(File file) {
         return file.getName().substring(0, file.getName().lastIndexOf('.'));
+    }
+
+    private void removeGames(List<Game> games) {
+        games.forEach((game) -> {
+            try {
+                if (game.getIconPath().isPresent())
+                    fileManagerService.delete(game.getIconPath().get());
+                repository.delete(game);
+            } catch (FileCouldNotBeDeletedException e) {
+                System.out.println(e.getMessage());
+            }
+        });
     }
 }

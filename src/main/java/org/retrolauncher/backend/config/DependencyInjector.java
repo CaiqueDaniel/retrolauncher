@@ -1,11 +1,9 @@
 package org.retrolauncher.backend.config;
 
 import lombok.Getter;
-import org.retrolauncher.backend.app._shared.application.services.EnvConfigService;
-import org.retrolauncher.backend.app._shared.application.services.EventDispatcherService;
-import org.retrolauncher.backend.app._shared.application.services.ProcessRunnerService;
-import org.retrolauncher.backend.app._shared.application.services.ShortcutService;
+import org.retrolauncher.backend.app._shared.application.services.*;
 import org.retrolauncher.backend.app._shared.infrastructure.services.*;
+import org.retrolauncher.backend.app.games.application.services.CoverFileManagerService;
 import org.retrolauncher.backend.app.games.application.usecases.*;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.models.GameModel;
@@ -38,6 +36,7 @@ public class DependencyInjector {
     private final ShortcutService shortcutService;
     private final ProcessRunnerService processRunnerService;
     private final EventDispatcherService eventDispatcherService;
+    private final FileManagerService coverFileManagerService;
 
     private final UpdatePlatformsListUseCase updatePlatformsListUseCase;
     private final UpdateGamesListUseCase updateGamesListUseCase;
@@ -57,6 +56,7 @@ public class DependencyInjector {
         this.shortcutService = new ShellLinkShortcutService();
         this.processRunnerService = new DefaultProcessRunnerService();
         this.eventDispatcherService = new DefaultEventDispatcherService(DefaultEventManager.getInstance());
+        this.coverFileManagerService = new CoverFileManagerService();
         this.platformRepository = new JacksonPlatformRepository(new JacksonFileDatabaseDriver<>(PlatformModel.class));
         this.gameRepository = new JacksonGameRepository(
                 new JacksonFileDatabaseDriver<>(GameModel.class),
@@ -73,7 +73,8 @@ public class DependencyInjector {
         this.updateGamesListUseCase = new UpdateGamesListUseCase(
                 this.gameRepository,
                 this.platformRepository,
-                this.settingRepository
+                this.settingRepository,
+                this.coverFileManagerService
         );
         this.startGameUseCase = new StartGameUseCase(this.gameRepository, this.processRunnerService);
         this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);
