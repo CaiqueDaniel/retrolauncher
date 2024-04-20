@@ -2,6 +2,7 @@ package integration;
 
 import fixtures.StubSettingRepository;
 import org.junit.jupiter.api.*;
+import org.retrolauncher.backend.app._shared.application.services.FileManagerService;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.repositories.MemoryGameRepository;
@@ -21,6 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UpdateGamesListUseCaseIntegrationTests {
@@ -28,10 +30,12 @@ class UpdateGamesListUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
     private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final StubSettingRepository settingRepository = new StubSettingRepository();
+    private final FileManagerService mockedFileManagerService = mock(FileManagerService.class);
     private final UpdateGamesListUseCase sut = new UpdateGamesListUseCase(
             repository,
-            this.platformRepository,
-            this.settingRepository
+            platformRepository,
+            settingRepository,
+            mockedFileManagerService
     );
 
     @BeforeAll
