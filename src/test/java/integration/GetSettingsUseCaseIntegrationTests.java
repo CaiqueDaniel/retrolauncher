@@ -7,6 +7,10 @@ import org.retrolauncher.backend.app.settings.application.exceptions.SettingNotF
 import org.retrolauncher.backend.app.settings.application.usecases.GetSettingsUseCase;
 import org.retrolauncher.backend.app.settings.domain.entities.Setting;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -14,17 +18,30 @@ public class GetSettingsUseCaseIntegrationTests {
     private final StubSettingRepository repository = new StubSettingRepository();
     private final GetSettingsUseCase sut = new GetSettingsUseCase(repository);
 
+    private final File testFolder = new File("test");
+
+    @BeforeAll
+    void beforeAll() {
+        testFolder.mkdirs();
+    }
+
     @AfterEach
     void afterEach() {
         repository.clear();
+        Arrays.stream(Objects.requireNonNull(testFolder.listFiles())).toList().forEach(File::delete);
+    }
+
+    @AfterAll
+    void afterAll() {
+        testFolder.delete();
     }
 
     @Test
     void it_should_be_able_to_get_settings() {
-        repository.save(new Setting("C:/roms", "C:/retroarch"));
+        repository.save(new Setting(testFolder.getAbsolutePath(), testFolder.getAbsolutePath()));
         GetSettingsOutputDto result = sut.execute();
-        assertEquals("C:\\roms", result.romsFolderPath());
-        assertEquals("C:\\retroarch", result.retroarchFolderPath());
+        assertEquals(testFolder.getAbsolutePath(), result.romsFolderPath());
+        assertEquals(testFolder.getAbsolutePath(), result.retroarchFolderPath());
     }
 
     @Test
