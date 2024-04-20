@@ -11,7 +11,7 @@ import java.util.UUID;
 @Getter
 public class Game extends Entity {
     private final String name;
-    private final Path path;
+    private Path path;
     private Path iconPath;
     private final Platform platform;
 
@@ -31,7 +31,11 @@ public class Game extends Entity {
     }
 
     public void uploadIcon(Path path) {
-        this.iconPath = path;
+        this.iconPath = path.toAbsolutePath();
+    }
+
+    public void updatePath(Path path) {
+        this.path = path.toAbsolutePath();
     }
 
     public Optional<Path> getIconPath() {

@@ -4,6 +4,7 @@ import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.mappers.JacksonGameMapper;
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.models.GameModel;
+import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
 
 import java.nio.file.Path;
@@ -51,5 +52,45 @@ public class MemoryGameRepository implements GameRepository {
     public boolean existsByPath(String path) {
         return this.storedData.values().stream()
                 .anyMatch((game) -> Path.of(game.getPath()).toAbsolutePath().toString().equals(path));
+    }
+
+    @Override
+    public Optional<Game> findOneByNameAndPlatformId(String name, UUID platformId) {
+        return this.storedData.values()
+                .stream()
+                .filter((game) -> game.getName().equals(name) && game.getPlatformId().equals(platformId.toString()))
+                .findFirst()
+                .map((model) -> {
+                    Optional<Platform> platform = this.platformRepository.findById(
+                            UUID.fromString(model.getPlatformId())
+                    );
+                    return platform.map(value -> JacksonGameMapper.toDomain(model, value)).orElse(null);
+                });
+    }
+
+    @Override
+    public List<Game> findAllByIdsNotIn(Set<String> exceptionsIds) {
+        try {
+            return this.storedData.values()
+                    .stream()
+                    .filter((game) -> !exceptionsIds.contains(game.getId().toString()))
+                    .map((model) -> {
+                        Optional<Platform> platform = this.platformRepository.findById(
+                                UUID.fromString(model.getPlatformId())
+                        );
+                        return platform.map(value -> JacksonGameMapper.toDomain(model, value)).orElse(null);
+                    }).toList();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    @Override
+    public void delete(Game game) {
+        try {
+            this.storedData.remove(game.getId().toString());
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
     }
 }

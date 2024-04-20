@@ -91,4 +91,52 @@ public class JacksonGameRepository implements GameRepository {
             throw new RuntimeException(exception);
         }
     }
+
+    @Override
+    public Optional<Game> findOneByNameAndPlatformId(String name, UUID platformId) {
+        try {
+            return this.driver.read(JacksonGameRepository.FILE_PATH)
+                    .values()
+                    .stream()
+                    .filter((game) -> game.getName().equals(name) && game.getPlatformId().equals(platformId.toString()))
+                    .findFirst()
+                    .map((model) -> {
+                        Optional<Platform> platform = this.platformRepository.findById(
+                                UUID.fromString(model.getPlatformId())
+                        );
+                        return platform.map(value -> JacksonGameMapper.toDomain(model, value)).orElse(null);
+                    });
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    @Override
+    public List<Game> findAllByIdsNotIn(Set<String> exceptionsIds) {
+        try {
+            return this.driver.read(JacksonGameRepository.FILE_PATH)
+                    .values()
+                    .stream()
+                    .filter((game) -> !exceptionsIds.contains(game.getId().toString()))
+                    .map((model) -> {
+                        Optional<Platform> platform = this.platformRepository.findById(
+                                UUID.fromString(model.getPlatformId())
+                        );
+                        return platform.map(value -> JacksonGameMapper.toDomain(model, value)).orElse(null);
+                    }).toList();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    @Override
+    public void delete(Game game) {
+        try {
+            Map<String, GameModel> storedData = this.driver.read(JacksonGameRepository.FILE_PATH);
+            storedData.remove(game.getId().toString());
+            this.driver.write(storedData, JacksonGameRepository.FILE_PATH);
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UpdateGamesListUseCase {
     private final GameRepository repository;
@@ -37,10 +38,19 @@ public class UpdateGamesListUseCase {
         if (setting.isEmpty())
             throw new SettingNotFoundException();
 
-        List<Platform> platforms = this.platformRepository.listAll();
-        List<File> gamesFiles = this.getGamesFiles(setting.get().getRomsFolderPath());
+        List<Game> indexedGames = this.getIndexedGames(setting.get());
+        List<Game> gamesToBeSaved = this.getGamesToBeSaved(indexedGames);
+        List<Game> gamesToBeRemoved = this.getGamesToBeRemoved(gamesToBeSaved);
 
-        List<Game> games = gamesFiles.stream().map((gameFile) -> {
+        gamesToBeSaved.forEach(this.repository::save);
+        gamesToBeRemoved.forEach(this.repository::delete);
+    }
+
+    private List<Game> getIndexedGames(Setting setting) throws FileNotFoundException {
+        List<Platform> platforms = this.platformRepository.listAll();
+        List<File> gamesFiles = this.getGamesFiles(setting.getRomsFolderPath());
+
+        return gamesFiles.stream().map((gameFile) -> {
             Optional<Platform> gamePlatform = platforms.stream()
                     .filter((platform) -> platform
                             .getExtensions()
@@ -53,8 +63,30 @@ public class UpdateGamesListUseCase {
                     platform
             )).orElse(null);
         }).filter(Objects::nonNull).toList();
+    }
 
-        games.forEach(this.repository::save);
+    private List<Game> getGamesToBeSaved(List<Game> games) {
+        return games.stream().map((game) -> {
+            Optional<Game> result = this.repository.findOneByNameAndPlatformId(
+                    game.getName(),
+                    game.getPlatform().getId()
+            );
+
+            if (result.isEmpty())
+                return game;
+
+            Game foundGame = result.get();
+            foundGame.updatePath(game.getPath());
+            return foundGame;
+        }).toList();
+    }
+
+    private List<Game> getGamesToBeRemoved(List<Game> games) {
+        return this.repository.findAllByIdsNotIn(
+                games.stream()
+                        .map((game) -> game.getId().toString())
+                        .collect(Collectors.toSet())
+        );
     }
 
     private List<File> getGamesFiles(Path folderPath) throws FileNotFoundException {
@@ -72,8 +104,6 @@ public class UpdateGamesListUseCase {
 
         for (File item : items) {
             if (item.isDirectory()) continue;
-            if (this.repository.existsByPath(item.getAbsolutePath())) continue;
-
             games.add(item);
         }
 
