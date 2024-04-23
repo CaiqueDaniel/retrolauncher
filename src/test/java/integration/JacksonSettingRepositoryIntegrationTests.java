@@ -6,7 +6,7 @@ import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.mo
 import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.repositories.JacksonSettingRepository;
 import org.retrolauncher.backend.database.FileDatabaseDriver;
 
-import java.nio.file.Path;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,19 +18,27 @@ class JacksonSettingRepositoryIntegrationTests {
     private Setting setting;
     private final StubFileDatabaseDriver driver = new StubFileDatabaseDriver();
 
+    private final File testFolder = new File("test");
+
     @BeforeAll
     void setup() {
+        testFolder.mkdirs();
         sut = new JacksonSettingRepository(driver);
     }
 
     @BeforeEach
     void beforeEach() {
-        setting = new Setting(Path.of("C:/roms"), Path.of("C:/retro"));
+        setting = new Setting(testFolder.toPath(), testFolder.toPath());
     }
 
     @AfterEach
     void destroy() {
         driver.clear("");
+    }
+
+    @AfterAll
+    void afterAll() {
+        testFolder.delete();
     }
 
     @Test
