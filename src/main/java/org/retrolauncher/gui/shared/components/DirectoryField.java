@@ -49,7 +49,7 @@ public class DirectoryField extends VBox {
 
     private void load() {
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("modules/_shared/templates/components/DirectoryField.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("shared/templates/components/DirectoryField.fxml"));
             loader.setController(this);
             loader.setRoot(this);
             loader.load();
