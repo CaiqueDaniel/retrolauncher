@@ -2,13 +2,12 @@ package org.retrolauncher.gui;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.retrolauncher.gui.views.pages.MainMenuPage;
-import org.retrolauncher.gui.views.pages.SetupPage;
+import org.retrolauncher.gui.modules.games.pages.MainMenuPage;
+import org.retrolauncher.gui.modules.settings.pages.SetupPage;
 
 public class Routes {
     private final Stage stage;
     private static Routes instance;
-
     private final Scene mainMenuPage;
     private final Scene setupPage;
 
