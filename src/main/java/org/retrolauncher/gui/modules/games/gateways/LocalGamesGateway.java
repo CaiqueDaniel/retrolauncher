@@ -34,6 +34,6 @@ public class LocalGamesGateway implements GamesGateway {
 
     @Override
     public void reindexGames() {
-        facade.updateList();
+        facade.reindexGames();
     }
 }

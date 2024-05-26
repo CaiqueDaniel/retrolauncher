@@ -47,7 +47,7 @@ public class GamesController {
         this.createGameShortcutUseCase.execute(id);
     }
 
-    public void updateList() {
+    public void reindexGames() {
         try {
             this.updateGamesListUseCase.execute();
         } catch (Exception exception) {

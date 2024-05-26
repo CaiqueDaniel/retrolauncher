@@ -12,5 +12,5 @@ public interface GamesFacade {
 
     void createShortcut(String id);
 
-    void updateList();
+    void reindexGames();
 }

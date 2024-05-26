@@ -23,7 +23,7 @@ public class GamesFacadeImpl implements GamesFacade {
     }
 
     @Override
-    public void updateList() {
-        Backend.getDependencies().getGamesController().updateList();
+    public void reindexGames() {
+        Backend.getDependencies().getGamesController().reindexGames();
     }
 }
