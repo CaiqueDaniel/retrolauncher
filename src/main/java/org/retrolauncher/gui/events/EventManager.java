@@ -21,7 +21,8 @@ public class EventManager {
     }
 
     public void notify(EventType eventType, Object data) {
-        this.eventListeners.get(eventType).forEach((listener) -> listener.accept(Optional.of(data)));
+        Optional.ofNullable(eventListeners.get(eventType))
+                .ifPresent((listeners) -> listeners.forEach((listener) -> listener.accept(Optional.of(data))));
     }
 
     public static EventManager getInstance() {

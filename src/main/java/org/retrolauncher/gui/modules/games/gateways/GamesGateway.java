@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface GamesGateway {
     List<Game> listAll();
+
+    void updateGame(Game game);
 }

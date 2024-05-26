@@ -1,5 +1,6 @@
 package org.retrolauncher.gui.modules.games.gateways;
 
+import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.SaveGameCoverDto;
 import org.retrolauncher.backend.facades.GamesFacade;
 import org.retrolauncher.backend.facades.GamesFacadeImpl;
 import org.retrolauncher.gui.modules.games.models.Game;
@@ -18,5 +19,11 @@ public class LocalGamesGateway implements GamesGateway {
                 item.platformName(),
                 item.iconPath().orElse(null)
         )).toList();
+    }
+
+    @Override
+    public void updateGame(Game game) {
+        if (game.getIconPath().isPresent())
+            facade.saveCover(new SaveGameCoverDto(game.getId().toString(), game.getIconPath().get().toFile()));
     }
 }
