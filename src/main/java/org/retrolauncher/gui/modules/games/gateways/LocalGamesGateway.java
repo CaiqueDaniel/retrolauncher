@@ -26,4 +26,9 @@ public class LocalGamesGateway implements GamesGateway {
         if (game.getIconPath().isPresent())
             facade.saveCover(new SaveGameCoverDto(game.getId().toString(), game.getIconPath().get().toFile()));
     }
+
+    @Override
+    public void createShortcut(Game game) {
+        facade.createShortcut(game.getId().toString());
+    }
 }

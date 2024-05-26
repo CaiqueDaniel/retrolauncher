@@ -8,4 +8,6 @@ public interface GamesGateway {
     List<Game> listAll();
 
     void updateGame(Game game);
+
+    void createShortcut(Game game);
 }

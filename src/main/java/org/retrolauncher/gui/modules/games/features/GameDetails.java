@@ -1,6 +1,7 @@
 package org.retrolauncher.gui.modules.games.features;
 
 import javafx.fxml.*;
+import javafx.scene.control.Button;
 import javafx.scene.image.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -21,6 +22,8 @@ public class GameDetails extends AnchorPane implements IGameDetails {
     private ImageView imgCover;
     @FXML
     private Label lblGameName, lblPlatformName;
+    @FXML
+    private Button btnCreateShortcut;
     @FXML
     private VBox paneMain;
     @FXML
@@ -69,6 +72,7 @@ public class GameDetails extends AnchorPane implements IGameDetails {
     @FXML
     private void initialize() {
         imgCover.setOnMouseClicked((evt) -> onClickImageView());
+        btnCreateShortcut.setOnMouseClicked((evt) -> presenter.createShortcut());
     }
 
     private void onClickImageView() {

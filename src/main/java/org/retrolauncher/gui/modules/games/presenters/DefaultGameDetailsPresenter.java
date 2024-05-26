@@ -29,6 +29,11 @@ public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
         gateway.updateGame(game);
     }
 
+    @Override
+    public void createShortcut() {
+        gateway.createShortcut(game);
+    }
+
     private void registerListeners() {
         eventManager.subscribe(EventType.GAME_SELECTED, (e) -> e.ifPresent((game) -> this.updateGame((Game) game)));
     }
