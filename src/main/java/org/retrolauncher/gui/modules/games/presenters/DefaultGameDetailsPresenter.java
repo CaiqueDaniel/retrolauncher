@@ -42,6 +42,7 @@ public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
         final Path NO_COVER_RESOURCE = new File(Main.class.getResource("assets/no-cover.png").getFile()).toPath();
         view.setLblGameName(game.getName())
                 .setLblPlatformName(game.getPlatformName())
-                .setImgCover(game.getIconPath().orElse(NO_COVER_RESOURCE));
+                .setImgCover(game.getIconPath().orElse(NO_COVER_RESOURCE))
+                .showMainPane();
     }
 }

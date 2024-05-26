@@ -3,6 +3,8 @@ package org.retrolauncher.gui.modules.games.features;
 import javafx.fxml.*;
 import javafx.scene.image.*;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.retrolauncher.Main;
@@ -14,11 +16,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public class GameDetails extends VBox implements IGameDetails {
+public class GameDetails extends AnchorPane implements IGameDetails {
     @FXML
     private ImageView imgCover;
     @FXML
     private Label lblGameName, lblPlatformName;
+    @FXML
+    private VBox paneMain;
+    @FXML
+    private FlowPane paneSelectGame;
 
     private final GameDetailsPresenter presenter;
 
@@ -50,6 +56,13 @@ public class GameDetails extends VBox implements IGameDetails {
     @Override
     public IGameDetails setImgCover(Path path) {
         imgCover.setImage(new Image(path.toUri().toString()));
+        return this;
+    }
+
+    @Override
+    public IGameDetails showMainPane() {
+        paneSelectGame.setVisible(false);
+        paneMain.setVisible(true);
         return this;
     }
 

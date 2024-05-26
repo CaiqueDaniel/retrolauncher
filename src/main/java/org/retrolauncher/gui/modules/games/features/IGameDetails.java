@@ -8,4 +8,6 @@ public interface IGameDetails {
     IGameDetails setLblPlatformName(String value);
 
     IGameDetails setImgCover(Path path);
+
+    IGameDetails showMainPane();
 }
