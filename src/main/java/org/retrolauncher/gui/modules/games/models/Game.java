@@ -1,22 +1,25 @@
 package org.retrolauncher.gui.modules.games.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.Accessors;
 
 import java.nio.file.Path;
-import java.util.Optional;
+import java.util.*;
 
 @Getter
-@Accessors(fluent = true)
-@AllArgsConstructor
 public class Game {
-    private final String id;
+    private final UUID id;
     private final String name;
     private final String platformName;
     private final Path iconPath;
 
-    public Optional<Path> iconPath() {
+    public Game(UUID id, String name, String platformName, Path iconPath) {
+        this.id = id;
+        this.name = name;
+        this.platformName = platformName;
+        this.iconPath = iconPath;
+    }
+
+    public Optional<Path> getIconPath() {
         return Optional.ofNullable(iconPath);
     }
 }

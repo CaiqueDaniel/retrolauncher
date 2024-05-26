@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<fx:root type="javafx.scene.layout.HBox" style="-fx-background-color: #303134;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+    <Button mnemonicParsing="false" styleClass="primary" text="Atualizar">
+        <HBox.margin>
+            <Insets right="8.0"/>
+        </HBox.margin>
+    </Button>
+    <Button mnemonicParsing="false" styleClass="primary" text="Configurações"/>
+    <VBox.margin>
+        <Insets bottom="24.0"/>
+    </VBox.margin>
+    <padding>
+        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+    </padding>
+</fx:root>

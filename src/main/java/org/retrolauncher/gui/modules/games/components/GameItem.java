@@ -23,7 +23,7 @@ public class GameItem extends HBox {
 
     private void load() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("modules/games/templates/components/GameItem.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("modules/games/components/GameItem.fxml"));
             fxmlLoader.setRoot(this);
             fxmlLoader.setController(this);
             fxmlLoader.load();
@@ -34,11 +34,11 @@ public class GameItem extends HBox {
 
     @FXML
     private void initialize() {
-        this.label.setText(game.name() + " (" + game.platformName() + ")");
+        this.label.setText(game.getName() + " (" + game.getPlatformName() + ")");
         this.setEventListeners();
     }
 
     private void setEventListeners() {
-        this.setOnMouseClicked((evt) -> this.onClick.accept(this.game));
+        this.setOnMouseClicked((evt) -> onClick.accept(game));
     }
 }
