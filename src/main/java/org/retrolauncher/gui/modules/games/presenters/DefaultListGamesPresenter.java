@@ -9,10 +9,14 @@ import org.retrolauncher.gui.modules.games.models.Game;
 public class DefaultListGamesPresenter implements ListGamesPresenter {
     private final IListGames view;
     private final GamesGateway gateway;
+    private final EventManager eventManager;
 
-    public DefaultListGamesPresenter(IListGames view, GamesGateway gateway) {
+    public DefaultListGamesPresenter(IListGames view, GamesGateway gateway, EventManager eventManager) {
         this.view = view;
         this.gateway = gateway;
+        this.eventManager = eventManager;
+
+        this.registerListeners();
     }
 
     @Override
@@ -21,6 +25,15 @@ public class DefaultListGamesPresenter implements ListGamesPresenter {
     }
 
     public void onSelectGameItem(Game game) {
-        EventManager.getInstance().notify(EventType.GAME_SELECTED, game);
+        eventManager.notify(EventType.GAME_SELECTED, game);
+    }
+
+    private void registerListeners() {
+        eventManager.subscribe(EventType.REINDEX_GAMES_REQUESTED, (object) -> reindexGames());
+    }
+
+    private void reindexGames() {
+        gateway.reindexGames();
+        listAll();
     }
 }

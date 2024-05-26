@@ -31,4 +31,9 @@ public class LocalGamesGateway implements GamesGateway {
     public void createShortcut(Game game) {
         facade.createShortcut(game.getId().toString());
     }
+
+    @Override
+    public void reindexGames() {
+        facade.updateList();
+    }
 }

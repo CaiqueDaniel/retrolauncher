@@ -10,4 +10,6 @@ public interface GamesGateway {
     void updateGame(Game game);
 
     void createShortcut(Game game);
+
+    void reindexGames();
 }

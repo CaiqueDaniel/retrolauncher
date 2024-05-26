@@ -1,5 +1,5 @@
 package org.retrolauncher.gui.events;
 
 public enum EventType {
-    FETCH_GAME_LIST, GAME_SELECTED
+    REINDEX_GAMES_REQUESTED, GAME_SELECTED
 }

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import org.retrolauncher.Main;
+import org.retrolauncher.gui.events.EventManager;
 import org.retrolauncher.gui.modules.games.components.GameItem;
 import org.retrolauncher.gui.modules.games.gateways.LocalGamesGateway;
 import org.retrolauncher.gui.modules.games.models.Game;
@@ -17,7 +18,7 @@ public class ListGames extends ListView<GameItem> implements IListGames {
     private final ListGamesPresenter presenter;
 
     public ListGames() {
-        this.presenter = new DefaultListGamesPresenter(this, new LocalGamesGateway());
+        this.presenter = new DefaultListGamesPresenter(this, new LocalGamesGateway(), EventManager.getInstance());
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("modules/games/features/ListGames.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -36,6 +37,7 @@ public class ListGames extends ListView<GameItem> implements IListGames {
 
     @Override
     public void updateList(List<Game> games) {
+        getItems().clear();
         games.forEach((game) -> getItems().add(new GameItem(game, presenter::onSelectGameItem)));
     }
 }
