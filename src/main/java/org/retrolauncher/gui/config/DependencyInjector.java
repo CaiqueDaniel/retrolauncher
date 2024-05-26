@@ -3,6 +3,7 @@ package org.retrolauncher.gui.config;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.retrolauncher.gui.modules.games.pages.GamesPage;
+import org.retrolauncher.gui.modules.settings.pages.SettingsPage;
 
 @Accessors(fluent = true)
 public class DependencyInjector {
@@ -11,8 +12,8 @@ public class DependencyInjector {
     @Getter
     private final GamesPage gamesPage = new GamesPage();
 
-    private DependencyInjector() {
-    }
+    @Getter
+    private final SettingsPage settingsPage = new SettingsPage();
 
     public static DependencyInjector getInstance() {
         if (instance == null)

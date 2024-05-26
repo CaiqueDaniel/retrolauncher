@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root maxHeight="77.0" minHeight="56.0" prefHeight="77.0" prefWidth="504.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <Label fx:id="label" text="Label" textFill="WHITE" />
+    <HBox alignment="CENTER" prefHeight="42.0" prefWidth="504.0">
+
+        <TextField fx:id="txtDirPath" prefHeight="30.0" prefWidth="352.0" promptText="Caminho da pasta" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+                <Insets right="16.0" />
+            </HBox.margin>
+        </TextField>
+
+        <Button fx:id="btnDirPath" mnemonicParsing="false" prefHeight="30.0" prefWidth="167.0" text="Selecione um caminho">
+            <font>
+                <Font name="Segoe UI" size="12.0" />
+            </font>
+        </Button>
+
+        <opaqueInsets>
+            <Insets right="12.0" />
+        </opaqueInsets>
+    </HBox>
+    <Label fx:id="lblError" text="Erro" textFill="#e42525" visible="false" />
+
+    <VBox.margin>
+        <Insets bottom="16.0" />
+    </VBox.margin>
+</fx:root>

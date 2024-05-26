@@ -10,7 +10,7 @@
             <Insets right="8.0"/>
         </HBox.margin>
     </Button>
-    <Button mnemonicParsing="false" styleClass="primary" text="Configurações"/>
+    <Button mnemonicParsing="false" styleClass="primary" text="Configurações" fx:id="btnSetting"/>
     <VBox.margin>
         <Insets bottom="24.0"/>
     </VBox.margin>

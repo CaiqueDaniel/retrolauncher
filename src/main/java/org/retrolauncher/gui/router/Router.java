@@ -15,7 +15,7 @@ public class Router {
 
     private Router() {
         routes.put(Routes.GAMES, DependencyInjector.getInstance().gamesPage());
-        //routes.put(Routes.TASKS, (Page) DependencyInjector.getInstance().taskPage());
+        routes.put(Routes.SETTINGS, DependencyInjector.getInstance().settingsPage());
     }
 
     public void navigateTo(Routes path) {
