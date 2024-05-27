@@ -14,9 +14,9 @@ import java.util.Arrays;
 import java.util.UUID;
 
 public class CoverUploaderService implements UploaderService {
-    private final static String[] ACCEPTED_EXTENSIONS = {".png", ".jpg", ".jpeg"};
+    private static final String[] ACCEPTED_EXTENSIONS = {".png", ".jpg", ".jpeg"};
 
-    private final static String COVERS_DIRECTORY = Path.of(System.getProperty("user.home"))
+    private static final String COVERS_DIRECTORY = Path.of(System.getProperty("user.home"))
             .resolve("retro-launcher")
             .resolve("covers")
             .toString();
