@@ -15,8 +15,6 @@ public class DefaultListGamesPresenter implements ListGamesPresenter {
         this.view = view;
         this.gateway = gateway;
         this.eventManager = eventManager;
-
-        this.registerListeners();
     }
 
     @Override
@@ -24,15 +22,11 @@ public class DefaultListGamesPresenter implements ListGamesPresenter {
         view.updateList(gateway.listAll());
     }
 
-    public void onSelectGameItem(Game game) {
+    public void selectGameItem(Game game) {
         eventManager.notify(EventType.GAME_SELECTED, game);
     }
 
-    private void registerListeners() {
-        eventManager.subscribe(EventType.REINDEX_GAMES_REQUESTED, (object) -> reindexGames());
-    }
-
-    private void reindexGames() {
+    public void reindexGames() {
         gateway.reindexGames();
         listAll();
     }

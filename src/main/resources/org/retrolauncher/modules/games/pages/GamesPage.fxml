@@ -16,7 +16,7 @@
             <SplitPane dividerPositions="0.3418181818181818" prefHeight="233.0" prefWidth="600.0"
                        style="-fx-background-color: #303134;" VBox.vgrow="ALWAYS">
                 <AnchorPane maxWidth="500.0" minHeight="0.0" minWidth="300.0" prefWidth="100.0">
-                    <ListGames/>
+                    <ListGamesFeature/>
                 </AnchorPane>
                 <AnchorPane>
                     <GameDetails/>

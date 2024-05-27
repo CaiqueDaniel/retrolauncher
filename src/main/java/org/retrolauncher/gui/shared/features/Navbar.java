@@ -5,22 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import org.retrolauncher.Main;
-import org.retrolauncher.gui.events.EventManager;
-import org.retrolauncher.gui.router.Router;
-import org.retrolauncher.gui.router.Routes;
-import org.retrolauncher.gui.shared.presenters.DefaultNavbarPresenter;
-import org.retrolauncher.gui.shared.presenters.NavbarPresenter;
+import org.retrolauncher.gui.router.*;
 
 import java.io.IOException;
 
 public class Navbar extends HBox {
     @FXML
-    private Button btnReindexGamesList, btnSetting;
-
-    private final NavbarPresenter presenter;
+    private Button btnGames, btnSetting;
 
     public Navbar() {
-        presenter = new DefaultNavbarPresenter(EventManager.getInstance());
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("shared/features/Navbar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -34,7 +27,7 @@ public class Navbar extends HBox {
 
     @FXML
     public void initialize() {
-        btnReindexGamesList.setOnMouseClicked((evt) -> presenter.reindexGamesList());
+        btnGames.setOnMouseClicked((evt) -> Router.getInstance().navigateTo(Routes.GAMES));
         btnSetting.setOnMouseClicked((evt) -> Router.getInstance().navigateTo(Routes.SETTINGS));
     }
 }

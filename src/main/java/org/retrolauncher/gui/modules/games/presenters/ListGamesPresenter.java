@@ -5,5 +5,7 @@ import org.retrolauncher.gui.modules.games.models.Game;
 public interface ListGamesPresenter {
     void listAll();
 
-    void onSelectGameItem(Game game);
+    void selectGameItem(Game game);
+
+    void reindexGames();
 }

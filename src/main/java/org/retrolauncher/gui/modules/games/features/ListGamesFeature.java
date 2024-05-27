@@ -1,25 +1,29 @@
 package org.retrolauncher.gui.modules.games.features;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.events.EventManager;
 import org.retrolauncher.gui.modules.games.components.GameItem;
 import org.retrolauncher.gui.modules.games.gateways.LocalGamesGateway;
 import org.retrolauncher.gui.modules.games.models.Game;
-import org.retrolauncher.gui.modules.games.presenters.DefaultListGamesPresenter;
-import org.retrolauncher.gui.modules.games.presenters.ListGamesPresenter;
+import org.retrolauncher.gui.modules.games.presenters.*;
 
 import java.io.IOException;
 import java.util.List;
 
-public class ListGames extends ListView<GameItem> implements IListGames {
+public class ListGamesFeature extends VBox implements IListGames {
+    @FXML
+    private ListView<GameItem> lvGames;
+    @FXML
+    private Button btnReindexGames;
     private final ListGamesPresenter presenter;
 
-    public ListGames() {
+    public ListGamesFeature() {
         this.presenter = new DefaultListGamesPresenter(this, new LocalGamesGateway(), EventManager.getInstance());
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("modules/games/features/ListGames.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("modules/games/features/ListGamesFeature.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -32,12 +36,13 @@ public class ListGames extends ListView<GameItem> implements IListGames {
 
     @FXML
     private void initialize() {
-        this.presenter.listAll();
+        presenter.listAll();
+        btnReindexGames.setOnMouseClicked((evt) -> presenter.reindexGames());
     }
 
     @Override
     public void updateList(List<Game> games) {
-        getItems().clear();
-        games.forEach((game) -> getItems().add(new GameItem(game, presenter::onSelectGameItem)));
+        lvGames.getItems().clear();
+        games.forEach((game) -> lvGames.getItems().add(new GameItem(game, presenter::selectGameItem)));
     }
 }

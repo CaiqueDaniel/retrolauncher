@@ -4,8 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<fx:root type="javafx.scene.layout.HBox" style="-fx-background-color: #303134;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
-    <Button mnemonicParsing="false" styleClass="primary" text="Reindexar jogos" fx:id="btnReindexGamesList">
+<fx:root type="javafx.scene.layout.HBox" style="-fx-background-color: #303134;" xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml">
+    <Button mnemonicParsing="false" styleClass="primary" text="Jogos" fx:id="btnGames">
         <HBox.margin>
             <Insets right="8.0"/>
         </HBox.margin>
