@@ -8,8 +8,7 @@ import org.retrolauncher.backend.app.games.application.exceptions.CoverUploadedI
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -40,19 +39,33 @@ public class CoverUploaderService implements UploaderService {
     }
 
     private Path saveImage(File file, String filename) throws IOException {
-        Path path = Path.of(COVERS_DIRECTORY);
-        Files.createDirectories(path);
-        Path uploadedFilePath = path.resolve(filename + this.getExtension(file.getName()));
-        InputStream in = new BufferedInputStream(new FileInputStream(file));
-        OutputStream out = new BufferedOutputStream(new FileOutputStream(uploadedFilePath.toFile()));
+        InputStream in = null;
+        OutputStream out = null;
 
-        byte[] buffer = new byte[1024];
-        int lengthRead;
-        while ((lengthRead = in.read(buffer)) > 0) {
-            out.write(buffer, 0, lengthRead);
-            out.flush();
+        try {
+            Path path = Path.of(COVERS_DIRECTORY);
+            Files.createDirectories(path);
+            Path uploadedFilePath = path.resolve(filename + this.getExtension(file.getName()));
+
+            in = new BufferedInputStream(new FileInputStream(file));
+            out = new BufferedOutputStream(new FileOutputStream(uploadedFilePath.toFile()));
+
+            byte[] buffer = new byte[1024];
+            int lengthRead;
+            while ((lengthRead = in.read(buffer)) > 0) {
+                out.write(buffer, 0, lengthRead);
+                out.flush();
+            }
+
+            in.close();
+            out.close();
+
+            return uploadedFilePath;
+        } catch (IOException exception) {
+            if (in != null) in.close();
+            if (out != null) out.close();
+            throw exception;
         }
-        return uploadedFilePath;
     }
 
     private void saveIcon(File file, String filename) throws IOException {
