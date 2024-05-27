@@ -14,7 +14,7 @@ import org.retrolauncher.gui.modules.games.presenters.*;
 import java.io.IOException;
 import java.util.List;
 
-public class ListGamesFeature extends VBox implements IListGames {
+public class ListGamesFeature extends VBox implements IListGamesFeature {
     @FXML
     private ListView<GameItem> lvGames;
     @FXML
