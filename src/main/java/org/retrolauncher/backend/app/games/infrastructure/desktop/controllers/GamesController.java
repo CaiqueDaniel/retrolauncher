@@ -1,32 +1,32 @@
 package org.retrolauncher.backend.app.games.infrastructure.desktop.controllers;
 
 import org.retrolauncher.backend.app.games.application.dtos.SaveGameCoverInputDto;
-import org.retrolauncher.backend.app.games.application.usecases.CreateGameShortcutUseCase;
-import org.retrolauncher.backend.app.games.application.usecases.ListGamesUseCase;
-import org.retrolauncher.backend.app.games.application.usecases.SaveGameCoverUseCase;
-import org.retrolauncher.backend.app.games.application.usecases.UpdateGamesListUseCase;
+import org.retrolauncher.backend.app.games.application.usecases.*;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.ListGameResponse;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.SaveGameCoverDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public class GamesController {
     private final ListGamesUseCase listGamesUseCase;
     private final SaveGameCoverUseCase saveGameCoverUseCase;
-
     private final CreateGameShortcutUseCase createGameShortcutUseCase;
     private final UpdateGamesListUseCase updateGamesListUseCase;
+    private final StartGameUseCase startGameUseCase;
 
     public GamesController(
             ListGamesUseCase listGamesUseCase,
             SaveGameCoverUseCase saveGameCoverUseCase,
             CreateGameShortcutUseCase createGameShortcutUseCase,
-            UpdateGamesListUseCase updateGamesListUseCase
+            UpdateGamesListUseCase updateGamesListUseCase,
+            StartGameUseCase startGameUseCase
     ) {
         this.listGamesUseCase = listGamesUseCase;
         this.saveGameCoverUseCase = saveGameCoverUseCase;
         this.createGameShortcutUseCase = createGameShortcutUseCase;
         this.updateGamesListUseCase = updateGamesListUseCase;
+        this.startGameUseCase = startGameUseCase;
     }
 
     public List<ListGameResponse> listAll() {
@@ -53,5 +53,9 @@ public class GamesController {
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    public void startGame(UUID id) {
+        startGameUseCase.execute(id.toString());
     }
 }

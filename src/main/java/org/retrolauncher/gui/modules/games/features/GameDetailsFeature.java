@@ -17,13 +17,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public class GameDetails extends AnchorPane implements IGameDetails {
+public class GameDetailsFeature extends AnchorPane implements IGameDetailsFeature {
     @FXML
     private ImageView imgCover;
     @FXML
     private Label lblGameName, lblPlatformName;
     @FXML
-    private Button btnCreateShortcut;
+    private Button btnStartGame, btnCreateShortcut;
     @FXML
     private VBox paneMain;
     @FXML
@@ -31,9 +31,9 @@ public class GameDetails extends AnchorPane implements IGameDetails {
 
     private final GameDetailsPresenter presenter;
 
-    public GameDetails() {
+    public GameDetailsFeature() {
         presenter = new DefaultGameDetailsPresenter(this, EventManager.getInstance(), new LocalGamesGateway());
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("modules/games/features/GameDetails.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("modules/games/features/GameDetailsFeature.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -45,25 +45,25 @@ public class GameDetails extends AnchorPane implements IGameDetails {
     }
 
     @Override
-    public IGameDetails setLblGameName(String value) {
+    public IGameDetailsFeature setLblGameName(String value) {
         lblGameName.setText(value);
         return this;
     }
 
     @Override
-    public IGameDetails setLblPlatformName(String value) {
+    public IGameDetailsFeature setLblPlatformName(String value) {
         lblPlatformName.setText(value);
         return this;
     }
 
     @Override
-    public IGameDetails setImgCover(Path path) {
+    public IGameDetailsFeature setImgCover(Path path) {
         imgCover.setImage(new Image(path.toUri().toString()));
         return this;
     }
 
     @Override
-    public IGameDetails showMainPane() {
+    public IGameDetailsFeature showMainPane() {
         paneSelectGame.setVisible(false);
         paneMain.setVisible(true);
         return this;
@@ -72,6 +72,7 @@ public class GameDetails extends AnchorPane implements IGameDetails {
     @FXML
     private void initialize() {
         imgCover.setOnMouseClicked((evt) -> onClickImageView());
+        btnStartGame.setOnMouseClicked((evt) -> presenter.startGame());
         btnCreateShortcut.setOnMouseClicked((evt) -> presenter.createShortcut());
     }
 

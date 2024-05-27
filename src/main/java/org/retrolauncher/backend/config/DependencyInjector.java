@@ -87,7 +87,8 @@ public class DependencyInjector {
                 this.listGamesUseCase,
                 this.saveGameCoverUseCase,
                 this.createGameShortcutUseCase,
-                this.updateGamesListUseCase
+                this.updateGamesListUseCase,
+                this.startGameUseCase
         );
         this.settingController = new SettingController(this.saveSettingsUseCase, this.getSettingsUseCase);
     }

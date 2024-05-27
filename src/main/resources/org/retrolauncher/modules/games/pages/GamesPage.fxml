@@ -19,7 +19,7 @@
                     <ListGamesFeature/>
                 </AnchorPane>
                 <AnchorPane>
-                    <GameDetails/>
+                    <GameDetailsFeature/>
                 </AnchorPane>
             </SplitPane>
             <padding>

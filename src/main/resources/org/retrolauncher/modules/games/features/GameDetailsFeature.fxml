@@ -35,9 +35,20 @@
                     </Label>
                 </VBox>
                 <HBox alignment="BOTTOM_LEFT" VBox.vgrow="ALWAYS">
-                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="122.0" styleClass="primary"
-                            fx:id="btnCreateShortcut"
-                            text="Criar atalho">
+                    <Button fx:id="btnStartGame" mnemonicParsing="false" prefHeight="40.0" prefWidth="113.0" styleClass="primary"
+                            text="Iniciar">
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <HBox.margin>
+                            <Insets right="16.0"/>
+                        </HBox.margin>
+                        <cursor>
+                            <Cursor fx:constant="HAND"/>
+                        </cursor>
+                    </Button>
+                    <Button fx:id="btnCreateShortcut" mnemonicParsing="false" prefHeight="40.0" prefWidth="122.0"
+                            styleClass="primary" text="Criar atalho">
                         <font>
                             <Font size="14.0"/>
                         </font>

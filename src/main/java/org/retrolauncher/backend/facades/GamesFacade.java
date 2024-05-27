@@ -4,13 +4,16 @@ import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.ListGameR
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.SaveGameCoverDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface GamesFacade {
-    List<ListGameResponse>  listAll();
+    List<ListGameResponse> listAll();
 
     void saveCover(SaveGameCoverDto dto);
 
     void createShortcut(String id);
 
     void reindexGames();
+
+    void startGame(UUID id);
 }

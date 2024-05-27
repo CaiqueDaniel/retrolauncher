@@ -5,6 +5,7 @@ import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.ListGameR
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.SaveGameCoverDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public class GamesFacadeImpl implements GamesFacade {
     @Override
@@ -25,5 +26,10 @@ public class GamesFacadeImpl implements GamesFacade {
     @Override
     public void reindexGames() {
         Backend.getDependencies().getGamesController().reindexGames();
+    }
+
+    @Override
+    public void startGame(UUID id) {
+        Backend.getDependencies().getGamesController().startGame(id);
     }
 }

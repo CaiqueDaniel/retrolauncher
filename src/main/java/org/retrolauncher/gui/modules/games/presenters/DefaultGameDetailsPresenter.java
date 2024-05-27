@@ -2,7 +2,7 @@ package org.retrolauncher.gui.modules.games.presenters;
 
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.events.*;
-import org.retrolauncher.gui.modules.games.features.IGameDetails;
+import org.retrolauncher.gui.modules.games.features.IGameDetailsFeature;
 import org.retrolauncher.gui.modules.games.gateways.GamesGateway;
 import org.retrolauncher.gui.modules.games.models.Game;
 
@@ -10,12 +10,12 @@ import java.io.File;
 import java.nio.file.Path;
 
 public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
-    private final IGameDetails view;
+    private final IGameDetailsFeature view;
     private final EventManager eventManager;
     private final GamesGateway gateway;
     private Game game;
 
-    public DefaultGameDetailsPresenter(IGameDetails view, EventManager eventManager, GamesGateway gateway) {
+    public DefaultGameDetailsPresenter(IGameDetailsFeature view, EventManager eventManager, GamesGateway gateway) {
         this.view = view;
         this.eventManager = eventManager;
         this.gateway = gateway;
@@ -32,6 +32,11 @@ public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
     @Override
     public void createShortcut() {
         gateway.createShortcut(game);
+    }
+
+    @Override
+    public void startGame() {
+        new Thread(() -> gateway.startGame(game)).start();
     }
 
     private void registerListeners() {
