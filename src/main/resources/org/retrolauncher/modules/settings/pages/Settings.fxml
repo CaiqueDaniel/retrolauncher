@@ -7,40 +7,41 @@
 <?import org.retrolauncher.gui.modules.settings.features.*?>
 <?import org.retrolauncher.gui.shared.features.*?>
 
-<AnchorPane prefHeight="471.0" prefWidth="711.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="471.0" prefWidth="711.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1">
 
-    <VBox layoutX="91.0" layoutY="51.0" prefHeight="471.0" prefWidth="711.0" style="-fx-background-color: #1f1f1f;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Navbar />
+    <VBox layoutX="91.0" layoutY="51.0" prefHeight="471.0" prefWidth="711.0" style="-fx-background-color: #1f1f1f;"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <Navbar/>
         <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
-            <children>
+            <Label text="Configurações" textFill="WHITE">
+                <font>
+                    <Font size="16.0"/>
+                </font>
+                <padding>
+                    <Insets bottom="16.0"/>
+                </padding>
+            </Label>
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #303134;" VBox.vgrow="ALWAYS">
 
-                <Label text="Configurações" textFill="WHITE">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
+                <VBox maxWidth="240.0" minWidth="240.0">
+
+                    <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="25.0" prefWidth="242.0" fx:id="btnGeneral"
+                            text="Geral"/>
+
                     <padding>
-                        <Insets bottom="16.0" />
+                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
                     </padding>
-                </Label>
-                <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #303134;" VBox.vgrow="ALWAYS">
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS">
+                    <GeneralFormFeature/>
+                </VBox>
 
-                    <VBox maxWidth="240.0" minWidth="240.0">
-
-                        <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="25.0" prefWidth="242.0" text="Geral" />
-
-                        <padding>
-                            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-                        </padding>
-                    </VBox>
-                    <VBox HBox.hgrow="ALWAYS">
-                        <GeneralFormFeature />
-                    </VBox>
-
-                </HBox>
-            </children>
-         <padding>
-            <Insets bottom="24.0" left="24.0" right="24.0" />
-         </padding>
+            </HBox>
+            <padding>
+                <Insets bottom="24.0" left="24.0" right="24.0"/>
+            </padding>
         </VBox>
     </VBox>
 
