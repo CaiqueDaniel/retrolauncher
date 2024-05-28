@@ -21,6 +21,15 @@ public class GeneralFormPresenter implements IGeneralFormPresenter {
     }
 
     @Override
+    public void loadInitialValues() {
+        final Optional<Settings> response = gateway.get();
+        response.ifPresent((settings) -> {
+            view.setRetroarchPath(settings.getRetroarchPath().toString());
+            view.setRomsPath(settings.getRomPath().toString());
+        });
+    }
+
+    @Override
     public void submit() {
         Optional<String> romsPath = view.getRomsPath();
         Optional<String> retroarchPath = view.getRetroarchPath();

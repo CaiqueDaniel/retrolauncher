@@ -11,6 +11,9 @@ public class Settings {
     private Path romPath;
     private Path retroarchPath;
 
+    public Settings() {
+    }
+
     public Settings(Path romPath, Path retroarchPath) {
         this.romPath = romPath;
         this.retroarchPath = retroarchPath;

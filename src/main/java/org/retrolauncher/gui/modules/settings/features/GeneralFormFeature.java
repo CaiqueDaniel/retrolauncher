@@ -36,6 +36,7 @@ public class GeneralFormFeature extends VBox implements IGeneralFormFeature {
 
     @FXML
     private void initialize() {
+        presenter.loadInitialValues();
         btnSubmit.setOnMouseClicked((evt) -> presenter.submit());
     }
 
@@ -47,5 +48,15 @@ public class GeneralFormFeature extends VBox implements IGeneralFormFeature {
     @Override
     public Optional<String> getRomsPath() {
         return txtRomsPath.getValue();
+    }
+
+    @Override
+    public void setRetroarchPath(String value) {
+        txtRetroarchPath.setValue(value);
+    }
+
+    @Override
+    public void setRomsPath(String value) {
+        txtRomsPath.setValue(value);
     }
 }

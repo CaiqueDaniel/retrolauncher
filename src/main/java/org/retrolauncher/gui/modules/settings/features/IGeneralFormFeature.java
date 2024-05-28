@@ -6,4 +6,8 @@ public interface IGeneralFormFeature {
     Optional<String> getRetroarchPath();
 
     Optional<String> getRomsPath();
+
+    void setRetroarchPath(String value);
+
+    void setRomsPath(String value);
 }
