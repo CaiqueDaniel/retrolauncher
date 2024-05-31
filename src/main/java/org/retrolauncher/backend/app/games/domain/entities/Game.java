@@ -1,9 +1,10 @@
 package org.retrolauncher.backend.app.games.domain.entities;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.retrolauncher.backend.app._shared.domain.entities.Entity;
+import org.retrolauncher.backend.app.games.application.exceptions.GameValidationException;
+import org.retrolauncher.backend.app.games.domain.validators.GameValidator;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 
 import java.nio.file.Path;
@@ -13,7 +14,6 @@ import java.util.UUID;
 @Getter
 @Accessors(chain = true)
 public class Game extends Entity {
-    @Setter
     private String name;
     private Path path;
     private Path iconPath;
@@ -24,6 +24,7 @@ public class Game extends Entity {
         this.name = name;
         this.path = path;
         this.platform = platform;
+        validate();
     }
 
     public Game(UUID id, String name, Path path, Path iconPath, Platform platform) {
@@ -32,6 +33,7 @@ public class Game extends Entity {
         this.path = path;
         this.iconPath = iconPath;
         this.platform = platform;
+        validate();
     }
 
     public void uploadIcon(Path path) {
@@ -44,5 +46,18 @@ public class Game extends Entity {
 
     public Optional<Path> getIconPath() {
         return Optional.ofNullable(this.iconPath);
+    }
+
+    public Game setName(String value) {
+        this.name = value;
+        validate();
+        return this;
+    }
+
+    private void validate() {
+        final GameValidator validator = new GameValidator(this);
+
+        if (validator.hasErrors())
+            throw new GameValidationException(validator.getErrors());
     }
 }
