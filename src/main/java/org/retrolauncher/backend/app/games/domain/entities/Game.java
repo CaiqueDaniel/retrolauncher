@@ -1,6 +1,8 @@
 package org.retrolauncher.backend.app.games.domain.entities;
 
 import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.retrolauncher.backend.app._shared.domain.entities.Entity;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 
@@ -9,8 +11,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Getter
+@Accessors(chain = true)
 public class Game extends Entity {
-    private final String name;
+    @Setter
+    private String name;
     private Path path;
     private Path iconPath;
     private final Platform platform;
