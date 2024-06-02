@@ -1,14 +1,12 @@
 package org.retrolauncher.gui.modules.games.presenters;
 
 import javafx.application.Platform;
-import org.retrolauncher.Main;
 import org.retrolauncher.gui.events.*;
 import org.retrolauncher.gui.modules.games.features.IGameDetailsFeature;
 import org.retrolauncher.gui.modules.games.gateways.GamesGateway;
 import org.retrolauncher.gui.modules.games.models.Game;
 
 import java.io.File;
-import java.nio.file.Path;
 
 public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
     private final IGameDetailsFeature view;
@@ -60,11 +58,9 @@ public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
     }
 
     private void updateView() {
-        final Path NO_COVER_RESOURCE = Path.of(new File(Main.class.getResource("assets/no-cover.png").getFile())
-                .toString().replace("file:\\", ""));
         view.setLblGameName(game.getName())
                 .setLblPlatformName(game.getPlatformName())
-                .setImgCover(game.getIconPath().orElse(NO_COVER_RESOURCE))
+                .setImgCover(game.getIconPath().orElse(null))
                 .showMainPane();
     }
 }

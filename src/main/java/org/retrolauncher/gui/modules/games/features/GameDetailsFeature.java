@@ -13,6 +13,7 @@ import org.retrolauncher.gui.modules.games.presenters.*;
 
 import java.io.*;
 import java.nio.file.Path;
+import java.util.Objects;
 
 public class GameDetailsFeature extends AnchorPane implements IGameDetailsFeature {
     @FXML
@@ -57,7 +58,10 @@ public class GameDetailsFeature extends AnchorPane implements IGameDetailsFeatur
 
     @Override
     public IGameDetailsFeature setImgCover(Path path) {
-        imgCover.setImage(new Image(path.toUri().toString()));
+        final Image image = path == null ?
+                new Image(Objects.requireNonNull(Main.class.getResourceAsStream("assets/no-cover.png"))) :
+                new Image(path.toUri().toString());
+        imgCover.setImage(image);
         return this;
     }
 
