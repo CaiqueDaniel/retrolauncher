@@ -1,0 +1,19 @@
+.list-cell {
+    -fx-control-inner-background: #3b3b3b;
+    -fx-control-inner-background-alt: derive(-fx-control-inner-background, 25%);
+    -fx-cursor: hand;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+   -fx-background-color: #1f1f1f;
+   -fx-padding: 1px;
+}
+
+.list-view .scroll-bar,
+.list-view .virtual-flow > .corner {
+    -fx-background-color: #3b3b3b;
+}
+
+.list-view .scroll-bar .thumb{
+	-fx-background-color: #595959;
+}
