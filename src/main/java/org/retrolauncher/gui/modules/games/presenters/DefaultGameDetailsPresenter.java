@@ -53,7 +53,7 @@ public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
     }
 
     private void updateGame(Game game) {
-        this.game = game.clone();
+        this.game = new Game(game);
         this.updateView();
     }
 

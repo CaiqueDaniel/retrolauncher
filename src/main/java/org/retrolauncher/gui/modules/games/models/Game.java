@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 @Getter
-public class Game implements Cloneable {
+public class Game {
     private final UUID id;
     @Setter
     private String name;
@@ -23,6 +23,13 @@ public class Game implements Cloneable {
         this.iconPath = iconPath;
     }
 
+    public Game(Game game) {
+        this.id = game.id;
+        this.name = game.name;
+        this.platformName = game.platformName;
+        this.iconPath = game.iconPath;
+    }
+
     public void replaceIcon(File file) {
         if (!file.exists())
             return;
@@ -33,8 +40,8 @@ public class Game implements Cloneable {
         return Optional.ofNullable(iconPath);
     }
 
-    @Override
+    /*@Override
     public Game clone() {
         return new Game(id, name, platformName, iconPath);
-    }
+    }*/
 }
