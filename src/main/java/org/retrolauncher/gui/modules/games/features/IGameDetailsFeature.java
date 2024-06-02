@@ -11,5 +11,9 @@ public interface IGameDetailsFeature {
 
     IGameDetailsFeature showMainPane();
 
+    IGameDetailsFeature resetBtnShortcut();
+
+    IGameDetailsFeature disableBtnShortcutWithLabel(String label);
+
     String getInputedGameName();
 }

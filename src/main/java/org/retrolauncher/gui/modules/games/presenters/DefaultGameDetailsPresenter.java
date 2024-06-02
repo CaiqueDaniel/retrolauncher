@@ -41,6 +41,7 @@ public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
     @Override
     public void createShortcut() {
         gateway.createShortcut(game);
+        view.disableBtnShortcutWithLabel("Atalho criado");
     }
 
     @Override
@@ -61,6 +62,7 @@ public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
         view.setLblGameName(game.getName())
                 .setLblPlatformName(game.getPlatformName())
                 .setImgCover(game.getIconPath().orElse(null))
+                .resetBtnShortcut()
                 .showMainPane();
     }
 }

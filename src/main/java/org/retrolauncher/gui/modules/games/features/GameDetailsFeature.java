@@ -23,9 +23,13 @@ public class GameDetailsFeature extends AnchorPane implements IGameDetailsFeatur
     @FXML
     private IGameLabelToInputComponent lblGameName;
     @FXML
-    private Button btnStartGame, btnCreateShortcut;
+    private Button btnStartGame;
     @FXML
-    private VBox paneMain, sectionGameData;
+    private Button btnCreateShortcut;
+    @FXML
+    private VBox paneMain;
+    @FXML
+    private VBox sectionGameData;
     @FXML
     private FlowPane paneSelectGame;
 
@@ -69,6 +73,20 @@ public class GameDetailsFeature extends AnchorPane implements IGameDetailsFeatur
     public IGameDetailsFeature showMainPane() {
         paneSelectGame.setVisible(false);
         paneMain.setVisible(true);
+        return this;
+    }
+
+    @Override
+    public IGameDetailsFeature resetBtnShortcut() {
+        btnCreateShortcut.setDisable(false);
+        btnCreateShortcut.setText("Criar atalho");
+        return this;
+    }
+
+    @Override
+    public IGameDetailsFeature disableBtnShortcutWithLabel(String label) {
+        btnCreateShortcut.setDisable(true);
+        btnCreateShortcut.setText(label);
         return this;
     }
 
