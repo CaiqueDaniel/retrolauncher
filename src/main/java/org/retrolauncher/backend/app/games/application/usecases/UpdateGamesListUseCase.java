@@ -1,5 +1,6 @@
 package org.retrolauncher.backend.app.games.application.usecases;
 
+import org.retrolauncher.Main;
 import org.retrolauncher.backend.app._shared.application.exceptions.FileCouldNotBeDeletedException;
 import org.retrolauncher.backend.app._shared.application.services.FileManagerService;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class UpdateGamesListUseCase {
@@ -127,7 +130,7 @@ public class UpdateGamesListUseCase {
                     fileManagerService.delete(game.getIconPath().get());
                 repository.delete(game);
             } catch (FileCouldNotBeDeletedException e) {
-                System.out.println(e.getMessage());
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, e.getMessage());
             }
         });
     }

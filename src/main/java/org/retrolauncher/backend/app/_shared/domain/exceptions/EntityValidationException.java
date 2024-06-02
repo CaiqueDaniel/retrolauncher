@@ -10,12 +10,12 @@ public abstract class EntityValidationException extends RuntimeException {
     private final Map<String, String> errors;
 
     @Deprecated
-    public EntityValidationException(String message) {
+    protected EntityValidationException(String message) {
         super(message);
         this.errors = new HashMap<>();
     }
 
-    public EntityValidationException(String message, Map<String, String> errors) {
+    protected EntityValidationException(String message, Map<String, String> errors) {
         super(message);
         this.errors = Map.copyOf(errors);
     }

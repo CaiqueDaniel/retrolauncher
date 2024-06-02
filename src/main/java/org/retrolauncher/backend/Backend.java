@@ -1,9 +1,13 @@
 package org.retrolauncher.backend;
 
+import org.retrolauncher.Main;
 import org.retrolauncher.backend.config.CommandsHandler;
 import org.retrolauncher.backend.config.DependencyInjector;
 import org.retrolauncher.backend.events.DefaultEventManager;
 import org.retrolauncher.backend.events.EventsRegister;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Backend {
     private static final DependencyInjector dependencyInjector = new DependencyInjector();
@@ -13,7 +17,7 @@ public class Backend {
             Backend.registerEvents();
             Backend.registerCommands(args);
         } catch (Exception exception) {
-            System.out.println(exception.getMessage());
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, exception.getMessage());
         }
     }
 
