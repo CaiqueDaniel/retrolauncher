@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <Label fx:id="label" text="Label" textFill="#fffefe" />
+
+    <HBox fx:id="controls" alignment="CENTER_LEFT" managed="false" visible="false" VBox.vgrow="NEVER">
+        <TextField fx:id="textField">
+            <font>
+                <Font size="14.0" />
+            </font>
+            <HBox.margin>
+                <Insets right="8.0" />
+            </HBox.margin>
+        </TextField>
+        <Button fx:id="btnOk" mnemonicParsing="false" prefHeight="30.0" text="OK">
+            <HBox.margin>
+                <Insets right="8.0" />
+            </HBox.margin>
+        </Button>
+        <Button fx:id="btnCancel" mnemonicParsing="false" prefHeight="30.0" text="Cancelar" />
+      <VBox.margin>
+         <Insets bottom="16.0" />
+      </VBox.margin>
+    </HBox>
+</fx:root>

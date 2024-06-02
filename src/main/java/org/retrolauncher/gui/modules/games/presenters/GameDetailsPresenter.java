@@ -5,6 +5,8 @@ import java.io.File;
 public interface GameDetailsPresenter {
     void sendGameCover(File cover);
 
+    void updateGameName();
+
     void createShortcut();
 
     void startGame();

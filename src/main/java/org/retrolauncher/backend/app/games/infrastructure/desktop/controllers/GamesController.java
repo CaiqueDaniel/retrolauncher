@@ -4,6 +4,7 @@ import org.retrolauncher.backend.app.games.application.dtos.SaveGameCoverInputDt
 import org.retrolauncher.backend.app.games.application.usecases.*;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.ListGameResponse;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.SaveGameCoverDto;
+import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.UpdateGameRequestDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,19 +15,22 @@ public class GamesController {
     private final CreateGameShortcutUseCase createGameShortcutUseCase;
     private final UpdateGamesListUseCase updateGamesListUseCase;
     private final StartGameUseCase startGameUseCase;
+    private final UpdateGameUseCase updateGameUseCase;
 
     public GamesController(
             ListGamesUseCase listGamesUseCase,
             SaveGameCoverUseCase saveGameCoverUseCase,
             CreateGameShortcutUseCase createGameShortcutUseCase,
             UpdateGamesListUseCase updateGamesListUseCase,
-            StartGameUseCase startGameUseCase
+            StartGameUseCase startGameUseCase,
+            UpdateGameUseCase updateGameUseCase
     ) {
         this.listGamesUseCase = listGamesUseCase;
         this.saveGameCoverUseCase = saveGameCoverUseCase;
         this.createGameShortcutUseCase = createGameShortcutUseCase;
         this.updateGamesListUseCase = updateGamesListUseCase;
         this.startGameUseCase = startGameUseCase;
+        this.updateGameUseCase = updateGameUseCase;
     }
 
     public List<ListGameResponse> listAll() {
@@ -57,5 +61,9 @@ public class GamesController {
 
     public void startGame(UUID id) {
         startGameUseCase.execute(id.toString());
+    }
+
+    public void updateGame(UpdateGameRequestDto dto) {
+        updateGameUseCase.execute(dto);
     }
 }

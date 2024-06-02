@@ -3,11 +3,14 @@ package org.retrolauncher.gui.modules.games.gateways;
 import org.retrolauncher.gui.modules.games.models.Game;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface GamesGateway {
     List<Game> listAll();
 
-    void updateGame(Game game);
+    CompletableFuture<Void> updateGame(Game game);
+
+    void saveCover(Game game);
 
     void createShortcut(Game game);
 

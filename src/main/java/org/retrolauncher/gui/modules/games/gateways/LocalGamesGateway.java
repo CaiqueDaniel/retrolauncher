@@ -1,12 +1,11 @@
 package org.retrolauncher.gui.modules.games.gateways;
 
-import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.SaveGameCoverDto;
-import org.retrolauncher.backend.facades.GamesFacade;
-import org.retrolauncher.backend.facades.GamesFacadeImpl;
+import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.*;
+import org.retrolauncher.backend.facades.*;
 import org.retrolauncher.gui.modules.games.models.Game;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class LocalGamesGateway implements GamesGateway {
     private final GamesFacade facade = new GamesFacadeImpl();
@@ -22,7 +21,18 @@ public class LocalGamesGateway implements GamesGateway {
     }
 
     @Override
-    public void updateGame(Game game) {
+    public CompletableFuture<Void> updateGame(Game game) {
+        final ExecutorService executorService = Executors.newSingleThreadExecutor();
+        final CompletableFuture<Void> result = CompletableFuture.supplyAsync(() -> {
+            facade.updateGame(new UpdateGameRequestDto(game.getId(), game.getName()));
+            return null;
+        }, executorService);
+        executorService.shutdown();
+        return result;
+    }
+
+    @Override
+    public void saveCover(Game game) {
         if (game.getIconPath().isPresent())
             facade.saveCover(new SaveGameCoverDto(game.getId().toString(), game.getIconPath().get().toFile()));
     }

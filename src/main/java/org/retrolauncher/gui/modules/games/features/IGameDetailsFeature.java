@@ -10,4 +10,6 @@ public interface IGameDetailsFeature {
     IGameDetailsFeature setImgCover(Path path);
 
     IGameDetailsFeature showMainPane();
+
+    String getInputedGameName();
 }

@@ -1,5 +1,6 @@
 package org.retrolauncher.gui.modules.games.presenters;
 
+import javafx.application.Platform;
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.events.*;
 import org.retrolauncher.gui.modules.games.features.IGameDetailsFeature;
@@ -26,7 +27,17 @@ public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
     @Override
     public void sendGameCover(File cover) {
         game.replaceIcon(cover);
-        gateway.updateGame(game);
+        gateway.saveCover(game);
+    }
+
+    @Override
+    public void updateGameName() {
+        game.setName(view.getInputedGameName());
+        gateway.updateGame(game)
+                .thenAccept((r) -> Platform.runLater(() -> {
+                    eventManager.notify(EventType.GAME_UPDATED, game);
+                    eventManager.notify(EventType.GAME_SELECTED, game);
+                }));
     }
 
     @Override

@@ -1,31 +1,30 @@
 package org.retrolauncher.gui.modules.games.features;
 
 import javafx.fxml.*;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.events.EventManager;
+import org.retrolauncher.gui.modules.games.components.IGameLabelToInputComponent;
 import org.retrolauncher.gui.modules.games.gateways.LocalGamesGateway;
 import org.retrolauncher.gui.modules.games.presenters.*;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 
 public class GameDetailsFeature extends AnchorPane implements IGameDetailsFeature {
     @FXML
     private ImageView imgCover;
     @FXML
-    private Label lblGameName, lblPlatformName;
+    private Label lblPlatformName;
+    @FXML
+    private IGameLabelToInputComponent lblGameName;
     @FXML
     private Button btnStartGame, btnCreateShortcut;
     @FXML
-    private VBox paneMain;
+    private VBox paneMain, sectionGameData;
     @FXML
     private FlowPane paneSelectGame;
 
@@ -46,7 +45,7 @@ public class GameDetailsFeature extends AnchorPane implements IGameDetailsFeatur
 
     @Override
     public IGameDetailsFeature setLblGameName(String value) {
-        lblGameName.setText(value);
+        lblGameName.setLabelText(value);
         return this;
     }
 
@@ -69,11 +68,17 @@ public class GameDetailsFeature extends AnchorPane implements IGameDetailsFeatur
         return this;
     }
 
+    @Override
+    public String getInputedGameName() {
+        return lblGameName.getInputValue();
+    }
+
     @FXML
     private void initialize() {
         imgCover.setOnMouseClicked((evt) -> onClickImageView());
         btnStartGame.setOnMouseClicked((evt) -> presenter.startGame());
         btnCreateShortcut.setOnMouseClicked((evt) -> presenter.createShortcut());
+        lblGameName.onClickConfirm(presenter::updateGameName);
     }
 
     private void onClickImageView() {

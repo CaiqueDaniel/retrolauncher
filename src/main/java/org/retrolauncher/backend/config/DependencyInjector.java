@@ -46,6 +46,7 @@ public class DependencyInjector {
     private final SaveGameCoverUseCase saveGameCoverUseCase;
     private final SaveSettingsUseCase saveSettingsUseCase;
     private final GetSettingsUseCase getSettingsUseCase;
+    private final UpdateGameUseCase updateGameUseCase;
 
     private final PlatformController platformController;
     private final GamesController gamesController;
@@ -82,13 +83,15 @@ public class DependencyInjector {
         this.saveGameCoverUseCase = new SaveGameCoverUseCase(this.gameRepository, new CoverUploaderService());
         this.saveSettingsUseCase = new SaveSettingsUseCase(this.settingRepository, this.eventDispatcherService);
         this.getSettingsUseCase = new GetSettingsUseCase(this.settingRepository);
+        this.updateGameUseCase = new UpdateGameUseCase(this.gameRepository);
         this.platformController = new PlatformController(this.updatePlatformsListUseCase);
         this.gamesController = new GamesController(
                 this.listGamesUseCase,
                 this.saveGameCoverUseCase,
                 this.createGameShortcutUseCase,
                 this.updateGamesListUseCase,
-                this.startGameUseCase
+                this.startGameUseCase,
+                this.updateGameUseCase
         );
         this.settingController = new SettingController(this.saveSettingsUseCase, this.getSettingsUseCase);
     }
