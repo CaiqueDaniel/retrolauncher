@@ -9,12 +9,14 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Renderer {
-    private Stage stage;
+    private final Stage stage = new Stage();
     private static Renderer instance;
 
+    private Renderer() {
+        stage.setMaximized(true);
+    }
+
     public void render(Page page) throws IOException {
-        if (stage != null) stage.close();
-        stage = new Stage();
         stage.setScene(page.createScene());
         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("assets/icon.png"))));
         stage.setTitle("Retro Launcher");
