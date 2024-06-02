@@ -47,7 +47,7 @@ public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
 
     @Override
     public void startGame() {
-        new Thread(() -> gateway.startGame(game)).start();
+        gateway.startGame(game);
     }
 
     private void registerListeners() {

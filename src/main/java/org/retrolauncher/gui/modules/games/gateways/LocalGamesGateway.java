@@ -49,6 +49,6 @@ public class LocalGamesGateway implements GamesGateway {
 
     @Override
     public void startGame(Game game) {
-        facade.startGame(game.getId());
+        new Thread(() -> facade.startGame(game.getId())).start();
     }
 }
