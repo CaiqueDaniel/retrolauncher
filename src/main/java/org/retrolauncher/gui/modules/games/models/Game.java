@@ -39,9 +39,4 @@ public class Game {
     public Optional<Path> getIconPath() {
         return Optional.ofNullable(iconPath);
     }
-
-    /*@Override
-    public Game clone() {
-        return new Game(id, name, platformName, iconPath);
-    }*/
 }

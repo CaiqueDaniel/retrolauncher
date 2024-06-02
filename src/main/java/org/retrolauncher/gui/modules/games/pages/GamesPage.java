@@ -12,6 +12,7 @@ public class GamesPage extends Page {
         super("modules/games/pages/GamesPage.fxml");
     }
 
+    @Override
     public Scene createScene() throws IOException {
         final Scene scene = super.createScene();
         final String style = Objects.requireNonNull(Main.class.getResource("styles/list-games.css")).toExternalForm();

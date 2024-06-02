@@ -1,8 +1,6 @@
 package org.retrolauncher.backend.config;
 
-import org.retrolauncher.backend.app.games.infrastructure.cli.commands.CreateShortcutCommand;
-import org.retrolauncher.backend.app.games.infrastructure.cli.commands.ListGamesCommand;
-import org.retrolauncher.backend.app.games.infrastructure.cli.commands.StartGameCommand;
+import org.retrolauncher.backend.app.games.infrastructure.cli.commands.*;
 import picocli.CommandLine;
 
 import java.util.*;
@@ -14,7 +12,6 @@ public class CommandsHandler implements Runnable {
     public CommandsHandler(DependencyInjector dependencyInjector, String[] args) {
         this.args = new LinkedList<>(List.of(args));
         this.commands = List.of(
-                new CommandLine(new ListGamesCommand(dependencyInjector.getListGamesUseCase())),
                 new CommandLine(new CreateShortcutCommand(dependencyInjector.getCreateGameShortcutUseCase())),
                 new CommandLine(new StartGameCommand(dependencyInjector.getStartGameUseCase()))
         );
@@ -22,7 +19,7 @@ public class CommandsHandler implements Runnable {
 
     @Override
     public void run() {
-        if (this.args.size() == 0)
+        if (this.args.isEmpty())
             return;
 
         String commandName = this.args.removeFirst();
