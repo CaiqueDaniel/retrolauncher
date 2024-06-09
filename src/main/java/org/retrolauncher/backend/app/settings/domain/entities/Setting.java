@@ -1,10 +1,9 @@
 package org.retrolauncher.backend.app.settings.domain.entities;
 
 import lombok.Getter;
-import org.retrolauncher.backend.app.settings.domain.exceptions.InvalidROMPathException;
-import org.retrolauncher.backend.app.settings.domain.exceptions.InvalidRetroarchPathException;
+import org.retrolauncher.backend.app.settings.domain.exceptions.SettingValidationException;
+import org.retrolauncher.backend.app.settings.domain.validators.SettingValidator;
 
-import java.io.File;
 import java.nio.file.Path;
 
 @Getter
@@ -25,14 +24,8 @@ public class Setting {
     }
 
     private void validate() {
-        if (isInvalidPath(romsFolderPath))
-            throw new InvalidROMPathException();
-        if (isInvalidPath(retroarchFolderPath))
-            throw new InvalidRetroarchPathException();
-    }
-
-    private boolean isInvalidPath(Path path) {
-        File file = path.toFile();
-        return !file.isDirectory() || !file.exists() || !file.canRead();
+        final SettingValidator validator = new SettingValidator(this);
+        if (validator.hasErrors())
+            throw new SettingValidationException(validator.getErrors());
     }
 }
