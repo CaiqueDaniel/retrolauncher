@@ -10,4 +10,9 @@ public interface IGeneralFormFeature {
     void setRetroarchPath(String value);
 
     void setRomsPath(String value);
+
+    void setErrorMessage(String message);
+
+    void setFieldsValidationError(String fieldName, String message);
 }
+

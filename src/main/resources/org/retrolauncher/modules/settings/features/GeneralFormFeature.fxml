@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.retrolauncher.gui.shared.components.DirectoryInput?>
-<?import javafx.scene.text.Font?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+<?import org.retrolauncher.gui.shared.components.*?>
 
-<fx:root type="VBox" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx"
-         xmlns:fx="http://javafx.com/fxml"
-         prefHeight="400.0" prefWidth="600.0">
-    <DirectoryInput text="Caminho da pasta do Retroarch" fx:id="txtRetroarchPath"/>
-    <DirectoryInput text="Caminho da pasta de ROMs" fx:id="txtRomsPath"/>
-    <Button mnemonicParsing="false" styleClass="primary" text="Salvar alterações" fx:id="btnSubmit">
+<fx:root prefHeight="400.0" prefWidth="600.0" type="VBox" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.2-ea"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <Label text="Label" textFill="#cd0909" fx:id="lblMessageError" managed="false" visible="false">
+        <VBox.margin>
+            <Insets bottom="16.0"/>
+        </VBox.margin>
+        <font>
+            <Font name="System Bold" size="16.0"/>
+        </font>
+    </Label>
+    <DirectoryInput fx:id="txtRetroarchPath" text="Caminho da pasta do Retroarch"/>
+    <DirectoryInput fx:id="txtRomsPath" text="Caminho da pasta de ROMs"/>
+    <Button fx:id="btnSubmit" mnemonicParsing="false" styleClass="primary" text="Salvar alterações">
         <font>
             <Font size="14.0"/>
         </font>
