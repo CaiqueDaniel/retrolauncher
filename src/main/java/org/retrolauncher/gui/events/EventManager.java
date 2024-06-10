@@ -25,6 +25,10 @@ public class EventManager {
                 .ifPresent((listeners) -> listeners.forEach((listener) -> listener.accept(Optional.of(data))));
     }
 
+    public void clear() {
+        this.eventListeners.clear();
+    }
+
     public static EventManager getInstance() {
         if (EventManager.instance == null)
             EventManager.instance = new EventManager();

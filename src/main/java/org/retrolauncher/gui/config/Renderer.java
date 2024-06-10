@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.base.Page;
+import org.retrolauncher.gui.events.EventManager;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -17,6 +18,7 @@ public class Renderer {
     }
 
     public void render(Page page) throws IOException {
+        EventManager.getInstance().clear();
         stage.setScene(page.createScene());
         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("assets/icon.png"))));
         stage.setTitle("Retro Launcher");
