@@ -15,12 +15,14 @@ public class Renderer {
 
     private Renderer() {
         stage.setMaximized(true);
+        stage.getIcons().add(
+                new Image(Objects.requireNonNull(Main.class.getResourceAsStream("assets/icon.png")))
+        );
     }
 
     public void render(Page page) throws IOException {
         EventManager.getInstance().clear();
         stage.setScene(page.createScene());
-        stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("assets/icon.png"))));
         stage.setTitle("Retro Launcher");
         stage.show();
     }
