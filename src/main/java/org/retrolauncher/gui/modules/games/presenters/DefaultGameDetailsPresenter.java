@@ -26,6 +26,8 @@ public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
     public void sendGameCover(File cover) {
         game.replaceIcon(cover);
         gateway.saveCover(game);
+        view.setImgCover(cover.toPath());
+        eventManager.notify(EventType.GAME_UPDATED, game);
     }
 
     @Override

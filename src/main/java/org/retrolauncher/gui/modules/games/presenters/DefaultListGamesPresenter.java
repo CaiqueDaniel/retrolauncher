@@ -44,7 +44,10 @@ public class DefaultListGamesPresenter implements ListGamesPresenter {
         final Optional<Game> result = games.stream()
                 .filter((oldGame) -> oldGame.getId().equals(game.getId()))
                 .findFirst();
-        result.ifPresent((foundGame) -> foundGame.setName(game.getName()));
+        result.ifPresent((foundGame) -> {
+            foundGame.setName(game.getName());
+            game.getIconPath().ifPresent((path) -> foundGame.replaceIcon(path.toFile()));
+        });
         view.updateList(games);
     }
 }
