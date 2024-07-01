@@ -30,12 +30,32 @@ public class CoverUploaderService implements UploaderService {
         if (!this.isValidFormat(file))
             throw new CoverUploadedIsNotImageException();
 
+        Path icoPath = null;
+
         try {
-            this.saveIcon(file, filename);
+            icoPath = this.saveIcon(file, filename);
             return this.saveImage(file, filename);
         } catch (IOException exception) {
+            if (icoPath != null)
+                icoPath.toFile().delete();
             throw new NotAbleToUploadCoverException(exception);
         }
+    }
+
+    @Override
+    public void remove(Path coverPath) {
+        if (!coverPath.toFile().exists())
+            return;
+
+        final String coverFilename = getIconName(coverPath);
+        final File cover = coverPath.toFile();
+        final File coverIco = Path.of(
+                coverPath.getParent().toAbsolutePath().toString(),
+                coverFilename + ".ico"
+        ).toFile();
+
+        if (cover.exists()) cover.delete();
+        if (coverIco.exists()) coverIco.delete();
     }
 
     private Path saveImage(File file, String filename) throws IOException {
@@ -68,20 +88,26 @@ public class CoverUploaderService implements UploaderService {
         }
     }
 
-    private void saveIcon(File file, String filename) throws IOException {
+    private Path saveIcon(File file, String filename) throws IOException {
         Path path = Path.of(COVERS_DIRECTORY);
         Files.createDirectories(path);
         BufferedImage bufferedImage = ImageIO.read(file);
         File outputFile = path.resolve(filename + ".ico").toFile();
         ICOEncoder.write(bufferedImage, outputFile);
+        return outputFile.toPath();
     }
 
     private boolean isValidFormat(File file) {
         return Arrays.stream(ACCEPTED_EXTENSIONS)
-                .anyMatch((extension) -> file.getName().contains(extension));
+                .anyMatch((extension) -> file.getName().toLowerCase().contains(extension));
     }
 
     private String getExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf('.'));
+    }
+
+    private String getIconName(Path path) {
+        String fileName = path.getFileName().toString();
+        return fileName.substring(0, fileName.lastIndexOf('.'));
     }
 }

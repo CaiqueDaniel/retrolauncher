@@ -20,4 +20,9 @@ public class StubCoverUploaderService implements UploaderService {
                 .append(".png")
                 .toString());
     }
+
+    @Override
+    public void remove(Path path) {
+        //nop
+    }
 }

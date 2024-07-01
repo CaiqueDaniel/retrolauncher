@@ -26,27 +26,28 @@ public class SaveGameCoverUseCaseIntegrationTests {
     private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final Platform platform = new Platform("Test", "test", List.of("test"));
     private final SaveGameCoverUseCase sut = new SaveGameCoverUseCase(repository, new StubCoverUploaderService());
+    private final File cover = new File("test/game.png");
 
     @BeforeAll
-    void beforeAll() throws IOException {
+    void beforeAll() {
         platformRepository.save(platform);
-        File folder = new File("test/game.png");
-        folder.getParentFile().mkdirs();
-        folder.createNewFile();
+    }
+
+    @BeforeEach
+    void beforeEach() throws IOException {
+        cover.getParentFile().mkdirs();
+        cover.createNewFile();
     }
 
     @AfterEach
     void afterEach() {
+        cover.delete();
+
         repository.listAll().forEach((game) -> {
             new File(game.getIconPath().get().toString()).delete();
         });
 
         repository.clear();
-    }
-
-    @AfterAll
-    void afterAll() {
-        new File("test/game.png").delete();
     }
 
     @Test
@@ -65,15 +66,14 @@ public class SaveGameCoverUseCaseIntegrationTests {
     @Test
     void it_should_be_able_to_replace_a_existent_cover_within_a_game() {
         Game game = new Game(UUID.randomUUID().toString(), Path.of("path"), platform);
-        File icon = new File("test/game.png");
 
         game.uploadIcon(Path.of("test/test.ico"));
         repository.save(game);
-        sut.execute(new SaveGameCoverInputDto(game.getId().toString(), icon));
+        sut.execute(new SaveGameCoverInputDto(game.getId().toString(), cover));
 
         Optional<Path> result = repository.listAll().get(0).getIconPath();
 
         assertTrue(result.isPresent());
-        assertEquals(Path.of("test/test.ico").toAbsolutePath().toString(), result.get().toAbsolutePath().toString());
+        assertNotEquals(Path.of("test/test.ico").toAbsolutePath().toString(), result.get().toAbsolutePath().toString());
     }
 }

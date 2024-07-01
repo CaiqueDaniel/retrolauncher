@@ -20,24 +20,17 @@ public class SaveGameCoverUseCase {
     }
 
     public void execute(SaveGameCoverInputDto input) {
-        Optional<Game> result = this.repository.findById(UUID.fromString(input.id()));
+        final Optional<Game> result = this.repository.findById(UUID.fromString(input.id()));
 
         if (result.isEmpty())
             throw new GameNotFoundException();
 
-        Game game = result.get();
+        final Game game = result.get();
+        final Optional<Path> previousCover = game.getIconPath();
+        final Path uploadedCover = this.uploaderService.upload(input.icon());
 
-        if (game.getIconPath().isPresent()) {
-            this.uploaderService.upload(input.icon(), this.getIconName(game.getIconPath().get()));
-            return;
-        }
-
-        game.uploadIcon(this.uploaderService.upload(input.icon()));
+        game.uploadIcon(uploadedCover);
         this.repository.save(game);
-    }
-
-    private String getIconName(Path path) {
-        String fileName = path.getFileName().toString();
-        return fileName.substring(0, fileName.lastIndexOf('.'));
+        previousCover.ifPresent(this.uploaderService::remove);
     }
 }

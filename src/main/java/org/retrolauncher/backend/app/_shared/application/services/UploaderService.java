@@ -7,4 +7,6 @@ public interface UploaderService {
     Path upload(File file);
 
     Path upload(File file, String filename);
+
+    void remove(Path path);
 }
