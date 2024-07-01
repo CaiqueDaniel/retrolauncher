@@ -1,6 +1,6 @@
 package integration;
 
-import fixtures.StubCoverUploaderService;
+import fixtures.StubCoverFileSystemService;
 import org.junit.jupiter.api.*;
 import org.retrolauncher.backend.app.games.application.dtos.SaveGameCoverInputDto;
 import org.retrolauncher.backend.app.games.application.usecases.SaveGameCoverUseCase;
@@ -25,7 +25,7 @@ public class SaveGameCoverUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
     private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final Platform platform = new Platform("Test", "test", List.of("test"));
-    private final SaveGameCoverUseCase sut = new SaveGameCoverUseCase(repository, new StubCoverUploaderService());
+    private final SaveGameCoverUseCase sut = new SaveGameCoverUseCase(repository, new StubCoverFileSystemService());
     private final File cover = new File("test/game.png");
 
     @BeforeAll

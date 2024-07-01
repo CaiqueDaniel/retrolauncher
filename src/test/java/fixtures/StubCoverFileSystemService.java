@@ -1,12 +1,12 @@
 package fixtures;
 
-import org.retrolauncher.backend.app._shared.application.services.UploaderService;
+import org.retrolauncher.backend.app._shared.application.services.FileSystemService;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.util.UUID;
 
-public class StubCoverUploaderService implements UploaderService {
+public class StubCoverFileSystemService implements FileSystemService {
     @Override
     public Path upload(File file) {
         return this.upload(file, UUID.randomUUID().toString());

@@ -80,7 +80,7 @@ public class DependencyInjector {
         this.startGameUseCase = new StartGameUseCase(this.gameRepository, this.processRunnerService);
         this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);
         this.createGameShortcutUseCase = new CreateGameShortcutUseCase(this.gameRepository, this.shortcutService);
-        this.saveGameCoverUseCase = new SaveGameCoverUseCase(this.gameRepository, new CoverUploaderService());
+        this.saveGameCoverUseCase = new SaveGameCoverUseCase(this.gameRepository, new CoverFileSystemService());
         this.saveSettingsUseCase = new SaveSettingsUseCase(this.settingRepository, this.eventDispatcherService);
         this.getSettingsUseCase = new GetSettingsUseCase(this.settingRepository);
         this.updateGameUseCase = new UpdateGameUseCase(this.gameRepository);

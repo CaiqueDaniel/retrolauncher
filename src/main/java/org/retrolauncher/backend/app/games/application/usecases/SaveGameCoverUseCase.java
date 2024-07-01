@@ -1,6 +1,6 @@
 package org.retrolauncher.backend.app.games.application.usecases;
 
-import org.retrolauncher.backend.app._shared.application.services.UploaderService;
+import org.retrolauncher.backend.app._shared.application.services.FileSystemService;
 import org.retrolauncher.backend.app.games.application.dtos.SaveGameCoverInputDto;
 import org.retrolauncher.backend.app.games.application.exceptions.GameNotFoundException;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
@@ -12,11 +12,11 @@ import java.util.UUID;
 
 public class SaveGameCoverUseCase {
     private final GameRepository repository;
-    private final UploaderService uploaderService;
+    private final FileSystemService fileSystemService;
 
-    public SaveGameCoverUseCase(GameRepository repository, UploaderService uploaderService) {
+    public SaveGameCoverUseCase(GameRepository repository, FileSystemService fileSystemService) {
         this.repository = repository;
-        this.uploaderService = uploaderService;
+        this.fileSystemService = fileSystemService;
     }
 
     public void execute(SaveGameCoverInputDto input) {
@@ -27,10 +27,10 @@ public class SaveGameCoverUseCase {
 
         final Game game = result.get();
         final Optional<Path> previousCover = game.getIconPath();
-        final Path uploadedCover = this.uploaderService.upload(input.icon());
+        final Path uploadedCover = this.fileSystemService.upload(input.icon());
 
         game.uploadIcon(uploadedCover);
         this.repository.save(game);
-        previousCover.ifPresent(this.uploaderService::remove);
+        previousCover.ifPresent(this.fileSystemService::remove);
     }
 }

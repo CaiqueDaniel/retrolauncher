@@ -2,7 +2,7 @@ package org.retrolauncher.backend.app._shared.infrastructure.services;
 
 import net.sf.image4j.codec.ico.ICOEncoder;
 import org.retrolauncher.backend.app._shared.application.exceptions.NotAbleToUploadCoverException;
-import org.retrolauncher.backend.app._shared.application.services.UploaderService;
+import org.retrolauncher.backend.app._shared.application.services.FileSystemService;
 import org.retrolauncher.backend.app.games.application.exceptions.CoverUploadedIsNotImageException;
 
 import javax.imageio.ImageIO;
@@ -12,7 +12,7 @@ import java.nio.file.*;
 import java.util.Arrays;
 import java.util.UUID;
 
-public class CoverUploaderService implements UploaderService {
+public class CoverFileSystemService implements FileSystemService {
     private static final String[] ACCEPTED_EXTENSIONS = {".png", ".jpg", ".jpeg"};
 
     private static final String COVERS_DIRECTORY = Path.of(System.getProperty("user.home"))
