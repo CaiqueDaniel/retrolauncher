@@ -10,7 +10,7 @@ public interface GamesGateway {
 
     CompletableFuture<Void> updateGame(Game game);
 
-    void saveCover(Game game);
+    CompletableFuture<Void> saveCover(Game game);
 
     void createShortcut(Game game);
 

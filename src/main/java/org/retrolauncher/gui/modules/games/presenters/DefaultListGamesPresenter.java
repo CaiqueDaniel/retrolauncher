@@ -46,7 +46,10 @@ public class DefaultListGamesPresenter implements ListGamesPresenter {
                 .findFirst();
         result.ifPresent((foundGame) -> {
             foundGame.setName(game.getName());
-            game.getIconPath().ifPresent((path) -> foundGame.replaceIcon(path.toFile()));
+            game.getIconPath().ifPresent((path) -> {
+                System.out.println(path);
+                foundGame.replaceIcon(path.toFile());
+            });
         });
         view.updateList(games);
     }

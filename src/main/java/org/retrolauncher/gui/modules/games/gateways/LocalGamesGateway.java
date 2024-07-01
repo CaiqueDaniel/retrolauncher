@@ -6,6 +6,7 @@ import org.retrolauncher.gui.modules.games.models.Game;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.function.Supplier;
 
 public class LocalGamesGateway implements GamesGateway {
     private final GamesFacade facade = new GamesFacadeImpl();
@@ -22,19 +23,19 @@ public class LocalGamesGateway implements GamesGateway {
 
     @Override
     public CompletableFuture<Void> updateGame(Game game) {
-        final ExecutorService executorService = Executors.newSingleThreadExecutor();
-        final CompletableFuture<Void> result = CompletableFuture.supplyAsync(() -> {
+        return handleRequestWithoutResponse(() -> {
             facade.updateGame(new UpdateGameRequestDto(game.getId(), game.getName()));
             return null;
-        }, executorService);
-        executorService.shutdown();
-        return result;
+        });
     }
 
     @Override
-    public void saveCover(Game game) {
-        if (game.getIconPath().isPresent())
-            facade.saveCover(new SaveGameCoverDto(game.getId().toString(), game.getIconPath().get().toFile()));
+    public CompletableFuture<Void> saveCover(Game game) {
+        return handleRequestWithoutResponse(() -> {
+            if (game.getIconPath().isPresent())
+                facade.saveCover(new SaveGameCoverDto(game.getId().toString(), game.getIconPath().get().toFile()));
+            return null;
+        });
     }
 
     @Override
@@ -50,5 +51,12 @@ public class LocalGamesGateway implements GamesGateway {
     @Override
     public void startGame(Game game) {
         new Thread(() -> facade.startGame(game.getId())).start();
+    }
+
+    private CompletableFuture<Void> handleRequestWithoutResponse(Supplier<Void> callback) {
+        final ExecutorService executorService = Executors.newSingleThreadExecutor();
+        final CompletableFuture<Void> result = CompletableFuture.supplyAsync(callback, executorService);
+        executorService.shutdown();
+        return result;
     }
 }
