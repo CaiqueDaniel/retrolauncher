@@ -16,6 +16,7 @@ public class Backend {
         try {
             Backend.registerEvents();
             Backend.registerCommands(args);
+            getDependencies().getPlatformController().updateList();
         } catch (Exception exception) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, exception.getMessage());
         }

@@ -10,11 +10,7 @@ public class PlatformController {
         this.updatePlatformsListUseCase = updatePlatformsListUseCase;
     }
 
-    public void updateList() {
-        try {
-            this.updatePlatformsListUseCase.execute();
-        } catch (CoreFolderNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+    public void updateList() throws CoreFolderNotFoundException {
+        this.updatePlatformsListUseCase.execute();
     }
 }
