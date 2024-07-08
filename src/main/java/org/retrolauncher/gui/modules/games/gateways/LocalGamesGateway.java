@@ -12,13 +12,17 @@ public class LocalGamesGateway implements GamesGateway {
     private final GamesFacade facade = new GamesFacadeImpl();
 
     @Override
-    public List<Game> listAll() {
-        return facade.listAll().stream().map((item) -> new Game(
+    public CompletableFuture<List<Game>> listAll() {
+        final Supplier<List<Game>> lambda = () -> facade.listAll().stream().map((item) -> new Game(
                 UUID.fromString(item.id()),
                 item.name(),
                 item.platformName(),
                 item.iconPath().orElse(null)
         )).toList();
+        final ExecutorService executorService = Executors.newSingleThreadExecutor();
+        final CompletableFuture<List<Game>> result = CompletableFuture.supplyAsync(lambda, executorService);
+        executorService.shutdown();
+        return result;
     }
 
     @Override
@@ -39,13 +43,19 @@ public class LocalGamesGateway implements GamesGateway {
     }
 
     @Override
-    public void createShortcut(Game game) {
-        facade.createShortcut(game.getId().toString());
+    public CompletableFuture<Void> createShortcut(Game game) {
+        return handleRequestWithoutResponse(() -> {
+            facade.createShortcut(game.getId().toString());
+            return null;
+        });
     }
 
     @Override
-    public void reindexGames() {
-        facade.reindexGames();
+    public CompletableFuture<Void> reindexGames() {
+        return handleRequestWithoutResponse(() -> {
+            facade.reindexGames();
+            return null;
+        });
     }
 
     @Override

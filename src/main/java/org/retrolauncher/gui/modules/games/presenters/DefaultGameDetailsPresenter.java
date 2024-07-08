@@ -44,8 +44,8 @@ public class DefaultGameDetailsPresenter implements GameDetailsPresenter {
 
     @Override
     public void createShortcut() {
-        gateway.createShortcut(selectedGame);
-        view.disableBtnShortcutWithLabel("Atalho criado");
+        gateway.createShortcut(selectedGame)
+                .thenAccept((r) -> Platform.runLater(() -> view.disableBtnShortcutWithLabel("Atalho criado")));
     }
 
     @Override

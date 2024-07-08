@@ -1,5 +1,6 @@
 package org.retrolauncher.gui.modules.games.presenters;
 
+import javafx.application.Platform;
 import org.retrolauncher.gui.events.*;
 import org.retrolauncher.gui.modules.games.features.IListGamesFeature;
 import org.retrolauncher.gui.modules.games.gateways.GamesGateway;
@@ -23,8 +24,10 @@ public class DefaultListGamesPresenter implements ListGamesPresenter {
 
     @Override
     public void listAll() {
-        games = gateway.listAll();
-        view.updateList(games);
+        gateway.listAll().thenAccept((games) -> {
+            this.games = games;
+            Platform.runLater(() -> view.updateList(games));
+        });
     }
 
     public void selectGameItem(Game game) {
@@ -32,8 +35,7 @@ public class DefaultListGamesPresenter implements ListGamesPresenter {
     }
 
     public void reindexGames() {
-        gateway.reindexGames();
-        listAll();
+        gateway.reindexGames().thenAccept((r) -> listAll());
     }
 
     private void registerListeners() {

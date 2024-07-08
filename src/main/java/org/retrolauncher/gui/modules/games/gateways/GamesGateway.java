@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface GamesGateway {
-    List<Game> listAll();
+    CompletableFuture<List<Game>> listAll();
 
     CompletableFuture<Void> updateGame(Game game);
 
     CompletableFuture<Void> saveCover(Game game);
 
-    void createShortcut(Game game);
+    CompletableFuture<Void> createShortcut(Game game);
 
-    void reindexGames();
+    CompletableFuture<Void> reindexGames();
 
     void startGame(Game game);
 }
