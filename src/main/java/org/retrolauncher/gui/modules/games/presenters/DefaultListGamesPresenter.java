@@ -35,7 +35,10 @@ public class DefaultListGamesPresenter implements ListGamesPresenter {
     }
 
     public void reindexGames() {
-        gateway.reindexGames().thenAccept((r) -> listAll());
+        view.setIsLoadingReindexGamesBtn(true);
+        gateway.reindexGames()
+                .thenAccept((r) -> listAll())
+                .whenComplete((r, e) -> Platform.runLater(() -> view.setIsLoadingReindexGamesBtn(false)));
     }
 
     private void registerListeners() {

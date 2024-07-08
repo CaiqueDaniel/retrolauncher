@@ -45,4 +45,14 @@ public class ListGamesFeature extends VBox implements IListGamesFeature {
         lvGames.getItems().clear();
         games.forEach((game) -> lvGames.getItems().add(new GameItem(game, presenter::selectGameItem)));
     }
+
+    @Override
+    public void setIsLoadingReindexGamesBtn(boolean isLoading) {
+        btnReindexGames.setDisable(isLoading);
+        if (isLoading) {
+            btnReindexGames.setText("Reindexando...");
+            return;
+        }
+        btnReindexGames.setText("Reindexar Jogos");
+    }
 }
