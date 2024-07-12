@@ -1,8 +1,9 @@
 [
   {
-    "name": "Nintendo Entretainement System",
+    "name": "Nintendo Entertainment System",
     "extensions": [
-      "nes"
+      "nes",
+      "fds"
     ],
     "coresAlias": [
       "mesen"
@@ -19,7 +20,7 @@
     ]
   },
   {
-    "name": "Super Nintendo Entretainement System",
+    "name": "Super Nintendo Entertainment System",
     "extensions": [
       "sfc"
     ],
@@ -35,6 +36,15 @@
     ],
     "coresAlias": [
       "mupen"
+    ]
+  },
+  {
+    "name": "Sega Master System",
+    "extensions": [
+      "sms"
+    ],
+    "coresAlias": [
+      "smsplus"
     ]
   }
 ]
