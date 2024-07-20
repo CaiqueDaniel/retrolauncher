@@ -8,6 +8,10 @@ public class LocalPlatformDetectorFactory implements PlatformDetectorFactory {
     @Override
     public PlatformDetectorService createFrom(String name) {
         return switch (name) {
+            case "Nintendo Entertainment System" -> new NESPlatformDetectorService();
+            case "Super Nintendo Entertainment System" -> new SNESPlatformDetectorService();
+            case "Game Boy/Color" -> new GBCPlatformDetectorService();
+            case "Sega Master System" -> new SMSPlatformDetectorService();
             case "Playstation 1" -> new PSXPlatformDetectorService();
             case "Nintendo 64" -> new N64PlatformDetectorService();
             default -> throw new RuntimeException();
