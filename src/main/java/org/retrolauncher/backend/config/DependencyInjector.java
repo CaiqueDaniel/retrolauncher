@@ -9,6 +9,7 @@ import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.models.GameModel;
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.repositories.JacksonGameRepository;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.controllers.GamesController;
+import org.retrolauncher.backend.app.games.infrastructure.factories.LocalPlatformDetectorFactory;
 import org.retrolauncher.backend.app.platforms.application.services.PlatformsResourceConfigService;
 import org.retrolauncher.backend.app.platforms.application.usecases.UpdatePlatformsListUseCase;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
@@ -32,7 +33,6 @@ public class DependencyInjector {
     private final SettingRepository settingRepository;
 
     private final PlatformsResourceConfigService platformsResourceConfigService;
-    private final EnvConfigService configService;
     private final ShortcutService shortcutService;
     private final ProcessRunnerService processRunnerService;
     private final EventDispatcherService eventDispatcherService;
@@ -53,7 +53,6 @@ public class DependencyInjector {
     private final SettingController settingController;
 
     public DependencyInjector() {
-        this.configService = new ProdEnvConfigService();
         this.shortcutService = new ShellLinkShortcutService();
         this.processRunnerService = new DefaultProcessRunnerService();
         this.eventDispatcherService = new DefaultEventDispatcherService(DefaultEventManager.getInstance());
@@ -75,7 +74,8 @@ public class DependencyInjector {
                 this.gameRepository,
                 this.platformRepository,
                 this.settingRepository,
-                this.coverFileManagerService
+                this.coverFileManagerService,
+                new LocalPlatformDetectorFactory()
         );
         this.startGameUseCase = new StartGameUseCase(this.gameRepository, this.processRunnerService);
         this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);

@@ -3,6 +3,8 @@ package integration;
 import fixtures.StubSettingRepository;
 import org.junit.jupiter.api.*;
 import org.retrolauncher.backend.app._shared.application.services.FileManagerService;
+import org.retrolauncher.backend.app.games.application.factories.PlatformDetectorFactory;
+import org.retrolauncher.backend.app.games.application.services.PlatformDetectorService;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.games.infrastructure.database.jackson.repositories.MemoryGameRepository;
@@ -35,7 +37,8 @@ class UpdateGamesListUseCaseIntegrationTests {
             repository,
             platformRepository,
             settingRepository,
-            mockedFileManagerService
+            mockedFileManagerService,
+            new StubPlatformDetectorFactory()
     );
 
     @BeforeAll
@@ -108,5 +111,13 @@ class UpdateGamesListUseCaseIntegrationTests {
         sut.execute();
         sut.execute();
         assertEquals(1, repository.listAll().size());
+    }
+}
+
+class StubPlatformDetectorFactory implements PlatformDetectorFactory {
+
+    @Override
+    public PlatformDetectorService createFrom(String name) {
+        return file -> true;
     }
 }

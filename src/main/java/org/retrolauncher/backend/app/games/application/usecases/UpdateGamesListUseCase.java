@@ -3,6 +3,7 @@ package org.retrolauncher.backend.app.games.application.usecases;
 import org.retrolauncher.Main;
 import org.retrolauncher.backend.app._shared.application.exceptions.FileCouldNotBeDeletedException;
 import org.retrolauncher.backend.app._shared.application.services.FileManagerService;
+import org.retrolauncher.backend.app.games.application.factories.PlatformDetectorFactory;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
@@ -27,17 +28,20 @@ public class UpdateGamesListUseCase {
     private final PlatformRepository platformRepository;
     private final SettingRepository settingRepository;
     private final FileManagerService fileManagerService;
+    private final PlatformDetectorFactory platformDetectorFactory;
 
     public UpdateGamesListUseCase(
             GameRepository repository,
             PlatformRepository platformRepository,
             SettingRepository settingRepository,
-            FileManagerService fileManagerService
+            FileManagerService fileManagerService,
+            PlatformDetectorFactory platformDetectorFactory
     ) {
         this.repository = repository;
         this.platformRepository = platformRepository;
         this.settingRepository = settingRepository;
         this.fileManagerService = fileManagerService;
+        this.platformDetectorFactory = platformDetectorFactory;
     }
 
     public void execute() throws FileNotFoundException {
@@ -61,10 +65,10 @@ public class UpdateGamesListUseCase {
 
         return gamesFiles.stream().map((gameFile) -> {
             Optional<Platform> gamePlatform = platforms.stream()
-                    .filter((platform) -> platform
-                            .getExtensions()
-                            .stream()
-                            .anyMatch((extension) -> gameFile.getName().contains(extension))).findFirst();
+                    .filter((platform) -> platformDetectorFactory
+                            .createFrom(platform.getName())
+                            .isFromPlatform(gameFile))
+                    .findFirst();
 
             return gamePlatform.map(platform -> new Game(
                     getNameWithoutExtension(gameFile),
