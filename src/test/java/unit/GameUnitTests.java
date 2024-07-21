@@ -12,7 +12,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameUnitTests {
-    private final Platform platform = new Platform("Test", "", new ArrayList<>());
+    private final Platform platform = new Platform("Test", "");
 
     @Test
     void it_should_be_able_to_create() {

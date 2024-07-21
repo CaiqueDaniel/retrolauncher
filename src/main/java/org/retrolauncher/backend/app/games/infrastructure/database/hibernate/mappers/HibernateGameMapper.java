@@ -5,7 +5,6 @@ import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.mod
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 
 import java.nio.file.Path;
-import java.util.List;
 import java.util.UUID;
 
 public class HibernateGameMapper {
@@ -28,7 +27,7 @@ public class HibernateGameMapper {
                 model.getName(),
                 Path.of(model.getPath()),
                 model.getIconPath() != null ? Path.of(model.getIconPath()) : null,
-                new Platform("","", List.of())
+                new Platform("","")
         );
     }
 }

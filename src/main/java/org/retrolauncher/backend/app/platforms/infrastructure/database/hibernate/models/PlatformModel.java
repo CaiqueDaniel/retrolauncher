@@ -9,11 +9,10 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "platform")
+@Table(name = "platforms")
 public class PlatformModel {
     @Id
     UUID id;
     String name;
     String corePath;
-    List<String> extensions = new ArrayList<>();
 }

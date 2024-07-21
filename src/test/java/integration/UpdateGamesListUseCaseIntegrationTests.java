@@ -42,7 +42,7 @@ class UpdateGamesListUseCaseIntegrationTests {
 
     @BeforeAll
     void beforeAll() {
-        platformRepository.save(new Platform("Test", "test", List.of("test")));
+        platformRepository.save(new Platform("Test", "test"));
         testFolder.mkdirs();
     }
 

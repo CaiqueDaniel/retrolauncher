@@ -10,21 +10,18 @@ import java.util.UUID;
 public class Platform extends Entity {
     private final String name;
     private final String corePath;
-    private final List<String> extensions;
 
-    public Platform(String name, String corePath, List<String> extensions) {
+    public Platform(String name, String corePath) {
         super(UUID.randomUUID());
 
         this.name = name;
         this.corePath = corePath;
-        this.extensions = extensions;
     }
 
-    public Platform(UUID id, String name, String corePath, List<String> extensions) {
+    public Platform(UUID id, String name, String corePath) {
         super(id);
 
         this.name = name;
         this.corePath = corePath;
-        this.extensions = extensions;
     }
 }

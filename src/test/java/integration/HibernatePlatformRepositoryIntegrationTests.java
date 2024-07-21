@@ -23,7 +23,7 @@ class HibernatePlatformRepositoryIntegrationTests {
     @BeforeEach
     void beforeEach() {
         sut.clear();
-        platform = new Platform("Nintendo 64", "path", new ArrayList<>());
+        platform = new Platform("Nintendo 64", "path");
     }
 
     @Test

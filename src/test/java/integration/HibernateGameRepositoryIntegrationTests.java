@@ -24,7 +24,7 @@ class HibernateGameRepositoryIntegrationTests {
         var driver = new TestHibernateDriver();
         var platformRepository = new HibernatePlatformRepository(driver.getSessionFactory());
         sut = new HibernateGameRepository(driver.getSessionFactory());
-        platform = new Platform("Nintendo 64", "path", new ArrayList<>());
+        platform = new Platform("Nintendo 64", "path");
         platformRepository.save(platform);
     }
 

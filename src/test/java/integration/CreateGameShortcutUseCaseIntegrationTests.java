@@ -27,7 +27,7 @@ class CreateGameShortcutUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
     private final MemoryGameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final ShortcutService shortcutService = mock(ShortcutService.class);
-    private final Platform platform = new Platform("Test", "test", List.of("test"));
+    private final Platform platform = new Platform("Test", "test");
     private final CreateGameShortcutUseCase sut = new CreateGameShortcutUseCase(repository, shortcutService);
 
     @BeforeAll

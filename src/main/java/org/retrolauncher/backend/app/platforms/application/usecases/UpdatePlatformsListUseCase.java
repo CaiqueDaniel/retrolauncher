@@ -66,7 +66,7 @@ public class UpdatePlatformsListUseCase {
 
             if (platformCore.isEmpty() || this.repository.existsByCore(platformCore.get().getAbsolutePath()))
                 return null;
-            return new Platform(config.name(), platformCore.get().getAbsolutePath(), config.extensions());
+            return new Platform(config.name(), platformCore.get().getAbsolutePath());
         }).filter(Objects::nonNull).toList();
     }
 }

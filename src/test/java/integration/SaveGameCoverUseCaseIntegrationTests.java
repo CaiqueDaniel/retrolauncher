@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SaveGameCoverUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
     private final MemoryGameRepository repository = new MemoryGameRepository(this.platformRepository);
-    private final Platform platform = new Platform("Test", "test", List.of("test"));
+    private final Platform platform = new Platform("Test", "test");
     private final SaveGameCoverUseCase sut = new SaveGameCoverUseCase(repository, new StubCoverFileSystemService());
     private final File cover = new File("test/game.png");
 

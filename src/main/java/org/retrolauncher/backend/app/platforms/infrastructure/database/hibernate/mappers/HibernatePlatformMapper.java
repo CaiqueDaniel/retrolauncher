@@ -12,7 +12,6 @@ public class HibernatePlatformMapper {
         model.setId(entity.getId());
         model.setName(entity.getName());
         model.setCorePath(entity.getCorePath());
-        model.setExtensions(entity.getExtensions());
         return model;
     }
 
@@ -20,8 +19,7 @@ public class HibernatePlatformMapper {
         return new Platform(
                 model.getId(),
                 model.getName(),
-                model.getCorePath(),
-                model.getExtensions()
+                model.getCorePath()
         );
     }
 }

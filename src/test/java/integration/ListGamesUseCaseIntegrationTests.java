@@ -20,7 +20,7 @@ class ListGamesUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
     private final MemoryGameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final ListGamesUseCase sut = new ListGamesUseCase(repository);
-    private final Platform platform = new Platform("Test", "test", List.of("test"));
+    private final Platform platform = new Platform("Test", "test");
 
     @BeforeAll
     void beforeAll() {
