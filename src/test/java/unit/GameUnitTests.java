@@ -6,7 +6,6 @@ import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;

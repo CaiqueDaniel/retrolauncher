@@ -3,7 +3,6 @@ package org.retrolauncher.backend.app.platforms.domain.entities;
 import lombok.Getter;
 import org.retrolauncher.backend.app._shared.domain.entities.Entity;
 
-import java.util.List;
 import java.util.UUID;
 
 @Getter

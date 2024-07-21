@@ -5,8 +5,6 @@ import org.junit.jupiter.api.*;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 import org.retrolauncher.backend.app.platforms.infrastructure.database.hibernate.repositories.HibernatePlatformRepository;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
