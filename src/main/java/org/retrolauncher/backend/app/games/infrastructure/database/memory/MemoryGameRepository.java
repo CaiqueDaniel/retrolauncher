@@ -47,7 +47,7 @@ public class MemoryGameRepository implements GameRepository {
     public Optional<Game> findOneByNameAndPlatformId(String name, UUID platformId) {
         return this.storedData.values()
                 .stream()
-                .filter((game) -> game.getName().equals(name) && game.getPlatform().getId().equals(platformId.toString()))
+                .filter((game) -> game.getName().equals(name) && game.getPlatformId().equals(platformId))
                 .findFirst();
     }
 

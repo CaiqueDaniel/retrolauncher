@@ -17,17 +17,17 @@ public class HibernateGameMapper {
         model.setName(entity.getName());
         model.setPath(entity.getPath().toString());
         entity.getIconPath().ifPresent((path) -> model.setIconPath(path.toAbsolutePath().toString()));
-        model.setPlatformId(entity.getPlatform().getId().toString());
+        model.setPlatformId(entity.getPlatformId().toString());
         return model;
     }
 
     public static Game toDomain(GameModel model) {
         return new Game(
-                UUID.fromString(model.getId().toString()),
+                model.getId(),
                 model.getName(),
                 Path.of(model.getPath()),
                 model.getIconPath() != null ? Path.of(model.getIconPath()) : null,
-                new Platform("","")
+                UUID.fromString(model.getPlatformId())
         );
     }
 }

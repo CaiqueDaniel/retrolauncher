@@ -19,7 +19,7 @@ public class ListGamesUseCase {
                 .map((game) -> new ListGamesUseCaseOutput(
                         game.getId().toString(),
                         game.getName(),
-                        game.getPlatform().getName(),
+                        "",//game.getPlatformId().getName(),
                         game.getIconPath().orElse(null)
                 )).sorted(Comparator.comparing(ListGamesUseCaseOutput::name))
                 .toList();

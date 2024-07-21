@@ -17,22 +17,22 @@ public class Game extends Entity {
     private String name;
     private Path path;
     private Path iconPath;
-    private final Platform platform;
+    private final UUID platformId;
 
-    public Game(String name, Path path, Platform platform) {
+    public Game(String name, Path path, UUID platformId) {
         super(UUID.randomUUID());
         this.name = name;
         this.path = path;
-        this.platform = platform;
+        this.platformId = platformId;
         validate();
     }
 
-    public Game(UUID id, String name, Path path, Path iconPath, Platform platform) {
+    public Game(UUID id, String name, Path path, Path iconPath, UUID platformId) {
         super(id);
         this.name = name;
         this.path = path;
         this.iconPath = iconPath;
-        this.platform = platform;
+        this.platformId = platformId;
         validate();
     }
 

@@ -34,7 +34,7 @@ class ListGamesUseCaseIntegrationTests {
 
     @Test()
     void it_should_be_able_to_list_games() {
-        repository.save(new Game("test", Path.of("testpath"), platform));
+        repository.save(new Game("test", Path.of("testpath"), platform.getId()));
         List<ListGamesUseCaseOutput> result = sut.execute();
         assertEquals(1, result.size());
         assertEquals("test", result.get(0).name());
@@ -43,7 +43,7 @@ class ListGamesUseCaseIntegrationTests {
 
     @Test()
     void it_should_be_able_to_list_games_with_icon() {
-        Game game = new Game("test", Path.of("testpath"), platform);
+        Game game = new Game("test", Path.of("testpath"), platform.getId());
         game.uploadIcon(Path.of("icon.png"));
         repository.save(game);
         List<ListGamesUseCaseOutput> result = sut.execute();

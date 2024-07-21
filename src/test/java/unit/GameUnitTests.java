@@ -16,17 +16,17 @@ public class GameUnitTests {
     @Test
     void it_should_be_able_to_create() {
         Path gamePath = Path.of(System.getProperty("user.home"));
-        Game game = new Game("test", gamePath, platform);
+        Game game = new Game("test", gamePath, platform.getId());
         assertEquals("test", game.getName());
         assertEquals(gamePath.toAbsolutePath(), game.getPath().toAbsolutePath());
-        assertEquals(platform.getId(), game.getPlatform().getId());
+        assertEquals(platform.getId(), game.getPlatformId());
         assertTrue(game.getIconPath().isEmpty());
     }
 
     @Test
     void it_should_not_be_able_to_set_name_using_invalid_data() {
         String[] invalidData = {"", null, " "};
-        Game game = new Game("test", Path.of(""), platform);
+        Game game = new Game("test", Path.of(""), platform.getId());
         Arrays.stream(invalidData)
                 .forEach((invalidName) -> assertThrows(GameValidationException.class, () -> game.setName(invalidName)));
     }

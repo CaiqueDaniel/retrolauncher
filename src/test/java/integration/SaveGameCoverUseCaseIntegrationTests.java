@@ -50,7 +50,7 @@ public class SaveGameCoverUseCaseIntegrationTests {
 
     @Test
     void it_should_be_able_to_save_a_cover_within_a_game() {
-        Game game = new Game(UUID.randomUUID().toString(), Path.of("path"), platform);
+        Game game = new Game(UUID.randomUUID().toString(), Path.of("path"), platform.getId());
         File icon = new File("test/game.png");
 
         repository.save(game);
@@ -63,7 +63,7 @@ public class SaveGameCoverUseCaseIntegrationTests {
 
     @Test
     void it_should_be_able_to_replace_a_existent_cover_within_a_game() {
-        Game game = new Game(UUID.randomUUID().toString(), Path.of("path"), platform);
+        Game game = new Game(UUID.randomUUID().toString(), Path.of("path"), platform.getId());
 
         game.uploadIcon(Path.of("test/test.ico"));
         repository.save(game);

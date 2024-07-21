@@ -23,11 +23,11 @@ class StartGameUseCaseIntegrationTests {
     private final MemoryGameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final ProcessRunnerService processRunnerService = mock(ProcessRunnerService.class);
     private final Platform platform = new Platform("Test", "test");
-    private final StartGameUseCase sut = new StartGameUseCase(repository, this.processRunnerService);
+    private final StartGameUseCase sut = new StartGameUseCase(repository, platformRepository, this.processRunnerService);
 
     @BeforeAll
     public void beforeAll() throws IOException {
-        when(processRunnerService.startGame(any()))
+        when(processRunnerService.startGame(any(), any()))
                 .thenReturn(new ProcessBuilder().command("cmd", "/c", "echo", "\"test\"").start());
         platformRepository.save(platform);
     }
@@ -39,11 +39,11 @@ class StartGameUseCaseIntegrationTests {
 
     @Test
     void it_should_start_game() {
-        Game game = new Game("test", Path.of("testpath"), platform);
+        Game game = new Game("test", Path.of("testpath"), platform.getId());
         repository.save(game);
 
         sut.execute(game.getId().toString());
-        verify(processRunnerService, times(1)).startGame(any(Game.class));
+        verify(processRunnerService, times(1)).startGame(any(), any());
     }
 
     @Test

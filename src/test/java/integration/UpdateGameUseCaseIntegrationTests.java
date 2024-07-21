@@ -35,7 +35,7 @@ public class UpdateGameUseCaseIntegrationTests {
 
     @Test
     void it_should_be_able_to_update_game_data() {
-        Game game = new Game(UUID.randomUUID().toString(), Path.of("path"), platform);
+        Game game = new Game(UUID.randomUUID().toString(), Path.of("path"), platform.getId());
         repository.save(game);
         sut.execute(new UpdateGameInputDto(game.getId(), "Renamed"));
         String result = repository.listAll().get(0).getName();
@@ -44,7 +44,7 @@ public class UpdateGameUseCaseIntegrationTests {
 
     @Test
     void it_should_not_update_game_data_when_game_is_not_found() {
-        Game game = new Game(UUID.randomUUID().toString(), Path.of("path"), platform);
+        Game game = new Game(UUID.randomUUID().toString(), Path.of("path"), platform.getId());
         repository.save(game);
         assertThrows(
                 GameNotFoundException.class,

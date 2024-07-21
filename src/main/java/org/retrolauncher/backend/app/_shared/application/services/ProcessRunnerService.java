@@ -1,8 +1,9 @@
 package org.retrolauncher.backend.app._shared.application.services;
 
 import org.retrolauncher.backend.app._shared.application.exceptions.NotAbleToLaunchProcessException;
-import org.retrolauncher.backend.app.games.domain.entities.Game;
+
+import java.nio.file.Path;
 
 public interface ProcessRunnerService {
-    Process startGame(Game game) throws NotAbleToLaunchProcessException;
+    Process startGame(Path gamePath, Path corePath) throws NotAbleToLaunchProcessException;
 }

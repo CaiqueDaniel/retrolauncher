@@ -2,15 +2,14 @@ package org.retrolauncher.backend.app._shared.infrastructure.services;
 
 import org.retrolauncher.backend.app._shared.application.exceptions.NotAbleToLaunchProcessException;
 import org.retrolauncher.backend.app._shared.application.services.ProcessRunnerService;
-import org.retrolauncher.backend.app.games.domain.entities.Game;
 
 import java.nio.file.Path;
 
 public class DefaultProcessRunnerService implements ProcessRunnerService {
     @Override
-    public Process startGame(Game game) throws NotAbleToLaunchProcessException {
+    public Process startGame(Path gamePath, Path corePath) throws NotAbleToLaunchProcessException {
         try {
-            Path retroarchPath = Path.of(game.getPlatform().getCorePath())
+            Path retroarchPath = corePath
                     .getParent()
                     .getParent()
                     .resolve("retroarch.exe");
@@ -19,8 +18,8 @@ public class DefaultProcessRunnerService implements ProcessRunnerService {
                     .command(
                             retroarchPath.toString(),
                             "-L",
-                            game.getPlatform().getCorePath(),
-                            game.getPath().toString()
+                            corePath.toAbsolutePath().toString(),
+                            gamePath.toAbsolutePath().toString()
                     ).start();
         } catch (Exception exception) {
             throw new NotAbleToLaunchProcessException(exception);

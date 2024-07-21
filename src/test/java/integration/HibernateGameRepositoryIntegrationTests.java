@@ -30,7 +30,7 @@ class HibernateGameRepositoryIntegrationTests {
 
     @BeforeEach
     void beforeEach() {
-        game = new Game("Teste", Path.of("teste.test"), platform);
+        game = new Game("Teste", Path.of("teste.test"), platform.getId());
     }
 
     @AfterEach
@@ -76,7 +76,7 @@ class HibernateGameRepositoryIntegrationTests {
     @Test
     void it_should_be_able_to_find_a_game_by_name_and_platform_id() {
         sut.save(game);
-        var result = sut.findOneByNameAndPlatformId(game.getName(), game.getPlatform().getId());
+        var result = sut.findOneByNameAndPlatformId(game.getName(), game.getPlatformId());
         assertTrue(result.isPresent());
     }
 

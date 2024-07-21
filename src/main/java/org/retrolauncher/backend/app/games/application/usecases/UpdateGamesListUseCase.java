@@ -73,7 +73,7 @@ public class UpdateGamesListUseCase {
             return gamePlatform.map(platform -> new Game(
                     getNameWithoutExtension(gameFile),
                     gameFile.toPath(),
-                    platform
+                    platform.getId()
             )).orElse(null);
         }).filter(Objects::nonNull).toList();
     }
@@ -82,7 +82,7 @@ public class UpdateGamesListUseCase {
         return games.stream().map((game) -> {
             Optional<Game> result = this.repository.findOneByNameAndPlatformId(
                     game.getName(),
-                    game.getPlatform().getId()
+                    game.getPlatformId()
             );
 
             if (result.isEmpty())

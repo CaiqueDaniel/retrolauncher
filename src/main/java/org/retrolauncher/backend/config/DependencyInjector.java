@@ -75,7 +75,7 @@ public class DependencyInjector {
                 this.coverFileManagerService,
                 new LocalPlatformDetectorFactory()
         );
-        this.startGameUseCase = new StartGameUseCase(this.gameRepository, this.processRunnerService);
+        this.startGameUseCase = new StartGameUseCase(gameRepository, platformRepository, processRunnerService);
         this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);
         this.createGameShortcutUseCase = new CreateGameShortcutUseCase(this.gameRepository, this.shortcutService);
         this.saveGameCoverUseCase = new SaveGameCoverUseCase(this.gameRepository, new CoverFileSystemService());
