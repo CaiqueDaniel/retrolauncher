@@ -17,7 +17,7 @@ import java.util.UUID;
 public class GameModel {
     @Id
     UUID id;
-    String platformId;
+    UUID platformId;
     String name;
     String path;
     String iconPath;

@@ -5,7 +5,6 @@ import lombok.experimental.Accessors;
 import org.retrolauncher.backend.app._shared.domain.entities.Entity;
 import org.retrolauncher.backend.app.games.application.exceptions.GameValidationException;
 import org.retrolauncher.backend.app.games.domain.validators.GameValidator;
-import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 
 import java.nio.file.Path;
 import java.util.Optional;

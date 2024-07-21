@@ -9,7 +9,6 @@ import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
 
 import java.nio.file.Path;
-import java.util.Optional;
 import java.util.UUID;
 
 public class StartGameUseCase {

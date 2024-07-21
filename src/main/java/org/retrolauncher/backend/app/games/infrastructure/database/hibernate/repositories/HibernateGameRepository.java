@@ -51,7 +51,7 @@ public class HibernateGameRepository implements GameRepository {
         var result = sessionFactory.fromSession((session) -> {
             return session.createQuery("FROM GameModel WHERE name = :name AND platformId = :platformId", GameModel.class)
                     .setParameter("name", name)
-                    .setParameter("platformId", platformId.toString())
+                    .setParameter("platformId", platformId)
                     .getSingleResultOrNull();
         });
         if (result == null) return Optional.empty();

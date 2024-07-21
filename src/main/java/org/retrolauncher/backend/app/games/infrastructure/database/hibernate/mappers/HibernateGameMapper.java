@@ -2,7 +2,6 @@ package org.retrolauncher.backend.app.games.infrastructure.database.hibernate.ma
 
 import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.models.GameModel;
-import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 
 import java.nio.file.Path;
 import java.util.UUID;
@@ -17,7 +16,7 @@ public class HibernateGameMapper {
         model.setName(entity.getName());
         model.setPath(entity.getPath().toString());
         entity.getIconPath().ifPresent((path) -> model.setIconPath(path.toAbsolutePath().toString()));
-        model.setPlatformId(entity.getPlatformId().toString());
+        model.setPlatformId(entity.getPlatformId());
         return model;
     }
 
@@ -27,7 +26,7 @@ public class HibernateGameMapper {
                 model.getName(),
                 Path.of(model.getPath()),
                 model.getIconPath() != null ? Path.of(model.getIconPath()) : null,
-                UUID.fromString(model.getPlatformId())
+                model.getPlatformId()
         );
     }
 }
