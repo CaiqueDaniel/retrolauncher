@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StartGameUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
-    private final MemoryGameRepository repository = new MemoryGameRepository(this.platformRepository);
+    private final MemoryGameRepository repository = new MemoryGameRepository();
     private final ProcessRunnerService processRunnerService = mock(ProcessRunnerService.class);
     private final Platform platform = new Platform("Test", "test");
     private final StartGameUseCase sut = new StartGameUseCase(repository, platformRepository, this.processRunnerService);

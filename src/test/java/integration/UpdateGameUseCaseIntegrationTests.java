@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UpdateGameUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
-    private final MemoryGameRepository repository = new MemoryGameRepository(this.platformRepository);
+    private final MemoryGameRepository repository = new MemoryGameRepository();
     private final Platform platform = new Platform("Test", "test");
     private final UpdateGameUseCase sut = new UpdateGameUseCase(repository);
 

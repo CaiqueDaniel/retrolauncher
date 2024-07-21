@@ -4,7 +4,6 @@ import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.models.GameModel;
 
 import java.nio.file.Path;
-import java.util.UUID;
 
 public class HibernateGameMapper {
     private HibernateGameMapper() {

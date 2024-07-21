@@ -9,11 +9,6 @@ import java.util.*;
 
 public class MemoryGameRepository implements GameRepository {
     private final Map<String, Game> storedData = new HashMap<>();
-    private final PlatformRepository platformRepository;
-
-    public MemoryGameRepository(PlatformRepository platformRepository) {
-        this.platformRepository = platformRepository;
-    }
 
     @Override
     public void save(Game entity) {

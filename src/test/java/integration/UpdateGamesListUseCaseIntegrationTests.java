@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 class UpdateGamesListUseCaseIntegrationTests {
     private final File testFolder = new File("test");
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
-    private final MemoryGameRepository repository = new MemoryGameRepository(this.platformRepository);
+    private final MemoryGameRepository repository = new MemoryGameRepository();
     private final StubSettingRepository settingRepository = new StubSettingRepository();
     private final FileManagerService mockedFileManagerService = mock(FileManagerService.class);
     private final UpdateGamesListUseCase sut = new UpdateGamesListUseCase(

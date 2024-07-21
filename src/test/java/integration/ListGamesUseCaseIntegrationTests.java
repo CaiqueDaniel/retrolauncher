@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ListGamesUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
-    private final MemoryGameRepository repository = new MemoryGameRepository(this.platformRepository);
+    private final MemoryGameRepository repository = new MemoryGameRepository();
     private final ListGamesUseCase sut = new ListGamesUseCase(repository);
     private final Platform platform = new Platform("Test", "test");
 
