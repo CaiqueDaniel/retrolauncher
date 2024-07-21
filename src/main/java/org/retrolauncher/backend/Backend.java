@@ -6,11 +6,20 @@ import org.retrolauncher.backend.config.DependencyInjector;
 import org.retrolauncher.backend.events.DefaultEventManager;
 import org.retrolauncher.backend.events.EventsRegister;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Backend {
-    private static final DependencyInjector dependencyInjector = new DependencyInjector();
+    private static final DependencyInjector dependencyInjector;
+
+    static {
+        try {
+            dependencyInjector = new DependencyInjector();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main(String[] args) {
         try {

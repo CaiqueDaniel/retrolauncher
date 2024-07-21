@@ -4,8 +4,7 @@ import fixtures.StubSettingRepository;
 import org.junit.jupiter.api.*;
 import org.retrolauncher.backend.app.platforms.application.services.PlatformsResourceConfigService;
 import org.retrolauncher.backend.app.platforms.application.usecases.UpdatePlatformsListUseCase;
-import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
-import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.MemoryPlatformRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.memory.MemoryPlatformRepository;
 import org.retrolauncher.backend.app.platforms.infrastructure.services.FilePlatformResourceConfigService;
 import org.retrolauncher.backend.app.settings.domain.entities.Setting;
 
@@ -18,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UpdatePlatformsListUseCaseIntegrationTests {
     private final String testFile = "./test-folder/cores/mesen.test";
-    private final PlatformRepository repository = new MemoryPlatformRepository();
+    private final MemoryPlatformRepository repository = new MemoryPlatformRepository();
     private final StubSettingRepository settingRepository = new StubSettingRepository();
     private final PlatformsResourceConfigService resourceConfigService = new FilePlatformResourceConfigService();
     private final UpdatePlatformsListUseCase sut = new UpdatePlatformsListUseCase(

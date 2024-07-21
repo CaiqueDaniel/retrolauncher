@@ -6,12 +6,11 @@ import org.retrolauncher.backend.app._shared.application.services.FileManagerSer
 import org.retrolauncher.backend.app.games.application.factories.PlatformDetectorFactory;
 import org.retrolauncher.backend.app.games.application.services.PlatformDetectorService;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
-import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
-import org.retrolauncher.backend.app.games.infrastructure.database.jackson.repositories.MemoryGameRepository;
+import org.retrolauncher.backend.app.games.infrastructure.database.memory.MemoryGameRepository;
 import org.retrolauncher.backend.app.games.application.usecases.UpdateGamesListUseCase;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
-import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.MemoryPlatformRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.memory.MemoryPlatformRepository;
 import org.retrolauncher.backend.app.settings.application.exceptions.SettingNotFoundException;
 import org.retrolauncher.backend.app.settings.domain.entities.Setting;
 
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.*;
 class UpdateGamesListUseCaseIntegrationTests {
     private final File testFolder = new File("test");
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
-    private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
+    private final MemoryGameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final StubSettingRepository settingRepository = new StubSettingRepository();
     private final FileManagerService mockedFileManagerService = mock(FileManagerService.class);
     private final UpdateGamesListUseCase sut = new UpdateGamesListUseCase(

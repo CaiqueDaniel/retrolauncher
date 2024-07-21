@@ -1,10 +1,10 @@
-package org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.mappers;
+package org.retrolauncher.backend.app.platforms.infrastructure.database.hibernate.mappers;
 
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
-import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.models.PlatformModel;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.hibernate.models.PlatformModel;
 
-public class JacksonPlatformMapper {
-    private JacksonPlatformMapper() {
+public class HibernatePlatformMapper {
+    private HibernatePlatformMapper() {
     }
 
     public static PlatformModel fromDomain(Platform entity) {

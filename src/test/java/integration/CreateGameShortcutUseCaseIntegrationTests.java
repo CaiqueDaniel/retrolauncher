@@ -9,11 +9,10 @@ import org.retrolauncher.backend.app._shared.application.services.ShortcutServic
 import org.retrolauncher.backend.app.games.application.exceptions.GameNotFoundException;
 import org.retrolauncher.backend.app.games.application.usecases.CreateGameShortcutUseCase;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
-import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
-import org.retrolauncher.backend.app.games.infrastructure.database.jackson.repositories.MemoryGameRepository;
+import org.retrolauncher.backend.app.games.infrastructure.database.memory.MemoryGameRepository;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
-import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.MemoryPlatformRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.memory.MemoryPlatformRepository;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -26,7 +25,7 @@ import static org.mockito.Mockito.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CreateGameShortcutUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
-    private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
+    private final MemoryGameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final ShortcutService shortcutService = mock(ShortcutService.class);
     private final Platform platform = new Platform("Test", "test", List.of("test"));
     private final CreateGameShortcutUseCase sut = new CreateGameShortcutUseCase(repository, shortcutService);

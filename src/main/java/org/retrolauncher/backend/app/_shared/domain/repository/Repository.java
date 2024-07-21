@@ -9,8 +9,6 @@ import java.util.UUID;
 public interface Repository<E extends Entity> {
     void save(E entity);
 
-    void clear();
-
     Optional<E> findById(UUID id);
 
     List<E> listAll();

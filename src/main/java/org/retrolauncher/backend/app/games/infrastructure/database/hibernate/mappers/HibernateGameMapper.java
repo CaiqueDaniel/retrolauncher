@@ -1,13 +1,15 @@
-package org.retrolauncher.backend.app.games.infrastructure.database.jackson.mappers;
+package org.retrolauncher.backend.app.games.infrastructure.database.hibernate.mappers;
 
 import org.retrolauncher.backend.app.games.domain.entities.Game;
-import org.retrolauncher.backend.app.games.infrastructure.database.jackson.models.GameModel;
+import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.models.GameModel;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 
 import java.nio.file.Path;
+import java.util.List;
+import java.util.UUID;
 
-public class JacksonGameMapper {
-    private JacksonGameMapper() {
+public class HibernateGameMapper {
+    private HibernateGameMapper() {
     }
 
     public static GameModel fromDomain(Game entity) {
@@ -20,13 +22,13 @@ public class JacksonGameMapper {
         return model;
     }
 
-    public static Game toDomain(GameModel model, Platform platform) {
+    public static Game toDomain(GameModel model) {
         return new Game(
-                model.getId(),
+                UUID.fromString(model.getId().toString()),
                 model.getName(),
                 Path.of(model.getPath()),
                 model.getIconPath() != null ? Path.of(model.getIconPath()) : null,
-                platform
+                new Platform("","", List.of())
         );
     }
 }

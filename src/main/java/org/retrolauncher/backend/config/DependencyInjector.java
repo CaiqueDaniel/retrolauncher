@@ -5,29 +5,30 @@ import org.retrolauncher.backend.app._shared.application.services.*;
 import org.retrolauncher.backend.app._shared.infrastructure.services.*;
 import org.retrolauncher.backend.app.games.application.services.CoverFileManagerService;
 import org.retrolauncher.backend.app.games.application.usecases.*;
+import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.repositories.HibernateGameRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.hibernate.repositories.HibernatePlatformRepository;
+import org.retrolauncher.backend.app.settings.application.usecases.*;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
-import org.retrolauncher.backend.app.games.infrastructure.database.jackson.models.GameModel;
-import org.retrolauncher.backend.app.games.infrastructure.database.jackson.repositories.JacksonGameRepository;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.controllers.GamesController;
 import org.retrolauncher.backend.app.games.infrastructure.factories.LocalPlatformDetectorFactory;
 import org.retrolauncher.backend.app.platforms.application.services.PlatformsResourceConfigService;
 import org.retrolauncher.backend.app.platforms.application.usecases.UpdatePlatformsListUseCase;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
-import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.models.PlatformModel;
-import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.JacksonPlatformRepository;
 import org.retrolauncher.backend.app.platforms.infrastructure.desktop.controllers.PlatformController;
 import org.retrolauncher.backend.app.platforms.infrastructure.services.FilePlatformResourceConfigService;
-import org.retrolauncher.backend.app.settings.application.usecases.GetSettingsUseCase;
-import org.retrolauncher.backend.app.settings.application.usecases.SaveSettingsUseCase;
 import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
 import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.model.SettingModel;
 import org.retrolauncher.backend.app.settings.infrastructure.database.jackson.repositories.JacksonSettingRepository;
 import org.retrolauncher.backend.app.settings.infrastructure.desktop.controllers.SettingController;
+import org.retrolauncher.backend.database.HibernateDriver;
 import org.retrolauncher.backend.database.JacksonFileDatabaseDriver;
 import org.retrolauncher.backend.events.DefaultEventManager;
 
+import java.io.IOException;
+
 @Getter
 public class DependencyInjector {
+    private final HibernateDriver hibernateDriver = new HibernateDriver();
     private final PlatformRepository platformRepository;
     private final GameRepository gameRepository;
     private final SettingRepository settingRepository;
@@ -52,16 +53,13 @@ public class DependencyInjector {
     private final GamesController gamesController;
     private final SettingController settingController;
 
-    public DependencyInjector() {
+    public DependencyInjector() throws IOException {
         this.shortcutService = new ShellLinkShortcutService();
         this.processRunnerService = new DefaultProcessRunnerService();
         this.eventDispatcherService = new DefaultEventDispatcherService(DefaultEventManager.getInstance());
         this.coverFileManagerService = new CoverFileManagerService();
-        this.platformRepository = new JacksonPlatformRepository(new JacksonFileDatabaseDriver<>(PlatformModel.class));
-        this.gameRepository = new JacksonGameRepository(
-                new JacksonFileDatabaseDriver<>(GameModel.class),
-                this.platformRepository
-        );
+        this.platformRepository = new HibernatePlatformRepository(hibernateDriver.getSessionFactory());
+        this.gameRepository = new HibernateGameRepository(hibernateDriver.getSessionFactory());
         this.settingRepository = new JacksonSettingRepository(new JacksonFileDatabaseDriver<>(SettingModel.class));
         this.platformsResourceConfigService = new FilePlatformResourceConfigService();
 

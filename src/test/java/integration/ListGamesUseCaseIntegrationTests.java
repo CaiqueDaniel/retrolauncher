@@ -4,11 +4,10 @@ import org.junit.jupiter.api.*;
 import org.retrolauncher.backend.app.games.application.dtos.ListGamesUseCaseOutput;
 import org.retrolauncher.backend.app.games.application.usecases.ListGamesUseCase;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
-import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
-import org.retrolauncher.backend.app.games.infrastructure.database.jackson.repositories.MemoryGameRepository;
+import org.retrolauncher.backend.app.games.infrastructure.database.memory.MemoryGameRepository;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
-import org.retrolauncher.backend.app.platforms.infrastructure.database.jackson.repositories.MemoryPlatformRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.memory.MemoryPlatformRepository;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -19,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ListGamesUseCaseIntegrationTests {
     private final PlatformRepository platformRepository = new MemoryPlatformRepository();
-    private final GameRepository repository = new MemoryGameRepository(this.platformRepository);
+    private final MemoryGameRepository repository = new MemoryGameRepository(this.platformRepository);
     private final ListGamesUseCase sut = new ListGamesUseCase(repository);
     private final Platform platform = new Platform("Test", "test", List.of("test"));
 
