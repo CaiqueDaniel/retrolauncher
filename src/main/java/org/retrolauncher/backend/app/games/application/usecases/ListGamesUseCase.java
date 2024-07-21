@@ -1,27 +1,18 @@
 package org.retrolauncher.backend.app.games.application.usecases;
 
-import org.retrolauncher.backend.app.games.application.dtos.ListGamesUseCaseOutput;
-import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
+import org.retrolauncher.backend.app.games.application.dtos.GameSearchResult;
+import org.retrolauncher.backend.app.games.application.repositories.GameQueryRepository;
 
-import java.util.Comparator;
 import java.util.List;
 
 public class ListGamesUseCase {
-    private final GameRepository repository;
+    private final GameQueryRepository repository;
 
-    public ListGamesUseCase(GameRepository repository) {
+    public ListGamesUseCase(GameQueryRepository repository) {
         this.repository = repository;
     }
 
-    public List<ListGamesUseCaseOutput> execute() {
-        return this.repository.listAll()
-                .stream()
-                .map((game) -> new ListGamesUseCaseOutput(
-                        game.getId().toString(),
-                        game.getName(),
-                        "",//game.getPlatformId().getName(),
-                        game.getIconPath().orElse(null)
-                )).sorted(Comparator.comparing(ListGamesUseCaseOutput::name))
-                .toList();
+    public List<GameSearchResult> execute() {
+        return repository.search();
     }
 }

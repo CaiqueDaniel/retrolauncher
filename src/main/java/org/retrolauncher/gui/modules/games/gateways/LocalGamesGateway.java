@@ -4,6 +4,7 @@ import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.*;
 import org.retrolauncher.backend.facades.*;
 import org.retrolauncher.gui.modules.games.models.Game;
 
+import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Supplier;
@@ -14,10 +15,10 @@ public class LocalGamesGateway implements GamesGateway {
     @Override
     public CompletableFuture<List<Game>> listAll() {
         final Supplier<List<Game>> lambda = () -> facade.listAll().stream().map((item) -> new Game(
-                UUID.fromString(item.id()),
+                item.id(),
                 item.name(),
                 item.platformName(),
-                item.iconPath().orElse(null)
+                Path.of(Objects.requireNonNull(item.iconPath().orElse(null)))
         )).toList();
         final ExecutorService executorService = Executors.newSingleThreadExecutor();
         final CompletableFuture<List<Game>> result = CompletableFuture.supplyAsync(lambda, executorService);

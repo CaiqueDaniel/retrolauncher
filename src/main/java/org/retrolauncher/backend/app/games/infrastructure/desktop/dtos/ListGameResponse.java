@@ -1,15 +1,15 @@
 package org.retrolauncher.backend.app.games.infrastructure.desktop.dtos;
 
-import org.retrolauncher.backend.app.games.application.dtos.ListGamesUseCaseOutput;
+import org.retrolauncher.backend.app.games.application.dtos.GameSearchResult;
 
-import java.nio.file.Path;
+import java.util.UUID;
 
-public class ListGameResponse extends ListGamesUseCaseOutput {
+public class ListGameResponse extends GameSearchResult {
     public ListGameResponse(
-            String id,
+            UUID id,
             String name,
             String platformName,
-            Path iconPath
+            String iconPath
     ) {
         super(id, name, platformName, iconPath);
     }

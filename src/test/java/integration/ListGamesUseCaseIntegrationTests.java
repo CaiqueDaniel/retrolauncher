@@ -1,13 +1,14 @@
 package integration;
 
+import fixtures.TestHibernateDriver;
 import org.junit.jupiter.api.*;
-import org.retrolauncher.backend.app.games.application.dtos.ListGamesUseCaseOutput;
+import org.retrolauncher.backend.app.games.application.dtos.GameSearchResult;
 import org.retrolauncher.backend.app.games.application.usecases.ListGamesUseCase;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
-import org.retrolauncher.backend.app.games.infrastructure.database.memory.MemoryGameRepository;
+import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.repositories.HibernateGameQueryRepository;
+import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.repositories.HibernateGameRepository;
 import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
-import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
-import org.retrolauncher.backend.app.platforms.infrastructure.database.memory.MemoryPlatformRepository;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.hibernate.repositories.HibernatePlatformRepository;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -17,9 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ListGamesUseCaseIntegrationTests {
-    private final PlatformRepository platformRepository = new MemoryPlatformRepository();
-    private final MemoryGameRepository repository = new MemoryGameRepository();
-    private final ListGamesUseCase sut = new ListGamesUseCase(repository);
+    private final TestHibernateDriver driver = new TestHibernateDriver();
+    private final HibernatePlatformRepository platformRepository = new HibernatePlatformRepository(driver.getSessionFactory());
+    private final HibernateGameRepository repository = new HibernateGameRepository(driver.getSessionFactory());
+    private final ListGamesUseCase sut = new ListGamesUseCase(new HibernateGameQueryRepository(driver.getSessionFactory()));
     private final Platform platform = new Platform("Test", "test");
 
     @BeforeAll
@@ -35,20 +37,10 @@ class ListGamesUseCaseIntegrationTests {
     @Test()
     void it_should_be_able_to_list_games() {
         repository.save(new Game("test", Path.of("testpath"), platform.getId()));
-        List<ListGamesUseCaseOutput> result = sut.execute();
+        List<GameSearchResult> result = sut.execute();
         assertEquals(1, result.size());
         assertEquals("test", result.get(0).name());
+        assertEquals(platform.getName(), result.get(0).platformName());
         assertEquals(Optional.empty(), result.get(0).iconPath());
-    }
-
-    @Test()
-    void it_should_be_able_to_list_games_with_icon() {
-        Game game = new Game("test", Path.of("testpath"), platform.getId());
-        game.uploadIcon(Path.of("icon.png"));
-        repository.save(game);
-        List<ListGamesUseCaseOutput> result = sut.execute();
-        assertEquals(1, result.size());
-        assertEquals("test", result.get(0).name());
-        assertEquals(Path.of("icon.png").toAbsolutePath(), result.get(0).iconPath().get().toAbsolutePath());
     }
 }

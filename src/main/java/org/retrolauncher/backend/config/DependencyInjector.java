@@ -5,6 +5,7 @@ import org.retrolauncher.backend.app._shared.application.services.*;
 import org.retrolauncher.backend.app._shared.infrastructure.services.*;
 import org.retrolauncher.backend.app.games.application.services.CoverFileManagerService;
 import org.retrolauncher.backend.app.games.application.usecases.*;
+import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.repositories.HibernateGameQueryRepository;
 import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.repositories.HibernateGameRepository;
 import org.retrolauncher.backend.app.platforms.infrastructure.database.hibernate.repositories.HibernatePlatformRepository;
 import org.retrolauncher.backend.app.settings.application.usecases.*;
@@ -76,7 +77,7 @@ public class DependencyInjector {
                 new LocalPlatformDetectorFactory()
         );
         this.startGameUseCase = new StartGameUseCase(gameRepository, platformRepository, processRunnerService);
-        this.listGamesUseCase = new ListGamesUseCase(this.gameRepository);
+        this.listGamesUseCase = new ListGamesUseCase(new HibernateGameQueryRepository(hibernateDriver.getSessionFactory()));
         this.createGameShortcutUseCase = new CreateGameShortcutUseCase(this.gameRepository, this.shortcutService);
         this.saveGameCoverUseCase = new SaveGameCoverUseCase(this.gameRepository, new CoverFileSystemService());
         this.saveSettingsUseCase = new SaveSettingsUseCase(this.settingRepository, this.eventDispatcherService);

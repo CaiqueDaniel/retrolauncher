@@ -6,6 +6,7 @@ import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.mappers.HibernateGameMapper;
 import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.models.GameModel;
+import org.retrolauncher.backend.app.platforms.infrastructure.database.hibernate.models.PlatformModel;
 
 import java.util.*;
 
@@ -18,7 +19,11 @@ public class HibernateGameRepository implements GameRepository {
 
     @Override
     public void save(Game entity) {
-        sessionFactory.inTransaction((session) -> session.persist(HibernateGameMapper.fromDomain(entity)));
+        sessionFactory.inTransaction((session) -> {
+            final var model = HibernateGameMapper.fromDomain(entity);
+            model.setPlatform(session.getReference(PlatformModel.class, model.getPlatformId()));
+            session.persist(model);
+        });
     }
 
     @Override
