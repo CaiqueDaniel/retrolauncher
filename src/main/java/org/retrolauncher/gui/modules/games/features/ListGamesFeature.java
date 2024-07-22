@@ -3,6 +3,7 @@ package org.retrolauncher.gui.modules.games.features;
 import javafx.fxml.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import org.retrolauncher.Main;
 import org.retrolauncher.gui.events.EventManager;
@@ -19,6 +20,8 @@ public class ListGamesFeature extends VBox implements IListGamesFeature {
     private ListView<GameItem> lvGames;
     @FXML
     private Button btnReindexGames;
+    @FXML
+    private TextField txtSearch;
     private final ListGamesPresenter presenter;
 
     public ListGamesFeature() {
@@ -38,6 +41,7 @@ public class ListGamesFeature extends VBox implements IListGamesFeature {
     private void initialize() {
         presenter.listAll();
         btnReindexGames.setOnMouseClicked((evt) -> presenter.reindexGames());
+        txtSearch.setOnKeyTyped((evt) -> presenter.setGameNameFilter(txtSearch.getText()));
     }
 
     @Override

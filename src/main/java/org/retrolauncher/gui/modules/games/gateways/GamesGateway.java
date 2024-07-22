@@ -1,12 +1,13 @@
 package org.retrolauncher.gui.modules.games.gateways;
 
+import org.retrolauncher.gui.modules.games.dtos.GameSearchFilter;
 import org.retrolauncher.gui.modules.games.models.Game;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface GamesGateway {
-    CompletableFuture<List<Game>> listAll();
+    CompletableFuture<List<Game>> listAll(GameSearchFilter params);
 
     CompletableFuture<Void> updateGame(Game game);
 

@@ -1,7 +1,7 @@
 package org.retrolauncher.backend.app.games.infrastructure.database.hibernate.repositories;
 
 import org.hibernate.SessionFactory;
-import org.retrolauncher.backend.app.games.application.dtos.GameSearchResult;
+import org.retrolauncher.backend.app.games.application.dtos.*;
 import org.retrolauncher.backend.app.games.application.repositories.GameQueryRepository;
 import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.models.GameModel;
 
@@ -15,7 +15,7 @@ public class HibernateGameQueryRepository implements GameQueryRepository {
     }
 
     @Override
-    public List<GameSearchResult> search() {
+    public List<GameSearchResult> search(GameSearchParams params) {
         return sessionFactory.fromTransaction(session -> {
             var criteriaBuilder = session.getCriteriaBuilder();
             var queryBuilder = criteriaBuilder.createQuery(GameSearchResult.class);
@@ -29,6 +29,13 @@ public class HibernateGameQueryRepository implements GameQueryRepository {
                     platformJoin.get("name"),
                     gameRoot.get("iconPath")
             ));
+
+            if (!params.name().isEmpty()) {
+                queryBuilder.where(criteriaBuilder.like(
+                        criteriaBuilder.lower(gameRoot.get("name")),
+                        "%" + params.name().toLowerCase() + "%"
+                ));
+            }
 
             return session.createQuery(queryBuilder).getResultList();
         });

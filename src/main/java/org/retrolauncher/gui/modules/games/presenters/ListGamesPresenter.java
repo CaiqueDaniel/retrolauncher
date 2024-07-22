@@ -8,4 +8,6 @@ public interface ListGamesPresenter {
     void selectGameItem(Game game);
 
     void reindexGames();
+
+    void setGameNameFilter(String value);
 }

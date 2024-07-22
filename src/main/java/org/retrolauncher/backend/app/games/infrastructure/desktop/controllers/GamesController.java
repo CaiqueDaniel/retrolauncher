@@ -1,5 +1,6 @@
 package org.retrolauncher.backend.app.games.infrastructure.desktop.controllers;
 
+import org.retrolauncher.backend.app.games.application.dtos.GameSearchParams;
 import org.retrolauncher.backend.app.games.application.dtos.SaveGameCoverInputDto;
 import org.retrolauncher.backend.app.games.application.usecases.*;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.ListGameResponse;
@@ -33,8 +34,8 @@ public class GamesController {
         this.updateGameUseCase = updateGameUseCase;
     }
 
-    public List<ListGameResponse> listAll() {
-        return this.listGamesUseCase.execute()
+    public List<ListGameResponse> listAll(GameSearchParams params) {
+        return this.listGamesUseCase.execute(params)
                 .stream()
                 .map((output) -> new ListGameResponse(
                         output.id(),

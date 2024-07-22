@@ -1,7 +1,9 @@
 package org.retrolauncher.gui.modules.games.gateways;
 
+import org.retrolauncher.backend.app.games.application.dtos.GameSearchParams;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.*;
 import org.retrolauncher.backend.facades.*;
+import org.retrolauncher.gui.modules.games.dtos.GameSearchFilter;
 import org.retrolauncher.gui.modules.games.models.Game;
 
 import java.nio.file.Path;
@@ -13,18 +15,16 @@ public class LocalGamesGateway implements GamesGateway {
     private final GamesFacade facade = new GamesFacadeImpl();
 
     @Override
-    public CompletableFuture<List<Game>> listAll() {
-        final Supplier<List<Game>> lambda = () -> facade.listAll().stream().map((item) -> {
-            final var iconPath = item.iconPath().isPresent() ? Path.of(item.iconPath().get()) : null;
-            return new Game(
-                    item.id(),
-                    item.name(),
-                    item.platformName(),
-                    iconPath
-            );
-        }).toList();
-        final ExecutorService executorService = Executors.newSingleThreadExecutor();
-        final CompletableFuture<List<Game>> result = CompletableFuture.supplyAsync(lambda, executorService);
+    public CompletableFuture<List<Game>> listAll(GameSearchFilter params) {
+        final Supplier<List<Game>> lambda = () -> facade.listAll(new GameSearchParams(params.name()))
+                .stream()
+                .map((item) -> {
+                    final var iconPath = item.iconPath().isPresent() ?
+                            Path.of(item.iconPath().get()) : null;
+                    return new Game(item.id(), item.name(), item.platformName(), iconPath);
+                }).toList();
+        final var executorService = Executors.newSingleThreadExecutor();
+        final var result = CompletableFuture.supplyAsync(lambda, executorService);
         executorService.shutdown();
         return result;
     }

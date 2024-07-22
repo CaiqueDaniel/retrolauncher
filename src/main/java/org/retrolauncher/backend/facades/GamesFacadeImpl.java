@@ -1,6 +1,7 @@
 package org.retrolauncher.backend.facades;
 
 import org.retrolauncher.backend.Backend;
+import org.retrolauncher.backend.app.games.application.dtos.GameSearchParams;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.controllers.GamesController;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.ListGameResponse;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.dtos.SaveGameCoverDto;
@@ -13,8 +14,8 @@ public class GamesFacadeImpl implements GamesFacade {
     private final GamesController controller = Backend.getDependencies().getGamesController();
 
     @Override
-    public List<ListGameResponse> listAll() {
-        return controller.listAll();
+    public List<ListGameResponse> listAll(GameSearchParams params) {
+        return controller.listAll(params);
     }
 
     @Override

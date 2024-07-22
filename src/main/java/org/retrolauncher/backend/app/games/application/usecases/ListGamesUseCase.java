@@ -1,6 +1,6 @@
 package org.retrolauncher.backend.app.games.application.usecases;
 
-import org.retrolauncher.backend.app.games.application.dtos.GameSearchResult;
+import org.retrolauncher.backend.app.games.application.dtos.*;
 import org.retrolauncher.backend.app.games.application.repositories.GameQueryRepository;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public class ListGamesUseCase {
         this.repository = repository;
     }
 
-    public List<GameSearchResult> execute() {
-        return repository.search();
+    public List<GameSearchResult> execute(GameSearchParams params) {
+        return repository.search(params);
     }
 }
