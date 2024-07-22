@@ -31,6 +31,13 @@ class HibernatePlatformRepositoryIntegrationTests {
     }
 
     @Test
+    void it_should_be_able_to_update() {
+        sut.save(platform);
+        sut.save(platform);
+        assertEquals("Nintendo 64", sut.findById(platform.getId()).get().getName());
+    }
+
+    @Test
     void it_should_be_able_to_find_by_id() {
         sut.save(platform);
         assertTrue(sut.findById(platform.getId()).isPresent());

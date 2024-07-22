@@ -22,7 +22,12 @@ public class HibernateGameRepository implements GameRepository {
         sessionFactory.inTransaction((session) -> {
             final var model = HibernateGameMapper.fromDomain(entity);
             model.setPlatform(session.getReference(PlatformModel.class, model.getPlatformId()));
-            session.persist(model);
+
+            if (session.find(GameModel.class, model.getId()) == null) {
+                session.persist(model);
+                return;
+            }
+            session.merge(model);
         });
     }
 

@@ -45,6 +45,14 @@ class HibernateGameRepositoryIntegrationTests {
     }
 
     @Test
+    void it_should_be_able_to_update() {
+        sut.save(game);
+        game.setName("test 2");
+        sut.save(game);
+        assertEquals("test 2", sut.findById(game.getId()).get().getName());
+    }
+
+    @Test
     void it_should_be_able_to_find_a_game_by_id() {
         sut.save(game);
         assertTrue(sut.findById(game.getId()).isPresent());

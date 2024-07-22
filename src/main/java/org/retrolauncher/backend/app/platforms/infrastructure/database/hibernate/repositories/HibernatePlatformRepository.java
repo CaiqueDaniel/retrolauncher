@@ -17,7 +17,15 @@ public class HibernatePlatformRepository implements PlatformRepository {
 
     @Override
     public void save(Platform entity) {
-        sessionFactory.inTransaction((session) -> session.persist(HibernatePlatformMapper.fromDomain(entity)));
+        sessionFactory.inTransaction((session) -> {
+            final var model = HibernatePlatformMapper.fromDomain(entity);
+
+            if (session.find(PlatformModel.class, model.getId()) == null) {
+                session.persist(model);
+                return;
+            }
+            session.merge(model);
+        });
     }
 
     @Override
