@@ -14,12 +14,15 @@ public class LocalGamesGateway implements GamesGateway {
 
     @Override
     public CompletableFuture<List<Game>> listAll() {
-        final Supplier<List<Game>> lambda = () -> facade.listAll().stream().map((item) -> new Game(
-                item.id(),
-                item.name(),
-                item.platformName(),
-                Path.of(Objects.requireNonNull(item.iconPath().orElse(null)))
-        )).toList();
+        final Supplier<List<Game>> lambda = () -> facade.listAll().stream().map((item) -> {
+            final var iconPath = item.iconPath().isPresent() ? Path.of(item.iconPath().get()) : null;
+            return new Game(
+                    item.id(),
+                    item.name(),
+                    item.platformName(),
+                    iconPath
+            );
+        }).toList();
         final ExecutorService executorService = Executors.newSingleThreadExecutor();
         final CompletableFuture<List<Game>> result = CompletableFuture.supplyAsync(lambda, executorService);
         executorService.shutdown();

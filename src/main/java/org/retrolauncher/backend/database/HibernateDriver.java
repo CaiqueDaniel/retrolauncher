@@ -5,14 +5,12 @@ import org.hibernate.cfg.Configuration;
 import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.models.GameModel;
 import org.retrolauncher.backend.app.platforms.infrastructure.database.hibernate.models.PlatformModel;
 
-import java.io.IOException;
-
 import static org.hibernate.cfg.JdbcSettings.*;
 
 public class HibernateDriver {
     private static SessionFactory sessionFactory;
 
-    public SessionFactory getSessionFactory() throws IOException {
+    public SessionFactory getSessionFactory() {
         if (sessionFactory != null)
             return sessionFactory;
 
@@ -20,9 +18,8 @@ public class HibernateDriver {
                 .addAnnotatedClass(GameModel.class)
                 .addAnnotatedClass(PlatformModel.class)
                 .setProperty(URL, "jdbc:h2:file:~/retro-launcher/database")
-                .setProperty("hibernate.agroal.maxSize", 20)
+                .setProperty("hibernate.hbm2ddl.auto", "update")
                 .buildSessionFactory();
-        sessionFactory.getSchemaManager().exportMappedObjects(true);
 
         return sessionFactory;
     }
