@@ -11,16 +11,16 @@ public class HibernateDriver {
     private static SessionFactory sessionFactory;
 
     public SessionFactory getSessionFactory() {
-        if (sessionFactory != null)
+        if (HibernateDriver.sessionFactory != null)
             return sessionFactory;
 
-        sessionFactory = new Configuration()
+        HibernateDriver.sessionFactory = new Configuration()
                 .addAnnotatedClass(GameModel.class)
                 .addAnnotatedClass(PlatformModel.class)
                 .setProperty(URL, "jdbc:h2:file:~/retro-launcher/database")
                 .setProperty("hibernate.hbm2ddl.auto", "update")
                 .buildSessionFactory();
 
-        return sessionFactory;
+        return HibernateDriver.sessionFactory;
     }
 }
