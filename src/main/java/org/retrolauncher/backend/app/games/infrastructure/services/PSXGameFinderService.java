@@ -50,7 +50,7 @@ public class PSXGameFinderService implements GameFinderService {
     }
 
     private boolean isPSXFile(File binFile) {
-        return searchForContentOnFile(binFile, Pattern.compile("(1993-1997 Sony)")).isPresent();
+        return searchForContentOnFile(binFile, Pattern.compile("(Sony Computer Entertainment)")).isPresent();
     }
 
     private Optional<String> searchForContentOnFile(File file, Pattern pattern) {
