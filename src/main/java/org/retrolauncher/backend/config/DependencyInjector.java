@@ -7,11 +7,11 @@ import org.retrolauncher.backend.app.games.application.services.CoverFileManager
 import org.retrolauncher.backend.app.games.application.usecases.*;
 import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.repositories.HibernateGameQueryRepository;
 import org.retrolauncher.backend.app.games.infrastructure.database.hibernate.repositories.HibernateGameRepository;
+import org.retrolauncher.backend.app.games.infrastructure.factories.DefaultGameFinderFactory;
 import org.retrolauncher.backend.app.platforms.infrastructure.database.hibernate.repositories.HibernatePlatformRepository;
 import org.retrolauncher.backend.app.settings.application.usecases.*;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
 import org.retrolauncher.backend.app.games.infrastructure.desktop.controllers.GamesController;
-import org.retrolauncher.backend.app.games.infrastructure.factories.LocalPlatformDetectorFactory;
 import org.retrolauncher.backend.app.platforms.application.services.PlatformsResourceConfigService;
 import org.retrolauncher.backend.app.platforms.application.usecases.UpdatePlatformsListUseCase;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
@@ -74,7 +74,7 @@ public class DependencyInjector {
                 this.platformRepository,
                 this.settingRepository,
                 this.coverFileManagerService,
-                new LocalPlatformDetectorFactory()
+                new DefaultGameFinderFactory()
         );
         this.startGameUseCase = new StartGameUseCase(gameRepository, platformRepository, processRunnerService);
         this.listGamesUseCase = new ListGamesUseCase(new HibernateGameQueryRepository(hibernateDriver.getSessionFactory()));

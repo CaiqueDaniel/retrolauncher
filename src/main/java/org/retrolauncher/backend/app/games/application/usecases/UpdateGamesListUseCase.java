@@ -3,24 +3,17 @@ package org.retrolauncher.backend.app.games.application.usecases;
 import org.retrolauncher.Main;
 import org.retrolauncher.backend.app._shared.application.exceptions.FileCouldNotBeDeletedException;
 import org.retrolauncher.backend.app._shared.application.services.FileManagerService;
-import org.retrolauncher.backend.app.games.application.factories.PlatformDetectorFactory;
+import org.retrolauncher.backend.app.games.application.factories.GameFinderFactory;
 import org.retrolauncher.backend.app.games.domain.entities.Game;
 import org.retrolauncher.backend.app.games.domain.repositories.GameRepository;
-import org.retrolauncher.backend.app.platforms.domain.entities.Platform;
 import org.retrolauncher.backend.app.platforms.domain.repositories.PlatformRepository;
 import org.retrolauncher.backend.app.settings.application.exceptions.SettingNotFoundException;
 import org.retrolauncher.backend.app.settings.domain.entities.Setting;
 import org.retrolauncher.backend.app.settings.domain.repositories.SettingRepository;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.*;
+import java.util.*;
+import java.util.logging.*;
 import java.util.stream.Collectors;
 
 public class UpdateGamesListUseCase {
@@ -28,20 +21,20 @@ public class UpdateGamesListUseCase {
     private final PlatformRepository platformRepository;
     private final SettingRepository settingRepository;
     private final FileManagerService fileManagerService;
-    private final PlatformDetectorFactory platformDetectorFactory;
+    private final GameFinderFactory gameFinderFactory;
 
     public UpdateGamesListUseCase(
             GameRepository repository,
             PlatformRepository platformRepository,
             SettingRepository settingRepository,
             FileManagerService fileManagerService,
-            PlatformDetectorFactory platformDetectorFactory
+            GameFinderFactory gameFinderFactory
     ) {
         this.repository = repository;
         this.platformRepository = platformRepository;
         this.settingRepository = settingRepository;
         this.fileManagerService = fileManagerService;
-        this.platformDetectorFactory = platformDetectorFactory;
+        this.gameFinderFactory = gameFinderFactory;
     }
 
     public void execute() throws FileNotFoundException {
@@ -59,23 +52,19 @@ public class UpdateGamesListUseCase {
         removeGames(gamesToBeRemoved);
     }
 
-    private List<Game> getIndexedGames(Setting setting) throws FileNotFoundException {
-        List<Platform> platforms = this.platformRepository.listAll();
-        List<File> gamesFiles = this.getGamesFiles(setting.getRomsFolderPath());
+    private List<Game> getIndexedGames(Setting setting) {
+        final var games = new ArrayList<Game>();
+        final var platforms = this.platformRepository.listAll();
 
-        return gamesFiles.stream().map((gameFile) -> {
-            Optional<Platform> gamePlatform = platforms.stream()
-                    .filter((platform) -> platformDetectorFactory
-                            .createFrom(platform.getName())
-                            .isFromPlatform(gameFile))
-                    .findFirst();
+        platforms.forEach((platform) -> {
+            final var files = gameFinderFactory
+                    .createFrom(platform.getName())
+                    .getFilesFrom(setting.getRomsFolderPath().toFile());
 
-            return gamePlatform.map(platform -> new Game(
-                    getNameWithoutExtension(gameFile),
-                    gameFile.toPath(),
-                    platform.getId()
-            )).orElse(null);
-        }).filter(Objects::nonNull).toList();
+            files.forEach((file) -> games.add(new Game(getNameWithoutExtension(file), file.toPath(), platform.getId())));
+        });
+
+        return games;
     }
 
     private List<Game> getGamesToBeSaved(List<Game> games) {
@@ -100,27 +89,6 @@ public class UpdateGamesListUseCase {
                         .map((game) -> game.getId().toString())
                         .collect(Collectors.toSet())
         );
-    }
-
-    private List<File> getGamesFiles(Path folderPath) throws FileNotFoundException {
-        File folder = folderPath.toFile();
-
-        if (!folder.exists() || !folder.isDirectory())
-            throw new FileNotFoundException();
-
-        File[] items = folder.listFiles();
-
-        if (items == null)
-            return new ArrayList<>();
-
-        List<File> games = new ArrayList<>();
-
-        for (File item : items) {
-            if (item.isDirectory()) continue;
-            games.add(item);
-        }
-
-        return games;
     }
 
     private String getNameWithoutExtension(File file) {

@@ -46,5 +46,14 @@
     "coresAlias": [
       "smsplus"
     ]
+  },
+  {
+    "name": "Playstation 1",
+    "extensions": [
+      "sms"
+    ],
+    "coresAlias": [
+      "mednafen"
+    ]
   }
 ]
