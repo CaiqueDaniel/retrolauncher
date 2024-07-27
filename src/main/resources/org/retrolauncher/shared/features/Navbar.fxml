@@ -6,12 +6,12 @@
 
 <fx:root type="javafx.scene.layout.HBox" style="-fx-background-color: #303134;" xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml">
-    <Button mnemonicParsing="false" styleClass="primary" text="Jogos" fx:id="btnGames">
+    <Button mnemonicParsing="false" text="Jogos" fx:id="btnGames">
         <HBox.margin>
             <Insets right="8.0"/>
         </HBox.margin>
     </Button>
-    <Button mnemonicParsing="false" styleClass="primary" text="Configurações" fx:id="btnSetting"/>
+    <Button mnemonicParsing="false" text="Configurações" fx:id="btnSetting"/>
     <VBox.margin>
         <Insets bottom="24.0"/>
     </VBox.margin>

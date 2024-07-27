@@ -45,7 +45,7 @@
                             <Cursor fx:constant="HAND" />
                         </cursor>
                     </Button>
-                    <Button fx:id="btnCreateShortcut" mnemonicParsing="false" prefHeight="40.0" prefWidth="122.0" styleClass="primary" text="Criar atalho">
+                    <Button fx:id="btnCreateShortcut" mnemonicParsing="false" prefHeight="40.0" prefWidth="122.0" text="Criar atalho">
                         <font>
                             <Font size="14.0" />
                         </font>
