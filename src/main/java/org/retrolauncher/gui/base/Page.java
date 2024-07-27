@@ -17,13 +17,15 @@ public abstract class Page {
     }
 
     public Scene createScene() throws IOException {
-        final Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
-        final FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(template));
-        fxmlLoader.setController(this);
+        final var screenSize = Screen.getPrimary().getVisualBounds();
+        final var fxmlLoader = new FXMLLoader(Main.class.getResource(template));
+        final var scene = new Scene(fxmlLoader.load(), screenSize.getWidth(), screenSize.getHeight());
 
-        final Scene scene = new Scene(fxmlLoader.load(), screenSize.getWidth(), screenSize.getHeight());
-        final String style = Objects.requireNonNull(Main.class.getResource("styles/button.css")).toExternalForm();
-        scene.getStylesheets().add(style);
+        fxmlLoader.setController(this);
+        scene.getStylesheets()
+                .add(Objects.requireNonNull(Main.class.getResource("styles/button.css")).toExternalForm());
+        scene.getStylesheets()
+                .add(Objects.requireNonNull(Main.class.getResource("styles/text-field.css")).toExternalForm());
 
         return scene;
     }

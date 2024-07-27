@@ -18,7 +18,7 @@
         </VBox.margin>
     </ToolBar>
     <HBox alignment="CENTER" prefWidth="200.0" VBox.vgrow="NEVER">
-        <TextField fx:id="txtSearch" minHeight="40.0" promptText="Busca por nome" style="-fx-background-color: #595959; -fx-text-fill: white;" HBox.hgrow="ALWAYS">
+        <TextField fx:id="txtSearch" minHeight="40.0" promptText="Busca por nome" HBox.hgrow="ALWAYS">
             <HBox.margin>
                 <Insets />
             </HBox.margin>
@@ -34,4 +34,7 @@
         </padding>
     </HBox>
     <ListView fx:id="lvGames" style="-fx-background-color: inherit;" VBox.vgrow="ALWAYS" />
+   <padding>
+      <Insets top="8.0" />
+   </padding>
 </fx:root>
