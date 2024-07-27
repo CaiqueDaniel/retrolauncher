@@ -31,7 +31,11 @@ public class GameDetailsFeature extends AnchorPane implements IGameDetailsFeatur
     @FXML
     private VBox sectionGameData;
     @FXML
+    private AnchorPane coverPane;
+    @FXML
     private FlowPane paneSelectGame;
+    @FXML
+    private FlowPane imgOverlay;
 
     private final GameDetailsPresenter presenter;
 
@@ -97,18 +101,30 @@ public class GameDetailsFeature extends AnchorPane implements IGameDetailsFeatur
 
     @FXML
     private void initialize() {
-        imgCover.setOnMouseClicked((evt) -> onClickImageView());
+        imgOverlay.setOnMouseClicked((evt) -> onClickImageView());
+        coverPane.setOnMouseEntered((evt) -> onHoverInImageView());
+        coverPane.setOnMouseExited((evt) -> onHoverOutImageView());
         btnStartGame.setOnMouseClicked((evt) -> presenter.startGame());
         btnCreateShortcut.setOnMouseClicked((evt) -> presenter.createShortcut());
         lblGameName.onClickConfirm(presenter::updateGameName);
     }
 
     private void onClickImageView() {
-        FileChooser fileChooser = new FileChooser();
-        File image = fileChooser.showOpenDialog(this.getScene().getWindow());
+        final var fileChooser = new FileChooser();
+        final var image = fileChooser.showOpenDialog(this.getScene().getWindow());
 
         if (image == null) return;
 
         presenter.sendGameCover(image);
+    }
+
+    private void onHoverInImageView() {
+        imgOverlay.setVisible(true);
+        imgOverlay.setManaged(true);
+    }
+
+    private void onHoverOutImageView() {
+        imgOverlay.setVisible(false);
+        imgOverlay.setManaged(false);
     }
 }

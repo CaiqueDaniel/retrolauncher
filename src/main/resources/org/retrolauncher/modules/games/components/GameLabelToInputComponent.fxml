@@ -22,7 +22,7 @@
                 <Insets right="8.0" />
             </HBox.margin>
         </TextField>
-        <Button fx:id="btnOk" mnemonicParsing="false" prefHeight="30.0" text="OK">
+        <Button fx:id="btnOk" mnemonicParsing="false" prefHeight="30.0" text="Confirmar" styleClass="primary">
             <HBox.margin>
                 <Insets right="8.0" />
             </HBox.margin>
