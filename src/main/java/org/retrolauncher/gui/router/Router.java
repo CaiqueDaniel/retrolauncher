@@ -29,6 +29,7 @@ public class Router {
             Renderer.getInstance().render(page);
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Não foi possível carregar essa página");
+            throw new RuntimeException(exception);
         }
     }
 

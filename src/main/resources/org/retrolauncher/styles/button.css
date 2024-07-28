@@ -1,6 +1,21 @@
-.button.primary {
+.button {
 	-fx-text-fill: white;
 	-fx-background-color: #7e7e7e;
 	-fx-background-radius: 4;
 	-fx-cursor: hand;
+	-fx-min-height: 40px;
+	-fx-font-size: 14px
 }
+
+.button:hover {
+	-fx-background-color: #a0a0a0;
+}
+
+.button.primary {
+	-fx-background-color: #699934;
+}
+
+.button.primary:hover {
+	-fx-background-color: #51821b;
+}
+

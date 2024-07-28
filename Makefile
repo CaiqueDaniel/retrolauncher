@@ -4,10 +4,16 @@ else
   RM = rm "build" -f
 endif
 
+TYPE = app-image
+NAME = retrolauncher
+MAIN_JAR = retro-launcher-1.0.0.jar
+MAIN_CLASS = org.retrolauncher.Main
+ICON = icon.ico
+
 compile:
 	$(RM)
 	mvn clean package
-	jpackage --type app-image --input target --name retrolauncher --dest build --main-jar retro-launcher-1.0.0.jar --main-class org.retrolauncher.Main
+	jpackage --type $(TYPE) --input target --name $(NAME) --dest build --main-jar $(MAIN_JAR) --main-class $(MAIN_CLASS) --icon $(ICON)
 
 dev:
 	mvn javafx:run

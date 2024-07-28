@@ -1,0 +1,5 @@
+.text-field {
+	-fx-background-color: #595959;
+	-fx-text-fill: white;
+	-fx-min-height: 40px;
+}
