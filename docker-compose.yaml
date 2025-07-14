@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000" # Exemplo: mapeia a porta 3000 do container para a porta 3000 da sua máquina
+    volumes:
+      - .:/app # Monta o diretório local da sua aplicação Node.js dentro do container
+    working_dir: /app
+    stdin_open: true # Permite entrada padrão (para interagir com o shell)
+    tty: true        # Aloca um pseudo-TTY (para interagir com o shell)
+    entrypoint: ["sh"]
+    environment:
+      NODE_ENV: development # Exemplo de variável de ambiente para Node.js
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
