@@ -1,4 +1,4 @@
-module project
+module retrolauncher
 
 go 1.23
 
