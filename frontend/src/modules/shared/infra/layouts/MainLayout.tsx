@@ -1,12 +1,10 @@
-import { Box } from '@mui/material';
-import { PropsWithChildren } from 'react';
+import { Box } from "@mui/material";
+import { PropsWithChildren } from "react";
 
 export function MainLayout({ children }: PropsWithChildren) {
   return (
-    <>
-      <Box px={3} pt={3} bgcolor="#ededed" height="100vh">
-        {children}
-      </Box>
-    </>
+    <Box bgcolor="#ededed" height="100vh" width="100vw">
+      <Box p={3}>{children}</Box>
+    </Box>
   );
 }
