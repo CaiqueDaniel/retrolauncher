@@ -2,8 +2,8 @@ package platform_application_test
 
 import (
 	platform_application "retrolauncher/backend/internal/app/platform/application"
+	platform_factories "retrolauncher/backend/internal/app/platform/factories"
 	platform_doubles_test "retrolauncher/backend/tests/app/platform/doubles"
-	platform_factories "retrolauncher/backend/tests/app/platform/factories"
 	"testing"
 )
 
