@@ -22,3 +22,8 @@ func (fs *LocalFileSystem) SaveFile(filepath string, data []byte) error {
 func (fs *LocalFileSystem) ReadFile(path string) ([]byte, error) {
 	return os.ReadFile(path)
 }
+
+func (fs *LocalFileSystem) ExistsFile(path string) bool {
+	_, err := os.Stat(path)
+	return !os.IsNotExist(err)
+}
