@@ -16,6 +16,18 @@ func (r *MemoryGameRepository) Save(entity *game.Game) error {
 	return nil
 }
 
+func (r *MemoryGameRepository) List(input game.ListGamesParams) []game.Game {
+	result := make([]game.Game, 0)
+	for _, game := range r.games {
+		if input.Name != "" && game.GetName() != input.Name {
+			continue
+		}
+		result = append(result, *game)
+	}
+
+	return result
+}
+
 func (r *MemoryGameRepository) Size() int {
 	return len(r.games)
 }
