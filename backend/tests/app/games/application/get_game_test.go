@@ -1,0 +1,70 @@
+package application_game_test
+
+import (
+	application_game "retrolauncher/backend/internal/app/games/application"
+	"retrolauncher/backend/internal/app/games/domain/game"
+	game_factories "retrolauncher/backend/internal/app/games/factories"
+	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
+	"testing"
+)
+
+func Test_it_should_be_able_to_get_a_game(t *testing.T) {
+	repository := &game_doubles_test.MemoryGameRepository{}
+	factory := &game_factories.DefaultGameFactory{}
+
+	// Create and save a game first
+	err := application_game.CreateGame(application_game.CreateGameInput{
+		Name:     "Test Game",
+		Platform: "Test Platform",
+		Path:     "/path/to/test/game",
+		Cover:    "/path/to/test/cover.jpg",
+	}, factory, repository)
+
+	if err != nil {
+		t.Fatalf("Failed to setup test game: %v", err)
+	}
+
+	// Retrieve the saved game to get its ID (since ID is generated on creation)
+	games := repository.List(game.ListGamesParams{Name: "Test Game"})
+	if len(games) != 1 {
+		t.Fatal("Expected 1 game in repository")
+	}
+	existingGame := games[0]
+
+	// Act: Try to get the game using the application use case
+	foundGame, err := application_game.GetGame(application_game.GetGameInput{
+		Id: existingGame.GetId().String(),
+	}, repository)
+
+	// Assert
+	if err != nil {
+		t.Errorf("Expected no error, but got: %v", err)
+	}
+
+	if foundGame == nil {
+		t.Error("Expected to find a game, but got nil")
+		return
+	}
+
+	if foundGame.GetId().String() != existingGame.GetId().String() {
+		t.Errorf("Expected game ID %s, but got %s", existingGame.GetId().String(), foundGame.GetId().String())
+	}
+}
+
+func Test_it_should_not_be_able_to_get_a_game_that_does_not_exist(t *testing.T) {
+	repository := &game_doubles_test.MemoryGameRepository{}
+
+	// Act: Try to get the game using the application use case
+	foundGame, err := application_game.GetGame(application_game.GetGameInput{
+		Id: "nonexistent-id",
+	}, repository)
+
+	// Assert
+	if err == nil {
+		t.Error("Expected an error, but got nil")
+	}
+
+	if foundGame != nil {
+		t.Error("Expected to not find a game, but got a game")
+	}
+}
