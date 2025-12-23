@@ -2,6 +2,7 @@ FROM golang:latest
 RUN apt update
 RUN apt install nodejs -y
 RUN apt install npm -y
+RUN apt install make -y
 RUN go install github.com/wailsapp/wails/v2/cmd/wails@latest
 WORKDIR /app
 COPY . .
