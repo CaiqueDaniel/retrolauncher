@@ -6,27 +6,25 @@ import (
 )
 
 type CreateGame struct {
-	factory    game.GameFactory
-	repository game.GameRepository
+	Execute func(input Input) error
 }
 
 func New(factory game.GameFactory, repository game.GameRepository) *CreateGame {
 	return &CreateGame{
-		factory:    factory,
-		repository: repository,
+		Execute: func(input Input) error { return execute(input, factory, repository) },
 	}
 }
 
-func (cg *CreateGame) Execute(input Input) error {
+func execute(input Input, factory game.GameFactory, repository game.GameRepository) error {
 	var err error
 
-	game := cg.factory.CreateGame(input.Name, input.Platform, input.Path, input.Cover)
+	game := factory.CreateGame(input.Name, input.Platform, input.Path, input.Cover)
 
 	if game == nil {
 		return errors.New("failed to create game")
 	}
 
-	err = cg.repository.Save(game)
+	err = repository.Save(game)
 	return err
 }
 

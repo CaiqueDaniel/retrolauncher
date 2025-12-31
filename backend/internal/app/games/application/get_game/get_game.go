@@ -6,17 +6,17 @@ import (
 )
 
 type GetGame struct {
-	repository game.GameRepository
+	Execute func(input Input) (*game.Game, error)
 }
 
 func New(repository game.GameRepository) *GetGame {
 	return &GetGame{
-		repository: repository,
+		Execute: func(input Input) (*game.Game, error) { return execute(input, repository) },
 	}
 }
 
-func (gg *GetGame) Execute(input Input) (*game.Game, error) {
-	game, err := gg.repository.Get(input.Id)
+func execute(input Input, repository game.GameRepository) (*game.Game, error) {
+	game, err := repository.Get(input.Id)
 
 	if err != nil {
 		return nil, err

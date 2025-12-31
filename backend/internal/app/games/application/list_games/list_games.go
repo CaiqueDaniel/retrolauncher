@@ -6,8 +6,8 @@ type ListGames struct {
 	Execute func(input Input) []Output
 }
 
-func New(repository game.GameRepository) ListGames {
-	return ListGames{
+func New(repository game.GameRepository) *ListGames {
+	return &ListGames{
 		Execute: func(input Input) []Output { return execute(input, repository) },
 	}
 }

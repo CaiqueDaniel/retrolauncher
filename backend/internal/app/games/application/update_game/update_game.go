@@ -9,8 +9,8 @@ type UpdateGame struct {
 	Execute func(input Input) error
 }
 
-func New(repository game.GameRepository) UpdateGame {
-	return UpdateGame{
+func New(repository game.GameRepository) *UpdateGame {
+	return &UpdateGame{
 		Execute: func(input Input) error { return execute(input, repository) },
 	}
 }
