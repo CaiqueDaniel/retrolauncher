@@ -1,15 +1,25 @@
-package application_game
+package list_games
 
 import "retrolauncher/backend/internal/app/games/domain/game"
 
-func ListGames(input ListGamesInput, repository game.GameRepository) []ListGamesOutput {
+type ListGames struct {
+	Execute func(input Input) []Output
+}
+
+func New(repository game.GameRepository) ListGames {
+	return ListGames{
+		Execute: func(input Input) []Output { return execute(input, repository) },
+	}
+}
+
+func execute(input Input, repository game.GameRepository) []Output {
 	games := repository.List(game.ListGamesParams{
 		Name: input.Name,
 	})
 
-	var result []ListGamesOutput
+	var result []Output
 	for _, game := range games {
-		result = append(result, ListGamesOutput{
+		result = append(result, Output{
 			Id:       game.GetId().String(),
 			Name:     game.GetName(),
 			Platform: game.GetPlatform(),
@@ -21,11 +31,11 @@ func ListGames(input ListGamesInput, repository game.GameRepository) []ListGames
 	return result
 }
 
-type ListGamesInput struct {
+type Input struct {
 	Name string
 }
 
-type ListGamesOutput struct {
+type Output struct {
 	Id       string
 	Name     string
 	Platform string
