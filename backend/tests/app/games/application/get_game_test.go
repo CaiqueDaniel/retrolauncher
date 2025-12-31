@@ -2,6 +2,7 @@ package application_game_test
 
 import (
 	application_game "retrolauncher/backend/internal/app/games/application"
+	create_game "retrolauncher/backend/internal/app/games/application/create_game"
 	"retrolauncher/backend/internal/app/games/domain/game"
 	game_factories "retrolauncher/backend/internal/app/games/factories"
 	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
@@ -13,12 +14,12 @@ func Test_it_should_be_able_to_get_a_game(t *testing.T) {
 	factory := &game_factories.DefaultGameFactory{}
 
 	// Create and save a game first
-	err := application_game.CreateGame(application_game.CreateGameInput{
+	err := create_game.New(factory, repository).Execute(create_game.Input{
 		Name:     "Test Game",
 		Platform: "Test Platform",
 		Path:     "/path/to/test/game",
 		Cover:    "/path/to/test/cover.jpg",
-	}, factory, repository)
+	})
 
 	if err != nil {
 		t.Fatalf("Failed to setup test game: %v", err)
