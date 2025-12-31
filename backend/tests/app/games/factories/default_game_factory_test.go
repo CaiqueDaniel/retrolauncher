@@ -1,7 +1,7 @@
 package game_factories_test
 
 import (
-	game_factories "retrolauncher/backend/internal/app/games/factories"
+	game_factories "retrolauncher/backend/src/app/games/factories"
 	"testing"
 )
 

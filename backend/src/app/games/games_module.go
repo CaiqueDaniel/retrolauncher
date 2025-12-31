@@ -1,12 +1,12 @@
 package games
 
 import (
-	"retrolauncher/backend/internal/app/games/application/create_game"
-	"retrolauncher/backend/internal/app/games/application/list_games"
-	"retrolauncher/backend/internal/app/games/application/update_game"
-	"retrolauncher/backend/internal/app/games/delivery/desktop/game_controller"
-	game_factories "retrolauncher/backend/internal/app/games/factories"
-	"retrolauncher/backend/internal/app/games/persistance/memory_game_repository"
+	"retrolauncher/backend/src/app/games/application/create_game"
+	"retrolauncher/backend/src/app/games/application/list_games"
+	"retrolauncher/backend/src/app/games/application/update_game"
+	"retrolauncher/backend/src/app/games/delivery/desktop/game_controller"
+	game_factories "retrolauncher/backend/src/app/games/factories"
+	"retrolauncher/backend/src/app/games/persistance/memory_game_repository"
 )
 
 type GamesModule struct {

@@ -1,7 +1,7 @@
 package memory_game_repository
 
 import (
-	"retrolauncher/backend/internal/app/games/domain/game"
+	"retrolauncher/backend/src/app/games/domain/game"
 )
 
 type MemoryGameRepository struct {

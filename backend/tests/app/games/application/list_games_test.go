@@ -1,8 +1,8 @@
 package application_game_test
 
 import (
-	"retrolauncher/backend/internal/app/games/application/list_games"
-	"retrolauncher/backend/internal/app/games/domain/game"
+	"retrolauncher/backend/src/app/games/application/list_games"
+	"retrolauncher/backend/src/app/games/domain/game"
 	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
 	"testing"
 )

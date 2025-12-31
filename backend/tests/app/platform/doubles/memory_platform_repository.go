@@ -1,6 +1,6 @@
 package platform_doubles_test
 
-import platform "retrolauncher/backend/internal/app/platform/domain"
+import platform "retrolauncher/backend/src/app/platform/domain"
 
 type MemoryPlatformRepository struct {
 	platforms map[string]*platform.Platform

@@ -1,9 +1,9 @@
 package game_controller
 
 import (
-	"retrolauncher/backend/internal/app/games/application/create_game"
-	"retrolauncher/backend/internal/app/games/application/list_games"
-	"retrolauncher/backend/internal/app/games/application/update_game"
+	"retrolauncher/backend/src/app/games/application/create_game"
+	"retrolauncher/backend/src/app/games/application/list_games"
+	"retrolauncher/backend/src/app/games/application/update_game"
 )
 
 type GameController struct {

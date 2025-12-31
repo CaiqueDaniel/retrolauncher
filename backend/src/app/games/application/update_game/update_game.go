@@ -2,7 +2,7 @@ package update_game
 
 import (
 	"errors"
-	"retrolauncher/backend/internal/app/games/domain/game"
+	"retrolauncher/backend/src/app/games/domain/game"
 )
 
 type UpdateGame struct {

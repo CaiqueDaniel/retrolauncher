@@ -1,7 +1,7 @@
 package platform_test
 
 import (
-	platform "retrolauncher/backend/internal/app/platform/domain"
+	platform "retrolauncher/backend/src/app/platform/domain"
 	"testing"
 
 	"github.com/google/uuid"

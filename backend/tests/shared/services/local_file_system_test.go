@@ -2,7 +2,7 @@ package shared_services_local_test
 
 import (
 	"os"
-	shared_services "retrolauncher/backend/internal/shared/services"
+	shared_services "retrolauncher/backend/src/shared/services"
 	"testing"
 )
 

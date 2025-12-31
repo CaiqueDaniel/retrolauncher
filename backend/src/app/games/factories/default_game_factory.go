@@ -1,6 +1,6 @@
 package game_factories
 
-import "retrolauncher/backend/internal/app/games/domain/game"
+import "retrolauncher/backend/src/app/games/domain/game"
 
 type DefaultGameFactory struct{}
 

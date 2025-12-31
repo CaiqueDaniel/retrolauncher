@@ -1,6 +1,6 @@
 package platform_application
 
-import platform "retrolauncher/backend/internal/app/platform/domain"
+import platform "retrolauncher/backend/src/app/platform/domain"
 
 func CreatePlatform(input CreatePlatformInput, factory platform.PlatformFactory, repository platform.PlatformRepository) []error {
 	platformEntity, validationErrors := factory.Create(input.Name, input.Path)

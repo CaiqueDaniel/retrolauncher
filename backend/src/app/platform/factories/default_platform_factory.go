@@ -1,6 +1,6 @@
 package platform_factories
 
-import platform "retrolauncher/backend/internal/app/platform/domain"
+import platform "retrolauncher/backend/src/app/platform/domain"
 
 type DefaultPlatformFactory struct{}
 
