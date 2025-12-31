@@ -1,11 +1,21 @@
-package application_game
+package update_game
 
 import (
 	"errors"
 	"retrolauncher/backend/internal/app/games/domain/game"
 )
 
-func UpdateGame(input UpdateGameInput, repository game.GameRepository) error {
+type UpdateGame struct {
+	Execute func(input Input) error
+}
+
+func New(repository game.GameRepository) UpdateGame {
+	return UpdateGame{
+		Execute: func(input Input) error { return execute(input, repository) },
+	}
+}
+
+func execute(input Input, repository game.GameRepository) error {
 	game, err := repository.Get(input.ID)
 
 	if err != nil {
@@ -21,7 +31,7 @@ func UpdateGame(input UpdateGameInput, repository game.GameRepository) error {
 	return repository.Save(game)
 }
 
-type UpdateGameInput struct {
+type Input struct {
 	ID       string
 	Name     string
 	Platform string
