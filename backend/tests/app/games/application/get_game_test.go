@@ -1,8 +1,8 @@
 package application_game_test
 
 import (
-	application_game "retrolauncher/backend/internal/app/games/application"
 	create_game "retrolauncher/backend/internal/app/games/application/create_game"
+	"retrolauncher/backend/internal/app/games/application/get_game"
 	"retrolauncher/backend/internal/app/games/domain/game"
 	game_factories "retrolauncher/backend/internal/app/games/factories"
 	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
@@ -33,9 +33,9 @@ func Test_it_should_be_able_to_get_a_game(t *testing.T) {
 	existingGame := games[0]
 
 	// Act: Try to get the game using the application use case
-	foundGame, err := application_game.GetGame(application_game.GetGameInput{
+	foundGame, err := get_game.New(repository).Execute(get_game.Input{
 		Id: existingGame.GetId().String(),
-	}, repository)
+	})
 
 	// Assert
 	if err != nil {
@@ -56,9 +56,9 @@ func Test_it_should_not_be_able_to_get_a_game_that_does_not_exist(t *testing.T) 
 	repository := &game_doubles_test.MemoryGameRepository{}
 
 	// Act: Try to get the game using the application use case
-	foundGame, err := application_game.GetGame(application_game.GetGameInput{
+	foundGame, err := get_game.New(repository).Execute(get_game.Input{
 		Id: "nonexistent-id",
-	}, repository)
+	})
 
 	// Assert
 	if err == nil {
