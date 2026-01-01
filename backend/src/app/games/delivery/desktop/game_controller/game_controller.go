@@ -7,10 +7,9 @@ import (
 )
 
 type GameController struct {
-	Create func(input CreateInputDto) error
-	Update func(input UpdateInputDto) error
-	//Get    func()
-	List func(input ListInputDto) []list_games.Output
+	createGame *create_game.CreateGame
+	updateGame *update_game.UpdateGame
+	listGames  *list_games.ListGames
 }
 
 func New(
@@ -20,14 +19,14 @@ func New(
 	listGames *list_games.ListGames,
 ) *GameController {
 	return &GameController{
-		Create: func(input CreateInputDto) error { return create(input, createGame) },
-		Update: func(input UpdateInputDto) error { return update(input, updateGame) },
-		List:   func(input ListInputDto) []list_games.Output { return list(input, listGames) },
+		createGame: createGame,
+		updateGame: updateGame,
+		listGames:  listGames,
 	}
 }
 
-func create(input CreateInputDto, useCase *create_game.CreateGame) error {
-	return useCase.Execute(create_game.Input{
+func (gc *GameController) Create(input CreateInputDto) error {
+	return gc.createGame.Execute(create_game.Input{
 		Name:     input.Name,
 		Platform: input.Platform,
 		Path:     input.Path,
@@ -35,8 +34,8 @@ func create(input CreateInputDto, useCase *create_game.CreateGame) error {
 	})
 }
 
-func update(input UpdateInputDto, useCase *update_game.UpdateGame) error {
-	return useCase.Execute(update_game.Input{
+func (gc *GameController) Update(input UpdateInputDto) error {
+	return gc.updateGame.Execute(update_game.Input{
 		ID:       input.ID,
 		Name:     input.Name,
 		Platform: input.Platform,
@@ -45,8 +44,8 @@ func update(input UpdateInputDto, useCase *update_game.UpdateGame) error {
 	})
 }
 
-func list(input ListInputDto, useCase *list_games.ListGames) []list_games.Output {
-	return useCase.Execute(list_games.Input{
+func (gc *GameController) List(input ListInputDto) []list_games.Output {
+	return gc.listGames.Execute(list_games.Input{
 		Name: input.Name,
 	})
 }
