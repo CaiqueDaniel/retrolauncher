@@ -78,3 +78,24 @@ export namespace list_games {
 
 }
 
+export namespace platform_controller {
+	
+	export class CreateInputDto {
+	    name: string;
+	    type: string;
+	    path: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new CreateInputDto(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.name = source["name"];
+	        this.type = source["type"];
+	        this.path = source["path"];
+	    }
+	}
+
+}
+
