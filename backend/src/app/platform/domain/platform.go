@@ -18,7 +18,7 @@ func NewPlatform(Name, Path string, platformType *Type) (*Platform, []error) {
 	platform := &Platform{id: uuid.New()}
 	platform.setName(Name, &err)
 	platform.setPath(Path, &err)
-	platform.platformType = platformType
+	platform.setPlatformType(platformType, &err)
 
 	if len(err) > 0 {
 		return nil, err
@@ -56,6 +56,15 @@ func (p *Platform) setPath(path string, err *[]error) {
 	}
 
 	p.path = path
+}
+
+func (p *Platform) setPlatformType(platformType *Type, err *[]error) {
+	if platformType == nil {
+		*err = append(*err, errors.New("invalid platform type"))
+		return
+	}
+
+	p.platformType = platformType
 }
 
 func (p *Platform) GetID() uuid.UUID {

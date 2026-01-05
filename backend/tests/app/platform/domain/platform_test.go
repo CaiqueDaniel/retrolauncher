@@ -104,3 +104,21 @@ func Test_it_should_not_be_able_to_create_with_empty_path(t *testing.T) {
 		return
 	}
 }
+
+func Test_it_should_not_be_able_to_create_with_invalid_platform_type(t *testing.T) {
+	platform, err := platform.NewPlatform("Test Platform", "/path/to/test/platform", platform.NewType("Invalid Platform Type"))
+
+	if platform != nil || err == nil {
+		t.Error("Expected platform to be nil when created with an invalid platform type, but it is not.")
+		return
+	}
+}
+
+func Test_it_should_not_be_able_to_create_without_platform_type(t *testing.T) {
+	platform, err := platform.NewPlatform("Test Platform", "/path/to/test/platform", nil)
+
+	if platform != nil || err == nil {
+		t.Error("Expected platform to be nil when created without a platform type, but it is not.")
+		return
+	}
+}
