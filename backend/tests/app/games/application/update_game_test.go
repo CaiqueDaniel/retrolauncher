@@ -1,8 +1,8 @@
 package application_game_test
 
 import (
-	application_game "retrolauncher/backend/internal/app/games/application"
-	game_factories "retrolauncher/backend/internal/app/games/factories"
+	"retrolauncher/backend/src/app/games/application/update_game"
+	game_factories "retrolauncher/backend/src/app/games/factories"
 	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
 	"testing"
 )
@@ -13,13 +13,13 @@ func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 	game := factory.CreateGame("test", "test", "test", "test")
 	repository.Save(game)
 
-	err := application_game.UpdateGame(application_game.UpdateGameInput{
+	err := update_game.New(repository).Execute(update_game.Input{
 		ID:       game.GetId().String(),
 		Name:     "Updated Test Game",
 		Platform: "Updated Test Platform",
 		Path:     "/path/to/updated/test/game",
 		Cover:    "/path/to/updated/test/cover.jpg",
-	}, repository)
+	})
 
 	if err != nil {
 		t.Errorf("Expected no error, but got: %v", err)
@@ -55,13 +55,13 @@ func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 
 func Test_it_should_not_be_able_to_update_a_game_that_does_not_exist(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
-	err := application_game.UpdateGame(application_game.UpdateGameInput{
+	err := update_game.New(repository).Execute(update_game.Input{
 		ID:       "nonexistent",
 		Name:     "Test Game",
 		Platform: "Test Platform",
 		Path:     "/path/to/test/game",
 		Cover:    "/path/to/test/cover.jpg",
-	}, repository)
+	})
 
 	if err == nil {
 		t.Error("Expected an error, but got none")

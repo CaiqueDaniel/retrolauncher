@@ -1,7 +1,7 @@
 package game_test
 
 import (
-	"retrolauncher/backend/internal/app/games/domain/game"
+	"retrolauncher/backend/src/app/games/domain/game"
 	"testing"
 
 	"github.com/google/uuid"

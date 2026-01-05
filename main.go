@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"retrolauncher/backend/src/app/games"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
@@ -16,7 +17,7 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "project",
+		Title:  "RetroLauncher",
 		Width:  1024,
 		Height: 768,
 		AssetServer: &assetserver.Options{
@@ -26,6 +27,7 @@ func main() {
 		OnStartup:        app.startup,
 		Bind: []interface{}{
 			app,
+			games.NewGamesModule().GameController,
 		},
 	})
 
