@@ -1,4 +1,4 @@
-package platform
+package domain
 
 import (
 	"errors"
@@ -12,7 +12,7 @@ type Platform struct {
 	path string
 }
 
-func New(Name, Path string) (*Platform, []error) {
+func NewPlatform(Name, Path string) (*Platform, []error) {
 	err := make([]error, 0)
 	platform := &Platform{id: uuid.New()}
 	platform.setName(Name, &err)
@@ -24,7 +24,7 @@ func New(Name, Path string) (*Platform, []error) {
 	return platform, nil
 }
 
-func Hydrate(ID uuid.UUID, name, path string) *Platform {
+func HydratePlatform(ID uuid.UUID, name, path string) *Platform {
 	return &Platform{
 		id:   ID,
 		name: name,

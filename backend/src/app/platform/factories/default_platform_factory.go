@@ -5,5 +5,5 @@ import platform "retrolauncher/backend/src/app/platform/domain"
 type DefaultPlatformFactory struct{}
 
 func (f *DefaultPlatformFactory) Create(name, path string) (*platform.Platform, []error) {
-	return platform.New(name, path)
+	return platform.NewPlatform(name, path)
 }

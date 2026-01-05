@@ -1,4 +1,4 @@
-package platform
+package domain
 
 type PlatformFactory interface {
 	Create(Name, Path string) (*Platform, []error)
