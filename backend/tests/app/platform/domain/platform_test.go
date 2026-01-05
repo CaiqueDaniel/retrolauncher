@@ -8,7 +8,8 @@ import (
 )
 
 func Test_it_should_be_able_to_create(t *testing.T) {
-	platform, _ := platform.NewPlatform("Test Platform", "/path/to/test/platform")
+	platformType := platform.NewType("RetroArch")
+	platform, _ := platform.NewPlatform("Test Platform", "/path/to/test/platform", *platformType)
 
 	if platform == nil {
 		t.Error("Expected platform to be created, but it is nil.")
@@ -52,7 +53,8 @@ func Test_it_should_be_able_to_hydrate(t *testing.T) {
 }
 
 func Test_it_should_be_able_to_update(t *testing.T) {
-	platform, _ := platform.NewPlatform("Old Platform", "/path/to/old/platform")
+	platformType := platform.NewType("RetroArch")
+	platform, _ := platform.NewPlatform("Old Platform", "/path/to/old/platform", *platformType)
 
 	if platform == nil {
 		t.Error("Expected platform to be created, but it is nil.")
@@ -73,7 +75,8 @@ func Test_it_should_be_able_to_update(t *testing.T) {
 }
 
 func Test_it_should_not_be_able_to_create_with_empty_name(t *testing.T) {
-	platform, err := platform.NewPlatform("", "/path/to/test/platform")
+	platformType := platform.NewType("RetroArch")
+	platform, err := platform.NewPlatform("", "/path/to/test/platform", *platformType)
 
 	if platform != nil || err == nil {
 		t.Error("Expected platform to be nil when created with an empty name, but it is not.")
@@ -82,7 +85,8 @@ func Test_it_should_not_be_able_to_create_with_empty_name(t *testing.T) {
 }
 
 func Test_it_should_not_be_able_to_create_with_empty_path(t *testing.T) {
-	platform, err := platform.NewPlatform("Test Platform", "")
+	platformType := platform.NewType("RetroArch")
+	platform, err := platform.NewPlatform("Test Platform", "", *platformType)
 
 	if platform != nil || err == nil {
 		t.Error("Expected platform to be nil when created with an empty path, but it is not.")

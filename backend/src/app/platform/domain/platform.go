@@ -7,12 +7,13 @@ import (
 )
 
 type Platform struct {
-	id   uuid.UUID
-	name string
-	path string
+	id           uuid.UUID
+	name         string
+	path         string
+	platformType *Type
 }
 
-func NewPlatform(Name, Path string) (*Platform, []error) {
+func NewPlatform(Name, Path string, platformType Type) (*Platform, []error) {
 	err := make([]error, 0)
 	platform := &Platform{id: uuid.New()}
 	platform.setName(Name, &err)
