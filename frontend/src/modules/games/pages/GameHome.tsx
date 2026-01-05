@@ -4,6 +4,8 @@ import { GameListContext } from "../features/GameList/GameListContext";
 import { Box, Paper } from "@mui/material";
 import { GameViewer } from "../features/GameViewer/GameViewer";
 import { MainLayout } from "~/modules/shared/infra/layouts/MainLayout";
+import { Link } from "react-router-dom";
+import { LocalGameGateway } from "../gateways/LocalGameGateway";
 
 export function GameHome() {
   return (
@@ -11,13 +13,10 @@ export function GameHome() {
       <GameListContext.Provider
         value={{
           alert: toast,
-          queryRepository: {
-            search: async () => {
-              return [];
-            },
-          },
+          queryRepository: new LocalGameGateway(),
         }}
       >
+        <Link to="new">Novo Jogo</Link>
         <Box
           display="grid"
           gridTemplateColumns="1fr 2fr"

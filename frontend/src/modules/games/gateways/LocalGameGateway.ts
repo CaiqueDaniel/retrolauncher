@@ -8,6 +8,7 @@ export class LocalGameGateway implements GameRepository, GameQueryRepository.Rep
     }
 
     get(id: string): Promise<Game> {
+        console.log(id);
         throw new Error("Method not implemented.");
     }
 
