@@ -3,7 +3,7 @@ import { GameList } from "../features/GameList/GameList";
 import { GameListContext } from "../features/GameList/GameListContext";
 import { Box, Paper } from "@mui/material";
 import { GameViewer } from "../features/GameViewer/GameViewer";
-import { MainLayout } from "~/modules/shared/infra/layouts/MainLayout";
+import { MainLayout } from "~/modules/shared/layouts/MainLayout";
 import { Link } from "react-router-dom";
 import { LocalGameGateway } from "../gateways/LocalGameGateway";
 
