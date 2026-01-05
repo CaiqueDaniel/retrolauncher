@@ -9,7 +9,7 @@ import (
 
 func Test_it_should_be_able_to_create(t *testing.T) {
 	platformType := platform.NewType("RetroArch")
-	platform, _ := platform.NewPlatform("Test Platform", "/path/to/test/platform", *platformType)
+	platform, _ := platform.NewPlatform("Test Platform", "/path/to/test/platform", platformType)
 
 	if platform == nil {
 		t.Error("Expected platform to be created, but it is nil.")
@@ -25,11 +25,17 @@ func Test_it_should_be_able_to_create(t *testing.T) {
 		t.Errorf("Expected platform path to be '/path/to/test/platform', but got: %s", platform.GetPath())
 		return
 	}
+
+	if platform.GetPlatformType() != platformType {
+		t.Errorf("Expected platform type to be 'RetroArch', but got: %s", platform.GetPlatformType().GetValue())
+		return
+	}
 }
 
 func Test_it_should_be_able_to_hydrate(t *testing.T) {
 	id := uuid.New()
-	platform := platform.HydratePlatform(id, "Hydrated Platform", "/path/to/hydrated/platform")
+	platformType := platform.NewType("RetroArch")
+	platform := platform.HydratePlatform(id, "Hydrated Platform", "/path/to/hydrated/platform", platformType)
 
 	if platform == nil {
 		t.Error("Expected hydrated platform to be created, but it is nil.")
@@ -50,11 +56,16 @@ func Test_it_should_be_able_to_hydrate(t *testing.T) {
 		t.Errorf("Expected platform path to be '/path/to/hydrated/platform', but got: %s", platform.GetPath())
 		return
 	}
+
+	if platform.GetPlatformType() != platformType {
+		t.Errorf("Expected platform type to be 'RetroArch', but got: %s", platform.GetPlatformType().GetValue())
+		return
+	}
 }
 
 func Test_it_should_be_able_to_update(t *testing.T) {
 	platformType := platform.NewType("RetroArch")
-	platform, _ := platform.NewPlatform("Old Platform", "/path/to/old/platform", *platformType)
+	platform, _ := platform.NewPlatform("Old Platform", "/path/to/old/platform", platformType)
 
 	if platform == nil {
 		t.Error("Expected platform to be created, but it is nil.")
@@ -76,7 +87,7 @@ func Test_it_should_be_able_to_update(t *testing.T) {
 
 func Test_it_should_not_be_able_to_create_with_empty_name(t *testing.T) {
 	platformType := platform.NewType("RetroArch")
-	platform, err := platform.NewPlatform("", "/path/to/test/platform", *platformType)
+	platform, err := platform.NewPlatform("", "/path/to/test/platform", platformType)
 
 	if platform != nil || err == nil {
 		t.Error("Expected platform to be nil when created with an empty name, but it is not.")
@@ -86,7 +97,7 @@ func Test_it_should_not_be_able_to_create_with_empty_name(t *testing.T) {
 
 func Test_it_should_not_be_able_to_create_with_empty_path(t *testing.T) {
 	platformType := platform.NewType("RetroArch")
-	platform, err := platform.NewPlatform("Test Platform", "", *platformType)
+	platform, err := platform.NewPlatform("Test Platform", "", platformType)
 
 	if platform != nil || err == nil {
 		t.Error("Expected platform to be nil when created with an empty path, but it is not.")

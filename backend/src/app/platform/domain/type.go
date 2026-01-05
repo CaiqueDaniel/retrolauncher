@@ -19,3 +19,7 @@ func NewType(value string) *Type {
 
 	return &Type{value: value}
 }
+
+func (t *Type) GetValue() string {
+	return t.value
+}

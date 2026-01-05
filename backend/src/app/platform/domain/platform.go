@@ -13,11 +13,12 @@ type Platform struct {
 	platformType *Type
 }
 
-func NewPlatform(Name, Path string, platformType Type) (*Platform, []error) {
+func NewPlatform(Name, Path string, platformType *Type) (*Platform, []error) {
 	err := make([]error, 0)
 	platform := &Platform{id: uuid.New()}
 	platform.setName(Name, &err)
 	platform.setPath(Path, &err)
+	platform.platformType = platformType
 
 	if len(err) > 0 {
 		return nil, err
@@ -25,11 +26,12 @@ func NewPlatform(Name, Path string, platformType Type) (*Platform, []error) {
 	return platform, nil
 }
 
-func HydratePlatform(ID uuid.UUID, name, path string) *Platform {
+func HydratePlatform(ID uuid.UUID, name, path string, platformType *Type) *Platform {
 	return &Platform{
-		id:   ID,
-		name: name,
-		path: path,
+		id:           ID,
+		name:         name,
+		path:         path,
+		platformType: platformType,
 	}
 }
 
@@ -66,4 +68,8 @@ func (p *Platform) GetName() string {
 
 func (p *Platform) GetPath() string {
 	return p.path
+}
+
+func (p *Platform) GetPlatformType() *Type {
+	return p.platformType
 }
