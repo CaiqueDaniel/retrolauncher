@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 
 export function FormLayout({ children }: PropsWithChildren) {
     return (
-        <Box bgcolor="#ededed" height="100vh" width="100vw">
+        <Box bgcolor="background.default" height="100vh" width="100vw">
             <Box p={3} display="flex" justifyContent="center" alignItems="center" height="100%">
                 <Paper sx={{ p: 3, mb: 3, maxWidth: 800 }}>
                     {children}
