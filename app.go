@@ -2,7 +2,8 @@ package main
 
 import (
 	"context"
-	"fmt"
+
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App struct
@@ -21,7 +22,17 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
+func (a *App) SelectFile() string {
+	options := runtime.OpenDialogOptions{
+		Title: "Selecione o arquivo de configuração",
+		Filters: []runtime.FileFilter{
+			{DisplayName: "Arquivos de Texto", Pattern: "*.txt;*.log"},
+		},
+	}
+
+	selection, err := runtime.OpenFileDialog(a.ctx, options)
+	if err != nil {
+		return ""
+	}
+	return selection
 }
