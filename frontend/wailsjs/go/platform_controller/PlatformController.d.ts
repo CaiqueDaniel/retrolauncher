@@ -3,3 +3,5 @@
 import {platform_controller} from '../models';
 
 export function Create(arg1:platform_controller.CreateInputDto):Promise<Array<Error>>;
+
+export function GetPlatformTypes():Promise<Array<string>>;

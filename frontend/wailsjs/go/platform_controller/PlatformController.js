@@ -5,3 +5,7 @@
 export function Create(arg1) {
   return window['go']['platform_controller']['PlatformController']['Create'](arg1);
 }
+
+export function GetPlatformTypes() {
+  return window['go']['platform_controller']['PlatformController']['GetPlatformTypes']();
+}

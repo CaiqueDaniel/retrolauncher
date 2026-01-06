@@ -2,6 +2,7 @@ package platform
 
 import (
 	"retrolauncher/backend/src/app/platform/application/create_platform"
+	"retrolauncher/backend/src/app/platform/application/get_platform_types"
 	"retrolauncher/backend/src/app/platform/delivery/desktop/platform_controller"
 	platform_factories "retrolauncher/backend/src/app/platform/factories"
 	memory_platform_repository "retrolauncher/backend/src/app/platform/persistance/memory_platform_repository"
@@ -18,6 +19,7 @@ func NewPlatformModule() *PlatformModule {
 	return &PlatformModule{
 		PlatformController: platform_controller.New(
 			create_platform.New(platformFactory, platformRepository),
+			get_platform_types.New(),
 		),
 	}
 }
