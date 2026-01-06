@@ -1,38 +1,41 @@
-import { toast } from "react-toastify";
 import { GameList } from "../features/GameList/GameList";
-import { GameListContext } from "../features/GameList/GameListContext";
-import { Box, Paper } from "@mui/material";
+import { Box, Button, Paper } from "@mui/material";
 import { GameViewer } from "../features/GameViewer/GameViewer";
 import { MainLayout } from "~/modules/shared/layouts/MainLayout";
-import { Link } from "react-router-dom";
-import { LocalGameGateway } from "../gateways/LocalGameGateway";
+import { useReactRouterRouteNavigator } from "~/modules/shared/infra/hooks/useReactRouterRouteNavigator";
 
 export function GameHome() {
+  const routeNavigator = useReactRouterRouteNavigator();
+
   return (
     <MainLayout>
-      <GameListContext.Provider
-        value={{
-          alert: toast,
-          queryRepository: new LocalGameGateway(),
-        }}
+      <Box display="flex" gap={2} justifyContent="flex-end">
+        <Button
+          variant="contained"
+          onClick={() => routeNavigator.navigateTo('/platforms/new')}
+        >Adicionar Plataforma
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => routeNavigator.navigateTo('/new')}
+        >Adicionar Jogo
+        </Button>
+      </Box>
+
+      <Box
+        display="grid"
+        gridTemplateColumns="1fr 2fr"
+        gap={2}
+        bgcolor="background"
+        p={2}
       >
-        <Link to="new">Novo Jogo</Link>
-        <Link to="platforms/new">Plataformas</Link>
-        <Box
-          display="grid"
-          gridTemplateColumns="1fr 2fr"
-          gap={2}
-          bgcolor="background"
-          p={2}
-        >
-          <Paper>
-            <GameList />
-          </Paper>
-          <Paper>
-            <GameViewer />
-          </Paper>
-        </Box>
-      </GameListContext.Provider>
+        <Paper>
+          <GameList />
+        </Paper>
+        <Paper>
+          <GameViewer />
+        </Paper>
+      </Box>
     </MainLayout>
   );
 }
