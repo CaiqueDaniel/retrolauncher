@@ -17,6 +17,7 @@ export function GameHome() {
         }}
       >
         <Link to="new">Novo Jogo</Link>
+        <Link to="platforms/new">Plataformas</Link>
         <Box
           display="grid"
           gridTemplateColumns="1fr 2fr"

@@ -4,7 +4,7 @@ import { PlatformFormData } from "./PlatformFormData";
 import * as yup from 'yup'
 
 export function usePlatformFormPresenter() {
-    const { repository, alert } = usePlatformFormContext();
+    const { repository, alert, routeNavigator } = usePlatformFormContext();
     const [isSubmiting, setIsSubmiting] = useState(false);
 
     const onSubmit = async (values: PlatformFormData) => {
@@ -12,7 +12,7 @@ export function usePlatformFormPresenter() {
 
         try {
             await repository.save(values);
-            alert.success("Jogo salvo com sucesso!");
+            alert.success("Plataforma salva com sucesso!");
         }
         catch (error) {
             alert.error("Erro ao salvar jogo!");
@@ -23,7 +23,7 @@ export function usePlatformFormPresenter() {
     }
 
     const onCancel = () => {
-
+        routeNavigator.navigateTo('/');
     }
 
     return {
