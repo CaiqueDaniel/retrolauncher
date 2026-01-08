@@ -1,4 +1,4 @@
-import { Typography, TextField } from "@mui/material";
+import { Typography, TextField, MenuItem } from "@mui/material";
 import { FastField } from "formik";
 import { Form } from "~/modules/shared/infra/components/Form/Form";
 import { PlatformFormData } from "./PlatformFormData";
@@ -7,7 +7,17 @@ import { usePlatformFormPresenter } from "./usePlatformFormPresenter";
 import { FilepathSelector } from "~/modules/shared/infra/features/FilepathSelector/FilepathSelector";
 
 export function PlatformForm() {
-    const { onSubmit, onCancel, isSubmiting, initialValues, validationSchema } = usePlatformFormPresenter();
+    const {
+        onSubmit,
+        onCancel,
+        isSubmiting,
+        isLoading,
+        initialValues,
+        validationSchema,
+        platformTypes
+    } = usePlatformFormPresenter();
+
+    if (isLoading) return <></>;
 
     return (
         <Form<PlatformFormData>
@@ -33,6 +43,7 @@ export function PlatformForm() {
                     />
                     <FastField
                         as={TextField}
+                        select
                         name="type"
                         label="Tipo de emulador"
                         required
@@ -40,7 +51,13 @@ export function PlatformForm() {
                         helperText={errors.type}
                         error={Boolean(errors.type)}
                         sx={{ mb: 2 }}
-                    />
+                    >
+                        {platformTypes.map((type) => (
+                            <MenuItem key={type} value={type}>
+                                {type}
+                            </MenuItem>
+                        ))}
+                    </FastField>
 
                     <FastField
                         as={FilepathSelector}

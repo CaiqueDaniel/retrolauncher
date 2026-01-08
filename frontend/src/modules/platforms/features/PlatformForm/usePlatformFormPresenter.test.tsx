@@ -7,15 +7,21 @@ import { RouteNavigator } from '~/modules/shared/application/RouteNavigator';
 import { describe, it, expect, Mocked, vi, beforeEach } from 'vitest';
 import { ReactNode } from 'react';
 import { PlatformFormData } from './PlatformFormData';
+import { PlatformTypesService } from '../../services/PlatformTypesService';
 
 describe('usePlatformFormPresenter', () => {
     let repository: Mocked<PlatformRepository>;
+    let platformTypesService: Mocked<PlatformTypesService>;
     let alert: Mocked<Alert>;
     let routeNavigator: Mocked<RouteNavigator>;
 
     beforeEach(() => {
         repository = {
             save: vi.fn()
+        };
+
+        platformTypesService = {
+            getPlatformTypes: vi.fn()
         };
 
         alert = {
@@ -26,9 +32,16 @@ describe('usePlatformFormPresenter', () => {
         routeNavigator = {
             navigateTo: vi.fn()
         };
+
+        platformTypesService.getPlatformTypes.mockResolvedValue([]);
     });
 
-    it('should initialize with default values', () => {
+    afterEach(() => {
+        vi.clearAllMocks();
+    });
+
+    it('should initialize with default values', async () => {
+        platformTypesService.getPlatformTypes.mockResolvedValue(['Console', 'PC']);
         const { result } = renderHook(() => usePlatformFormPresenter(), { wrapper });
 
         expect(result.current.initialValues).toEqual({
@@ -37,7 +50,22 @@ describe('usePlatformFormPresenter', () => {
             path: '',
         });
         expect(result.current.isSubmiting).toBe(false);
+        expect(result.current.platformTypes).toEqual([]);
         expect(result.current.validationSchema).toBeDefined();
+
+        await waitFor(() => {
+            expect(result.current.platformTypes).toEqual(['Console', 'PC']);
+        });
+    });
+
+    it('should handle error on load platform types', async () => {
+        platformTypesService.getPlatformTypes.mockRejectedValue(new Error('Error on load platform types'));
+        const { result } = renderHook(() => usePlatformFormPresenter(), { wrapper });
+
+        await waitFor(() => {
+            expect(result.current.platformTypes).toEqual([]);
+            expect(alert.error).toHaveBeenCalledWith('Erro ao listar tipos de plataformas');
+        });
     });
 
     it('should submit form successfully', async () => {
@@ -126,6 +154,7 @@ describe('usePlatformFormPresenter', () => {
         return (
             <PlatformFormContext.Provider value={{
                 repository,
+                platformTypesService,
                 alert,
                 routeNavigator
             }}>

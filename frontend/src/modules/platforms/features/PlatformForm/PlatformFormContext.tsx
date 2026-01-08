@@ -3,6 +3,7 @@ import { useContextHandler } from "~/modules/shared/infra/hooks/useContextHandle
 import { Alert } from "~/modules/shared/application/Alert";
 import { PlatformRepository } from "../../domain/Platform";
 import { RouteNavigator } from "~/modules/shared/application/RouteNavigator";
+import { PlatformTypesService } from "../../services/PlatformTypesService";
 
 export const PlatformFormContext = createContext<Context | undefined>(undefined)
 
@@ -12,6 +13,7 @@ export function usePlatformFormContext() {
 
 type Context = {
     repository: PlatformRepository,
+    platformTypesService: PlatformTypesService,
     alert: Alert
     routeNavigator: RouteNavigator
 }
