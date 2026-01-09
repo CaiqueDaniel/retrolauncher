@@ -5,7 +5,7 @@ import * as yup from 'yup'
 import { PlatformSearchResult } from "~/modules/platforms/services/PlatformSearchService";
 
 export function useGameFormPresenter() {
-    const { repository, alert, platformSearchService } = useGameFormContext();
+    const { repository, alert, platformSearchService, routeNavigator } = useGameFormContext();
     const [isSubmiting, setIsSubmiting] = useState(false);
     const [platforms, setPlatforms] = useState<PlatformSearchResult[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -25,9 +25,7 @@ export function useGameFormPresenter() {
         }
     }
 
-    const onCancel = () => {
-
-    }
+    const onCancel = () => routeNavigator.navigateTo('/');
 
     useEffect(fetchPlatforms, []);
 

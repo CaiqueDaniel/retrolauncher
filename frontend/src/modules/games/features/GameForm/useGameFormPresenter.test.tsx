@@ -7,11 +7,13 @@ import { describe, it, expect, Mocked, vi, beforeEach, afterEach } from 'vitest'
 import { ReactNode } from 'react';
 import { GameFormData } from './GameFormData';
 import { PlatformSearchService } from '~/modules/platforms/services/PlatformSearchService';
+import { RouteNavigator } from '~/modules/shared/application/RouteNavigator';
 
 describe('useGameFormPresenter', () => {
     let repository: Mocked<GameRepository>;
     let platformSearchService: Mocked<PlatformSearchService>;
     let alert: Mocked<Alert>;
+    let routeNavigator: Mocked<RouteNavigator>;
 
     beforeEach(() => {
         repository = {
@@ -26,6 +28,10 @@ describe('useGameFormPresenter', () => {
         alert = {
             success: vi.fn(),
             error: vi.fn()
+        };
+
+        routeNavigator = {
+            navigateTo: vi.fn()
         };
 
         platformSearchService.listAll.mockResolvedValue([]);
@@ -53,8 +59,8 @@ describe('useGameFormPresenter', () => {
 
         await waitFor(() => {
             expect(result.current.platforms).toEqual([
-                'Nintendo 64',
-                'PlayStation 2',
+                { id: '1', name: 'Nintendo 64' },
+                { id: '2', name: 'PlayStation 2' },
             ]);
         });
     });
@@ -160,11 +166,9 @@ describe('useGameFormPresenter', () => {
     it('should call onCancel without errors', () => {
         const { result } = renderHook(() => useGameFormPresenter(), { wrapper });
 
-        expect(() => {
-            act(() => {
-                result.current.onCancel();
-            });
-        }).not.toThrow();
+        result.current.onCancel();
+
+        expect(routeNavigator.navigateTo).toHaveBeenCalledWith('/');
     });
 
     function wrapper({ children }: { children: ReactNode }) {
@@ -172,7 +176,8 @@ describe('useGameFormPresenter', () => {
             <GameFormContext.Provider value={{
                 repository,
                 platformSearchService,
-                alert
+                alert,
+                routeNavigator
             }}>
                 {children}
             </GameFormContext.Provider>
