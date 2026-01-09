@@ -14,6 +14,18 @@ func (r *MemoryPlatformRepository) Save(entity *platform.Platform) error {
 	return nil
 }
 
+func (r *MemoryPlatformRepository) List() ([]*platform.Platform, error) {
+	result := make([]*platform.Platform, len(r.platforms))
+	i := 0
+
+	for _, platform := range r.platforms {
+		result[i] = platform
+		i++
+	}
+
+	return result, nil
+}
+
 func (r *MemoryPlatformRepository) Size() int {
 	if r.platforms == nil {
 		return 0

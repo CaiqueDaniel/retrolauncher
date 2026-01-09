@@ -75,8 +75,6 @@ describe('usePlatformFormPresenter', () => {
             path: '/path/to/ps5'
         };
 
-        repository.save.mockResolvedValue({ id: '1', ...platformData });
-
         const { result } = renderHook(() => usePlatformFormPresenter(), { wrapper });
 
         await act(async () => {
