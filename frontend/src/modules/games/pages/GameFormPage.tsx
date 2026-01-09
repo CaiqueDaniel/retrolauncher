@@ -1,10 +1,10 @@
-import { Paper } from "@mui/material";
 import { GameForm } from "../features/GameForm/GameForm";
+import { FormLayout } from "~/modules/shared/layouts/FormLayout";
 
 export function GameFormPage() {
     return (
-        <Paper sx={{ p: 3, mb: 3 }}>
+        <FormLayout>
             <GameForm />
-        </Paper>
+        </FormLayout>
     )
 }
