@@ -1,6 +1,5 @@
 import { toast } from "react-toastify";
-import { PlatformFormContext } from "./features/PlatformForm/PlatformFormContext";
-import { PlatformRepository } from "./domain/Platform";
+import { PlatformFormContext } from "./features/PlatformForm/PlatformFormContext";;
 import { PropsWithChildren, useMemo } from "react";
 import { FilepathSelectorContext } from "../shared/infra/features/FilepathSelector/FilepathSelectorContext";
 import { LocalFilepathSelectionService } from "../shared/infra/services/LocalFilepathSelectionService";
@@ -14,7 +13,7 @@ export function PlatformsProviders({ children }: PropsWithChildren) {
     return (
         <FilepathSelectorContext.Provider value={{ filepathSelectionService }}>
             <PlatformFormContext.Provider value={{
-                repository: {} as PlatformRepository,
+                repository: platformGateway,
                 platformTypesService: platformGateway,
                 alert: toast,
                 routeNavigator: useReactRouterRouteNavigator()

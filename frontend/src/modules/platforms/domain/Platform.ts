@@ -6,5 +6,5 @@ export type Platform = {
 }
 
 export interface PlatformRepository {
-    save(platform: Platform): Promise<Platform>;
+    save(platform: Platform): Promise<void>;
 }
