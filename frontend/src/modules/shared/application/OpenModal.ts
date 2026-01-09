@@ -1,8 +1,8 @@
-import { BusDispacher } from './BusDispacher';
+import { BusDispatcher } from './BusDispatcher';
 import { UseCase } from './UseCase';
 
 export class OpenModal implements UseCase<Input, void> {
-  constructor(private readonly bus: BusDispacher) {}
+  constructor(private readonly bus: BusDispatcher) { }
 
   execute(input: Input): void {
     this.bus.dispatch(input.eventName, input.data);

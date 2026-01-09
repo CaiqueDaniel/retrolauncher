@@ -4,21 +4,25 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
+import { useGameListPresenter } from "./useGameListPresenter";
 
 export function GameList() {
+  const { games, isLoading, onClick } = useGameListPresenter();
+
+  if (isLoading) return <></>
+
   return (
     <nav>
       <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemText primary="Teste" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemText primary="Test 2" />
-          </ListItemButton>
-        </ListItem>
+        {
+          games.map(game => (
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => onClick(game.id)}>
+                <ListItemText primary={game.name} />
+              </ListItemButton>
+            </ListItem>
+          ))
+        }
       </List>
     </nav>
   );

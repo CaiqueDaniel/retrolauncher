@@ -1,14 +1,14 @@
-import { BusDispacher } from '../../application/BusDispacher';
+import { BusDispatcher } from '../../application/BusDispatcher';
 import {
   BusSubscriber,
   BusHandler,
 } from '../../application/BusSubscriber';
 
-export class EventBus implements BusSubscriber, BusDispacher {
+export class EventBus implements BusSubscriber, BusDispatcher {
   private readonly eventBuses = new Map<string, Map<string, BusHandler>>();
   private static instance?: EventBus;
 
-  private constructor() {}
+  private constructor() { }
 
   static getInstance() {
     if (EventBus.instance) return EventBus.instance;

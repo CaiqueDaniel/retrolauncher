@@ -1,20 +1,17 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import { GameQueryRepository } from "../../repositories/GameQueryRepository";
 import { Alert } from "~/modules/shared/application/Alert";
+import { BusDispatcher } from "~/modules/shared/application/BusDispatcher";
+import { useContextHandler } from "~/modules/shared/infra/hooks/useContextHandler";
 
 export const GameListContext = createContext<Context | undefined>(undefined);
 
 export function useGameListContext() {
-  const context = useContext(GameListContext);
-  if (!context) {
-    throw new Error(
-      "useGameListContext must be used within a GameListProvider"
-    );
-  }
-  return context;
+  return useContextHandler(GameListContext);
 }
 
 type Context = {
   queryRepository: GameQueryRepository.Repository;
   alert: Alert;
+  busDispatcher: BusDispatcher;
 };
