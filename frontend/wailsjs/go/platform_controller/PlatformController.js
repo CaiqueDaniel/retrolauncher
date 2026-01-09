@@ -9,3 +9,7 @@ export function Create(arg1) {
 export function GetPlatformTypes() {
   return window['go']['platform_controller']['PlatformController']['GetPlatformTypes']();
 }
+
+export function List() {
+  return window['go']['platform_controller']['PlatformController']['List']();
+}

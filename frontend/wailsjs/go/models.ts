@@ -78,6 +78,25 @@ export namespace list_games {
 
 }
 
+export namespace list_platforms {
+	
+	export class Output {
+	    Id: string;
+	    Name: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Output(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.Id = source["Id"];
+	        this.Name = source["Name"];
+	    }
+	}
+
+}
+
 export namespace platform_controller {
 	
 	export class CreateInputDto {
