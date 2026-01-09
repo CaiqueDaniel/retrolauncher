@@ -6,6 +6,7 @@ import { GameListContext } from "./features/GameList/GameListContext";
 import { LocalPlatformGateway } from "../platforms/gateways/LocalPlatformGateway";
 import { useReactRouterRouteNavigator } from "../shared/infra/hooks/useReactRouterRouteNavigator";
 import { EventBus } from "../shared/infra/services/EventBus";
+import { GameViewerContext } from "./features/GameViewer/GameViewerContext";
 
 export function GameProviders({ children }: PropsWithChildren) {
     const repository = useMemo(() => new LocalGameGateway(), []);
@@ -17,14 +18,18 @@ export function GameProviders({ children }: PropsWithChildren) {
             queryRepository: repository,
             busDispatcher: EventBus.getInstance()
         }}>
-            <GameFormContext.Provider value={{
-                repository,
-                alert: toast,
-                platformSearchService,
-                routeNavigator: useReactRouterRouteNavigator()
+            <GameViewerContext.Provider value={{
+                busSubscriber: EventBus.getInstance()
             }}>
-                {children}
-            </GameFormContext.Provider>
+                <GameFormContext.Provider value={{
+                    repository,
+                    alert: toast,
+                    platformSearchService,
+                    routeNavigator: useReactRouterRouteNavigator()
+                }}>
+                    {children}
+                </GameFormContext.Provider>
+            </GameViewerContext.Provider>
         </GameListContext.Provider>
     )
 }

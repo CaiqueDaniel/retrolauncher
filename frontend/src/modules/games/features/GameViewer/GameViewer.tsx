@@ -1,6 +1,9 @@
 import { Box, Button, Typography } from "@mui/material";
+import { useGameViewerPresenter } from "./useGameViewerPresenter";
 
 export function GameViewer() {
+  const { game } = useGameViewerPresenter();
+
   return (
     <Box p={3}>
       <Box display="flex" gap={2}>
@@ -10,7 +13,7 @@ export function GameViewer() {
         />
         <Box>
           <Typography variant="h5" mb={1}>
-            Game Title
+            {game?.name}
           </Typography>
           <Button variant="contained" color="success">
             Iniciar
