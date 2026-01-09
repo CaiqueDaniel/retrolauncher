@@ -4,6 +4,7 @@ import { Form } from "~/modules/shared/infra/components/Form/Form";
 import { GameFormData } from "./GameFormData";
 import { FormSubmitControls } from "./FormSubmitControls";
 import { useGameFormPresenter } from "./useGameFormPresenter";
+import { FilepathSelector } from "~/modules/shared/infra/features/FilepathSelector/FilepathSelector";
 
 export function GameForm() {
     const {
@@ -57,7 +58,7 @@ export function GameForm() {
                     </FastField>
 
                     <FastField
-                        as={TextField}
+                        as={FilepathSelector}
                         name="path"
                         label="Caminho"
                         required
@@ -67,7 +68,7 @@ export function GameForm() {
                         sx={{ mb: 2 }}
                     />
                     <FastField
-                        as={TextField}
+                        as={FilepathSelector}
                         name="cover"
                         label="Capa"
                         required
