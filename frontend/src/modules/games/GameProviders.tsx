@@ -3,13 +3,15 @@ import { GameFormContext } from "./features/GameForm/GameFormContext";
 import { LocalGameGateway } from "./gateways/LocalGameGateway";
 import { toast } from "react-toastify";
 import { GameListContext } from "./features/GameList/GameListContext";
+import { LocalPlatformGateway } from "../platforms/gateways/LocalPlatformGateway";
 
 export function GameProviders({ children }: PropsWithChildren) {
-    const repository = useMemo(() => new LocalGameGateway(), [])
+    const repository = useMemo(() => new LocalGameGateway(), []);
+    const platformSearchService = useMemo(() => new LocalPlatformGateway(), []);
 
     return (
         <GameListContext.Provider value={{ alert: toast, queryRepository: repository }}>
-            <GameFormContext.Provider value={{ repository, alert: toast }}>
+            <GameFormContext.Provider value={{ repository, alert: toast, platformSearchService }}>
                 {children}
             </GameFormContext.Provider>
         </GameListContext.Provider>

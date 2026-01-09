@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { MenuItem, TextField } from "@mui/material";
 import { FastField } from "formik";
 import { Form } from "~/modules/shared/infra/components/Form/Form";
 import { GameFormData } from "./GameFormData";
@@ -6,7 +6,17 @@ import { FormSubmitControls } from "./FormSubmitControls";
 import { useGameFormPresenter } from "./useGameFormPresenter";
 
 export function GameForm() {
-    const { onSubmit, onCancel, isSubmiting, initialValues, validationSchema } = useGameFormPresenter();
+    const {
+        onSubmit,
+        onCancel,
+        isSubmiting,
+        initialValues,
+        validationSchema,
+        isLoading,
+        platforms
+    } = useGameFormPresenter();
+
+    if (isLoading) return <></>;
 
     return (
         <Form<GameFormData>
@@ -28,6 +38,7 @@ export function GameForm() {
                     />
                     <FastField
                         as={TextField}
+                        select
                         name="platform"
                         label="Plataforma"
                         required
@@ -35,7 +46,15 @@ export function GameForm() {
                         helperText={errors.name}
                         error={Boolean(errors.name)}
                         sx={{ mb: 2 }}
-                    />
+                    >
+                        {
+                            platforms.map(platform => (
+                                <MenuItem key={platform.id} value={platform.id}>
+                                    {platform.name}
+                                </MenuItem>
+                            ))
+                        }
+                    </FastField>
 
                     <FastField
                         as={TextField}
