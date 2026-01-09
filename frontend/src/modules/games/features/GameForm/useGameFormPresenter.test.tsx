@@ -91,6 +91,7 @@ describe('useGameFormPresenter', () => {
         expect(repository.save).toHaveBeenCalledWith(gameData);
         expect(alert.success).toHaveBeenCalledWith('Jogo salvo com sucesso!');
         expect(result.current.isSubmiting).toBe(false);
+        expect(routeNavigator.navigateTo).toHaveBeenCalledWith('/');
     });
 
     it('should handle submit error', async () => {

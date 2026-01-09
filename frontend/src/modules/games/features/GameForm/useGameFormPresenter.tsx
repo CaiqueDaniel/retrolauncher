@@ -16,6 +16,7 @@ export function useGameFormPresenter() {
         try {
             await repository.save(values);
             alert.success("Jogo salvo com sucesso!");
+            routeNavigator.navigateTo('/');
         }
         catch (error) {
             alert.error("Erro ao salvar jogo!");

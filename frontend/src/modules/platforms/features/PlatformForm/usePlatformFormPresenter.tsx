@@ -15,6 +15,7 @@ export function usePlatformFormPresenter() {
         try {
             await repository.save(values);
             alert.success("Plataforma salva com sucesso!");
+            routeNavigator.navigateTo('/');
         }
         catch (error) {
             alert.error("Erro ao salvar jogo!");

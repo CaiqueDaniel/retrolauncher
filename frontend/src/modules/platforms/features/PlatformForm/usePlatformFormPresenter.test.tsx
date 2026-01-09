@@ -84,6 +84,7 @@ describe('usePlatformFormPresenter', () => {
         expect(repository.save).toHaveBeenCalledWith(platformData);
         expect(alert.success).toHaveBeenCalledWith('Plataforma salva com sucesso!');
         expect(result.current.isSubmiting).toBe(false);
+        expect(routeNavigator.navigateTo).toHaveBeenCalledWith('/');
     });
 
     it('should handle submit error', async () => {
