@@ -2,6 +2,7 @@ package game_controller
 
 import (
 	"retrolauncher/backend/src/app/games/application/create_game"
+	"retrolauncher/backend/src/app/games/application/get_game"
 	"retrolauncher/backend/src/app/games/application/list_games"
 	"retrolauncher/backend/src/app/games/application/update_game"
 )
@@ -10,18 +11,20 @@ type GameController struct {
 	createGame *create_game.CreateGame
 	updateGame *update_game.UpdateGame
 	listGames  *list_games.ListGames
+	getGame    *get_game.GetGame
 }
 
 func New(
 	createGame *create_game.CreateGame,
 	updateGame *update_game.UpdateGame,
-	//getGame get_game.GetGame,
+	getGame *get_game.GetGame,
 	listGames *list_games.ListGames,
 ) *GameController {
 	return &GameController{
 		createGame: createGame,
 		updateGame: updateGame,
 		listGames:  listGames,
+		getGame:    getGame,
 	}
 }
 
@@ -47,6 +50,12 @@ func (gc *GameController) Update(input UpdateInputDto) error {
 func (gc *GameController) List(input ListInputDto) []*list_games.Output {
 	return gc.listGames.Execute(list_games.Input{
 		Name: input.Name,
+	})
+}
+
+func (gc *GameController) Get(id string) (*get_game.Output, error) {
+	return gc.getGame.Execute(get_game.Input{
+		Id: id,
 	})
 }
 

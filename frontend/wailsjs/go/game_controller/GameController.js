@@ -6,6 +6,10 @@ export function Create(arg1) {
   return window['go']['game_controller']['GameController']['Create'](arg1);
 }
 
+export function Get(arg1) {
+  return window['go']['game_controller']['GameController']['Get'](arg1);
+}
+
 export function List(arg1) {
   return window['go']['game_controller']['GameController']['List'](arg1);
 }

@@ -53,6 +53,31 @@ export namespace game_controller {
 
 }
 
+export namespace get_game {
+	
+	export class Output {
+	    Id: string;
+	    Name: string;
+	    Platform: string;
+	    Cover: string;
+	    Path: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Output(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.Id = source["Id"];
+	        this.Name = source["Name"];
+	        this.Platform = source["Platform"];
+	        this.Cover = source["Cover"];
+	        this.Path = source["Path"];
+	    }
+	}
+
+}
+
 export namespace list_games {
 	
 	export class Output {

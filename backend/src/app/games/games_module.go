@@ -2,6 +2,7 @@ package games
 
 import (
 	"retrolauncher/backend/src/app/games/application/create_game"
+	"retrolauncher/backend/src/app/games/application/get_game"
 	"retrolauncher/backend/src/app/games/application/list_games"
 	"retrolauncher/backend/src/app/games/application/update_game"
 	"retrolauncher/backend/src/app/games/delivery/desktop/game_controller"
@@ -21,7 +22,7 @@ func NewGamesModule() *GamesModule {
 		GameController: game_controller.New(
 			create_game.New(gameFactory, gameRepository),
 			update_game.New(gameRepository),
-			//get_game.New(),
+			get_game.New(gameRepository),
 			list_games.New(gameRepository),
 		),
 	}
