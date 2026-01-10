@@ -47,8 +47,8 @@ func Test_it_should_be_able_to_get_a_game(t *testing.T) {
 		return
 	}
 
-	if foundGame.GetId().String() != existingGame.GetId().String() {
-		t.Errorf("Expected game ID %s, but got %s", existingGame.GetId().String(), foundGame.GetId().String())
+	if foundGame.Id != existingGame.GetId().String() {
+		t.Errorf("Expected game ID %s, but got %s", existingGame.GetId().String(), foundGame.Id)
 	}
 }
 

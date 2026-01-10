@@ -6,16 +6,16 @@ import (
 )
 
 type GetGame struct {
-	Execute func(input Input) (*game.Game, error)
+	Execute func(input Input) (*Output, error)
 }
 
 func New(repository game.GameRepository) *GetGame {
 	return &GetGame{
-		Execute: func(input Input) (*game.Game, error) { return execute(input, repository) },
+		Execute: func(input Input) (*Output, error) { return execute(input, repository) },
 	}
 }
 
-func execute(input Input, repository game.GameRepository) (*game.Game, error) {
+func execute(input Input, repository game.GameRepository) (*Output, error) {
 	game, err := repository.Get(input.Id)
 
 	if err != nil {
@@ -26,9 +26,23 @@ func execute(input Input, repository game.GameRepository) (*game.Game, error) {
 		return nil, errors.New("game not found")
 	}
 
-	return game, nil
+	return &Output{
+		Id:       game.GetId().String(),
+		Name:     game.GetName(),
+		Platform: game.GetPlatform(),
+		Cover:    game.GetCover(),
+		Path:     game.GetPath(),
+	}, nil
 }
 
 type Input struct {
 	Id string
+}
+
+type Output struct {
+	Id       string
+	Name     string
+	Platform string
+	Cover    string
+	Path     string
 }
