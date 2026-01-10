@@ -18,6 +18,18 @@ export namespace game_controller {
 	        this.cover = source["cover"];
 	    }
 	}
+	export class GetInputDto {
+	    id: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new GetInputDto(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
+	    }
+	}
 	export class ListInputDto {
 	    name: string;
 	

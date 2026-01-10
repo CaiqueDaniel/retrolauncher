@@ -17,7 +17,7 @@ export function GameHome() {
         </Button>
         <Button
           variant="contained"
-          onClick={() => routeNavigator.navigateTo('/new')}
+          onClick={() => routeNavigator.navigateTo('/game/new')}
         >Adicionar Jogo
         </Button>
       </Box>

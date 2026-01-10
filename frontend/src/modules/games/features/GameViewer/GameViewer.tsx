@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useGameViewerPresenter } from "./useGameViewerPresenter";
 
 export function GameViewer() {
-  const { game } = useGameViewerPresenter();
+  const { game, onClickEdit } = useGameViewerPresenter();
 
   return (
     <Box p={3}>
@@ -15,9 +15,12 @@ export function GameViewer() {
           <Typography variant="h5" mb={1}>
             {game?.name}
           </Typography>
-          <Button variant="contained" color="success">
-            Iniciar
-          </Button>
+          <Box display="flex" gap={1}>
+            <Button variant="contained" color="success">
+              Iniciar
+            </Button>
+            <Button onClick={onClickEdit}>Editar</Button>
+          </Box>
         </Box>
       </Box>
     </Box>

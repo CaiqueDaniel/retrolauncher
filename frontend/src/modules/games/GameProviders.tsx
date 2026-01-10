@@ -22,7 +22,8 @@ export function GameProviders({ children }: PropsWithChildren) {
             busDispatcher: EventBus.getInstance()
         }}>
             <GameViewerContext.Provider value={{
-                busSubscriber: EventBus.getInstance()
+                busSubscriber: EventBus.getInstance(),
+                routeNavigate: useReactRouterRouteNavigator()
             }}>
                 <GameFormContext.Provider value={{
                     repository,

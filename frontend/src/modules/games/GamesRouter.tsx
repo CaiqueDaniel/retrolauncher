@@ -14,12 +14,16 @@ export const gamesRoutes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element: <GameHome />
+        element: <GameHome />,
       },
       {
-        path: "/new",
-        element: <GameFormPage />
-      }
-    ]
+        path: "/game/new",
+        element: <GameFormPage />,
+      },
+      {
+        path: "/game/:id/edit",
+        element: <GameFormPage />,
+      },
+    ],
   },
 ];

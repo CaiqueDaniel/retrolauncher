@@ -53,9 +53,9 @@ func (gc *GameController) List(input ListInputDto) []*list_games.Output {
 	})
 }
 
-func (gc *GameController) Get(id string) (*get_game.Output, error) {
+func (gc *GameController) Get(input GetInputDto) (*get_game.Output, error) {
 	return gc.getGame.Execute(get_game.Input{
-		Id: id,
+		Id: input.Id,
 	})
 }
 
@@ -73,4 +73,8 @@ type UpdateInputDto struct {
 
 type ListInputDto struct {
 	Name string `json:"name"`
+}
+
+type GetInputDto struct {
+	Id string `json:"id"`
 }

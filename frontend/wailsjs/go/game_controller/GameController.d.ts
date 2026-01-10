@@ -6,7 +6,7 @@ import {list_games} from '../models';
 
 export function Create(arg1:game_controller.CreateInputDto):Promise<void>;
 
-export function Get(arg1:string):Promise<get_game.Output>;
+export function Get(arg1:game_controller.GetInputDto):Promise<get_game.Output>;
 
 export function List(arg1:game_controller.ListInputDto):Promise<Array<list_games.Output>>;
 

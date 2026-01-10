@@ -46,7 +46,7 @@ describe('useGameFormPresenter', () => {
             { id: '1', name: 'Nintendo 64' },
             { id: '2', name: 'PlayStation 2' },
         ]);
-        const { result } = renderHook(() => useGameFormPresenter(), { wrapper });
+        const { result } = renderHook(() => useGameFormPresenter({}), { wrapper });
 
         expect(result.current.initialValues).toEqual({
             name: '',
@@ -67,7 +67,7 @@ describe('useGameFormPresenter', () => {
 
     it('should handle platform search error', async () => {
         platformSearchService.listAll.mockRejectedValue(new Error('error'));
-        const { result } = renderHook(() => useGameFormPresenter(), { wrapper });
+        const { result } = renderHook(() => useGameFormPresenter({}), { wrapper });
 
         await waitFor(() => {
             expect(result.current.platforms).toEqual([]);
@@ -82,7 +82,7 @@ describe('useGameFormPresenter', () => {
             cover: '/path/to/cover.jpg'
         };
 
-        const { result } = renderHook(() => useGameFormPresenter(), { wrapper });
+        const { result } = renderHook(() => useGameFormPresenter({}), { wrapper });
 
         await act(async () => {
             await result.current.onSubmit(gameData);
@@ -104,7 +104,7 @@ describe('useGameFormPresenter', () => {
 
         repository.save.mockRejectedValue(new Error('Network error'));
 
-        const { result } = renderHook(() => useGameFormPresenter(), { wrapper });
+        const { result } = renderHook(() => useGameFormPresenter({}), { wrapper });
 
         await act(async () => {
             await result.current.onSubmit(gameData);
@@ -130,7 +130,7 @@ describe('useGameFormPresenter', () => {
 
         repository.save.mockReturnValue(promise as any);
 
-        const { result } = renderHook(() => useGameFormPresenter(), { wrapper });
+        const { result } = renderHook(() => useGameFormPresenter({}), { wrapper });
 
         act(() => {
             result.current.onSubmit(gameData);
@@ -149,7 +149,7 @@ describe('useGameFormPresenter', () => {
     });
 
     it('should validate required fields', () => {
-        const { result } = renderHook(() => useGameFormPresenter(), { wrapper });
+        const { result } = renderHook(() => useGameFormPresenter({}), { wrapper });
 
         expect(result.current.validationSchema).toBeDefined();
 
@@ -165,7 +165,7 @@ describe('useGameFormPresenter', () => {
     });
 
     it('should call onCancel without errors', () => {
-        const { result } = renderHook(() => useGameFormPresenter(), { wrapper });
+        const { result } = renderHook(() => useGameFormPresenter({}), { wrapper });
 
         result.current.onCancel();
 
