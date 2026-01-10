@@ -26,7 +26,7 @@ func (a *App) SelectFile() string {
 	options := runtime.OpenDialogOptions{
 		Title: "Selecione o arquivo de configuração",
 		Filters: []runtime.FileFilter{
-			{DisplayName: "Arquivos de Texto", Pattern: "*.txt;*.log"},
+			{DisplayName: "Arquivos de Texto"},
 		},
 	}
 
