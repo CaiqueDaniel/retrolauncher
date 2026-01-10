@@ -44,7 +44,7 @@ func (gc *GameController) Update(input UpdateInputDto) error {
 	})
 }
 
-func (gc *GameController) List(input ListInputDto) []list_games.Output {
+func (gc *GameController) List(input ListInputDto) []*list_games.Output {
 	return gc.listGames.Execute(list_games.Input{
 		Name: input.Name,
 	})
