@@ -28,7 +28,7 @@ func New(
 	}
 }
 
-func (gc *GameController) Create(input CreateInputDto) error {
+func (gc *GameController) Create(input CreateInputDto) []error {
 	return gc.createGame.Execute(create_game.Input{
 		Name:     input.Name,
 		Platform: input.Platform,

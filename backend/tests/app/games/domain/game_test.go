@@ -9,7 +9,7 @@ import (
 )
 
 func Test_it_should_be_able_to_create(t *testing.T) {
-	game := game.New("Test Game", platform_type.New(platform_type.TypeRetroArch), "game.nes", "test_cover.jpg")
+	game, _ := game.New("Test Game", platform_type.New(platform_type.TypeRetroArch), "game.nes", "test_cover.jpg")
 
 	if game.GetId() == (uuid.UUID{}) {
 		t.Error("Game ID should not be empty")
@@ -58,7 +58,7 @@ func Test_it_should_be_able_to_hydrate(t *testing.T) {
 }
 
 func Test_it_should_be_able_to_update(t *testing.T) {
-	game := game.New("Old Game", platform_type.New(platform_type.TypeRetroArch), "game.nes", "old_cover.jpg")
+	game, _ := game.New("Old Game", platform_type.New(platform_type.TypeRetroArch), "game.nes", "old_cover.jpg")
 	game.Update("Updated Game", platform_type.New(platform_type.TypeRetroArch), "game.sns", "updated_cover.jpg")
 
 	if game.GetName() != "Updated Game" {
@@ -77,3 +77,19 @@ func Test_it_should_be_able_to_update(t *testing.T) {
 		t.Error("Game path should remain unchanged after update")
 	}
 }
+
+func Test_it_should_not_be_able_to_create_with_invalid_values(t *testing.T) {
+	_, err := game.New("", platform_type.New(""), "", "")
+
+	if err == nil {
+		t.Error("Expected errors when creating game with invalid values, but got none.")
+		return
+	}
+
+	if len(err) < 4 {
+		t.Errorf("Expected at least 4 errors, but got: %d", len(err))
+		return
+	}
+}
+
+func Test_it_should_not_be_able_to_update_with_invalid_values(t *testing.T) {}

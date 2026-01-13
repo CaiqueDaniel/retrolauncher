@@ -8,7 +8,7 @@ import (
 
 func Test_it_should_be_able_to_create_a_game(t *testing.T) {
 	factory := &game_factories.DefaultGameFactory{}
-	game := factory.CreateGame("Test Game", platform_type.New(platform_type.TypeRetroArch), "/path/to/test/game", "/path/to/test/cover.jpg")
+	game, _ := factory.CreateGame("Test Game", platform_type.New(platform_type.TypeRetroArch), "/path/to/test/game", "/path/to/test/cover.jpg")
 
 	if game == nil {
 		t.Error("Expected game to be created, but it is nil.")

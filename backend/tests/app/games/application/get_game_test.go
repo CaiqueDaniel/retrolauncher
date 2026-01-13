@@ -34,13 +34,15 @@ func Test_it_should_be_able_to_get_a_game(t *testing.T) {
 	existingGame := games[0]
 
 	// Act: Try to get the game using the application use case
-	foundGame, err := get_game.New(repository).Execute(get_game.Input{
+	sut := get_game.New(repository)
+
+	foundGame, getErr := sut.Execute(get_game.Input{
 		Id: existingGame.GetId().String(),
 	})
 
 	// Assert
-	if err != nil {
-		t.Errorf("Expected no error, but got: %v", err)
+	if getErr != nil {
+		t.Errorf("Expected no error, but got: %v", getErr)
 	}
 
 	if foundGame == nil {
@@ -57,12 +59,12 @@ func Test_it_should_not_be_able_to_get_a_game_that_does_not_exist(t *testing.T) 
 	repository := &game_doubles_test.MemoryGameRepository{}
 
 	// Act: Try to get the game using the application use case
-	foundGame, err := get_game.New(repository).Execute(get_game.Input{
+	foundGame, getErr := get_game.New(repository).Execute(get_game.Input{
 		Id: "nonexistent-id",
 	})
 
 	// Assert
-	if err == nil {
+	if getErr == nil {
 		t.Error("Expected an error, but got nil")
 	}
 

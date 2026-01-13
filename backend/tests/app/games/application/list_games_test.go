@@ -10,7 +10,8 @@ import (
 
 func Test_it_should_be_able_to_list_games(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
-	repository.Save(game.New("Name", platform_type.New(platform_type.TypeRetroArch), "Path", "Cover"))
+	value, _ := game.New("Name", platform_type.New(platform_type.TypeRetroArch), "Path", "Cover")
+	repository.Save(value)
 	sut := list_games.New(repository)
 
 	result := sut.Execute(list_games.Input{
@@ -30,10 +31,11 @@ func Test_it_should_be_able_to_list_games(t *testing.T) {
 
 func Test_it_should_be_able_to_list_games_by_name(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
-	expectedGame := game.New("Name", platform_type.New(platform_type.TypeRetroArch), "Path", "Cover")
+	expectedGame, _ := game.New("Name", platform_type.New(platform_type.TypeRetroArch), "Path", "Cover")
+	currentGame, _ := game.New("Test", platform_type.New(platform_type.TypeRetroArch), "Path", "Cover")
 
 	repository.Save(expectedGame)
-	repository.Save(game.New("Test", platform_type.New(platform_type.TypeRetroArch), "Path", "Cover"))
+	repository.Save(currentGame)
 
 	sut := list_games.New(repository)
 

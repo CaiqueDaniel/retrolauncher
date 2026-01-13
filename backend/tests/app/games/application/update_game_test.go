@@ -11,7 +11,7 @@ import (
 func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
 	factory := &game_factories.DefaultGameFactory{}
-	game := factory.CreateGame("test", platform_type.New(platform_type.TypeRetroArch), "test", "test")
+	game, _ := factory.CreateGame("test", platform_type.New(platform_type.TypeRetroArch), "test", "test")
 	repository.Save(game)
 
 	err := update_game.New(repository).Execute(update_game.Input{

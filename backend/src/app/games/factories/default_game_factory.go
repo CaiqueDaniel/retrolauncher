@@ -7,6 +7,6 @@ import (
 
 type DefaultGameFactory struct{}
 
-func (f *DefaultGameFactory) CreateGame(name string, platform *platform_type.PlatformType, path, cover string) *game.Game {
+func (f *DefaultGameFactory) CreateGame(name string, platform *platform_type.PlatformType, path, cover string) (*game.Game, []error) {
 	return game.New(name, platform, path, cover)
 }
