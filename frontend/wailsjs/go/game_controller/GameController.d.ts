@@ -4,7 +4,7 @@ import {game_controller} from '../models';
 import {get_game} from '../models';
 import {list_games} from '../models';
 
-export function Create(arg1:game_controller.CreateInputDto):Promise<void>;
+export function Create(arg1:game_controller.CreateInputDto):Promise<Array<Error>>;
 
 export function Get(arg1:game_controller.GetInputDto):Promise<get_game.Output>;
 

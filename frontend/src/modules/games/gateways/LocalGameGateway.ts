@@ -3,8 +3,12 @@ import { Create, Update, List, Get } from "~/../wailsjs/go/game_controller/GameC
 import { GameQueryRepository } from "../repositories/GameQueryRepository";
 
 export class LocalGameGateway implements GameRepository, GameQueryRepository.Repository {
-    save(game: Game): Promise<void> {
-        return game.id ? Update({ ...game, id: game.id }) : Create(game)
+    async save(game: Game): Promise<void> {
+        if (game.id) {
+            await Update({ ...game, id: game.id });
+            return;
+        }
+        await Create(game);
     }
 
     async get(id: string): Promise<Game> {
