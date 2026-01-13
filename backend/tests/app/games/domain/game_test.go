@@ -2,14 +2,14 @@ package game_test
 
 import (
 	"retrolauncher/backend/src/app/games/domain/game"
-	"retrolauncher/backend/src/app/games/domain/platform_type"
+	"retrolauncher/backend/src/app/games/domain/platform"
 	"testing"
 
 	"github.com/google/uuid"
 )
 
 func Test_it_should_be_able_to_create(t *testing.T) {
-	game, _ := game.New("Test Game", platform_type.New(platform_type.TypeRetroArch), "game.nes", "test_cover.jpg")
+	game, _ := game.New("Test Game", platform.New(platform.TypeRetroArch), "game.nes", "test_cover.jpg")
 
 	if game.GetId() == (uuid.UUID{}) {
 		t.Error("Game ID should not be empty")
@@ -34,7 +34,7 @@ func Test_it_should_be_able_to_create(t *testing.T) {
 
 func Test_it_should_be_able_to_hydrate(t *testing.T) {
 	id := uuid.New()
-	game := game.Hydrate(id, "Hydrated Game", platform_type.New(platform_type.TypeRetroArch), "game.nes", "hydrated_cover.jpg")
+	game := game.Hydrate(id, "Hydrated Game", platform.New(platform.TypeRetroArch), "game.nes", "hydrated_cover.jpg")
 
 	if game.GetId() != id {
 		t.Error("Game ID does not match")
@@ -58,8 +58,8 @@ func Test_it_should_be_able_to_hydrate(t *testing.T) {
 }
 
 func Test_it_should_be_able_to_update(t *testing.T) {
-	game, _ := game.New("Old Game", platform_type.New(platform_type.TypeRetroArch), "game.nes", "old_cover.jpg")
-	game.Update("Updated Game", platform_type.New(platform_type.TypeRetroArch), "game.sns", "updated_cover.jpg")
+	game, _ := game.New("Old Game", platform.New(platform.TypeRetroArch), "game.nes", "old_cover.jpg")
+	game.Update("Updated Game", platform.New(platform.TypeRetroArch), "game.sns", "updated_cover.jpg")
 
 	if game.GetName() != "Updated Game" {
 		t.Error("Game name was not updated correctly")
@@ -79,7 +79,7 @@ func Test_it_should_be_able_to_update(t *testing.T) {
 }
 
 func Test_it_should_not_be_able_to_create_with_invalid_values(t *testing.T) {
-	_, err := game.New("", platform_type.New(""), "", "")
+	_, err := game.New("", platform.New(""), "", "")
 
 	if err == nil {
 		t.Error("Expected errors when creating game with invalid values, but got none.")

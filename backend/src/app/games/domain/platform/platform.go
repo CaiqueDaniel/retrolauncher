@@ -1,4 +1,4 @@
-package platform_type
+package platform
 
 import "slices"
 
@@ -6,20 +6,20 @@ const (
 	TypeRetroArch = "RetroArch"
 )
 
-type PlatformType struct {
+type Platform struct {
 	value string
 }
 
-func New(value string) *PlatformType {
+func New(value string) *Platform {
 	expectedValues := [...]string{TypeRetroArch}
 
 	if !slices.Contains(expectedValues[:], value) {
 		return nil
 	}
 
-	return &PlatformType{value: value}
+	return &Platform{value: value}
 }
 
-func (t *PlatformType) GetValue() string {
+func (t *Platform) GetValue() string {
 	return t.value
 }

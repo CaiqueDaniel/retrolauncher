@@ -4,7 +4,7 @@ import (
 	create_game "retrolauncher/backend/src/app/games/application/create_game"
 	"retrolauncher/backend/src/app/games/application/get_game"
 	"retrolauncher/backend/src/app/games/domain"
-	"retrolauncher/backend/src/app/games/domain/platform_type"
+	"retrolauncher/backend/src/app/games/domain/platform"
 	game_factories "retrolauncher/backend/src/app/games/factories"
 	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
 	"testing"
@@ -17,7 +17,7 @@ func Test_it_should_be_able_to_get_a_game(t *testing.T) {
 	// Create and save a game first
 	err := create_game.New(factory, repository).Execute(create_game.Input{
 		Name:     "Test Game",
-		Platform: platform_type.TypeRetroArch,
+		Platform: platform.TypeRetroArch,
 		Path:     "/path/to/test/game",
 		Cover:    "/path/to/test/cover.jpg",
 	})

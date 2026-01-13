@@ -2,11 +2,11 @@ package game_factories
 
 import (
 	"retrolauncher/backend/src/app/games/domain/game"
-	"retrolauncher/backend/src/app/games/domain/platform_type"
+	"retrolauncher/backend/src/app/games/domain/platform"
 )
 
 type DefaultGameFactory struct{}
 
-func (f *DefaultGameFactory) CreateGame(name string, platform *platform_type.PlatformType, path, cover string) (*game.Game, []error) {
+func (f *DefaultGameFactory) CreateGame(name string, platform *platform.Platform, path, cover string) (*game.Game, []error) {
 	return game.New(name, platform, path, cover)
 }

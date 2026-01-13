@@ -1,14 +1,14 @@
 package game_factories_test
 
 import (
-	"retrolauncher/backend/src/app/games/domain/platform_type"
+	"retrolauncher/backend/src/app/games/domain/platform"
 	game_factories "retrolauncher/backend/src/app/games/factories"
 	"testing"
 )
 
 func Test_it_should_be_able_to_create_a_game(t *testing.T) {
 	factory := &game_factories.DefaultGameFactory{}
-	game, _ := factory.CreateGame("Test Game", platform_type.New(platform_type.TypeRetroArch), "/path/to/test/game", "/path/to/test/cover.jpg")
+	game, _ := factory.CreateGame("Test Game", platform.New(platform.TypeRetroArch), "/path/to/test/game", "/path/to/test/cover.jpg")
 
 	if game == nil {
 		t.Error("Expected game to be created, but it is nil.")

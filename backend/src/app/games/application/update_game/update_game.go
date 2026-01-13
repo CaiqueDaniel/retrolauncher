@@ -3,7 +3,7 @@ package update_game
 import (
 	"errors"
 	"retrolauncher/backend/src/app/games/domain"
-	"retrolauncher/backend/src/app/games/domain/platform_type"
+	"retrolauncher/backend/src/app/games/domain/platform"
 )
 
 type UpdateGame struct {
@@ -27,7 +27,7 @@ func execute(input Input, repository domain.GameRepository) error {
 		return errors.New("game not found")
 	}
 
-	game.Update(input.Name, platform_type.New(input.Platform), input.Path, input.Cover)
+	game.Update(input.Name, platform.New(input.Platform), input.Path, input.Cover)
 
 	return repository.Save(game)
 }

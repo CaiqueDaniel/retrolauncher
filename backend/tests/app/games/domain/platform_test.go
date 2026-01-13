@@ -1,12 +1,12 @@
 package game_test
 
 import (
-	"retrolauncher/backend/src/app/games/domain/platform_type"
+	"retrolauncher/backend/src/app/games/domain/platform"
 	"testing"
 )
 
 func Test_it_should_be_able_to_create_with_valid_value(t *testing.T) {
-	value := platform_type.New(platform_type.TypeRetroArch)
+	value := platform.New(platform.TypeRetroArch)
 
 	if value == nil {
 		t.Error("should have created")
@@ -15,7 +15,7 @@ func Test_it_should_be_able_to_create_with_valid_value(t *testing.T) {
 }
 
 func Test_it_should_not_be_able_to_create_with_invalid_value(t *testing.T) {
-	value := platform_type.New("invalid")
+	value := platform.New("invalid")
 
 	if value != nil {
 		t.Error("should not have created")

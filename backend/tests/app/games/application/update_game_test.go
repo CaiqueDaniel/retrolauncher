@@ -2,7 +2,7 @@ package application_game_test
 
 import (
 	"retrolauncher/backend/src/app/games/application/update_game"
-	"retrolauncher/backend/src/app/games/domain/platform_type"
+	"retrolauncher/backend/src/app/games/domain/platform"
 	game_factories "retrolauncher/backend/src/app/games/factories"
 	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
 	"testing"
@@ -11,13 +11,13 @@ import (
 func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
 	factory := &game_factories.DefaultGameFactory{}
-	game, _ := factory.CreateGame("test", platform_type.New(platform_type.TypeRetroArch), "test", "test")
+	game, _ := factory.CreateGame("test", platform.New(platform.TypeRetroArch), "test", "test")
 	repository.Save(game)
 
 	err := update_game.New(repository).Execute(update_game.Input{
 		ID:       game.GetId().String(),
 		Name:     "Updated Test Game",
-		Platform: platform_type.TypeRetroArch,
+		Platform: platform.TypeRetroArch,
 		Path:     "/path/to/updated/test/game",
 		Cover:    "/path/to/updated/test/cover.jpg",
 	})
@@ -38,7 +38,7 @@ func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 		return
 	}
 
-	if updatedGame.GetPlatformType().GetValue() != platform_type.TypeRetroArch {
+	if updatedGame.GetPlatformType().GetValue() != platform.TypeRetroArch {
 		t.Errorf("Expected platform to be 'RetroArch', but got: %s", updatedGame.GetPlatformType().GetValue())
 		return
 	}
@@ -59,7 +59,7 @@ func Test_it_should_not_be_able_to_update_a_game_that_does_not_exist(t *testing.
 	err := update_game.New(repository).Execute(update_game.Input{
 		ID:       "nonexistent",
 		Name:     "Test Game",
-		Platform: platform_type.TypeRetroArch,
+		Platform: platform.TypeRetroArch,
 		Path:     "/path/to/test/game",
 		Cover:    "/path/to/test/cover.jpg",
 	})

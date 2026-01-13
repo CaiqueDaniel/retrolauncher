@@ -2,7 +2,7 @@ package game
 
 import (
 	"errors"
-	"retrolauncher/backend/src/app/games/domain/platform_type"
+	"retrolauncher/backend/src/app/games/domain/platform"
 
 	"github.com/google/uuid"
 )
@@ -10,12 +10,12 @@ import (
 type Game struct {
 	id           uuid.UUID
 	name         string
-	platformType *platform_type.PlatformType
+	platformType *platform.Platform
 	cover        string
 	path         string
 }
 
-func New(Name string, PlatformType *platform_type.PlatformType, Path, Cover string) (*Game, []error) {
+func New(Name string, PlatformType *platform.Platform, Path, Cover string) (*Game, []error) {
 	err := make([]error, 0)
 	game := &Game{id: uuid.New()}
 
@@ -27,7 +27,7 @@ func New(Name string, PlatformType *platform_type.PlatformType, Path, Cover stri
 	return game, err
 }
 
-func Hydrate(Id uuid.UUID, Name string, PlatformType *platform_type.PlatformType, Path, Cover string) *Game {
+func Hydrate(Id uuid.UUID, Name string, PlatformType *platform.Platform, Path, Cover string) *Game {
 	return &Game{
 		id:           Id,
 		name:         Name,
@@ -37,18 +37,18 @@ func Hydrate(Id uuid.UUID, Name string, PlatformType *platform_type.PlatformType
 	}
 }
 
-func (g *Game) Update(Name string, PlatformType *platform_type.PlatformType, Path, Cover string) {
+func (g *Game) Update(Name string, PlatformType *platform.Platform, Path, Cover string) {
 	g.name = Name
 	g.platformType = PlatformType
 	g.cover = Cover
 	g.path = Path
 }
 
-func (g *Game) GetId() uuid.UUID                             { return g.id }
-func (g *Game) GetName() string                              { return g.name }
-func (g *Game) GetPlatformType() *platform_type.PlatformType { return g.platformType }
-func (g *Game) GetCover() string                             { return g.cover }
-func (g *Game) GetPath() string                              { return g.path }
+func (g *Game) GetId() uuid.UUID                    { return g.id }
+func (g *Game) GetName() string                     { return g.name }
+func (g *Game) GetPlatformType() *platform.Platform { return g.platformType }
+func (g *Game) GetCover() string                    { return g.cover }
+func (g *Game) GetPath() string                     { return g.path }
 
 func (g *Game) setName(value string, err *[]error) {
 	if value == "" {
@@ -59,7 +59,7 @@ func (g *Game) setName(value string, err *[]error) {
 	g.name = value
 }
 
-func (g *Game) setPlatformType(value *platform_type.PlatformType, err *[]error) {
+func (g *Game) setPlatformType(value *platform.Platform, err *[]error) {
 	if value == nil || value.GetValue() == "" {
 		*err = append(*err, errors.New("invalid platform type"))
 		return
