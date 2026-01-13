@@ -2,20 +2,20 @@ package create_game
 
 import (
 	"errors"
-	"retrolauncher/backend/src/app/games/domain/game"
+	"retrolauncher/backend/src/app/games/domain"
 )
 
 type CreateGame struct {
 	Execute func(input Input) error
 }
 
-func New(factory game.GameFactory, repository game.GameRepository) *CreateGame {
+func New(factory domain.GameFactory, repository domain.GameRepository) *CreateGame {
 	return &CreateGame{
 		Execute: func(input Input) error { return execute(input, factory, repository) },
 	}
 }
 
-func execute(input Input, factory game.GameFactory, repository game.GameRepository) error {
+func execute(input Input, factory domain.GameFactory, repository domain.GameRepository) error {
 	var err error
 
 	game := factory.CreateGame(input.Name, input.Platform, input.Path, input.Cover)

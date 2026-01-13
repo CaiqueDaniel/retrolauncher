@@ -3,7 +3,7 @@ package application_game_test
 import (
 	create_game "retrolauncher/backend/src/app/games/application/create_game"
 	"retrolauncher/backend/src/app/games/application/get_game"
-	"retrolauncher/backend/src/app/games/domain/game"
+	"retrolauncher/backend/src/app/games/domain"
 	game_factories "retrolauncher/backend/src/app/games/factories"
 	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
 	"testing"
@@ -26,7 +26,7 @@ func Test_it_should_be_able_to_get_a_game(t *testing.T) {
 	}
 
 	// Retrieve the saved game to get its ID (since ID is generated on creation)
-	games := repository.List(game.ListGamesParams{Name: "Test Game"})
+	games := repository.List(domain.ListGamesParams{Name: "Test Game"})
 	if len(games) != 1 {
 		t.Fatal("Expected 1 game in repository")
 	}

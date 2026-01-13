@@ -1,6 +1,7 @@
 package memory_game_repository
 
 import (
+	"retrolauncher/backend/src/app/games/domain"
 	"retrolauncher/backend/src/app/games/domain/game"
 )
 
@@ -20,7 +21,7 @@ func (r *MemoryGameRepository) Get(id string) (*game.Game, error) {
 	return r.games[id], nil
 }
 
-func (r *MemoryGameRepository) List(input game.ListGamesParams) []game.Game {
+func (r *MemoryGameRepository) List(input domain.ListGamesParams) []game.Game {
 	result := make([]game.Game, 0)
 	for _, game := range r.games {
 		if input.Name != "" && game.GetName() != input.Name {

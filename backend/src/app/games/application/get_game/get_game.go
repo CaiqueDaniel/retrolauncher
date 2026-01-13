@@ -2,20 +2,20 @@ package get_game
 
 import (
 	"errors"
-	"retrolauncher/backend/src/app/games/domain/game"
+	"retrolauncher/backend/src/app/games/domain"
 )
 
 type GetGame struct {
 	Execute func(input Input) (*Output, error)
 }
 
-func New(repository game.GameRepository) *GetGame {
+func New(repository domain.GameRepository) *GetGame {
 	return &GetGame{
 		Execute: func(input Input) (*Output, error) { return execute(input, repository) },
 	}
 }
 
-func execute(input Input, repository game.GameRepository) (*Output, error) {
+func execute(input Input, repository domain.GameRepository) (*Output, error) {
 	game, err := repository.Get(input.Id)
 
 	if err != nil {

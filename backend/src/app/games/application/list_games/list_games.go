@@ -1,19 +1,19 @@
 package list_games
 
-import "retrolauncher/backend/src/app/games/domain/game"
+import "retrolauncher/backend/src/app/games/domain"
 
 type ListGames struct {
 	Execute func(input Input) []*Output
 }
 
-func New(repository game.GameRepository) *ListGames {
+func New(repository domain.GameRepository) *ListGames {
 	return &ListGames{
 		Execute: func(input Input) []*Output { return execute(input, repository) },
 	}
 }
 
-func execute(input Input, repository game.GameRepository) []*Output {
-	games := repository.List(game.ListGamesParams{
+func execute(input Input, repository domain.GameRepository) []*Output {
+	games := repository.List(domain.ListGamesParams{
 		Name: input.Name,
 	})
 
