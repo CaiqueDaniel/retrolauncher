@@ -1,46 +1,48 @@
 package game
 
 import (
+	"retrolauncher/backend/src/app/games/domain/platform_type"
+
 	"github.com/google/uuid"
 )
 
 type Game struct {
-	id       uuid.UUID
-	name     string
-	platform string
-	cover    string
-	path     string
+	id           uuid.UUID
+	name         string
+	platformType *platform_type.PlatformType
+	cover        string
+	path         string
 }
 
-func New(Name, Platform, Path, Cover string) *Game {
+func New(Name string, PlatformType *platform_type.PlatformType, Path, Cover string) *Game {
 	return &Game{
-		id:       uuid.New(),
-		name:     Name,
-		platform: Platform,
-		cover:    Cover,
-		path:     Path,
+		id:           uuid.New(),
+		name:         Name,
+		platformType: PlatformType,
+		cover:        Cover,
+		path:         Path,
 	}
 }
 
-func Hydrate(Id uuid.UUID, Name, Platform, Path, Cover string) *Game {
+func Hydrate(Id uuid.UUID, Name string, PlatformType *platform_type.PlatformType, Path, Cover string) *Game {
 	return &Game{
-		id:       Id,
-		name:     Name,
-		platform: Platform,
-		cover:    Cover,
-		path:     Path,
+		id:           Id,
+		name:         Name,
+		platformType: PlatformType,
+		cover:        Cover,
+		path:         Path,
 	}
 }
 
-func (g *Game) Update(Name, Platform, Path, Cover string) {
+func (g *Game) Update(Name string, PlatformType *platform_type.PlatformType, Path, Cover string) {
 	g.name = Name
-	g.platform = Platform
+	g.platformType = PlatformType
 	g.cover = Cover
 	g.path = Path
 }
 
-func (g *Game) GetId() uuid.UUID    { return g.id }
-func (g *Game) GetName() string     { return g.name }
-func (g *Game) GetPlatform() string { return g.platform }
-func (g *Game) GetCover() string    { return g.cover }
-func (g *Game) GetPath() string     { return g.path }
+func (g *Game) GetId() uuid.UUID                             { return g.id }
+func (g *Game) GetName() string                              { return g.name }
+func (g *Game) GetPlatformType() *platform_type.PlatformType { return g.platformType }
+func (g *Game) GetCover() string                             { return g.cover }
+func (g *Game) GetPath() string                              { return g.path }

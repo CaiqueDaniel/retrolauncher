@@ -29,7 +29,7 @@ func execute(input Input, repository domain.GameRepository) (*Output, error) {
 	return &Output{
 		Id:       game.GetId().String(),
 		Name:     game.GetName(),
-		Platform: game.GetPlatform(),
+		Platform: game.GetPlatformType().GetValue(),
 		Cover:    game.GetCover(),
 		Path:     game.GetPath(),
 	}, nil

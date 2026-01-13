@@ -3,13 +3,14 @@ package application_game_test
 import (
 	"retrolauncher/backend/src/app/games/application/list_games"
 	"retrolauncher/backend/src/app/games/domain/game"
+	"retrolauncher/backend/src/app/games/domain/platform_type"
 	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
 	"testing"
 )
 
 func Test_it_should_be_able_to_list_games(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
-	repository.Save(game.New("Name", "Platform", "Path", "Cover"))
+	repository.Save(game.New("Name", platform_type.New(platform_type.TypeRetroArch), "Path", "Cover"))
 	sut := list_games.New(repository)
 
 	result := sut.Execute(list_games.Input{
@@ -29,10 +30,10 @@ func Test_it_should_be_able_to_list_games(t *testing.T) {
 
 func Test_it_should_be_able_to_list_games_by_name(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
-	expectedGame := game.New("Name", "Platform", "Path", "Cover")
+	expectedGame := game.New("Name", platform_type.New(platform_type.TypeRetroArch), "Path", "Cover")
 
 	repository.Save(expectedGame)
-	repository.Save(game.New("Test", "Platform", "Path", "Cover"))
+	repository.Save(game.New("Test", platform_type.New(platform_type.TypeRetroArch), "Path", "Cover"))
 
 	sut := list_games.New(repository)
 

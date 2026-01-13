@@ -3,6 +3,7 @@ package create_game
 import (
 	"errors"
 	"retrolauncher/backend/src/app/games/domain"
+	"retrolauncher/backend/src/app/games/domain/platform_type"
 )
 
 type CreateGame struct {
@@ -18,7 +19,7 @@ func New(factory domain.GameFactory, repository domain.GameRepository) *CreateGa
 func execute(input Input, factory domain.GameFactory, repository domain.GameRepository) error {
 	var err error
 
-	game := factory.CreateGame(input.Name, input.Platform, input.Path, input.Cover)
+	game := factory.CreateGame(input.Name, platform_type.New(input.Platform), input.Path, input.Cover)
 
 	if game == nil {
 		return errors.New("failed to create game")

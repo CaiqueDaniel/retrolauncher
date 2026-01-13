@@ -2,13 +2,14 @@ package game_test
 
 import (
 	"retrolauncher/backend/src/app/games/domain/game"
+	"retrolauncher/backend/src/app/games/domain/platform_type"
 	"testing"
 
 	"github.com/google/uuid"
 )
 
 func Test_it_should_be_able_to_create(t *testing.T) {
-	game := game.New("Test Game", "PC", "game.nes", "test_cover.jpg")
+	game := game.New("Test Game", platform_type.New(platform_type.TypeRetroArch), "game.nes", "test_cover.jpg")
 
 	if game.GetId() == (uuid.UUID{}) {
 		t.Error("Game ID should not be empty")
@@ -18,7 +19,7 @@ func Test_it_should_be_able_to_create(t *testing.T) {
 		t.Error("Game name does not match")
 	}
 
-	if game.GetPlatform() != "PC" {
+	if game.GetPlatformType().GetValue() != "RetroArch" {
 		t.Error("Game platform does not match")
 	}
 
@@ -33,7 +34,7 @@ func Test_it_should_be_able_to_create(t *testing.T) {
 
 func Test_it_should_be_able_to_hydrate(t *testing.T) {
 	id := uuid.New()
-	game := game.Hydrate(id, "Hydrated Game", "Console", "game.nes", "hydrated_cover.jpg")
+	game := game.Hydrate(id, "Hydrated Game", platform_type.New(platform_type.TypeRetroArch), "game.nes", "hydrated_cover.jpg")
 
 	if game.GetId() != id {
 		t.Error("Game ID does not match")
@@ -43,7 +44,7 @@ func Test_it_should_be_able_to_hydrate(t *testing.T) {
 		t.Error("Game name does not match")
 	}
 
-	if game.GetPlatform() != "Console" {
+	if game.GetPlatformType().GetValue() != "RetroArch" {
 		t.Error("Game platform does not match")
 	}
 
@@ -57,14 +58,14 @@ func Test_it_should_be_able_to_hydrate(t *testing.T) {
 }
 
 func Test_it_should_be_able_to_update(t *testing.T) {
-	game := game.New("Old Game", "PC", "game.nes", "old_cover.jpg")
-	game.Update("Updated Game", "Console", "game.sns", "updated_cover.jpg")
+	game := game.New("Old Game", platform_type.New(platform_type.TypeRetroArch), "game.nes", "old_cover.jpg")
+	game.Update("Updated Game", platform_type.New(platform_type.TypeRetroArch), "game.sns", "updated_cover.jpg")
 
 	if game.GetName() != "Updated Game" {
 		t.Error("Game name was not updated correctly")
 	}
 
-	if game.GetPlatform() != "Console" {
+	if game.GetPlatformType().GetValue() != "RetroArch" {
 		t.Error("Game platform was not updated correctly")
 	}
 
