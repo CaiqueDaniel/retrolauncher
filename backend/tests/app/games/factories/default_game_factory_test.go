@@ -8,7 +8,7 @@ import (
 
 func Test_it_should_be_able_to_create_a_game(t *testing.T) {
 	factory := &game_factories.DefaultGameFactory{}
-	game, _ := factory.CreateGame("Test Game", platform.New(platform.TypeRetroArch), "/path/to/test/game", "/path/to/test/cover.jpg")
+	game, _ := factory.CreateGame("Test Game", platform.New(platform.TypeRetroArch, "/path"), "/path/to/test/game", "/path/to/test/cover.jpg")
 
 	if game == nil {
 		t.Error("Expected game to be created, but it is nil.")
@@ -20,8 +20,13 @@ func Test_it_should_be_able_to_create_a_game(t *testing.T) {
 		return
 	}
 
-	if game.GetPlatformType().GetValue() != "RetroArch" {
-		t.Errorf("Expected game platform to be 'RetroArch', but got '%s'", game.GetPlatformType().GetValue())
+	if game.GetPlatformType().GetPlatformType() != "RetroArch" {
+		t.Errorf("Expected game platform to be 'RetroArch', but got '%s'", game.GetPlatformType().GetPlatformType())
+		return
+	}
+
+	if game.GetPlatformType().GetPath() != "/path" {
+		t.Errorf("Expected platform path to be '/path', but got '%s'", game.GetPlatformType().GetPath())
 		return
 	}
 

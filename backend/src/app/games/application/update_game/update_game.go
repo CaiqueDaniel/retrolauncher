@@ -27,15 +27,21 @@ func execute(input Input, repository domain.GameRepository) error {
 		return errors.New("game not found")
 	}
 
-	game.Update(input.Name, platform.New(input.Platform), input.Path, input.Cover)
+	game.Update(
+		input.Name,
+		platform.New(input.PlatformType, input.PlatformPath),
+		input.Path,
+		input.Cover,
+	)
 
 	return repository.Save(game)
 }
 
 type Input struct {
-	ID       string
-	Name     string
-	Platform string
-	Path     string
-	Cover    string
+	ID           string
+	Name         string
+	PlatformType string
+	PlatformPath string
+	Path         string
+	Cover        string
 }

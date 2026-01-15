@@ -9,7 +9,7 @@ import (
 )
 
 func Test_it_should_be_able_to_create(t *testing.T) {
-	game, _ := game.New("Test Game", platform.New(platform.TypeRetroArch), "game.nes", "test_cover.jpg")
+	game, _ := game.New("Test Game", platform.New(platform.TypeRetroArch, "/path"), "game.nes", "test_cover.jpg")
 
 	if game.GetId() == (uuid.UUID{}) {
 		t.Error("Game ID should not be empty")
@@ -19,7 +19,7 @@ func Test_it_should_be_able_to_create(t *testing.T) {
 		t.Error("Game name does not match")
 	}
 
-	if game.GetPlatformType().GetValue() != "RetroArch" {
+	if game.GetPlatformType().GetPlatformType() != "RetroArch" {
 		t.Error("Game platform does not match")
 	}
 
@@ -34,7 +34,7 @@ func Test_it_should_be_able_to_create(t *testing.T) {
 
 func Test_it_should_be_able_to_hydrate(t *testing.T) {
 	id := uuid.New()
-	game := game.Hydrate(id, "Hydrated Game", platform.New(platform.TypeRetroArch), "game.nes", "hydrated_cover.jpg")
+	game := game.Hydrate(id, "Hydrated Game", platform.New(platform.TypeRetroArch, "/path"), "game.nes", "hydrated_cover.jpg")
 
 	if game.GetId() != id {
 		t.Error("Game ID does not match")
@@ -44,7 +44,7 @@ func Test_it_should_be_able_to_hydrate(t *testing.T) {
 		t.Error("Game name does not match")
 	}
 
-	if game.GetPlatformType().GetValue() != "RetroArch" {
+	if game.GetPlatformType().GetPlatformType() != "RetroArch" {
 		t.Error("Game platform does not match")
 	}
 
@@ -58,14 +58,14 @@ func Test_it_should_be_able_to_hydrate(t *testing.T) {
 }
 
 func Test_it_should_be_able_to_update(t *testing.T) {
-	game, _ := game.New("Old Game", platform.New(platform.TypeRetroArch), "game.nes", "old_cover.jpg")
-	game.Update("Updated Game", platform.New(platform.TypeRetroArch), "game.sns", "updated_cover.jpg")
+	game, _ := game.New("Old Game", platform.New(platform.TypeRetroArch, "/path"), "game.nes", "old_cover.jpg")
+	game.Update("Updated Game", platform.New(platform.TypeRetroArch, "/path"), "game.sns", "updated_cover.jpg")
 
 	if game.GetName() != "Updated Game" {
 		t.Error("Game name was not updated correctly")
 	}
 
-	if game.GetPlatformType().GetValue() != "RetroArch" {
+	if game.GetPlatformType().GetPlatformType() != "RetroArch" {
 		t.Error("Game platform was not updated correctly")
 	}
 
@@ -79,7 +79,7 @@ func Test_it_should_be_able_to_update(t *testing.T) {
 }
 
 func Test_it_should_not_be_able_to_create_with_invalid_values(t *testing.T) {
-	_, err := game.New("", platform.New(""), "", "")
+	_, err := game.New("", platform.New("", "/path"), "", "")
 
 	if err == nil {
 		t.Error("Expected errors when creating game with invalid values, but got none.")
@@ -91,5 +91,3 @@ func Test_it_should_not_be_able_to_create_with_invalid_values(t *testing.T) {
 		return
 	}
 }
-
-func Test_it_should_not_be_able_to_update_with_invalid_values(t *testing.T) {}

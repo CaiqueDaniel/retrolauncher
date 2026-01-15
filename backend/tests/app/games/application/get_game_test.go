@@ -16,10 +16,10 @@ func Test_it_should_be_able_to_get_a_game(t *testing.T) {
 
 	// Create and save a game first
 	err := create_game.New(factory, repository).Execute(create_game.Input{
-		Name:     "Test Game",
-		Platform: platform.TypeRetroArch,
-		Path:     "/path/to/test/game",
-		Cover:    "/path/to/test/cover.jpg",
+		Name:         "Test Game",
+		PlatformType: platform.TypeRetroArch,
+		Path:         "/path/to/test/game",
+		Cover:        "/path/to/test/cover.jpg",
 	})
 
 	if err != nil {

@@ -13,10 +13,10 @@ func Test_it_should_be_able_to_create_a_game(t *testing.T) {
 	sut := create_game.New(factory, repository)
 
 	err := sut.Execute(create_game.Input{
-		Name:     "Test Game",
-		Platform: "Test Platform",
-		Path:     "/path/to/test/game",
-		Cover:    "/path/to/test/cover.jpg",
+		Name:         "Test Game",
+		PlatformType: "Test Platform",
+		Path:         "/path/to/test/game",
+		Cover:        "/path/to/test/cover.jpg",
 	})
 
 	if err != nil {

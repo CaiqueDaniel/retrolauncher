@@ -16,7 +16,12 @@ func New(factory domain.GameFactory, repository domain.GameRepository) *CreateGa
 }
 
 func execute(input Input, factory domain.GameFactory, repository domain.GameRepository) []error {
-	game, gameErrors := factory.CreateGame(input.Name, platform.New(input.Platform), input.Path, input.Cover)
+	game, gameErrors := factory.CreateGame(
+		input.Name,
+		platform.New(input.PlatformType, input.PlatformPath),
+		input.Path,
+		input.Cover,
+	)
 
 	if game == nil {
 		return gameErrors
@@ -32,8 +37,9 @@ func execute(input Input, factory domain.GameFactory, repository domain.GameRepo
 }
 
 type Input struct {
-	Name     string
-	Platform string
-	Path     string
-	Cover    string
+	Name         string
+	PlatformType string
+	PlatformPath string
+	Path         string
+	Cover        string
 }

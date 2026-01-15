@@ -30,20 +30,20 @@ func New(
 
 func (gc *GameController) Create(input CreateInputDto) []error {
 	return gc.createGame.Execute(create_game.Input{
-		Name:     input.Name,
-		Platform: input.Platform,
-		Path:     input.Path,
-		Cover:    input.Cover,
+		Name:         input.Name,
+		PlatformType: input.Platform,
+		Path:         input.Path,
+		Cover:        input.Cover,
 	})
 }
 
 func (gc *GameController) Update(input UpdateInputDto) error {
 	return gc.updateGame.Execute(update_game.Input{
-		ID:       input.ID,
-		Name:     input.Name,
-		Platform: input.Platform,
-		Path:     input.Path,
-		Cover:    input.Cover,
+		ID:           input.ID,
+		Name:         input.Name,
+		PlatformType: input.Platform,
+		Path:         input.Path,
+		Cover:        input.Cover,
 	})
 }
 

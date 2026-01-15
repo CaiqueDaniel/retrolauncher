@@ -11,15 +11,15 @@ import (
 func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
 	factory := &game_factories.DefaultGameFactory{}
-	game, _ := factory.CreateGame("test", platform.New(platform.TypeRetroArch), "test", "test")
+	game, _ := factory.CreateGame("test", platform.New(platform.TypeRetroArch, "/path"), "test", "test")
 	repository.Save(game)
 
 	err := update_game.New(repository).Execute(update_game.Input{
-		ID:       game.GetId().String(),
-		Name:     "Updated Test Game",
-		Platform: platform.TypeRetroArch,
-		Path:     "/path/to/updated/test/game",
-		Cover:    "/path/to/updated/test/cover.jpg",
+		ID:           game.GetId().String(),
+		Name:         "Updated Test Game",
+		PlatformType: platform.TypeRetroArch,
+		Path:         "/path/to/updated/test/game",
+		Cover:        "/path/to/updated/test/cover.jpg",
 	})
 
 	if err != nil {
@@ -38,8 +38,8 @@ func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 		return
 	}
 
-	if updatedGame.GetPlatformType().GetValue() != platform.TypeRetroArch {
-		t.Errorf("Expected platform to be 'RetroArch', but got: %s", updatedGame.GetPlatformType().GetValue())
+	if updatedGame.GetPlatformType().GetPlatformType() != platform.TypeRetroArch {
+		t.Errorf("Expected platform to be '%s', but got: %s", platform.TypeRetroArch, updatedGame.GetPlatformType().GetPlatformType())
 		return
 	}
 
@@ -57,11 +57,11 @@ func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 func Test_it_should_not_be_able_to_update_a_game_that_does_not_exist(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
 	err := update_game.New(repository).Execute(update_game.Input{
-		ID:       "nonexistent",
-		Name:     "Test Game",
-		Platform: platform.TypeRetroArch,
-		Path:     "/path/to/test/game",
-		Cover:    "/path/to/test/cover.jpg",
+		ID:           "nonexistent",
+		Name:         "Test Game",
+		PlatformType: platform.TypeRetroArch,
+		Path:         "/path/to/test/game",
+		Cover:        "/path/to/test/cover.jpg",
 	})
 
 	if err == nil {

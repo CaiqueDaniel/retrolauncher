@@ -60,7 +60,7 @@ func (g *Game) setName(value string, err *[]error) {
 }
 
 func (g *Game) setPlatformType(value *platform.Platform, err *[]error) {
-	if value == nil || value.GetValue() == "" {
+	if value == nil || value.GetPlatformType() == "" {
 		*err = append(*err, errors.New("invalid platform type"))
 		return
 	}

@@ -23,7 +23,7 @@ func execute(input Input, repository domain.GameRepository) []*Output {
 		result = append(result, &Output{
 			Id:       game.GetId().String(),
 			Name:     game.GetName(),
-			Platform: game.GetPlatformType().GetValue(),
+			Platform: game.GetPlatformType().GetPlatformType(),
 			Path:     game.GetPath(),
 			Cover:    game.GetCover(),
 		})
