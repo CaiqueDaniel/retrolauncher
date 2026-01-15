@@ -16,7 +16,8 @@ export class LocalGameGateway implements GameRepository, GameQueryRepository.Rep
         return {
             id: result.Id,
             name: result.Name,
-            platform: result.Platform,
+            platformType: result.PlatformType,
+            platformPath: result.PlatformPath,
             cover: result.Cover,
             path: result.Path
         }
@@ -27,7 +28,8 @@ export class LocalGameGateway implements GameRepository, GameQueryRepository.Rep
         return result.map((game) => ({
             id: game.Id,
             name: game.Name,
-            platform: game.Platform,
+            platform: game.PlatformType,
+            platformPath: game.PlatformPath,
             cover: game.Cover,
         }))
     }

@@ -21,11 +21,12 @@ func execute(input Input, repository domain.GameRepository) []*Output {
 
 	for _, game := range games {
 		result = append(result, &Output{
-			Id:       game.GetId().String(),
-			Name:     game.GetName(),
-			Platform: game.GetPlatformType().GetPlatformType(),
-			Path:     game.GetPath(),
-			Cover:    game.GetCover(),
+			Id:           game.GetId().String(),
+			Name:         game.GetName(),
+			PlatformType: game.GetPlatformType().GetPlatformType(),
+			PlatformPath: game.GetPlatformType().GetPath(),
+			Path:         game.GetPath(),
+			Cover:        game.GetCover(),
 		})
 	}
 
@@ -37,9 +38,10 @@ type Input struct {
 }
 
 type Output struct {
-	Id       string
-	Name     string
-	Platform string
-	Path     string
-	Cover    string
+	Id           string
+	Name         string
+	PlatformType string
+	PlatformPath string
+	Path         string
+	Cover        string
 }

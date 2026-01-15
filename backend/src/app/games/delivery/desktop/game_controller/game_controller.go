@@ -31,7 +31,8 @@ func New(
 func (gc *GameController) Create(input CreateInputDto) []error {
 	return gc.createGame.Execute(create_game.Input{
 		Name:         input.Name,
-		PlatformType: input.Platform,
+		PlatformType: input.PlatformType,
+		PlatformPath: input.PlatformPath,
 		Path:         input.Path,
 		Cover:        input.Cover,
 	})
@@ -41,7 +42,8 @@ func (gc *GameController) Update(input UpdateInputDto) error {
 	return gc.updateGame.Execute(update_game.Input{
 		ID:           input.ID,
 		Name:         input.Name,
-		PlatformType: input.Platform,
+		PlatformType: input.PlatformType,
+		PlatformPath: input.PlatformPath,
 		Path:         input.Path,
 		Cover:        input.Cover,
 	})
@@ -60,10 +62,11 @@ func (gc *GameController) Get(input GetInputDto) (*get_game.Output, error) {
 }
 
 type CreateInputDto struct {
-	Name     string `json:"name"`
-	Platform string `json:"platform"`
-	Path     string `json:"path"`
-	Cover    string `json:"cover"`
+	Name         string `json:"name"`
+	PlatformType string `json:"platformType"`
+	PlatformPath string `json:"platformPath"`
+	Path         string `json:"path"`
+	Cover        string `json:"cover"`
 }
 
 type UpdateInputDto struct {

@@ -27,11 +27,12 @@ func execute(input Input, repository domain.GameRepository) (*Output, error) {
 	}
 
 	return &Output{
-		Id:       game.GetId().String(),
-		Name:     game.GetName(),
-		Platform: game.GetPlatformType().GetPlatformType(),
-		Cover:    game.GetCover(),
-		Path:     game.GetPath(),
+		Id:           game.GetId().String(),
+		Name:         game.GetName(),
+		PlatformType: game.GetPlatformType().GetPlatformType(),
+		PlatformPath: game.GetPlatformType().GetPath(),
+		Cover:        game.GetCover(),
+		Path:         game.GetPath(),
 	}, nil
 }
 
@@ -40,9 +41,10 @@ type Input struct {
 }
 
 type Output struct {
-	Id       string
-	Name     string
-	Platform string
-	Cover    string
-	Path     string
+	Id           string
+	Name         string
+	PlatformType string
+	PlatformPath string
+	Cover        string
+	Path         string
 }

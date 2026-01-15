@@ -2,7 +2,8 @@ export namespace game_controller {
 	
 	export class CreateInputDto {
 	    name: string;
-	    platform: string;
+	    platformType: string;
+	    platformPath: string;
 	    path: string;
 	    cover: string;
 	
@@ -13,7 +14,8 @@ export namespace game_controller {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.name = source["name"];
-	        this.platform = source["platform"];
+	        this.platformType = source["platformType"];
+	        this.platformPath = source["platformPath"];
 	        this.path = source["path"];
 	        this.cover = source["cover"];
 	    }
@@ -45,7 +47,8 @@ export namespace game_controller {
 	export class UpdateInputDto {
 	    id: string;
 	    name: string;
-	    platform: string;
+	    platformType: string;
+	    platformPath: string;
 	    path: string;
 	    cover: string;
 	
@@ -57,7 +60,8 @@ export namespace game_controller {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.id = source["id"];
 	        this.name = source["name"];
-	        this.platform = source["platform"];
+	        this.platformType = source["platformType"];
+	        this.platformPath = source["platformPath"];
 	        this.path = source["path"];
 	        this.cover = source["cover"];
 	    }
@@ -70,7 +74,8 @@ export namespace get_game {
 	export class Output {
 	    Id: string;
 	    Name: string;
-	    Platform: string;
+	    PlatformType: string;
+	    PlatformPath: string;
 	    Cover: string;
 	    Path: string;
 	
@@ -82,7 +87,8 @@ export namespace get_game {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.Id = source["Id"];
 	        this.Name = source["Name"];
-	        this.Platform = source["Platform"];
+	        this.PlatformType = source["PlatformType"];
+	        this.PlatformPath = source["PlatformPath"];
 	        this.Cover = source["Cover"];
 	        this.Path = source["Path"];
 	    }
@@ -95,7 +101,8 @@ export namespace list_games {
 	export class Output {
 	    Id: string;
 	    Name: string;
-	    Platform: string;
+	    PlatformType: string;
+	    PlatformPath: string;
 	    Path: string;
 	    Cover: string;
 	
@@ -107,7 +114,8 @@ export namespace list_games {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.Id = source["Id"];
 	        this.Name = source["Name"];
-	        this.Platform = source["Platform"];
+	        this.PlatformType = source["PlatformType"];
+	        this.PlatformPath = source["PlatformPath"];
 	        this.Path = source["Path"];
 	        this.Cover = source["Cover"];
 	    }

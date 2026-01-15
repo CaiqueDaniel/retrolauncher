@@ -50,7 +50,8 @@ describe('useGameFormPresenter', () => {
 
         expect(result.current.initialValues).toEqual({
             name: '',
-            platform: '',
+            platformType: '',
+            platformPath: '',
             path: '',
             cover: '',
         });
@@ -77,7 +78,8 @@ describe('useGameFormPresenter', () => {
     it('should submit form successfully', async () => {
         const gameData: GameFormData = {
             name: 'The Legend of Zelda',
-            platform: 'Nintendo 64',
+            platformType: 'Nintendo 64',
+            platformPath: '/path/to/platform',
             path: '/path/to/zelda',
             cover: '/path/to/cover.jpg'
         };
@@ -97,7 +99,8 @@ describe('useGameFormPresenter', () => {
     it('should handle submit error', async () => {
         const gameData: GameFormData = {
             name: 'The Legend of Zelda',
-            platform: 'Nintendo 64',
+            platformType: 'Nintendo 64',
+            platformPath: '/path/to/platform',
             path: '/path/to/zelda',
             cover: '/path/to/cover.jpg'
         };
@@ -118,8 +121,9 @@ describe('useGameFormPresenter', () => {
     it('should set isSubmiting to true during submission', async () => {
         const gameData: GameFormData = {
             name: 'The Legend of Zelda',
-            platform: 'Nintendo 64',
+            platformType: 'Nintendo 64',
             path: '/path/to/zelda',
+            platformPath: '/path/to/platform',
             cover: '/path/to/cover.jpg'
         };
 

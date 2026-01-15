@@ -66,7 +66,8 @@ export function useGameFormPresenter(props: Props) {
 
 const emptyValues: GameFormData = {
   name: "",
-  platform: "",
+  platformType: "",
+  platformPath: "",
   path: "",
   cover: "",
 };

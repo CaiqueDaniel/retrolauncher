@@ -1,6 +1,7 @@
 export type GameFormData = {
     name: string
-    platform: string
+    platformType: string
+    platformPath: string
     path: string
     cover: string
 }

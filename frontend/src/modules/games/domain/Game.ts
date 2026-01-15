@@ -6,7 +6,8 @@ export interface GameRepository {
 export type Game = {
     id?: string
     name: string
-    platform: string
+    platformType: string
+    platformPath: string
     path: string
     cover: string
 }
