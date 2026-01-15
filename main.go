@@ -3,7 +3,6 @@ package main
 import (
 	"embed"
 	"retrolauncher/backend/src/app/games"
-	"retrolauncher/backend/src/app/platform"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
@@ -29,7 +28,6 @@ func main() {
 		Bind: []interface{}{
 			app,
 			games.NewGamesModule().GameController,
-			platform.NewPlatformModule().PlatformController,
 		},
 	})
 

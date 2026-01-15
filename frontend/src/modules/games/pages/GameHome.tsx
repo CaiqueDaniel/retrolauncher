@@ -12,13 +12,9 @@ export function GameHome() {
       <Box display="flex" gap={2} justifyContent="flex-end">
         <Button
           variant="contained"
-          onClick={() => routeNavigator.navigateTo('/platforms/new')}
-        >Adicionar Plataforma
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => routeNavigator.navigateTo('/game/new')}
-        >Adicionar Jogo
+          onClick={() => routeNavigator.navigateTo("/game/new")}
+        >
+          Adicionar Jogo
         </Button>
       </Box>
 

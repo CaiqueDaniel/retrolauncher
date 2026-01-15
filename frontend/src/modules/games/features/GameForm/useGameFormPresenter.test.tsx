@@ -6,7 +6,7 @@ import { Alert } from '~/modules/shared/application/Alert';
 import { describe, it, expect, Mocked, vi, beforeEach, afterEach } from 'vitest';
 import { ReactNode } from 'react';
 import { GameFormData } from './GameFormData';
-import { PlatformTypesService } from '~/modules/platforms/services/PlatformTypesService';
+import { PlatformTypesService } from '../../services/PlatformTypesService';
 import { RouteNavigator } from '~/modules/shared/application/RouteNavigator';
 
 describe('useGameFormPresenter', () => {
