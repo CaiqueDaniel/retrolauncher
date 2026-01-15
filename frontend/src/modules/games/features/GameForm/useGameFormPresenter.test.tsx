@@ -6,12 +6,12 @@ import { Alert } from '~/modules/shared/application/Alert';
 import { describe, it, expect, Mocked, vi, beforeEach, afterEach } from 'vitest';
 import { ReactNode } from 'react';
 import { GameFormData } from './GameFormData';
-import { PlatformSearchService } from '~/modules/platforms/services/PlatformSearchService';
+import { PlatformTypesService } from '~/modules/platforms/services/PlatformTypesService';
 import { RouteNavigator } from '~/modules/shared/application/RouteNavigator';
 
 describe('useGameFormPresenter', () => {
     let repository: Mocked<GameRepository>;
-    let platformSearchService: Mocked<PlatformSearchService>;
+    let platformTypesService: Mocked<PlatformTypesService>;
     let alert: Mocked<Alert>;
     let routeNavigator: Mocked<RouteNavigator>;
 
@@ -21,8 +21,8 @@ describe('useGameFormPresenter', () => {
             get: vi.fn()
         };
 
-        platformSearchService = {
-            listAll: vi.fn()
+        platformTypesService = {
+            getPlatformTypes: vi.fn()
         };
 
         alert = {
@@ -34,7 +34,7 @@ describe('useGameFormPresenter', () => {
             navigateTo: vi.fn()
         };
 
-        platformSearchService.listAll.mockResolvedValue([]);
+        platformTypesService.getPlatformTypes.mockResolvedValue([]);
     });
 
     afterEach(() => {
@@ -42,9 +42,9 @@ describe('useGameFormPresenter', () => {
     });
 
     it('should initialize with default values', async () => {
-        platformSearchService.listAll.mockResolvedValue([
-            { id: '1', name: 'Nintendo 64' },
-            { id: '2', name: 'PlayStation 2' },
+        platformTypesService.getPlatformTypes.mockResolvedValue([
+            'Nintendo 64',
+            'PlayStation 2',
         ]);
         const { result } = renderHook(() => useGameFormPresenter({}), { wrapper });
 
@@ -60,14 +60,14 @@ describe('useGameFormPresenter', () => {
 
         await waitFor(() => {
             expect(result.current.platforms).toEqual([
-                { id: '1', name: 'Nintendo 64' },
-                { id: '2', name: 'PlayStation 2' },
+                'Nintendo 64',
+                'PlayStation 2',
             ]);
         });
     });
 
     it('should handle platform search error', async () => {
-        platformSearchService.listAll.mockRejectedValue(new Error('error'));
+        platformTypesService.getPlatformTypes.mockRejectedValue(new Error('error'));
         const { result } = renderHook(() => useGameFormPresenter({}), { wrapper });
 
         await waitFor(() => {
@@ -180,7 +180,7 @@ describe('useGameFormPresenter', () => {
         return (
             <GameFormContext.Provider value={{
                 repository,
-                platformSearchService,
+                platformTypesService,
                 alert,
                 routeNavigator
             }}>

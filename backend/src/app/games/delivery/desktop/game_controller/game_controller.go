@@ -3,15 +3,17 @@ package game_controller
 import (
 	"retrolauncher/backend/src/app/games/application/create_game"
 	"retrolauncher/backend/src/app/games/application/get_game"
+	"retrolauncher/backend/src/app/games/application/get_platform_types"
 	"retrolauncher/backend/src/app/games/application/list_games"
 	"retrolauncher/backend/src/app/games/application/update_game"
 )
 
 type GameController struct {
-	createGame *create_game.CreateGame
-	updateGame *update_game.UpdateGame
-	listGames  *list_games.ListGames
-	getGame    *get_game.GetGame
+	createGame       *create_game.CreateGame
+	updateGame       *update_game.UpdateGame
+	listGames        *list_games.ListGames
+	getGame          *get_game.GetGame
+	getPlatformTypes *get_platform_types.GetPlatformTypes
 }
 
 func New(
@@ -19,12 +21,14 @@ func New(
 	updateGame *update_game.UpdateGame,
 	getGame *get_game.GetGame,
 	listGames *list_games.ListGames,
+	getPlatformTypes *get_platform_types.GetPlatformTypes,
 ) *GameController {
 	return &GameController{
-		createGame: createGame,
-		updateGame: updateGame,
-		listGames:  listGames,
-		getGame:    getGame,
+		createGame:       createGame,
+		updateGame:       updateGame,
+		listGames:        listGames,
+		getGame:          getGame,
+		getPlatformTypes: getPlatformTypes,
 	}
 }
 
@@ -59,6 +63,10 @@ func (gc *GameController) Get(input GetInputDto) (*get_game.Output, error) {
 	return gc.getGame.Execute(get_game.Input{
 		Id: input.Id,
 	})
+}
+
+func (c *GameController) GetPlatformTypes() []string {
+	return *c.getPlatformTypes.Execute()
 }
 
 type CreateInputDto struct {

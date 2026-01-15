@@ -2,19 +2,20 @@ import { useEffect, useState } from "react";
 import { useGameFormContext } from "./GameFormContext";
 import { GameFormData } from "./GameFormData";
 import * as yup from "yup";
-import { PlatformSearchResult } from "~/modules/platforms/services/PlatformSearchService";
 
 export function useGameFormPresenter(props: Props) {
-  const { repository, alert, platformSearchService, routeNavigator } =
+  const { repository, alert, platformTypesService, routeNavigator } =
     useGameFormContext();
   const [initialValues, setInitialValues] = useState<GameFormData>(emptyValues);
   const [isSubmiting, setIsSubmiting] = useState(false);
-  const [platforms, setPlatforms] = useState<PlatformSearchResult[]>([]);
+  const [platforms, setPlatforms] = useState<string[]>([]);
   const [isLoadingPlatform, setIsLoadingPlatform] = useState(false);
   const [isLoadingGame, setIsLoadingGame] = useState(false);
 
   const onSubmit = async (values: GameFormData) => {
     setIsSubmiting(true);
+
+    console.log(values);
 
     try {
       await repository.save(values);
@@ -43,15 +44,6 @@ export function useGameFormPresenter(props: Props) {
     isLoadingGame,
   };
 
-  function fetchPlatforms() {
-    setIsLoadingPlatform(true);
-    platformSearchService
-      .listAll()
-      .then(setPlatforms)
-      .catch(() => alert.error("Erro ao buscar plataformas"))
-      .finally(() => setIsLoadingPlatform(false));
-  }
-
   function fetchGame() {
     if (!props.id) return;
 
@@ -61,6 +53,15 @@ export function useGameFormPresenter(props: Props) {
       .then(setInitialValues)
       .catch(() => alert.error("Erro ao buscar jogo"))
       .finally(() => setTimeout(() => setIsLoadingGame(false), 10));
+  }
+
+  function fetchPlatforms() {
+    setIsLoadingPlatform(true);
+    platformTypesService
+      .getPlatformTypes()
+      .then(setPlatforms)
+      .catch(() => alert.error("Erro ao listar tipos de plataformas"))
+      .finally(() => setIsLoadingPlatform(false));
   }
 }
 
@@ -74,7 +75,8 @@ const emptyValues: GameFormData = {
 
 const validationSchema = yup.object({
   name: yup.string().required("Nome é obrigatório"),
-  platform: yup.string().required("Plataforma é obrigatória"),
+  platformType: yup.string().required("Plataforma é obrigatória"),
+  platformPath: yup.string().required("Caminho da plataforma é obrigatório"),
   path: yup.string().required("Caminho é obrigatório"),
   cover: yup.string().required("Capa é obrigatória"),
 });

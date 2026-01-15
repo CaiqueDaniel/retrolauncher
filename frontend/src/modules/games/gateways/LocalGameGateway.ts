@@ -1,8 +1,9 @@
 import { Game, GameRepository } from "../domain/Game";
-import { Create, Update, List, Get } from "~/../wailsjs/go/game_controller/GameController";
+import { Create, Update, List, Get, GetPlatformTypes } from "~/../wailsjs/go/game_controller/GameController";
 import { GameQueryRepository } from "../repositories/GameQueryRepository";
+import { PlatformTypesService } from "~/modules/platforms/services/PlatformTypesService";
 
-export class LocalGameGateway implements GameRepository, GameQueryRepository.Repository {
+export class LocalGameGateway implements GameRepository, GameQueryRepository.Repository, PlatformTypesService {
     async save(game: Game): Promise<void> {
         if (game.id) {
             await Update({ ...game, id: game.id });
@@ -32,5 +33,9 @@ export class LocalGameGateway implements GameRepository, GameQueryRepository.Rep
             platformPath: game.PlatformPath,
             cover: game.Cover,
         }))
+    }
+
+    getPlatformTypes(): Promise<string[]> {
+        return GetPlatformTypes();
     }
 }

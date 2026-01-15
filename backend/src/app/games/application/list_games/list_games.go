@@ -1,6 +1,8 @@
 package list_games
 
-import "retrolauncher/backend/src/app/games/domain"
+import (
+	"retrolauncher/backend/src/app/games/domain"
+)
 
 type ListGames struct {
 	Execute func(input Input) []*Output

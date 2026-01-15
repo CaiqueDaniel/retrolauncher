@@ -8,6 +8,8 @@ export function Create(arg1:game_controller.CreateInputDto):Promise<Array<Error>
 
 export function Get(arg1:game_controller.GetInputDto):Promise<get_game.Output>;
 
+export function GetPlatformTypes():Promise<Array<string>>;
+
 export function List(arg1:game_controller.ListInputDto):Promise<Array<list_games.Output>>;
 
 export function Update(arg1:game_controller.UpdateInputDto):Promise<void>;

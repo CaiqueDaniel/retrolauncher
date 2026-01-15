@@ -41,7 +41,7 @@ export function GameForm(props: Props) {
           <FastField
             as={TextField}
             select
-            name="platform"
+            name="platformType"
             label="Plataforma"
             required
             fullWidth
@@ -50,11 +50,22 @@ export function GameForm(props: Props) {
             sx={{ mb: 2 }}
           >
             {platforms.map((platform) => (
-              <MenuItem key={platform.id} value={platform.id}>
-                {platform.name}
+              <MenuItem key={platform} value={platform}>
+                {platform}
               </MenuItem>
             ))}
           </FastField>
+
+          <FastField
+            as={FilepathSelector}
+            name="platformPath"
+            label="Caminho da Plataforma"
+            required
+            fullWidth
+            helperText={errors.name}
+            error={Boolean(errors.name)}
+            sx={{ mb: 2 }}
+          />
 
           <FastField
             as={FilepathSelector}
