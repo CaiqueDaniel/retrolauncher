@@ -28,6 +28,7 @@ export function GameProviders({ children }: PropsWithChildren) {
         value={{
           busSubscriber: EventBus.getInstance(),
           routeNavigate: useReactRouterRouteNavigator(),
+          startGameService: gameGateway,
         }}
       >
         <GameFormContext.Provider

@@ -15,14 +15,17 @@ import { GameEvents } from "../../GameEvents";
 import { GameQueryRepository } from "../../repositories/GameQueryRepository";
 import { EventBus } from "~/modules/shared/infra/services/EventBus";
 import { RouteNavigator } from "~/modules/shared/application/RouteNavigator";
+import { StartGameService } from "../../services/StartGameService";
 
 describe("useGameViewerPresenter", () => {
   const eventBus = EventBus.getInstance();
   let routeNavigate: Mocked<RouteNavigator>;
+  let startGameService: Mocked<StartGameService>;
 
   beforeEach(() => {
     eventBus.clear();
     routeNavigate = { navigateTo: vi.fn() };
+    startGameService = { startGame: vi.fn() };
   });
 
   afterEach(() => {
@@ -170,12 +173,40 @@ describe("useGameViewerPresenter", () => {
     expect(routeNavigate.navigateTo).not.toHaveBeenCalled();
   });
 
+  it("should be able to start game when onClickPlay is called and game is set", async () => {
+    const mockGame: GameQueryRepository.Output = {
+      id: "1",
+      name: "Super Mario 64",
+      platform: "Nintendo 64",
+      cover: "/path/to/cover.jpg",
+    };
+
+    const { result } = renderHook(() => useGameViewerPresenter(), {
+      wrapper,
+    });
+
+    await act(async () => {
+      eventBus.dispatch(GameEvents.GAME_SELECTED, mockGame);
+    });
+
+    await waitFor(() => {
+      expect(result.current.game).toEqual(mockGame);
+    });
+
+    act(() => {
+      result.current.onClickStart();
+    });
+
+    expect(startGameService.startGame).toHaveBeenCalledWith(mockGame.id);
+  });
+
   function wrapper({ children }: { children: ReactNode }) {
     return (
       <GameViewerContext.Provider
         value={{
           busSubscriber: eventBus,
           routeNavigate: routeNavigate,
+          startGameService: startGameService,
         }}
       >
         {children}

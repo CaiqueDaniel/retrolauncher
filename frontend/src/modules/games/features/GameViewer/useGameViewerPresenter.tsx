@@ -5,12 +5,18 @@ import { GameQueryRepository } from "../../repositories/GameQueryRepository";
 import { useState } from "react";
 
 export function useGameViewerPresenter() {
-  const { busSubscriber, routeNavigate } = useGameViewerContext();
+  const { busSubscriber, routeNavigate, startGameService } =
+    useGameViewerContext();
   const [game, setGame] = useState<GameQueryRepository.Output | null>(null);
 
   const onClickEdit = () => {
     if (!game) return;
     routeNavigate.navigateTo(`/game/${game?.id}/edit`);
+  };
+
+  const onClickStart = () => {
+    if (!game) return;
+    startGameService.startGame(game.id);
   };
 
   useBusSubscriber({
@@ -22,5 +28,6 @@ export function useGameViewerPresenter() {
   return {
     game,
     onClickEdit,
+    onClickStart,
   };
 }
