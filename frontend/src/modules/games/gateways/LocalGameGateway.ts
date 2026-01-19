@@ -14,7 +14,12 @@ export class LocalGameGateway implements
             await Update({ ...game, id: game.id });
             return;
         }
-        await Create(game);
+
+        const errors = await Create(game);
+
+        if (errors.length > 0) {
+            throw new Error(errors.join(", "));
+        }
     }
 
     async get(id: string): Promise<Game> {

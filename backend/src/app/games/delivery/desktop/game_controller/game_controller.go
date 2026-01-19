@@ -36,14 +36,22 @@ func New(
 	}
 }
 
-func (gc *GameController) Create(input CreateInputDto) []error {
-	return gc.createGame.Execute(create_game.Input{
+func (gc *GameController) Create(input CreateInputDto) []string {
+	errors := gc.createGame.Execute(create_game.Input{
 		Name:         input.Name,
 		PlatformType: input.PlatformType,
 		PlatformPath: input.PlatformPath,
 		Path:         input.Path,
 		Cover:        input.Cover,
 	})
+
+	var errorMessages []string
+
+	for _, err := range errors {
+		errorMessages = append(errorMessages, err.Error())
+	}
+
+	return errorMessages
 }
 
 func (gc *GameController) Update(input UpdateInputDto) error {

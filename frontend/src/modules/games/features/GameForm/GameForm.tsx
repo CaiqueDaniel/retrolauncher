@@ -45,8 +45,8 @@ export function GameForm(props: Props) {
             label="Plataforma"
             required
             fullWidth
-            helperText={errors.name}
-            error={Boolean(errors.name)}
+            helperText={errors.platformType}
+            error={Boolean(errors.platformType)}
             sx={{ mb: 2 }}
           >
             {platforms.map((platform) => (
@@ -62,8 +62,8 @@ export function GameForm(props: Props) {
             label="Caminho da Plataforma"
             required
             fullWidth
-            helperText={errors.name}
-            error={Boolean(errors.name)}
+            helperText={errors.platformPath}
+            error={Boolean(errors.platformPath)}
             sx={{ mb: 2 }}
           />
 
@@ -73,8 +73,8 @@ export function GameForm(props: Props) {
             label="Caminho"
             required
             fullWidth
-            helperText={errors.name}
-            error={Boolean(errors.name)}
+            helperText={errors.path}
+            error={Boolean(errors.path)}
             sx={{ mb: 2 }}
           />
           <FastField
@@ -83,8 +83,8 @@ export function GameForm(props: Props) {
             label="Capa"
             required
             fullWidth
-            helperText={errors.name}
-            error={Boolean(errors.name)}
+            helperText={errors.cover}
+            error={Boolean(errors.cover)}
             sx={{ mb: 2 }}
           />
           <FormSubmitControls onCancel={onCancel} isSubmiting={isSubmiting} />

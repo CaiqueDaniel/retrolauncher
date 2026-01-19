@@ -27,6 +27,10 @@ func execute(input Input, factory domain.GameFactory, repository domain.GameRepo
 		return gameErrors
 	}
 
+	if len(gameErrors) > 0 {
+		return gameErrors
+	}
+
 	repoErr := repository.Save(game)
 
 	if repoErr != nil {

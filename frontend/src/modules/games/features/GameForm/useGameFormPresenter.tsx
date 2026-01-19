@@ -15,8 +15,6 @@ export function useGameFormPresenter(props: Props) {
   const onSubmit = async (values: GameFormData) => {
     setIsSubmiting(true);
 
-    console.log(values);
-
     try {
       await repository.save(values);
       alert.success("Jogo salvo com sucesso!");
