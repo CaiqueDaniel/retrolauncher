@@ -18,6 +18,10 @@ export function List(arg1) {
   return window['go']['game_controller']['GameController']['List'](arg1);
 }
 
+export function StartGame(arg1) {
+  return window['go']['game_controller']['GameController']['StartGame'](arg1);
+}
+
 export function Update(arg1) {
   return window['go']['game_controller']['GameController']['Update'](arg1);
 }

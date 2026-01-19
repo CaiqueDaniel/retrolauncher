@@ -12,4 +12,6 @@ export function GetPlatformTypes():Promise<Array<string>>;
 
 export function List(arg1:game_controller.ListInputDto):Promise<Array<list_games.Output>>;
 
+export function StartGame(arg1:game_controller.GetInputDto):Promise<void>;
+
 export function Update(arg1:game_controller.UpdateInputDto):Promise<void>;

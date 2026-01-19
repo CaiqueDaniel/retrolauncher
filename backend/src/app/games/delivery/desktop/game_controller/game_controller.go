@@ -5,6 +5,7 @@ import (
 	"retrolauncher/backend/src/app/games/application/get_game"
 	"retrolauncher/backend/src/app/games/application/get_platform_types"
 	"retrolauncher/backend/src/app/games/application/list_games"
+	"retrolauncher/backend/src/app/games/application/start_game"
 	"retrolauncher/backend/src/app/games/application/update_game"
 )
 
@@ -14,6 +15,7 @@ type GameController struct {
 	listGames        *list_games.ListGames
 	getGame          *get_game.GetGame
 	getPlatformTypes *get_platform_types.GetPlatformTypes
+	startGame        *start_game.StartGame
 }
 
 func New(
@@ -22,6 +24,7 @@ func New(
 	getGame *get_game.GetGame,
 	listGames *list_games.ListGames,
 	getPlatformTypes *get_platform_types.GetPlatformTypes,
+	startGame *start_game.StartGame,
 ) *GameController {
 	return &GameController{
 		createGame:       createGame,
@@ -29,6 +32,7 @@ func New(
 		listGames:        listGames,
 		getGame:          getGame,
 		getPlatformTypes: getPlatformTypes,
+		startGame:        startGame,
 	}
 }
 
@@ -67,6 +71,12 @@ func (gc *GameController) Get(input GetInputDto) (*get_game.Output, error) {
 
 func (c *GameController) GetPlatformTypes() []string {
 	return *c.getPlatformTypes.Execute()
+}
+
+func (gc *GameController) StartGame(input GetInputDto) error {
+	return gc.startGame.Execute(start_game.Input{
+		GameId: input.Id,
+	})
 }
 
 type CreateInputDto struct {
