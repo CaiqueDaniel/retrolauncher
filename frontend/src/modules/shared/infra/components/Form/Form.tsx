@@ -1,5 +1,5 @@
-import { Box } from '@mui/material';
-import { Formik, Form as FormikForm } from 'formik';
+import { Box } from "@mui/material";
+import { Formik, Form as FormikForm } from "formik";
 
 export function Form<I extends Record<string, any>>({
   children,
@@ -13,6 +13,9 @@ export function Form<I extends Record<string, any>>({
       onSubmit={onSubmit}
       validationSchema={validationSchema}
       isInitialValid
+      validateOnBlur={false}
+      validateOnMount={false}
+      validateOnChange={false}
     >
       {({ errors, setFieldValue }) => (
         <FormikForm>
