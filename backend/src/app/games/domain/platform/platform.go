@@ -2,6 +2,7 @@ package platform
 
 import (
 	"slices"
+	"strings"
 )
 
 const (
@@ -17,6 +18,10 @@ func New(platformType string, path string) *Platform {
 	expectedValues := [...]string{TypeRetroArch}
 
 	if !slices.Contains(expectedValues[:], platformType) {
+		return nil
+	}
+
+	if "" == strings.TrimSpace(path) {
 		return nil
 	}
 
