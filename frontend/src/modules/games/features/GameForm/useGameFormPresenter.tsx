@@ -59,7 +59,7 @@ export function useGameFormPresenter(props: Props) {
       .getPlatformTypes()
       .then(setPlatforms)
       .catch(() => alert.error("Erro ao listar tipos de plataformas"))
-      .finally(() => setIsLoadingPlatform(false));
+      .finally(() => setTimeout(() => setIsLoadingPlatform(false), 10));
   }
 }
 

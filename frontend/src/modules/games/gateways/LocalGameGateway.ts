@@ -17,7 +17,7 @@ export class LocalGameGateway implements
 
         const errors = await Create(game);
 
-        if (errors.length > 0) {
+        if (errors?.length > 0) {
             throw new Error(errors.join(", "));
         }
     }
