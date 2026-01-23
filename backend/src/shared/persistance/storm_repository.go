@@ -45,8 +45,8 @@ func (r *StormRepository[T]) Get(id string, tableName string) (*T, error) {
 	return &result, err
 }
 
-func (r *StormRepository[T]) List(fieldName, likeValue, tableName string) ([]T, error) {
-	var results []T
+func (r *StormRepository[T]) List(fieldName, likeValue, tableName string) ([]*T, error) {
+	var results []*T
 
 	db, err := storm.Open(tableName)
 
@@ -68,7 +68,7 @@ func (r *StormRepository[T]) List(fieldName, likeValue, tableName string) ([]T, 
 	defer db.Close()
 
 	if err != nil && err == storm.ErrNotFound {
-		return []T{}, nil
+		return []*T{}, nil
 	}
 
 	return results, err
