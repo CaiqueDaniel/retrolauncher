@@ -18,6 +18,7 @@ func Test_it_should_be_able_to_get_a_game(t *testing.T) {
 	err := create_game.New(factory, repository).Execute(create_game.Input{
 		Name:         "Test Game",
 		PlatformType: platform.TypeRetroArch,
+		PlatformPath: "/path/platform",
 		Path:         "/path/to/test/game",
 		Cover:        "/path/to/test/cover.jpg",
 	})

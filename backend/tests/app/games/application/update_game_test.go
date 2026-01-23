@@ -18,6 +18,7 @@ func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 		ID:           game.GetId().String(),
 		Name:         "Updated Test Game",
 		PlatformType: platform.TypeRetroArch,
+		PlatformPath: "/path/platform",
 		Path:         "/path/to/updated/test/game",
 		Cover:        "/path/to/updated/test/cover.jpg",
 	})

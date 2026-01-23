@@ -2,6 +2,7 @@ package application_game_test
 
 import (
 	"retrolauncher/backend/src/app/games/application/create_game"
+	"retrolauncher/backend/src/app/games/domain/platform"
 	game_factories "retrolauncher/backend/src/app/games/factories"
 	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
 	"testing"
@@ -14,7 +15,8 @@ func Test_it_should_be_able_to_create_a_game(t *testing.T) {
 
 	err := sut.Execute(create_game.Input{
 		Name:         "Test Game",
-		PlatformType: "Test Platform",
+		PlatformType: platform.TypeRetroArch,
+		PlatformPath: "/path/to/platform",
 		Path:         "/path/to/test/game",
 		Cover:        "/path/to/test/cover.jpg",
 	})
