@@ -40,17 +40,17 @@ func (r *StormGameRepository) Get(id string) (*game.Game, error) {
 	return toDomain(model), nil
 }
 
-func (r *StormGameRepository) List(input domain.ListGamesParams) []game.Game {
+func (r *StormGameRepository) List(input domain.ListGamesParams) []*game.Game {
 	models, err := r.driver.List("Name", input.Name, table_name)
 
 	if err != nil {
-		return []game.Game{}
+		return []*game.Game{}
 	}
 
-	var games []game.Game
+	var games []*game.Game
 
 	for _, model := range models {
-		games = append(games, *toDomain(model))
+		games = append(games, toDomain(model))
 	}
 	return games
 }

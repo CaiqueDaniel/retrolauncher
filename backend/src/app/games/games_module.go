@@ -9,7 +9,7 @@ import (
 	"retrolauncher/backend/src/app/games/application/update_game"
 	"retrolauncher/backend/src/app/games/delivery/desktop/game_controller"
 	game_factories "retrolauncher/backend/src/app/games/factories"
-	"retrolauncher/backend/src/app/games/persistance/memory_game_repository"
+	"retrolauncher/backend/src/app/games/persistance"
 	"retrolauncher/backend/src/app/games/services/os_start_game_service"
 )
 
@@ -19,7 +19,7 @@ type GamesModule struct {
 
 func NewGamesModule() *GamesModule {
 	gameFactory := &game_factories.DefaultGameFactory{}
-	gameRepository := &memory_game_repository.MemoryGameRepository{}
+	gameRepository := &persistance.StormGameRepository{}
 
 	return &GamesModule{
 		GameController: game_controller.New(

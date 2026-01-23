@@ -21,13 +21,13 @@ func (r *MemoryGameRepository) Get(id string) (*game.Game, error) {
 	return r.games[id], nil
 }
 
-func (r *MemoryGameRepository) List(input domain.ListGamesParams) []game.Game {
-	result := make([]game.Game, 0)
+func (r *MemoryGameRepository) List(input domain.ListGamesParams) []*game.Game {
+	result := make([]*game.Game, 0)
 	for _, game := range r.games {
 		if input.Name != "" && game.GetName() != input.Name {
 			continue
 		}
-		result = append(result, *game)
+		result = append(result, game)
 	}
 
 	return result
