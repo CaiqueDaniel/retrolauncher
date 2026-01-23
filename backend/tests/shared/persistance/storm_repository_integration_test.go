@@ -157,3 +157,104 @@ func Test_it_should_get_no_data_from_storm_database_given_nothing_was_found(t *t
 		return
 	}
 }
+
+func Test_it_should_list_data_from_storm_database(t *testing.T) {
+	// Arrange
+	sut := &shared_persistance.StormRepository[TestData]{}
+	testDB := "./tmp/test_storm.db"
+	testData := &TestData{
+		Id:   "1",
+		Name: "Test Item",
+	}
+	sut.Save(testData, testDB)
+
+	// Act
+	data, err := sut.List("", "", testDB)
+
+	// Assert
+	if err != nil {
+		t.Errorf("Expected no error, but got %v", err)
+		return
+	}
+
+	if len(data) == 0 {
+		t.Error("Expected data, but got nil")
+		return
+	}
+}
+
+func Test_it_should_search_data_from_storm_database(t *testing.T) {
+	// Arrange
+	sut := &shared_persistance.StormRepository[TestData]{}
+	testDB := "./tmp/test_storm.db"
+	testDatas := []*TestData{
+		{
+			Id:   "1",
+			Name: "Test Item",
+		}, {
+			Id:   "2",
+			Name: "Another Item",
+		},
+	}
+
+	for _, testData := range testDatas {
+		sut.Save(testData, testDB)
+	}
+
+	// Act
+	data, err := sut.List("Name", "Test", testDB)
+
+	// Assert
+	if err != nil {
+		t.Errorf("Expected no error, but got %v", err)
+		return
+	}
+
+	if len(data) == 0 {
+		t.Error("Expected data, but got empty list")
+		return
+	}
+
+	if len(data) == 2 {
+		t.Error("Expected filtered data, but got all items")
+		return
+	}
+
+	if data[0].Name != "Test Item" {
+		t.Errorf("Expected 'Test Item', but got %s", data[0].Name)
+		return
+	}
+}
+
+func Test_it_should_return_empty_list_from_storm_database_given_nothing_was_found(t *testing.T) {
+	// Arrange
+	sut := &shared_persistance.StormRepository[TestData]{}
+	testDB := "./tmp/test_storm.db"
+	testDatas := []*TestData{
+		{
+			Id:   "1",
+			Name: "Test Item",
+		}, {
+			Id:   "2",
+			Name: "Another Item",
+		},
+	}
+
+	for _, testData := range testDatas {
+		sut.Save(testData, testDB)
+	}
+
+	// Act
+	data, err := sut.List("Name", "abc", testDB)
+
+	// Assert
+	if err != nil {
+		t.Errorf("Expected no error, but got %v", err)
+		return
+	}
+
+	if len(data) != 0 {
+		t.Error("Expected data, but got empty list")
+		return
+	}
+}
