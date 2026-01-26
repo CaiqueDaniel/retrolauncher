@@ -63,8 +63,8 @@ func toDomain(model *model) *game.Game {
 		gameId,
 		model.Name,
 		platform,
-		model.Cover,
 		model.Path,
+		model.Cover,
 	)
 }
 
