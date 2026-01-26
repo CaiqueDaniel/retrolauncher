@@ -64,7 +64,6 @@ export function GameForm(props: Props) {
             fullWidth
             helperText={errors.platformPath}
             error={Boolean(errors.platformPath)}
-            extensions={[".dll", ".exe", ".so"]}
             sx={{ mb: 2 }}
           />
 
