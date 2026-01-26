@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestCopyImageToInternalValidExtensions(t *testing.T) {
+func Test_it_should_copy_image_to_internal_valid_extensions(t *testing.T) {
 	tests := []struct {
 		name      string
 		imagePath string
@@ -55,7 +55,7 @@ func TestCopyImageToInternalValidExtensions(t *testing.T) {
 	}
 }
 
-func TestCopyImageToInternalInvalidExtension(t *testing.T) {
+func Test_it_should_not_copy_image_with_invalid_extension(t *testing.T) {
 	invalidExtensions := []string{
 		"/path/to/file.txt",
 		"/path/to/file.gif",
@@ -81,7 +81,7 @@ func TestCopyImageToInternalInvalidExtension(t *testing.T) {
 	}
 }
 
-func TestCopyImageToInternalPreservesExtension(t *testing.T) {
+func Test_it_should_copy_image_to_internal_preserves_extension(t *testing.T) {
 	testCases := []struct {
 		name      string
 		imagePath string
@@ -112,5 +112,57 @@ func TestCopyImageToInternalPreservesExtension(t *testing.T) {
 				t.Fatalf("expected extension %s, got %s", originalExt, resultExt)
 			}
 		})
+	}
+}
+
+func Test_it_should_rollback_File(t *testing.T) {
+	fs := game_doubles_test.NewMockFileSystem()
+	uploader := shared_services.NewLocalImageUploader(fs)
+
+	filePath := "./images/test-image.jpg"
+	fs.SaveFile(filePath, []byte("image data"))
+
+	// Verificar que o arquivo existe
+	if !fs.ExistsFile(filePath) {
+		t.Fatalf("expected file to exist before rollback")
+	}
+
+	// Fazer rollback
+	err := uploader.RollbackCopy(filePath)
+
+	if err != nil {
+		t.Fatalf("expected no error on rollback, got %v", err)
+	}
+
+	// Verificar que o arquivo foi removido
+	if fs.ExistsFile(filePath) {
+		t.Fatalf("expected file to be removed after rollback")
+	}
+}
+
+func Test_it_should_rollback_nonexistent_file(t *testing.T) {
+	fs := game_doubles_test.NewMockFileSystem()
+	uploader := shared_services.NewLocalImageUploader(fs)
+
+	// Tentar remover arquivo que não existe
+	err := uploader.RollbackCopy("./images/nonexistent.jpg")
+
+	// Deve retornar sem erro (idempotente)
+	if err != nil {
+		t.Fatalf("expected no error on rollback of nonexistent file, got %v", err)
+	}
+}
+
+func Test_it_should_not_copy_non_existent_file(t *testing.T) {
+	fs := game_doubles_test.NewMockFileSystem()
+	uploader := shared_services.NewLocalImageUploader(fs)
+	path, err := uploader.CopyImageToInternal("/path/to/nonexistent/image.jpg")
+
+	if path != "" {
+		t.Fatalf("expected empty path when copying nonexistent file, got %s", path)
+	}
+
+	if err == nil {
+		t.Fatalf("expected error when copying nonexistent file, got nil")
 	}
 }

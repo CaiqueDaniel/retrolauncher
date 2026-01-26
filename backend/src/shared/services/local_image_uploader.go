@@ -32,6 +32,10 @@ func (l *localImageUploader) CopyImageToInternal(path string) (string, error) {
 		return "", fmt.Errorf("unsupported image extension: %s", extension)
 	}
 
+	if !l.fileSystem.ExistsFile(path) {
+		return "", fmt.Errorf("file does not exist: %s", path)
+	}
+
 	copyPath := fmt.Sprintf("%s%s%s", internalImagePath, uuid.New().String(), extension)
 	err := l.fileSystem.CopyFile(path, copyPath)
 
@@ -40,4 +44,8 @@ func (l *localImageUploader) CopyImageToInternal(path string) (string, error) {
 	}
 
 	return copyPath, nil
+}
+
+func (l *localImageUploader) RollbackCopy(path string) error {
+	return l.fileSystem.RemoveFile(path)
 }

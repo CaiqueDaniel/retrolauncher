@@ -11,6 +11,7 @@ import (
 	game_factories "retrolauncher/backend/src/app/games/factories"
 	"retrolauncher/backend/src/app/games/persistance"
 	"retrolauncher/backend/src/app/games/services/os_start_game_service"
+	shared_services "retrolauncher/backend/src/shared/services"
 )
 
 type GamesModule struct {
@@ -20,10 +21,12 @@ type GamesModule struct {
 func NewGamesModule() *GamesModule {
 	gameFactory := &game_factories.DefaultGameFactory{}
 	gameRepository := &persistance.StormGameRepository{}
+	fileSystem := &shared_services.LocalFileSystem{}
+	imageUploader := shared_services.NewLocalImageUploader(fileSystem)
 
 	return &GamesModule{
 		GameController: game_controller.New(
-			create_game.New(gameFactory, gameRepository),
+			create_game.New(gameFactory, gameRepository, imageUploader),
 			update_game.New(gameRepository),
 			get_game.New(gameRepository),
 			list_games.New(gameRepository),
