@@ -43,3 +43,35 @@ func Test_it_should_be_able_to_read_a_file(t *testing.T) {
 
 	os.RemoveAll("./tmp")
 }
+
+func Test_it_should_check_if_file_exists(t *testing.T) {
+	sut := &shared_services.LocalFileSystem{}
+	sut.SaveFile("./tmp/test.txt", []byte("Hello, World!"))
+
+	exists := sut.ExistsFile("./tmp/test.txt")
+
+	if !exists {
+		t.Errorf("Expected file to exist, but it doesn't")
+	}
+
+	os.RemoveAll("./tmp")
+}
+
+func Test_it_should_copy_a_file(t *testing.T) {
+	sut := &shared_services.LocalFileSystem{}
+	sut.SaveFile("./tmp/source.txt", []byte("Hello, World!"))
+	err := sut.CopyFile("./tmp/source.txt", "./tmp/destination.txt")
+
+	if err != nil {
+		t.Errorf("Expected no error, but got %v", err)
+	}
+	data, err := sut.ReadFile("./tmp/destination.txt")
+
+	if err != nil {
+		t.Errorf("Expected no error, but got %v", err)
+	}
+	if string(data) != "Hello, World!" {
+		t.Errorf("File content does not match, got: %s", string(data))
+	}
+	os.RemoveAll("./tmp")
+}
