@@ -14,6 +14,7 @@ export function FilepathSelector(props: Props) {
   const { setFieldValue } = useFormikContext();
   const { onClick, value } = useFilepathSelectorPresenter({
     value: (props.value as string) || "",
+    extensions: props.extensions,
   });
 
   useEffect(() => {
@@ -50,4 +51,5 @@ export function FilepathSelector(props: Props) {
 type Props = InputProps & {
   helperText?: string;
   label: string;
+  extensions?: string[];
 };

@@ -27,7 +27,7 @@ func (a *App) SelectFile(filePattern string) string {
 		Title: "Selecione o arquivo de configuração",
 		Filters: []runtime.FileFilter{
 			{
-				DisplayName: "Arquivo",
+				DisplayName: "Arquivo (" + filePattern + ")",
 				Pattern:     filePattern,
 			},
 		},

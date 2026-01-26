@@ -64,6 +64,7 @@ export function GameForm(props: Props) {
             fullWidth
             helperText={errors.platformPath}
             error={Boolean(errors.platformPath)}
+            extensions={[".dll", ".exe", ".so"]}
             sx={{ mb: 2 }}
           />
 
@@ -76,6 +77,20 @@ export function GameForm(props: Props) {
             helperText={errors.path}
             error={Boolean(errors.path)}
             sx={{ mb: 2 }}
+            extensions={[
+              "*.iso",
+              "*.bin",
+              "*.cue",
+              "*.nes",
+              "*.sfc",
+              "*.smc",
+              "*.gb",
+              "*.gba",
+              "*.gbc",
+              "*.n64",
+              "*.v64",
+              "*.z64",
+            ]}
           />
           <FastField
             as={FilepathSelector}
@@ -86,6 +101,7 @@ export function GameForm(props: Props) {
             helperText={errors.cover}
             error={Boolean(errors.cover)}
             sx={{ mb: 2 }}
+            extensions={["*.png", "*.jpg", "*.jpeg"]}
           />
           <FormSubmitControls onCancel={onCancel} isSubmiting={isSubmiting} />
         </>

@@ -7,7 +7,7 @@ export function useFilepathSelectorPresenter(props: Props) {
 
   const onClick = () => {
     filepathSelectionService
-      .selectFile(props.extenssions || ["*"])
+      .selectFile(props.extensions || ["*"])
       .then(setValue);
   };
 
@@ -16,5 +16,5 @@ export function useFilepathSelectorPresenter(props: Props) {
 
 type Props = {
   value: string;
-  extenssions?: string[];
+  extensions?: string[];
 };
