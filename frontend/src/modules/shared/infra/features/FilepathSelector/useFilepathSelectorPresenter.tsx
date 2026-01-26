@@ -2,16 +2,19 @@ import { useState } from "react";
 import { useFilepathSelectorContext } from "./FilepathSelectorContext";
 
 export function useFilepathSelectorPresenter(props: Props) {
-    const { filepathSelectionService } = useFilepathSelectorContext();
-    const [value, setValue] = useState(props.value);
+  const { filepathSelectionService } = useFilepathSelectorContext();
+  const [value, setValue] = useState(props.value);
 
-    const onClick = () => {
-        filepathSelectionService.selectFile().then(setValue);
-    }
+  const onClick = () => {
+    filepathSelectionService
+      .selectFile(props.extenssions || ["*"])
+      .then(setValue);
+  };
 
-    return { onClick, value }
+  return { onClick, value };
 }
 
 type Props = {
-    value: string;
-}
+  value: string;
+  extenssions?: string[];
+};

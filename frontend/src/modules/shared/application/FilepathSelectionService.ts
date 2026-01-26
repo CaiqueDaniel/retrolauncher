@@ -1,3 +1,3 @@
 export interface FilepathSelectionService {
-    selectFile(): Promise<string>;
+    selectFile(extensions: string[]): Promise<string>;
 }

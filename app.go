@@ -22,11 +22,14 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-func (a *App) SelectFile() string {
+func (a *App) SelectFile(filePattern string) string {
 	options := runtime.OpenDialogOptions{
 		Title: "Selecione o arquivo de configuração",
 		Filters: []runtime.FileFilter{
-			{DisplayName: "Arquivos de Texto"},
+			{
+				DisplayName: "Arquivo",
+				Pattern:     filePattern,
+			},
 		},
 	}
 
