@@ -1,7 +1,6 @@
 package application_game_test
 
 import (
-	create_game "retrolauncher/backend/src/app/games/application/create_game"
 	"retrolauncher/backend/src/app/games/application/get_game"
 	"retrolauncher/backend/src/app/games/domain"
 	"retrolauncher/backend/src/app/games/domain/platform"
@@ -15,13 +14,9 @@ func Test_it_should_be_able_to_get_a_game(t *testing.T) {
 	factory := &game_factories.DefaultGameFactory{}
 
 	// Create and save a game first
-	err := create_game.New(factory, repository).Execute(create_game.Input{
-		Name:         "Test Game",
-		PlatformType: platform.TypeRetroArch,
-		PlatformPath: "/path/platform",
-		Path:         "/path/to/test/game",
-		Cover:        "/path/to/test/cover.jpg",
-	})
+
+	game, _ := factory.CreateGame("Test Game", platform.New(platform.TypeRetroArch, "/path/platform"), "/path/to/test/game", "/path/to/test/cover.jpg")
+	err := repository.Save(game)
 
 	if err != nil {
 		t.Fatalf("Failed to setup test game: %v", err)

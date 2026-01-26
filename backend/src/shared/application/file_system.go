@@ -1,4 +1,4 @@
-package shared_application
+package application
 
 type FileSystem interface {
 	SaveFile(path string, data []byte) error
