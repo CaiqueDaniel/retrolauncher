@@ -4,6 +4,8 @@ import { useGameViewerPresenter } from "./useGameViewerPresenter";
 export function GameViewer() {
   const { game, onClickEdit, onClickStart } = useGameViewerPresenter();
 
+  if (!game) return <></>;
+
   return (
     <Box p={3}>
       <Box display="flex" gap={2}>

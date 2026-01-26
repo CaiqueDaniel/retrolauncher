@@ -7,14 +7,16 @@ export function useGameListPresenter() {
   const { queryRepository, alert, busDispatcher } = useGameListContext();
   const [games, setGames] = useState<GameQueryRepository.Output[]>([]);
   const [isLoading, setLoading] = useState(false);
+  const [wasFirstLoaded, setWasFirstLoad] = useState(false);
 
   const onClick = (id: string) => {
-    const game = games.find(game => game.id === id);
+    const game = games.find((game) => game.id === id);
     if (!game) return;
     busDispatcher.dispatch(GameEvents.GAME_SELECTED, game);
-  }
+  };
 
   useEffect(fetchGames, []);
+  useEffect(onInit, [wasFirstLoaded]);
 
   return {
     games,
@@ -28,6 +30,13 @@ export function useGameListPresenter() {
       .search({})
       .then(setGames)
       .catch(() => alert.error("Não foi possível carregar os jogos"))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        setWasFirstLoad(true);
+      });
+  }
+
+  function onInit() {
+    if (games[0]) onClick(games[0].id);
   }
 }
