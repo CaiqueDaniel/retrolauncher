@@ -166,3 +166,23 @@ func Test_it_should_not_copy_non_existent_file(t *testing.T) {
 		t.Fatalf("expected error when copying nonexistent file, got nil")
 	}
 }
+
+func Test_it_should_be_able_to_open_image_as_base64(t *testing.T) {
+	fs := game_doubles_test.NewMockFileSystem()
+	uploader := shared_services.NewLocalImageUploader(fs)
+	imagePath := "/path/to/image.jpg"
+	imageData := []byte("fake image data")
+
+	fs.SaveFile(imagePath, imageData)
+	base64Str, err := uploader.OpenAsBase64(imagePath)
+
+	if err != nil {
+		t.Fatalf("expected no error, got %v", err)
+	}
+
+	expectedBase64 := "ZmFrZSBpbWFnZSBkYXRh"
+
+	if base64Str != expectedBase64 {
+		t.Fatalf("expected base64 %s, got %s", expectedBase64, base64Str)
+	}
+}

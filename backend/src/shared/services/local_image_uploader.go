@@ -1,6 +1,7 @@
 package shared_services
 
 import (
+	"encoding/base64"
 	"fmt"
 	"path/filepath"
 	"retrolauncher/backend/src/shared/application"
@@ -53,4 +54,15 @@ func (l *localImageUploader) CopyImageToInternal(path string) (string, error) {
 
 func (l *localImageUploader) RollbackCopy(path string) error {
 	return l.fileSystem.RemoveFile(path)
+}
+
+func (l *localImageUploader) OpenAsBase64(path string) (string, error) {
+	data, err := l.fileSystem.ReadFile(path)
+
+	if err != nil {
+		return "", err
+	}
+
+	encoded := base64.StdEncoding.EncodeToString(data)
+	return encoded, nil
 }
