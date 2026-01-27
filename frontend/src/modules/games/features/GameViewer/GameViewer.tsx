@@ -9,10 +9,7 @@ export function GameViewer() {
   return (
     <Box p={3}>
       <Box display="flex" gap={2}>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/pt/thumb/0/03/Super_Mario_Bros._box.png/260px-Super_Mario_Bros._box.png"
-          width="100px"
-        />
+        <img src={`data:image/jpeg;base64,${game.cover}`} width="100px" />
         <Box>
           <Typography variant="h5" mb={1}>
             {game?.name}

@@ -1,10 +1,10 @@
 package games
 
 import (
+	game_app "retrolauncher/backend/src/app/games/application"
 	"retrolauncher/backend/src/app/games/application/create_game"
 	"retrolauncher/backend/src/app/games/application/get_game"
 	"retrolauncher/backend/src/app/games/application/get_platform_types"
-	"retrolauncher/backend/src/app/games/application/list_games"
 	"retrolauncher/backend/src/app/games/application/start_game"
 	"retrolauncher/backend/src/app/games/application/update_game"
 	"retrolauncher/backend/src/app/games/delivery/desktop/game_controller"
@@ -29,7 +29,7 @@ func NewGamesModule() *GamesModule {
 			create_game.New(gameFactory, gameRepository, imageUploader),
 			update_game.New(gameRepository),
 			get_game.New(gameRepository),
-			list_games.New(gameRepository),
+			game_app.NewListGames(gameRepository, imageUploader),
 			get_platform_types.New(),
 			start_game.New(gameRepository, os_start_game_service.New()),
 		),

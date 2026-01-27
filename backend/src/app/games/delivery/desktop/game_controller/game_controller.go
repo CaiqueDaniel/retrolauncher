@@ -1,10 +1,10 @@
 package game_controller
 
 import (
+	game_app "retrolauncher/backend/src/app/games/application"
 	"retrolauncher/backend/src/app/games/application/create_game"
 	"retrolauncher/backend/src/app/games/application/get_game"
 	"retrolauncher/backend/src/app/games/application/get_platform_types"
-	"retrolauncher/backend/src/app/games/application/list_games"
 	"retrolauncher/backend/src/app/games/application/start_game"
 	"retrolauncher/backend/src/app/games/application/update_game"
 )
@@ -12,7 +12,7 @@ import (
 type GameController struct {
 	createGame       *create_game.CreateGame
 	updateGame       *update_game.UpdateGame
-	listGames        *list_games.ListGames
+	listGames        game_app.ListGames
 	getGame          *get_game.GetGame
 	getPlatformTypes *get_platform_types.GetPlatformTypes
 	startGame        *start_game.StartGame
@@ -22,7 +22,7 @@ func New(
 	createGame *create_game.CreateGame,
 	updateGame *update_game.UpdateGame,
 	getGame *get_game.GetGame,
-	listGames *list_games.ListGames,
+	listGames game_app.ListGames,
 	getPlatformTypes *get_platform_types.GetPlatformTypes,
 	startGame *start_game.StartGame,
 ) *GameController {
@@ -65,8 +65,8 @@ func (gc *GameController) Update(input UpdateInputDto) error {
 	})
 }
 
-func (gc *GameController) List(input ListInputDto) []*list_games.Output {
-	return gc.listGames.Execute(list_games.Input{
+func (gc *GameController) List(input ListInputDto) []*game_app.ListGamesOutput {
+	return gc.listGames.Execute(game_app.ListGamesInput{
 		Name: input.Name,
 	})
 }
