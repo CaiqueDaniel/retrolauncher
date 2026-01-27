@@ -36,8 +36,13 @@ func (l *localImageUploader) CopyImageToInternal(path string) (string, error) {
 		return "", fmt.Errorf("file does not exist: %s", path)
 	}
 
-	copyPath := fmt.Sprintf("%s%s%s", internalImagePath, uuid.New().String(), extension)
-	err := l.fileSystem.CopyFile(path, copyPath)
+	copyPath, err := filepath.Abs(fmt.Sprintf("%s%s%s", internalImagePath, uuid.New().String(), extension))
+
+	if err != nil {
+		return "", err
+	}
+
+	err = l.fileSystem.CopyFile(path, copyPath)
 
 	if err != nil {
 		return "", err
