@@ -6,7 +6,6 @@ import (
 	"retrolauncher/backend/src/app/games/application/get_game"
 	"retrolauncher/backend/src/app/games/application/get_platform_types"
 	"retrolauncher/backend/src/app/games/application/start_game"
-	"retrolauncher/backend/src/app/games/application/update_game"
 	"retrolauncher/backend/src/app/games/delivery/desktop/game_controller"
 	game_factories "retrolauncher/backend/src/app/games/factories"
 	"retrolauncher/backend/src/app/games/persistance"
@@ -27,7 +26,7 @@ func NewGamesModule() *GamesModule {
 	return &GamesModule{
 		GameController: game_controller.New(
 			create_game.New(gameFactory, gameRepository, imageUploader),
-			update_game.New(gameRepository),
+			game_app.NewUpdateGame(gameRepository),
 			get_game.New(gameRepository),
 			game_app.NewListGames(gameRepository, imageUploader),
 			get_platform_types.New(),

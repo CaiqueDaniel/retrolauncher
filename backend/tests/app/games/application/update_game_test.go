@@ -1,7 +1,7 @@
 package application_game_test
 
 import (
-	"retrolauncher/backend/src/app/games/application/update_game"
+	update_game "retrolauncher/backend/src/app/games/application"
 	"retrolauncher/backend/src/app/games/domain/platform"
 	game_factories "retrolauncher/backend/src/app/games/factories"
 	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
@@ -14,7 +14,7 @@ func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 	game, _ := factory.CreateGame("test", platform.New(platform.TypeRetroArch, "/path"), "test", "test")
 	repository.Save(game)
 
-	err := update_game.New(repository).Execute(update_game.Input{
+	err := update_game.NewUpdateGame(repository).Execute(update_game.UpdateGameInput{
 		ID:           game.GetId().String(),
 		Name:         "Updated Test Game",
 		PlatformType: platform.TypeRetroArch,
@@ -57,7 +57,7 @@ func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 
 func Test_it_should_not_be_able_to_update_a_game_that_does_not_exist(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
-	err := update_game.New(repository).Execute(update_game.Input{
+	err := update_game.NewUpdateGame(repository).Execute(update_game.UpdateGameInput{
 		ID:           "nonexistent",
 		Name:         "Test Game",
 		PlatformType: platform.TypeRetroArch,

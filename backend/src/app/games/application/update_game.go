@@ -1,4 +1,4 @@
-package update_game
+package application
 
 import (
 	"errors"
@@ -6,18 +6,22 @@ import (
 	"retrolauncher/backend/src/app/games/domain/platform"
 )
 
-type UpdateGame struct {
-	Execute func(input Input) error
+type UpdateGame interface {
+	Execute(input UpdateGameInput) error
 }
 
-func New(repository domain.GameRepository) *UpdateGame {
-	return &UpdateGame{
-		Execute: func(input Input) error { return execute(input, repository) },
+type updateGame struct {
+	repository domain.GameRepository
+}
+
+func NewUpdateGame(repository domain.GameRepository) UpdateGame {
+	return &updateGame{
+		repository: repository,
 	}
 }
 
-func execute(input Input, repository domain.GameRepository) error {
-	game, err := repository.Get(input.ID)
+func (u *updateGame) Execute(input UpdateGameInput) error {
+	game, err := u.repository.Get(input.ID)
 
 	if err != nil {
 		return err
@@ -34,10 +38,10 @@ func execute(input Input, repository domain.GameRepository) error {
 		input.Cover,
 	)
 
-	return repository.Save(game)
+	return u.repository.Save(game)
 }
 
-type Input struct {
+type UpdateGameInput struct {
 	ID           string
 	Name         string
 	PlatformType string
