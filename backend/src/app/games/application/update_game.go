@@ -4,6 +4,7 @@ import (
 	"errors"
 	"retrolauncher/backend/src/app/games/domain"
 	"retrolauncher/backend/src/app/games/domain/platform"
+	"retrolauncher/backend/src/shared/application"
 )
 
 type UpdateGame interface {
@@ -11,12 +12,14 @@ type UpdateGame interface {
 }
 
 type updateGame struct {
-	repository domain.GameRepository
+	repository    domain.GameRepository
+	imageUploader application.ImageUploader
 }
 
-func NewUpdateGame(repository domain.GameRepository) UpdateGame {
+func NewUpdateGame(repository domain.GameRepository, imageUploader application.ImageUploader) UpdateGame {
 	return &updateGame{
-		repository: repository,
+		repository:    repository,
+		imageUploader: imageUploader,
 	}
 }
 
@@ -31,14 +34,27 @@ func (u *updateGame) Execute(input UpdateGameInput) error {
 		return errors.New("game not found")
 	}
 
+	coverPath, coverCopyError := u.imageUploader.CopyImageToInternal(input.Cover)
+
+	if coverCopyError != nil {
+		return coverCopyError
+	}
+
 	game.Update(
 		input.Name,
 		platform.New(input.PlatformType, input.PlatformPath),
 		input.Path,
-		input.Cover,
+		coverPath,
 	)
 
-	return u.repository.Save(game)
+	err = u.repository.Save(game)
+
+	if err != nil {
+		u.imageUploader.RollbackCopy(coverPath)
+		return err
+	}
+
+	return err
 }
 
 type UpdateGameInput struct {

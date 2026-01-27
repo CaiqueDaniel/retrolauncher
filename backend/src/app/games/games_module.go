@@ -26,7 +26,7 @@ func NewGamesModule() *GamesModule {
 	return &GamesModule{
 		GameController: game_controller.New(
 			create_game.New(gameFactory, gameRepository, imageUploader),
-			game_app.NewUpdateGame(gameRepository),
+			game_app.NewUpdateGame(gameRepository, imageUploader),
 			get_game.New(gameRepository),
 			game_app.NewListGames(gameRepository, imageUploader),
 			get_platform_types.New(),
