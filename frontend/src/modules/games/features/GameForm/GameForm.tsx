@@ -1,4 +1,4 @@
-import { MenuItem, TextField } from "@mui/material";
+import { MenuItem, TextField, Typography } from "@mui/material";
 import { FastField } from "formik";
 import { Form } from "~/modules/shared/infra/components/Form/Form";
 import { GameFormData } from "./GameFormData";
@@ -28,6 +28,9 @@ export function GameForm(props: Props) {
     >
       {({ errors }) => (
         <>
+          <Typography variant="h1" mb={3}>
+            {props.id ? "Editar" : "Adicionar"} Jogo
+          </Typography>
           <FastField
             as={TextField}
             name="name"

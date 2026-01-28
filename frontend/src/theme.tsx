@@ -6,7 +6,7 @@ export const theme = createTheme({
     },
     typography: {
         h1: {
-            fontSize: '2.25rem',
+            fontSize: '1.70rem',
             lineHeight: '2.5rem',
             fontWeight: '700',
         },
