@@ -24,6 +24,7 @@ export function GameHome() {
         gap={2}
         bgcolor="background"
         p={2}
+        height='calc(100% - 48px)'
       >
         <Paper>
           <GameList />
