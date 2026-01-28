@@ -37,11 +37,15 @@ func Hydrate(Id uuid.UUID, Name string, PlatformType *platform.Platform, Path, C
 	}
 }
 
-func (g *Game) Update(Name string, PlatformType *platform.Platform, Path, Cover string) {
-	g.name = Name
-	g.platformType = PlatformType
-	g.cover = Cover
-	g.path = Path
+func (g *Game) Update(Name string, PlatformType *platform.Platform, Path, Cover string) []error {
+	err := make([]error, 0)
+
+	g.setName(Name, &err)
+	g.setPlatformType(PlatformType, &err)
+	g.setPath(Path, &err)
+	g.setCover(Cover, &err)
+
+	return err
 }
 
 func (g *Game) GetId() uuid.UUID                    { return g.id }

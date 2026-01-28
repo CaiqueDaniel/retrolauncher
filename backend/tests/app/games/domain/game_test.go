@@ -91,3 +91,18 @@ func Test_it_should_not_be_able_to_create_with_invalid_values(t *testing.T) {
 		return
 	}
 }
+
+func Test_it_should_not_be_able_to_update_with_invalid_values(t *testing.T) {
+	entity, _ := game.New("Test Game", platform.New(platform.TypeRetroArch, "/path"), "game.nes", "test_cover.jpg")
+	err := entity.Update("", platform.New("", "/path"), "", "")
+
+	if err == nil {
+		t.Error("Expected errors when creating game with invalid values, but got none.")
+		return
+	}
+
+	if len(err) < 4 {
+		t.Errorf("Expected at least 4 errors, but got: %d", len(err))
+		return
+	}
+}
