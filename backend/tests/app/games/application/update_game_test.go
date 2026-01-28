@@ -34,11 +34,7 @@ func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 		return
 	}
 
-	updatedGame, err := repository.Get(game.GetId().String())
-	if err != nil {
-		t.Errorf("Expected no error, but got: %v", err)
-		return
-	}
+	updatedGame, _ := repository.Get(game.GetId().String())
 
 	if updatedGame.GetName() != "Updated Test Game" {
 		t.Errorf("Expected name to be 'Updated Test Game', but got: %s", updatedGame.GetName())

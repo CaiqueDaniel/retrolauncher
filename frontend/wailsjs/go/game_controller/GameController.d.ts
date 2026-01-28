@@ -14,4 +14,4 @@ export function List(arg1:game_controller.ListInputDto):Promise<Array<applicatio
 
 export function StartGame(arg1:game_controller.GetInputDto):Promise<void>;
 
-export function Update(arg1:game_controller.UpdateInputDto):Promise<void>;
+export function Update(arg1:game_controller.UpdateInputDto):Promise<Array<string>>;

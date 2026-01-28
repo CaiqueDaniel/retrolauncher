@@ -11,7 +11,9 @@ export class LocalGameGateway implements
     StartGameService {
     async save(game: Game): Promise<void> {
         if (game.id) {
-            await Update({ ...game, id: game.id });
+            const errors = await Update({ ...game, id: game.id });
+            if (errors?.length > 0)
+                throw new Error(errors.join(", "));
             return;
         }
 

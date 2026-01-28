@@ -53,8 +53,8 @@ func (gc *GameController) Create(input CreateInputDto) []string {
 	return errorMessages
 }
 
-func (gc *GameController) Update(input UpdateInputDto) error {
-	return gc.updateGame.Execute(game_app.UpdateGameInput{
+func (gc *GameController) Update(input UpdateInputDto) []string {
+	errors := gc.updateGame.Execute(game_app.UpdateGameInput{
 		ID:           input.ID,
 		Name:         input.Name,
 		PlatformType: input.PlatformType,
@@ -62,6 +62,14 @@ func (gc *GameController) Update(input UpdateInputDto) error {
 		Path:         input.Path,
 		Cover:        input.Cover,
 	})
+
+	var errorMessages []string
+
+	for _, err := range errors {
+		errorMessages = append(errorMessages, err.Error())
+	}
+
+	return errorMessages
 }
 
 func (gc *GameController) List(input ListInputDto) []*game_app.ListGamesOutput {

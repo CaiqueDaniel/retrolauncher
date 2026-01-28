@@ -8,7 +8,7 @@ import (
 )
 
 type UpdateGame interface {
-	Execute(input UpdateGameInput) error
+	Execute(input UpdateGameInput) []error
 }
 
 type updateGame struct {
@@ -23,38 +23,43 @@ func NewUpdateGame(repository domain.GameRepository, imageUploader application.I
 	}
 }
 
-func (u *updateGame) Execute(input UpdateGameInput) error {
+func (u *updateGame) Execute(input UpdateGameInput) []error {
 	game, err := u.repository.Get(input.ID)
 
 	if err != nil {
-		return err
+		return []error{err}
 	}
 
 	if game == nil {
-		return errors.New("game not found")
+		return []error{errors.New("game not found")}
 	}
 
 	coverPath, coverCopyError := u.imageUploader.CopyImageToInternal(input.Cover)
 
 	if coverCopyError != nil {
-		return coverCopyError
+		return []error{coverCopyError}
 	}
 
-	game.Update(
+	entityErrors := game.Update(
 		input.Name,
 		platform.New(input.PlatformType, input.PlatformPath),
 		input.Path,
 		coverPath,
 	)
 
+	if len(entityErrors) > 0 {
+		u.imageUploader.RollbackCopy(coverPath)
+		return entityErrors
+	}
+
 	err = u.repository.Save(game)
 
 	if err != nil {
 		u.imageUploader.RollbackCopy(coverPath)
-		return err
+		return []error{err}
 	}
 
-	return err
+	return nil
 }
 
 type UpdateGameInput struct {
