@@ -15,6 +15,10 @@ type stormSettingsDAO struct {
 	driver *persistance.StormRepository[model]
 }
 
+func NewStormSettingsDAO() domain.SettingsDAO {
+	return &stormSettingsDAO{}
+}
+
 func (s *stormSettingsDAO) GetSettings() (*settings.Settings, error) {
 	model, err := s.driver.Get(id, tableName)
 
@@ -44,10 +48,4 @@ type model struct {
 	ID                  string `storm:"id"`
 	RetroarchFolderPath string
 	RomsFolderPath      string
-}
-
-func NewStormSettingsDAO(driver *persistance.StormRepository[model]) domain.SettingsDAO {
-	return &stormSettingsDAO{
-		driver: driver,
-	}
 }
