@@ -16,6 +16,7 @@ func NewSettingsModule() *SettingsModule {
 	fs := &shared_services.LocalFileSystem{}
 	controller := desktop.NewSettingsController(
 		application.NewSaveSettings(dao, fs),
+		application.NewGetSettings(dao),
 	)
 
 	return &SettingsModule{
