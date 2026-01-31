@@ -2,7 +2,7 @@ import { MenuItem, TextField, Typography } from "@mui/material";
 import { FastField } from "formik";
 import { Form } from "~/modules/shared/infra/components/Form/Form";
 import { GameFormData } from "./GameFormData";
-import { FormSubmitControls } from "./FormSubmitControls";
+import { FormSubmitControls } from "../../../shared/infra/components/FormSubmitControls";
 import { useGameFormPresenter } from "./useGameFormPresenter";
 import { FilepathSelector } from "~/modules/shared/infra/features/FilepathSelector/FilepathSelector";
 

@@ -1,9 +1,10 @@
-import { Typography, Box, Button } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FastField } from "formik";
 import { Form } from "~/modules/shared/infra/components/Form/Form";
 import { SettingsFormData } from "../../services/SettingsGateway";
 import { useSettingsFormPresenter } from "./useSettingsFormPresenter";
 import { FilepathSelector } from "~/modules/shared/infra/features/FilepathSelector/FilepathSelector";
+import { FormSubmitControls } from "~/modules/shared/infra/components/FormSubmitControls";
 
 export function SettingsForm() {
   const {
@@ -51,24 +52,7 @@ export function SettingsForm() {
             sx={{ mb: 2 }}
           />
 
-          <Box display="flex" gap={2} mt={3}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="secondary"
-              onClick={onCancel}
-            >
-              Voltar
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={isSubmiting}
-            >
-              Salvar
-            </Button>
-          </Box>
+          <FormSubmitControls isSubmiting={isSubmiting} onCancel={onCancel} />
         </>
       )}
     </Form>
