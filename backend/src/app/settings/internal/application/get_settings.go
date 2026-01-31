@@ -19,6 +19,13 @@ func NewGetSettings(settingsDAO domain.SettingsDAO) GetSettings {
 func (uc *getSettings) Execute() (*GetSettingsOutput, error) {
 	settings, err := uc.settingsDAO.GetSettings()
 
+	if settings == nil {
+		return &GetSettingsOutput{
+			RetroarchFolderPath: "",
+			RomsFolderPath:      "",
+		}, nil
+	}
+
 	if err != nil {
 		return nil, err
 	}

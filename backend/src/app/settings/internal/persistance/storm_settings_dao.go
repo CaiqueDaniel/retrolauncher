@@ -38,14 +38,14 @@ func (s *stormSettingsDAO) GetSettings() (*settings.Settings, error) {
 
 func (s *stormSettingsDAO) SaveSettings(settings *settings.Settings) error {
 	return s.driver.Save(&model{
-		ID:                  id,
+		Id:                  id,
 		RetroarchFolderPath: settings.RetroarchFolderPath,
 		RomsFolderPath:      settings.RomsFolderPath,
 	}, tableName)
 }
 
 type model struct {
-	ID                  string `storm:"id"`
+	Id                  string `storm:"id"`
 	RetroarchFolderPath string
 	RomsFolderPath      string
 }
