@@ -6,8 +6,14 @@ import { useSettingsFormPresenter } from "./useSettingsFormPresenter";
 import { FilepathSelector } from "~/modules/shared/infra/features/FilepathSelector/FilepathSelector";
 
 export function SettingsForm() {
-  const { onSubmit, isSubmiting, initialValues, validationSchema, isLoading } =
-    useSettingsFormPresenter();
+  const {
+    onSubmit,
+    onCancel,
+    isSubmiting,
+    initialValues,
+    validationSchema,
+    isLoading,
+  } = useSettingsFormPresenter();
 
   if (isLoading) return <></>;
 
@@ -46,6 +52,14 @@ export function SettingsForm() {
           />
 
           <Box display="flex" gap={2} mt={3}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              onClick={onCancel}
+            >
+              Voltar
+            </Button>
             <Button
               type="submit"
               variant="contained"

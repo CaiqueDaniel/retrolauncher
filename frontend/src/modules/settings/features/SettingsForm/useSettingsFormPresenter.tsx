@@ -4,7 +4,7 @@ import { SettingsFormData } from "../../services/SettingsGateway";
 import { useSettingsFormContext } from "./SettingsFormContext";
 
 export function useSettingsFormPresenter() {
-  const { gateway, alert } = useSettingsFormContext();
+  const { gateway, alert, navigator } = useSettingsFormContext();
   const [initialValues, setInitialValues] = useState<SettingsFormData>({
     romsFolderPath: "",
     retroarchFolderPath: "",
@@ -22,6 +22,7 @@ export function useSettingsFormPresenter() {
       const settings = await gateway.getSettings();
       setInitialValues(settings);
     } catch (error) {
+      console.log(error);
       alert.error("Erro ao carregar configurações");
     } finally {
       setIsLoading(false);
@@ -43,9 +44,14 @@ export function useSettingsFormPresenter() {
     [gateway, alert, loadSettings],
   );
 
+  const onCancel = () => {
+    navigator.navigateTo("..");
+  };
+
   return {
     initialValues,
     onSubmit,
+    onCancel,
     isSubmiting,
     isLoading,
     validationSchema,
