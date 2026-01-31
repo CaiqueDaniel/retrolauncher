@@ -1,7 +1,6 @@
 package application
 
 import (
-	"fmt"
 	"retrolauncher/backend/src/app/games/domain"
 	"retrolauncher/backend/src/shared/application"
 )
@@ -30,10 +29,7 @@ func (l *listGames) Execute(input ListGamesInput) []*ListGamesOutput {
 	result := make([]*ListGamesOutput, 0)
 
 	for _, game := range games {
-		cover, err := l.imageUploader.OpenAsBase64(game.GetCover())
-
-		fmt.Println(game)
-		fmt.Println(err)
+		cover, _ := l.imageUploader.OpenAsBase64(game.GetCover())
 
 		result = append(result, &ListGamesOutput{
 			Id:           game.GetId().String(),
