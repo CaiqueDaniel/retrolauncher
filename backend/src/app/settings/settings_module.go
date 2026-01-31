@@ -8,7 +8,7 @@ import (
 )
 
 type SettingsModule struct {
-	SettingsController *desktop.SettingsController
+	SettingsController desktop.SettingsController
 }
 
 func NewSettingsModule() *SettingsModule {
@@ -20,6 +20,6 @@ func NewSettingsModule() *SettingsModule {
 	)
 
 	return &SettingsModule{
-		SettingsController: &controller,
+		SettingsController: controller,
 	}
 }

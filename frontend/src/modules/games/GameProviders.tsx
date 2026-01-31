@@ -6,15 +6,9 @@ import { GameListContext } from "./features/GameList/GameListContext";
 import { useReactRouterRouteNavigator } from "../shared/infra/hooks/useReactRouterRouteNavigator";
 import { EventBus } from "../shared/infra/services/EventBus";
 import { GameViewerContext } from "./features/GameViewer/GameViewerContext";
-import { FilepathSelectorContext } from "../shared/infra/features/FilepathSelector/FilepathSelectorContext";
-import { LocalFilepathSelectionService } from "../shared/infra/services/LocalFilepathSelectionService";
 
 export function GameProviders({ children }: PropsWithChildren) {
   const gameGateway = useMemo(() => new LocalGameGateway(), []);
-  const filepathSelectionService = useMemo(
-    () => new LocalFilepathSelectionService(),
-    []
-  );
 
   return (
     <GameListContext.Provider
@@ -39,13 +33,7 @@ export function GameProviders({ children }: PropsWithChildren) {
             routeNavigator: useReactRouterRouteNavigator(),
           }}
         >
-          <FilepathSelectorContext.Provider
-            value={{
-              filepathSelectionService,
-            }}
-          >
-            {children}
-          </FilepathSelectorContext.Provider>
+          {children}
         </GameFormContext.Provider>
       </GameViewerContext.Provider>
     </GameListContext.Provider>

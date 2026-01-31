@@ -1,5 +1,19 @@
 export namespace application {
 	
+	export class GetSettingsOutput {
+	    RetroarchFolderPath: string;
+	    RomsFolderPath: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new GetSettingsOutput(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.RetroarchFolderPath = source["RetroarchFolderPath"];
+	        this.RomsFolderPath = source["RomsFolderPath"];
+	    }
+	}
 	export class ListGamesOutput {
 	    Id: string;
 	    Name: string;
@@ -20,6 +34,25 @@ export namespace application {
 	        this.PlatformPath = source["PlatformPath"];
 	        this.Path = source["Path"];
 	        this.Cover = source["Cover"];
+	    }
+	}
+
+}
+
+export namespace desktop {
+	
+	export class SaveSettingsInputDto {
+	    retroarchFolderPath: string;
+	    romsFolderPath: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new SaveSettingsInputDto(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.retroarchFolderPath = source["retroarchFolderPath"];
+	        this.romsFolderPath = source["romsFolderPath"];
 	    }
 	}
 

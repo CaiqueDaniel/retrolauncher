@@ -9,19 +9,19 @@ type SettingsController interface {
 	Get() (*application.GetSettingsOutput, error)
 }
 
-type controller struct {
+type settingsController struct {
 	saveSettings application.SaveSettings
 	getSettings  application.GetSettings
 }
 
 func NewSettingsController(saveSettings application.SaveSettings, getSettings application.GetSettings) SettingsController {
-	return &controller{
+	return &settingsController{
 		saveSettings: saveSettings,
 		getSettings:  getSettings,
 	}
 }
 
-func (sc *controller) Save(input SaveSettingsInputDto) string {
+func (sc *settingsController) Save(input SaveSettingsInputDto) string {
 	err := sc.saveSettings.Execute(application.SaveSettingsInput{
 		RetroarchFolderPath: input.RetroarchFolderPath,
 		RomsFolderPath:      input.RomsFolderPath,
@@ -30,7 +30,7 @@ func (sc *controller) Save(input SaveSettingsInputDto) string {
 	return err.Error()
 }
 
-func (sc *controller) Get() (*application.GetSettingsOutput, error) {
+func (sc *settingsController) Get() (*application.GetSettingsOutput, error) {
 	return sc.getSettings.Execute()
 }
 

@@ -12,6 +12,12 @@ export function GameHome() {
       <Box display="flex" gap={2} justifyContent="flex-end">
         <Button
           variant="contained"
+          onClick={() => routeNavigator.navigateTo("/settings")}
+        >
+          Configurações
+        </Button>
+        <Button
+          variant="contained"
           onClick={() => routeNavigator.navigateTo("/game/new")}
         >
           Adicionar Jogo
