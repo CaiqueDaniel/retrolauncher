@@ -1,11 +1,11 @@
 package games
 
 import (
-	"retrolauncher/backend/src/app/games/application"
-	"retrolauncher/backend/src/app/games/delivery/desktop/game_controller"
-	game_factories "retrolauncher/backend/src/app/games/factories"
-	"retrolauncher/backend/src/app/games/persistance"
-	"retrolauncher/backend/src/app/games/services/os_start_game_service"
+	"retrolauncher/backend/src/app/games/internal/application"
+	"retrolauncher/backend/src/app/games/internal/delivery/desktop/game_controller"
+	game_factories "retrolauncher/backend/src/app/games/internal/factories"
+	"retrolauncher/backend/src/app/games/internal/persistance"
+	"retrolauncher/backend/src/app/games/internal/services/os_start_game_service"
 	shared_services "retrolauncher/backend/src/shared/services"
 )
 
