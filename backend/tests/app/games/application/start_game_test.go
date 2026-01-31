@@ -1,7 +1,7 @@
 package application_game_test
 
 import (
-	"retrolauncher/backend/src/app/games/application/start_game"
+	"retrolauncher/backend/src/app/games/application"
 	"retrolauncher/backend/src/app/games/domain/game"
 	"retrolauncher/backend/src/app/games/domain/platform"
 	game_doubles_test "retrolauncher/backend/tests/app/games/doubles"
@@ -12,8 +12,8 @@ func Test_it_should_not_be_able_to_start_a_game_that_does_not_exist(t *testing.T
 	repository := &game_doubles_test.MemoryGameRepository{}
 	startGameService := &DoubleStartGameService{}
 
-	sut := start_game.New(repository, startGameService)
-	err := sut.Execute(start_game.Input{
+	sut := application.NewStartGame(repository, startGameService)
+	err := sut.Execute(application.StartGameInput{
 		GameId: "nonexistent-id",
 	})
 	if err == nil {
@@ -39,8 +39,8 @@ func Test_it_should_start_a_game(t *testing.T) {
 
 	repository.Save(game)
 
-	sut := start_game.New(repository, startGameService)
-	err := sut.Execute(start_game.Input{
+	sut := application.NewStartGame(repository, startGameService)
+	err := sut.Execute(application.StartGameInput{
 		GameId: game.GetId().String(),
 	})
 

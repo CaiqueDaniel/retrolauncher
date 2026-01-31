@@ -1,5 +1,27 @@
 export namespace application {
 	
+	export class GetGameOutput {
+	    Id: string;
+	    Name: string;
+	    PlatformType: string;
+	    PlatformPath: string;
+	    Cover: string;
+	    Path: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new GetGameOutput(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.Id = source["Id"];
+	        this.Name = source["Name"];
+	        this.PlatformType = source["PlatformType"];
+	        this.PlatformPath = source["PlatformPath"];
+	        this.Cover = source["Cover"];
+	        this.Path = source["Path"];
+	    }
+	}
 	export class GetSettingsOutput {
 	    RetroarchFolderPath: string;
 	    RomsFolderPath: string;
@@ -124,33 +146,6 @@ export namespace game_controller {
 	        this.platformPath = source["platformPath"];
 	        this.path = source["path"];
 	        this.cover = source["cover"];
-	    }
-	}
-
-}
-
-export namespace get_game {
-	
-	export class Output {
-	    Id: string;
-	    Name: string;
-	    PlatformType: string;
-	    PlatformPath: string;
-	    Cover: string;
-	    Path: string;
-	
-	    static createFrom(source: any = {}) {
-	        return new Output(source);
-	    }
-	
-	    constructor(source: any = {}) {
-	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.Id = source["Id"];
-	        this.Name = source["Name"];
-	        this.PlatformType = source["PlatformType"];
-	        this.PlatformPath = source["PlatformPath"];
-	        this.Cover = source["Cover"];
-	        this.Path = source["Path"];
 	    }
 	}
 

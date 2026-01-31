@@ -1,22 +1,26 @@
-package get_game
+package application
 
 import (
 	"errors"
 	"retrolauncher/backend/src/app/games/domain"
 )
 
-type GetGame struct {
-	Execute func(input Input) (*Output, error)
+type GetGame interface {
+	Execute(input GetGameInput) (*GetGameOutput, error)
 }
 
-func New(repository domain.GameRepository) *GetGame {
-	return &GetGame{
-		Execute: func(input Input) (*Output, error) { return execute(input, repository) },
+type getGame struct {
+	repository domain.GameRepository
+}
+
+func NewGetGame(repository domain.GameRepository) GetGame {
+	return &getGame{
+		repository: repository,
 	}
 }
 
-func execute(input Input, repository domain.GameRepository) (*Output, error) {
-	game, err := repository.Get(input.Id)
+func (g *getGame) Execute(input GetGameInput) (*GetGameOutput, error) {
+	game, err := g.repository.Get(input.Id)
 
 	if err != nil {
 		return nil, err
@@ -26,7 +30,7 @@ func execute(input Input, repository domain.GameRepository) (*Output, error) {
 		return nil, errors.New("game not found")
 	}
 
-	return &Output{
+	return &GetGameOutput{
 		Id:           game.GetId().String(),
 		Name:         game.GetName(),
 		PlatformType: game.GetPlatformType().GetPlatformType(),
@@ -36,11 +40,11 @@ func execute(input Input, repository domain.GameRepository) (*Output, error) {
 	}, nil
 }
 
-type Input struct {
+type GetGameInput struct {
 	Id string
 }
 
-type Output struct {
+type GetGameOutput struct {
 	Id           string
 	Name         string
 	PlatformType string

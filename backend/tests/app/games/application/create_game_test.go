@@ -1,7 +1,7 @@
 package application_game_test
 
 import (
-	"retrolauncher/backend/src/app/games/application/create_game"
+	"retrolauncher/backend/src/app/games/application"
 	"retrolauncher/backend/src/app/games/domain/platform"
 	game_factories "retrolauncher/backend/src/app/games/factories"
 	shared_services "retrolauncher/backend/src/shared/services"
@@ -17,9 +17,9 @@ func Test_it_should_be_able_to_create_a_game(t *testing.T) {
 
 	fileSystem.SaveFile("/path/to/test/cover.jpg", []byte("cover image data"))
 
-	sut := create_game.New(factory, repository, imageUploader)
+	sut := application.NewCreateGame(factory, repository, imageUploader)
 
-	err := sut.Execute(create_game.Input{
+	err := sut.Execute(application.CreateGameInput{
 		Name:         "Test Game",
 		PlatformType: platform.TypeRetroArch,
 		PlatformPath: "/path/to/platform",
@@ -50,8 +50,8 @@ func Test_it_should_rollback_copied_image_if_game_creation_fails(t *testing.T) {
 	imageUploader := shared_services.NewLocalImageUploader(fileSystem)
 	fileSystem.SaveFile("/path/to/test/cover.png", []byte("cover image data"))
 
-	sut := create_game.New(factory, repository, imageUploader)
-	err := sut.Execute(create_game.Input{
+	sut := application.NewCreateGame(factory, repository, imageUploader)
+	err := sut.Execute(application.CreateGameInput{
 		Name:         "", // Invalid name to trigger creation failure
 		PlatformType: platform.TypeRetroArch,
 		PlatformPath: "/path/to/platform",

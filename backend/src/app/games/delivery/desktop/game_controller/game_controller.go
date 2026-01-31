@@ -1,29 +1,25 @@
 package game_controller
 
 import (
-	game_app "retrolauncher/backend/src/app/games/application"
-	"retrolauncher/backend/src/app/games/application/create_game"
-	"retrolauncher/backend/src/app/games/application/get_game"
-	"retrolauncher/backend/src/app/games/application/get_platform_types"
-	"retrolauncher/backend/src/app/games/application/start_game"
+	"retrolauncher/backend/src/app/games/application"
 )
 
 type GameController struct {
-	createGame       *create_game.CreateGame
-	updateGame       game_app.UpdateGame
-	listGames        game_app.ListGames
-	getGame          *get_game.GetGame
-	getPlatformTypes *get_platform_types.GetPlatformTypes
-	startGame        *start_game.StartGame
+	createGame       application.CreateGame
+	updateGame       application.UpdateGame
+	listGames        application.ListGames
+	getGame          application.GetGame
+	getPlatformTypes application.GetPlatformTypes
+	startGame        application.StartGame
 }
 
 func New(
-	createGame *create_game.CreateGame,
-	updateGame game_app.UpdateGame,
-	getGame *get_game.GetGame,
-	listGames game_app.ListGames,
-	getPlatformTypes *get_platform_types.GetPlatformTypes,
-	startGame *start_game.StartGame,
+	createGame application.CreateGame,
+	updateGame application.UpdateGame,
+	getGame application.GetGame,
+	listGames application.ListGames,
+	getPlatformTypes application.GetPlatformTypes,
+	startGame application.StartGame,
 ) *GameController {
 	return &GameController{
 		createGame:       createGame,
@@ -36,7 +32,7 @@ func New(
 }
 
 func (gc *GameController) Create(input CreateInputDto) []string {
-	errors := gc.createGame.Execute(create_game.Input{
+	errors := gc.createGame.Execute(application.CreateGameInput{
 		Name:         input.Name,
 		PlatformType: input.PlatformType,
 		PlatformPath: input.PlatformPath,
@@ -54,7 +50,7 @@ func (gc *GameController) Create(input CreateInputDto) []string {
 }
 
 func (gc *GameController) Update(input UpdateInputDto) []string {
-	errors := gc.updateGame.Execute(game_app.UpdateGameInput{
+	errors := gc.updateGame.Execute(application.UpdateGameInput{
 		ID:           input.ID,
 		Name:         input.Name,
 		PlatformType: input.PlatformType,
@@ -72,24 +68,24 @@ func (gc *GameController) Update(input UpdateInputDto) []string {
 	return errorMessages
 }
 
-func (gc *GameController) List(input ListInputDto) []*game_app.ListGamesOutput {
-	return gc.listGames.Execute(game_app.ListGamesInput{
+func (gc *GameController) List(input ListInputDto) []*application.ListGamesOutput {
+	return gc.listGames.Execute(application.ListGamesInput{
 		Name: input.Name,
 	})
 }
 
-func (gc *GameController) Get(input GetInputDto) (*get_game.Output, error) {
-	return gc.getGame.Execute(get_game.Input{
+func (gc *GameController) Get(input GetInputDto) (*application.GetGameOutput, error) {
+	return gc.getGame.Execute(application.GetGameInput{
 		Id: input.Id,
 	})
 }
 
 func (c *GameController) GetPlatformTypes() []string {
-	return *c.getPlatformTypes.Execute()
+	return c.getPlatformTypes.Execute()
 }
 
 func (gc *GameController) StartGame(input GetInputDto) error {
-	return gc.startGame.Execute(start_game.Input{
+	return gc.startGame.Execute(application.StartGameInput{
 		GameId: input.Id,
 	})
 }
