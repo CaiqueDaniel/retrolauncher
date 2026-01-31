@@ -39,3 +39,15 @@ func (a *App) SelectFile(filePattern string) string {
 	}
 	return selection
 }
+
+func (a *App) SelectFolder() string {
+	options := runtime.OpenDialogOptions{
+		Title: "Selecione o diretório",
+	}
+
+	selection, err := runtime.OpenDirectoryDialog(a.ctx, options)
+	if err != nil {
+		return ""
+	}
+	return selection
+}

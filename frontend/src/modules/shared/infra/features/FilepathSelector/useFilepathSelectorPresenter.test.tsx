@@ -1,23 +1,23 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { useFilepathSelectorPresenter } from './useFilepathSelectorPresenter';
 import { FilepathSelectorContext } from './FilepathSelectorContext';
-import { FilepathSelectionService } from '~/modules/shared/application/FilepathSelectionService';
+import { PathSelectionService } from '~/modules/shared/application/FilepathSelectionService';
 import { describe, it, expect, Mocked } from 'vitest';
 import { ReactNode } from 'react';
 
 describe('useFilepathSelectorPresenter', () => {
-    let service: Mocked<FilepathSelectionService>;
+    let service: Mocked<PathSelectionService>;
 
     beforeAll(() => {
         service = {
-            selectFile: vi.fn()
+            selectPath: vi.fn()
         }
     })
 
     it('should initialize with provided value', () => {
         const initialValue = 'initial/path';
 
-        service.selectFile.mockResolvedValue(initialValue);
+        service.selectPath.mockResolvedValue(initialValue);
 
         const { result } = renderHook(() => useFilepathSelectorPresenter({ value: initialValue }), { wrapper });
 
@@ -27,7 +27,7 @@ describe('useFilepathSelectorPresenter', () => {
     it('should update value when file is selected', async () => {
         const expectedFile = '/path/to/file';
 
-        service.selectFile.mockResolvedValue(expectedFile);
+        service.selectPath.mockResolvedValue(expectedFile);
 
         const { result } = renderHook(() => useFilepathSelectorPresenter({ value: '' }), { wrapper });
 

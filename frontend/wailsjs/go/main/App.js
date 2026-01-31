@@ -5,3 +5,7 @@
 export function SelectFile(arg1) {
   return window['go']['main']['App']['SelectFile'](arg1);
 }
+
+export function SelectFolder() {
+  return window['go']['main']['App']['SelectFolder']();
+}

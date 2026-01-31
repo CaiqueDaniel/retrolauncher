@@ -27,6 +27,10 @@ func (sc *settingsController) Save(input SaveSettingsInputDto) string {
 		RomsFolderPath:      input.RomsFolderPath,
 	})
 
+	if err == nil {
+		return ""
+	}
+
 	return err.Error()
 }
 

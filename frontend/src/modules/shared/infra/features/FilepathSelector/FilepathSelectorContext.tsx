@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { FilepathSelectionService } from "~/modules/shared/application/FilepathSelectionService";
+import { PathSelectionService } from "~/modules/shared/application/FilepathSelectionService";
 import { useContextHandler } from "../../hooks/useContextHandler";
 
 export const FilepathSelectorContext = createContext<Context | undefined>(undefined);
@@ -9,5 +9,5 @@ export function useFilepathSelectorContext() {
 }
 
 type Context = {
-    filepathSelectionService: FilepathSelectionService
+    filepathSelectionService: PathSelectionService
 }

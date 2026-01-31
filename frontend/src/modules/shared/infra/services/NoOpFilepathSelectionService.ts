@@ -1,7 +1,7 @@
-import { FilepathSelectionService } from "../../application/FilepathSelectionService";
+import { PathSelectionService } from "../../application/FilepathSelectionService";
 
-export class NoOpFilepathSelectionService implements FilepathSelectionService {
-    selectFile(): Promise<string> {
+export class NoOpFilepathSelectionService implements PathSelectionService {
+    selectPath(): Promise<string> {
         return Promise.resolve("");
     }
 }
