@@ -37,7 +37,7 @@ func Test_it_should_be_able_to_create_a_game(t *testing.T) {
 		return
 	}
 
-	if len(fileSystem.ListFiles()) < 2 {
+	if len(fileSystem.ListFilesForTest()) < 2 {
 		t.Error("Expected game file to exist in the file system, but it does not.")
 		return
 	}
@@ -69,7 +69,7 @@ func Test_it_should_rollback_copied_image_if_game_creation_fails(t *testing.T) {
 		return
 	}
 
-	if len(fileSystem.ListFiles()) == 2 {
+	if len(fileSystem.ListFilesForTest()) == 2 {
 		t.Error("Expected no files in the file system due to rollback, but some exist.")
 		return
 	}
