@@ -22,7 +22,7 @@ func New(Name string, PlatformType *platform.Platform, Path, Cover string) (*Gam
 	game.setName(Name, &err)
 	game.setPlatformType(PlatformType, &err)
 	game.setPath(Path, &err)
-	game.setCover(Cover, &err)
+	game.setCover(Cover)
 
 	return game, err
 }
@@ -43,7 +43,7 @@ func (g *Game) Update(Name string, PlatformType *platform.Platform, Path, Cover 
 	g.setName(Name, &err)
 	g.setPlatformType(PlatformType, &err)
 	g.setPath(Path, &err)
-	g.setCover(Cover, &err)
+	g.setCover(Cover)
 
 	return err
 }
@@ -72,11 +72,7 @@ func (g *Game) setPlatformType(value *platform.Platform, err *[]error) {
 	g.platformType = value
 }
 
-func (g *Game) setCover(value string, err *[]error) {
-	if value == "" {
-		*err = append(*err, errors.New("cover cannot be empty"))
-		return
-	}
+func (g *Game) setCover(value string) {
 	g.cover = value
 }
 

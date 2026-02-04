@@ -1,6 +1,9 @@
 package settings
 
-import "retrolauncher/backend/src/app/settings/internal/application"
+import (
+	"retrolauncher/backend/src/app/settings/internal/application"
+	"retrolauncher/backend/src/app/settings/internal/persistance"
+)
 
 type settingsGateway struct {
 	getSettings application.GetSettings
@@ -10,9 +13,9 @@ type SettingsService interface {
 	GetSettings() (*Settings, error)
 }
 
-func NewSettingsGateway(getSettings application.GetSettings) SettingsService {
+func NewSettingsGateway() SettingsService {
 	return &settingsGateway{
-		getSettings: getSettings,
+		getSettings: application.NewGetSettings(persistance.NewStormSettingsDAO()),
 	}
 }
 

@@ -3,6 +3,8 @@
 import {game_controller} from '../models';
 import {application} from '../models';
 
+export function AutoIndexGames():Promise<string>;
+
 export function Create(arg1:game_controller.CreateInputDto):Promise<Array<string>>;
 
 export function Get(arg1:game_controller.GetInputDto):Promise<application.GetGameOutput>;

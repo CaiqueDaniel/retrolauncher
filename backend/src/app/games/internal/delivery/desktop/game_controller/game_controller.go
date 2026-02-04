@@ -11,6 +11,7 @@ type GameController struct {
 	getGame          application.GetGame
 	getPlatformTypes application.GetPlatformTypes
 	startGame        application.StartGame
+	autoIndexGames   application.AutoIndexGames
 }
 
 func New(
@@ -20,6 +21,7 @@ func New(
 	listGames application.ListGames,
 	getPlatformTypes application.GetPlatformTypes,
 	startGame application.StartGame,
+	autoIndexGames application.AutoIndexGames,
 ) *GameController {
 	return &GameController{
 		createGame:       createGame,
@@ -28,6 +30,7 @@ func New(
 		getGame:          getGame,
 		getPlatformTypes: getPlatformTypes,
 		startGame:        startGame,
+		autoIndexGames:   autoIndexGames,
 	}
 }
 
@@ -88,6 +91,14 @@ func (gc *GameController) StartGame(input GetInputDto) error {
 	return gc.startGame.Execute(application.StartGameInput{
 		GameId: input.Id,
 	})
+}
+
+func (gc *GameController) AutoIndexGames() string {
+	err := gc.autoIndexGames.Execute()
+	if err != nil {
+		return err.Error()
+	}
+	return ""
 }
 
 type CreateInputDto struct {
