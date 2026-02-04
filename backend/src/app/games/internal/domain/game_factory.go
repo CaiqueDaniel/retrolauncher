@@ -7,4 +7,5 @@ import (
 
 type GameFactory interface {
 	CreateGame(name string, platformType *platform.Platform, path, cover string) (*game.Game, []error)
+	CreateGameFromPath(path string, platformType *platform.Platform) (*game.Game, []error)
 }
