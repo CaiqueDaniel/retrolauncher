@@ -1,6 +1,9 @@
 package game_doubles_test
 
-import "sync"
+import (
+	"path/filepath"
+	"sync"
+)
 
 // MockFileSystem é um dublê para a interface FileSystem
 type MockFileSystem struct {
@@ -70,4 +73,8 @@ func (m *MockFileSystem) ListFiles(path string) ([]string, error) {
 		paths = append(paths, path)
 	}
 	return paths, nil
+}
+
+func (m *MockFileSystem) GetFileName(path string) string {
+	return filepath.Base(path)
 }

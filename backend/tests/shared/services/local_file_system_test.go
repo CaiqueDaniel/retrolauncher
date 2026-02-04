@@ -93,3 +93,12 @@ func Test_it_should_list_files_in_a_directory(t *testing.T) {
 
 	os.RemoveAll("./tmp")
 }
+
+func Test_it_should_get_file_name(t *testing.T) {
+	sut := shared_services.NewLocalFileSystem()
+	fileName := sut.GetFileName("./tmp/test.txt")
+
+	if fileName != "test.txt" {
+		t.Errorf("Expected test.txt, but got %s", fileName)
+	}
+}

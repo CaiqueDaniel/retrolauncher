@@ -3,6 +3,7 @@ package shared_services
 import (
 	"os"
 	"path"
+	"path/filepath"
 	"retrolauncher/backend/src/shared/application"
 )
 
@@ -68,4 +69,8 @@ func (fs *localFileSystem) ListFiles(path string) ([]string, error) {
 	}
 
 	return fileNames, nil
+}
+
+func (fs *localFileSystem) GetFileName(path string) string {
+	return filepath.Base(path)
 }

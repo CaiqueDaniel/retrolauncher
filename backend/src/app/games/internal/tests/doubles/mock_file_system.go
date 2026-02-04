@@ -1,6 +1,7 @@
 package game_doubles_test
 
 import (
+	"path/filepath"
 	"sync"
 )
 
@@ -82,4 +83,8 @@ func (m *MockFileSystem) ListFilesForTest() []string {
 		paths = append(paths, path)
 	}
 	return paths
+}
+
+func (m *MockFileSystem) GetFileName(path string) string {
+	return filepath.Base(path)
 }

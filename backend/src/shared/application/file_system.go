@@ -7,4 +7,5 @@ type FileSystem interface {
 	CopyFile(src string, dst string) error
 	RemoveFile(path string) error
 	ListFiles(path string) ([]string, error)
+	GetFileName(path string) string
 }
