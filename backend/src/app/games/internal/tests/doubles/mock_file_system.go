@@ -1,6 +1,8 @@
 package game_doubles_test
 
-import "sync"
+import (
+	"sync"
+)
 
 // MockFileSystem é um dublê para a interface FileSystem
 type MockFileSystem struct {
@@ -62,7 +64,17 @@ func (m *MockFileSystem) RemoveFile(path string) error {
 	return nil
 }
 
-func (m *MockFileSystem) ListFiles() []string {
+func (m *MockFileSystem) ListFiles(path string) ([]string, error) {
+	m.mu.RLock()
+	defer m.mu.RUnlock()
+	paths := make([]string, 0, len(m.files))
+	for path := range m.files {
+		paths = append(paths, path)
+	}
+	return paths, nil
+}
+
+func (m *MockFileSystem) ListFilesForTest() []string {
 	m.mu.RLock()
 	defer m.mu.RUnlock()
 	paths := make([]string, 0, len(m.files))
