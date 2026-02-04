@@ -7,7 +7,7 @@ import (
 )
 
 func Test_it_should_be_able_to_save_a_file(t *testing.T) {
-	sut := &shared_services.LocalFileSystem{}
+	sut := shared_services.NewLocalFileSystem()
 	err := sut.SaveFile("./tmp/test.txt", []byte("Hello, World!"))
 
 	if err != nil {
@@ -28,7 +28,7 @@ func Test_it_should_be_able_to_save_a_file(t *testing.T) {
 }
 
 func Test_it_should_be_able_to_read_a_file(t *testing.T) {
-	sut := &shared_services.LocalFileSystem{}
+	sut := shared_services.NewLocalFileSystem()
 
 	sut.SaveFile("./tmp/test.txt", []byte("Hello, World!"))
 	data, err := sut.ReadFile("./tmp/test.txt")
@@ -45,7 +45,7 @@ func Test_it_should_be_able_to_read_a_file(t *testing.T) {
 }
 
 func Test_it_should_check_if_file_exists(t *testing.T) {
-	sut := &shared_services.LocalFileSystem{}
+	sut := shared_services.NewLocalFileSystem()
 	sut.SaveFile("./tmp/test.txt", []byte("Hello, World!"))
 
 	exists := sut.ExistsFile("./tmp/test.txt")
@@ -58,7 +58,7 @@ func Test_it_should_check_if_file_exists(t *testing.T) {
 }
 
 func Test_it_should_copy_a_file(t *testing.T) {
-	sut := &shared_services.LocalFileSystem{}
+	sut := shared_services.NewLocalFileSystem()
 	sut.SaveFile("./tmp/source.txt", []byte("Hello, World!"))
 	err := sut.CopyFile("./tmp/source.txt", "./tmp/destination.txt")
 
@@ -77,7 +77,7 @@ func Test_it_should_copy_a_file(t *testing.T) {
 }
 
 func Test_it_should_list_files_in_a_directory(t *testing.T) {
-	sut := &shared_services.LocalFileSystem{}
+	sut := shared_services.NewLocalFileSystem()
 	sut.SaveFile("./tmp/test.txt", []byte("Hello, World!"))
 	sut.SaveFile("./tmp/test2.txt", []byte("Hello, World!"))
 
