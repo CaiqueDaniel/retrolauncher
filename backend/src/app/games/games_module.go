@@ -16,7 +16,7 @@ type GamesModule struct {
 func NewGamesModule() *GamesModule {
 	gameFactory := &game_factories.DefaultGameFactory{}
 	gameRepository := &persistance.StormGameRepository{}
-	fileSystem := &shared_services.LocalFileSystem{}
+	fileSystem := shared_services.NewLocalFileSystem()
 	imageUploader := shared_services.NewLocalImageUploader(fileSystem)
 
 	return &GamesModule{

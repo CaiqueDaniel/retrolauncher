@@ -13,7 +13,7 @@ type SettingsModule struct {
 
 func NewSettingsModule() *SettingsModule {
 	dao := persistance.NewStormSettingsDAO()
-	fs := &shared_services.LocalFileSystem{}
+	fs := shared_services.NewLocalFileSystem()
 	controller := desktop.NewSettingsController(
 		application.NewSaveSettings(dao, fs),
 		application.NewGetSettings(dao),
