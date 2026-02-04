@@ -6,4 +6,5 @@ type FileSystem interface {
 	ExistsFile(path string) bool
 	CopyFile(src string, dst string) error
 	RemoveFile(path string) error
+	ListFiles(path string) ([]string, error)
 }

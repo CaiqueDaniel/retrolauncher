@@ -62,12 +62,12 @@ func (m *MockFileSystem) RemoveFile(path string) error {
 	return nil
 }
 
-func (m *MockFileSystem) ListFiles() []string {
+func (m *MockFileSystem) ListFiles(path string) ([]string, error) {
 	m.mu.RLock()
 	defer m.mu.RUnlock()
 	paths := make([]string, 0, len(m.files))
 	for path := range m.files {
 		paths = append(paths, path)
 	}
-	return paths
+	return paths, nil
 }

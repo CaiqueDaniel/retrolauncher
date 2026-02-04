@@ -75,3 +75,21 @@ func Test_it_should_copy_a_file(t *testing.T) {
 	}
 	os.RemoveAll("./tmp")
 }
+
+func Test_it_should_list_files_in_a_directory(t *testing.T) {
+	sut := &shared_services.LocalFileSystem{}
+	sut.SaveFile("./tmp/test.txt", []byte("Hello, World!"))
+	sut.SaveFile("./tmp/test2.txt", []byte("Hello, World!"))
+
+	files, err := sut.ListFiles("./tmp")
+
+	if err != nil {
+		t.Errorf("Expected no error, but got %v", err)
+	}
+
+	if len(files) != 2 {
+		t.Errorf("Expected 2 files, but got %d", len(files))
+	}
+
+	os.RemoveAll("./tmp")
+}

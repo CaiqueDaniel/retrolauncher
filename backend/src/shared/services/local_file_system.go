@@ -3,9 +3,14 @@ package shared_services
 import (
 	"os"
 	"path"
+	"retrolauncher/backend/src/shared/application"
 )
 
 type LocalFileSystem struct {
+}
+
+func NewLocalFileSystem() application.FileSystem {
+	return &LocalFileSystem{}
 }
 
 func (fs *LocalFileSystem) SaveFile(filepath string, data []byte) error {
@@ -47,4 +52,20 @@ func (fs *LocalFileSystem) CopyFile(src string, dst string) error {
 
 func (fs *LocalFileSystem) RemoveFile(path string) error {
 	return os.Remove(path)
+}
+
+func (fs *LocalFileSystem) ListFiles(path string) ([]string, error) {
+	files, err := os.ReadDir(path)
+	if err != nil {
+		return nil, err
+	}
+
+	var fileNames []string
+	for _, file := range files {
+		if !file.IsDir() {
+			fileNames = append(fileNames, file.Name())
+		}
+	}
+
+	return fileNames, nil
 }
