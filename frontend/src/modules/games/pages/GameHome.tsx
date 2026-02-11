@@ -3,6 +3,7 @@ import { Box, Button, Paper } from "@mui/material";
 import { GameViewer } from "../features/GameViewer/GameViewer";
 import { MainLayout } from "~/modules/shared/layouts/MainLayout";
 import { useReactRouterRouteNavigator } from "~/modules/shared/infra/hooks/useReactRouterRouteNavigator";
+import { IndexGamesButton } from "../features/IndexGamesButton/IndexGamesButton";
 
 export function GameHome() {
   const routeNavigator = useReactRouterRouteNavigator();
@@ -10,6 +11,7 @@ export function GameHome() {
   return (
     <MainLayout>
       <Box display="flex" gap={2} justifyContent="flex-end">
+        <IndexGamesButton />
         <Button
           variant="contained"
           onClick={() => routeNavigator.navigateTo("/settings")}

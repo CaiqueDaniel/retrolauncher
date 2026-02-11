@@ -1,14 +1,16 @@
 import { Game, GameRepository } from "../domain/Game";
-import { Create, Update, List, Get, GetPlatformTypes, StartGame } from "~/../wailsjs/go/game_controller/GameController";
+import { Create, Update, List, Get, GetPlatformTypes, StartGame, AutoIndexGames } from "~/../wailsjs/go/game_controller/GameController";
 import { GameQueryRepository } from "../repositories/GameQueryRepository";
 import { PlatformTypesService } from "../services/PlatformTypesService";
 import { StartGameService } from "../services/StartGameService";
+import { IndexGamesService } from "../services/IndexGamesService";
 
 export class LocalGameGateway implements
     GameRepository,
     GameQueryRepository.Repository,
     PlatformTypesService,
-    StartGameService {
+    StartGameService,
+    IndexGamesService {
     async save(game: Game): Promise<void> {
         if (game.id) {
             const errors = await Update({ ...game, id: game.id });
@@ -53,5 +55,12 @@ export class LocalGameGateway implements
 
     startGame(gameId: string): Promise<void> {
         return StartGame({ id: gameId })
+    }
+
+    async indexGames(): Promise<void> {
+        const errorMessage = await AutoIndexGames();
+
+        if (errorMessage?.length > 0)
+            throw new Error(errorMessage);
     }
 }

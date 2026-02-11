@@ -6,6 +6,7 @@ import { GameListContext } from "./features/GameList/GameListContext";
 import { useReactRouterRouteNavigator } from "../shared/infra/hooks/useReactRouterRouteNavigator";
 import { EventBus } from "../shared/infra/services/EventBus";
 import { GameViewerContext } from "./features/GameViewer/GameViewerContext";
+import { IndexGamesButtonContext } from "./features/IndexGamesButton/IndexGamesButtonContext";
 
 export function GameProviders({ children }: PropsWithChildren) {
   const gameGateway = useMemo(() => new LocalGameGateway(), []);
@@ -33,7 +34,9 @@ export function GameProviders({ children }: PropsWithChildren) {
             routeNavigator: useReactRouterRouteNavigator(),
           }}
         >
-          {children}
+          <IndexGamesButtonContext.Provider value={{ indexGamesService: gameGateway, alert: toast }}>
+            {children}
+          </IndexGamesButtonContext.Provider>
         </GameFormContext.Provider>
       </GameViewerContext.Provider>
     </GameListContext.Provider>
