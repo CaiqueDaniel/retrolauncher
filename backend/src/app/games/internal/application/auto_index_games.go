@@ -1,7 +1,6 @@
 package application
 
 import (
-	"fmt"
 	"path/filepath"
 	"retrolauncher/backend/src/app/games/internal/domain"
 	"retrolauncher/backend/src/app/games/internal/domain/game"
@@ -52,8 +51,6 @@ func (uc *useCase) Execute() error {
 	platformsCores, _ := uc.platformsCoresService.GetPlatformsCores()
 	coresFiles := uc.getCoresFiles(settings)
 
-	fmt.Println(currentGamesFiles)
-
 	for platformExtension, coreSufix := range platformsCores {
 		gameFinder := uc.gameFinderFactory.CreateFrom(platformExtension)
 		gamesFiles := gameFinder.GetFilesFrom(settings.RomsFolderPath)
@@ -96,17 +93,9 @@ func (uc *useCase) getNewGamesInstances(currentGamesFiles map[string]bool, games
 
 		game, err := uc.gameFactory.CreateGameFromPath(gameFile, platform.New(platform.TypeRetroArch, coreFile))
 
-		fmt.Print("game")
-		fmt.Println(game)
-		fmt.Print("err")
-		fmt.Println(err)
-
 		if len(err) > 0 {
 			continue
 		}
-
-		fmt.Print("tobe appended")
-		fmt.Println(game)
 
 		result = append(result, game)
 	}
@@ -126,8 +115,6 @@ func (uc *useCase) findCoreFile(coresFiles []string, coreSufix string) string {
 
 func (uc *useCase) saveGames(games []*game.Game) {
 	for _, game := range games {
-		fmt.Println(game)
-		err := uc.repository.Save(game)
-		fmt.Println(err)
+		uc.repository.Save(game)
 	}
 }
