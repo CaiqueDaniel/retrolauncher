@@ -1,8 +1,8 @@
 import { PathSelectionService } from "../../application/FilepathSelectionService";
-import { SelectFolder } from '~/../wailsjs/go/main/App'
+import { SelectFile } from '~/../wailsjs/go/main/App'
 
 export class LocalFilepathSelectionService implements PathSelectionService {
-    selectPath(): Promise<string> {
-        return SelectFolder();
+    selectPath(extensions: string[]): Promise<string> {
+        return SelectFile(extensions.join(";"));
     }
 }

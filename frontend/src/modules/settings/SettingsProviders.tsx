@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { SettingsFormContext } from "./features/SettingsForm/SettingsFormContext";
 import { useReactRouterRouteNavigator } from "../shared/infra/hooks/useReactRouterRouteNavigator";
 import { FilepathSelectorContext } from "../shared/infra/features/FilepathSelector/FilepathSelectorContext";
-import { LocalFilepathSelectionService } from "../shared/infra/services/LocalFilepathSelectionService";
+import { LocalFolderPathSelectionService } from "../shared/infra/services/LocalFolderPathSelectionService";
 
 interface SettingsProvidersProps {
   children: React.ReactNode;
@@ -23,7 +23,7 @@ export function SettingsProviders({ children }: SettingsProvidersProps) {
     >
       <FilepathSelectorContext.Provider
         value={{
-          filepathSelectionService: new LocalFilepathSelectionService(),
+          filepathSelectionService: new LocalFolderPathSelectionService(),
         }}
       >
         {children}
