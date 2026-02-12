@@ -7,5 +7,5 @@ var _ error = NotFoundError("")
 type NotFoundError string
 
 func (e NotFoundError) Error() string {
-	return fmt.Sprintf("not found: %s", string(e))
+	return fmt.Sprintf("Not found: %s", string(e))
 }
