@@ -185,6 +185,88 @@ func Test_it_should_return_error_when_settings_service_fails(t *testing.T) {
 	}
 }
 
+func Test_it_should_return_error_when_there_is_no_roms_folder(t *testing.T) {
+	repository := &game_doubles_test.MemoryGameRepository{}
+	fileSystem := game_doubles_test.NewMockFileSystem()
+	factory := game_factories.NewDefaultGameFactory(fileSystem)
+
+	settingsService := &mockSettingsService{
+		settings: &application.Settings{
+			RetroarchFolderPath: "/retroarch",
+			RomsFolderPath:      "",
+		},
+	}
+
+	platformsCoresService := &mockPlatformsCoresService{
+		cores: map[string]string{},
+	}
+
+	gameFinderFactory := &mockGameFinderFactory{
+		finders: map[string]*mockGameFinderService{},
+	}
+
+	sut := application.NewAutoIndexGames(
+		repository,
+		settingsService,
+		fileSystem,
+		platformsCoresService,
+		gameFinderFactory,
+		factory,
+	)
+
+	err := sut.Execute()
+
+	if err == nil {
+		t.Error("Expected error when settings service fails, but got none")
+		return
+	}
+
+	if repository.Size() != 0 {
+		t.Errorf("Expected no games to be indexed, but got %d", repository.Size())
+	}
+}
+
+func Test_it_should_return_error_when_there_is_no_retroarch_folder(t *testing.T) {
+	repository := &game_doubles_test.MemoryGameRepository{}
+	fileSystem := game_doubles_test.NewMockFileSystem()
+	factory := game_factories.NewDefaultGameFactory(fileSystem)
+
+	settingsService := &mockSettingsService{
+		settings: &application.Settings{
+			RetroarchFolderPath: "",
+			RomsFolderPath:      "/roms",
+		},
+	}
+
+	platformsCoresService := &mockPlatformsCoresService{
+		cores: map[string]string{},
+	}
+
+	gameFinderFactory := &mockGameFinderFactory{
+		finders: map[string]*mockGameFinderService{},
+	}
+
+	sut := application.NewAutoIndexGames(
+		repository,
+		settingsService,
+		fileSystem,
+		platformsCoresService,
+		gameFinderFactory,
+		factory,
+	)
+
+	err := sut.Execute()
+
+	if err == nil {
+		t.Error("Expected error when settings service fails, but got none")
+		return
+	}
+
+	if repository.Size() != 0 {
+		t.Errorf("Expected no games to be indexed, but got %d", repository.Size())
+	}
+}
+
 func Test_it_should_skip_games_when_core_file_is_not_found(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
 	fileSystem := game_doubles_test.NewMockFileSystem()

@@ -1,6 +1,8 @@
 package application
 
 import (
+	"errors"
+	"fmt"
 	"path/filepath"
 	"retrolauncher/backend/src/app/games/internal/domain"
 	"retrolauncher/backend/src/app/games/internal/domain/game"
@@ -41,7 +43,7 @@ func NewAutoIndexGames(
 }
 
 func (uc *useCase) Execute() error {
-	settings, err := uc.settingsService.GetSettings()
+	settings, err := uc.getSettings()
 
 	if err != nil {
 		return err
@@ -61,6 +63,24 @@ func (uc *useCase) Execute() error {
 	return nil
 }
 
+func (uc *useCase) getSettings() (*Settings, error) {
+	settings, err := uc.settingsService.GetSettings()
+
+	if err != nil {
+		return nil, err
+	}
+
+	if settings.RetroarchFolderPath == "" {
+		return nil, errors.New("retroarch folder path is empty")
+	}
+
+	if settings.RomsFolderPath == "" {
+		return nil, errors.New("roms folder path is empty")
+	}
+
+	return settings, nil
+}
+
 func (uc *useCase) getCurrentGamesFiles() map[string]bool {
 	games := uc.repository.List(domain.ListGamesParams{})
 	result := make(map[string]bool)
@@ -77,7 +97,12 @@ func (uc *useCase) getCoresFiles(settings *Settings) []string {
 	return coresFiles
 }
 
-func (uc *useCase) getNewGamesInstances(currentGamesFiles map[string]bool, gamesFiles []string, coresFiles []string, coreSufix string) []*game.Game {
+func (uc *useCase) getNewGamesInstances(
+	currentGamesFiles map[string]bool,
+	gamesFiles []string,
+	coresFiles []string,
+	coreSufix string,
+) []*game.Game {
 	result := make([]*game.Game, 0)
 
 	for _, gameFile := range gamesFiles {
@@ -105,6 +130,7 @@ func (uc *useCase) getNewGamesInstances(currentGamesFiles map[string]bool, games
 
 func (uc *useCase) findCoreFile(coresFiles []string, coreSufix string) string {
 	for _, coreFile := range coresFiles {
+		fmt.Println(coreFile)
 		if strings.Contains(coreFile, coreSufix) {
 			return coreFile
 		}
