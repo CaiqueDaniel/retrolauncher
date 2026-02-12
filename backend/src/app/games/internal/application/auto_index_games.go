@@ -1,7 +1,6 @@
 package application
 
 import (
-	"fmt"
 	"path/filepath"
 	"retrolauncher/backend/src/app/games/internal/domain"
 	"retrolauncher/backend/src/app/games/internal/domain/game"
@@ -129,7 +128,6 @@ func (uc *useCase) getNewGamesInstances(
 
 func (uc *useCase) findCoreFile(coresFiles []string, coreSufix string) string {
 	for _, coreFile := range coresFiles {
-		fmt.Println(coreFile)
 		if strings.Contains(coreFile, coreSufix) {
 			return coreFile
 		}

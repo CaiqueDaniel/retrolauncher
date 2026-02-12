@@ -91,6 +91,14 @@ func Test_it_should_list_files_in_a_directory(t *testing.T) {
 		t.Errorf("Expected 2 files, but got %d", len(files))
 	}
 
+	if files[0] != "tmp\\test.txt" {
+		t.Errorf("Expected test.txt, but got %s", files[0])
+	}
+
+	if files[1] != "tmp\\test2.txt" {
+		t.Errorf("Expected test2.txt, but got %s", files[1])
+	}
+
 	os.RemoveAll("./tmp")
 }
 

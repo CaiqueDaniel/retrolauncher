@@ -64,7 +64,7 @@ func (fs *localFileSystem) ListFiles(path string) ([]string, error) {
 	var fileNames []string
 	for _, file := range files {
 		if !file.IsDir() {
-			fileNames = append(fileNames, file.Name())
+			fileNames = append(fileNames, filepath.Join(path, file.Name()))
 		}
 	}
 
