@@ -57,10 +57,7 @@ export class LocalGameGateway implements
         return StartGame({ id: gameId })
     }
 
-    async indexGames(): Promise<void> {
-        const errorMessage = await AutoIndexGames();
-
-        if (errorMessage?.length > 0)
-            throw new Error(errorMessage);
+    indexGames(): Promise<void> {
+        return AutoIndexGames()
     }
 }

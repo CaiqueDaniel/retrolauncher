@@ -93,12 +93,8 @@ func (gc *GameController) StartGame(input GetInputDto) error {
 	})
 }
 
-func (gc *GameController) AutoIndexGames() string {
-	err := gc.autoIndexGames.Execute()
-	if err != nil {
-		return err.Error()
-	}
-	return ""
+func (gc *GameController) AutoIndexGames() error {
+	return gc.autoIndexGames.Execute()
 }
 
 type CreateInputDto struct {

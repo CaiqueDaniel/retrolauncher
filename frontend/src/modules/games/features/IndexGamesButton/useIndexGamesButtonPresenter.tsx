@@ -10,7 +10,7 @@ export function useIndexGamesButtonPresenter() {
 
         await indexGamesService.indexGames()
             .then(() => alert.success("Jogos indexados com sucesso"))
-            .catch(() => alert.error("Erro ao indexar jogos"))
+            .catch((error) => alert.error(`Erro ao indexar jogos: ${error}`))
             .finally(() => setLoading(false));
     };
 
