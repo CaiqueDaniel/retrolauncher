@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useGameViewerPresenter } from "./useGameViewerPresenter";
+import { HideImage } from "@mui/icons-material";
 
 export function GameViewer() {
   const { game, onClickEdit, onClickStart } = useGameViewerPresenter();
@@ -9,7 +10,11 @@ export function GameViewer() {
   return (
     <Box p={3}>
       <Box display="flex" gap={2}>
-        <img src={`data:image/jpeg;base64,${game.cover}`} width="100px" />
+        {
+          game.cover.length ?
+            <img src={`data:image/jpeg;base64,${game.cover}`} width="100px" /> :
+            <HideImage sx={{ fontSize: 85 }} />
+        }
         <Box>
           <Typography variant="h5" mb={1}>
             {game?.name}
