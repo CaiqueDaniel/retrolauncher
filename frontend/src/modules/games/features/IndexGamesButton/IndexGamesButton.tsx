@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { useIndexGamesButtonPresenter } from "./useIndexGamesButtonPresenter";
+import { PlaylistAdd } from "@mui/icons-material";
 
 export function IndexGamesButton() {
     const { handleIndexGames, loading } = useIndexGamesButtonPresenter();
@@ -11,7 +12,7 @@ export function IndexGamesButton() {
             disabled={loading}
             loading={loading}
         >
-            Auto Indexar
+            <PlaylistAdd />
         </Button>
     );
 }

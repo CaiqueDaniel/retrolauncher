@@ -4,6 +4,7 @@ import { GameViewer } from "../features/GameViewer/GameViewer";
 import { MainLayout } from "~/modules/shared/layouts/MainLayout";
 import { useReactRouterRouteNavigator } from "~/modules/shared/infra/hooks/useReactRouterRouteNavigator";
 import { IndexGamesButton } from "../features/IndexGamesButton/IndexGamesButton";
+import { Add, Settings } from "@mui/icons-material";
 
 export function GameHome() {
   const routeNavigator = useReactRouterRouteNavigator();
@@ -16,13 +17,14 @@ export function GameHome() {
           variant="contained"
           onClick={() => routeNavigator.navigateTo("/settings")}
         >
-          Configurações
+          <Settings />
         </Button>
         <Button
           variant="contained"
+          color="success"
           onClick={() => routeNavigator.navigateTo("/game/new")}
         >
-          Adicionar Jogo
+          <Add />
         </Button>
       </Box>
 
@@ -31,7 +33,7 @@ export function GameHome() {
         gridTemplateColumns="1fr 2fr"
         gap={2}
         bgcolor="background"
-        p={2}
+        py={2}
         height='calc(100% - 48px)'
       >
         <Paper sx={{ height: "100%", overflow: "auto" }}>
