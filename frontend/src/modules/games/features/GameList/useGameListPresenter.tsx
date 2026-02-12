@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useGameListContext } from "./GameListContext";
 import { GameQueryRepository } from "../../repositories/GameQueryRepository";
 import { GameEvents } from "../../GameEvents";
+import { useBusSubscriber } from "~/modules/shared/infra/hooks/useBusSubscriber";
 
 export function useGameListPresenter() {
-  const { queryRepository, alert, busDispatcher } = useGameListContext();
+  const { queryRepository, alert, busDispatcher, busSubscriber } = useGameListContext();
   const [games, setGames] = useState<GameQueryRepository.Output[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [wasFirstLoaded, setWasFirstLoad] = useState(false);
@@ -17,6 +18,12 @@ export function useGameListPresenter() {
 
   useEffect(fetchGames, []);
   useEffect(onInit, [wasFirstLoaded]);
+
+  useBusSubscriber({
+    bus: busSubscriber,
+    eventName: GameEvents.GAME_LIST_REFRESH_REQUESTED,
+    handler: fetchGames
+  });
 
   return {
     games,

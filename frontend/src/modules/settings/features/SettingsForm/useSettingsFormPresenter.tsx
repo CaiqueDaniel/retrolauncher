@@ -35,6 +35,7 @@ export function useSettingsFormPresenter() {
         setIsSubmiting(true);
         await gateway.saveSettings(values);
         alert.success("Configurações salvas com sucesso!");
+        navigator.navigateTo("..");
       } catch (error) {
         alert.error("Erro ao salvar configurações");
       } finally {

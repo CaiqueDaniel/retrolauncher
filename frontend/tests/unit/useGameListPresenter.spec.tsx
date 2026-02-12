@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
 import { PropsWithChildren } from "react";
 import { Mocked } from "vitest";
 import { GameListContext } from "~/modules/games/features/GameList/GameListContext";
@@ -108,9 +108,34 @@ describe("useGameListPresenter", () => {
     });
   });
 
+  it('should be able to refresh list', async () => {
+    queryRepository.search.mockResolvedValue([]);
+
+    const { result } = renderHook(() => useGameListPresenter(), options);
+
+    await waitFor(() => {
+      expect(result.current.games).toHaveLength(0);
+    });
+
+    queryRepository.search.mockResolvedValue([
+      {
+        id: crypto.randomUUID(),
+        name: "Game",
+        platform: "NES",
+        cover: "https://example.com/cover.jpg",
+      },
+    ]);
+
+    act(() => EventBus.getInstance().dispatch(GameEvents.GAME_LIST_REFRESH_REQUESTED))
+
+    await waitFor(() => {
+      expect(result.current.games).toHaveLength(1);
+    });
+  });
+
   function Provider({ children }: PropsWithChildren) {
     return (
-      <GameListContext.Provider value={{ queryRepository, alert, busDispatcher: EventBus.getInstance() }}>
+      <GameListContext.Provider value={{ queryRepository, alert, busDispatcher: EventBus.getInstance(), busSubscriber: EventBus.getInstance() }}>
         {children}
       </GameListContext.Provider>
     );
