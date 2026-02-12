@@ -1,7 +1,6 @@
 package application
 
 import (
-	"errors"
 	"fmt"
 	"path/filepath"
 	"retrolauncher/backend/src/app/games/internal/domain"
@@ -71,11 +70,11 @@ func (uc *useCase) getSettings() (*Settings, error) {
 	}
 
 	if settings.RetroarchFolderPath == "" {
-		return nil, errors.New("retroarch folder path is empty")
+		return nil, application.NotFoundError("retroarch folder path is empty")
 	}
 
 	if settings.RomsFolderPath == "" {
-		return nil, errors.New("roms folder path is empty")
+		return nil, application.NotFoundError("roms folder path is empty")
 	}
 
 	return settings, nil
