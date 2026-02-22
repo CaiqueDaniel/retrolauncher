@@ -41,7 +41,7 @@ func (r *StormGameRepository) Get(id string) (*game.Game, error) {
 }
 
 func (r *StormGameRepository) List(input domain.ListGamesParams) []*game.Game {
-	models, err := r.driver.List("Name", input.Name, table_name)
+	models, err := r.driver.List("Name", input.Name, table_name, "Name")
 
 	if err != nil {
 		return []*game.Game{}

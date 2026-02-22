@@ -45,7 +45,7 @@ func (r *StormRepository[T]) Get(id string, tableName string) (*T, error) {
 	return &result, err
 }
 
-func (r *StormRepository[T]) List(fieldName, likeValue, tableName string) ([]*T, error) {
+func (r *StormRepository[T]) List(fieldName, likeValue, tableName, orderBy string) ([]*T, error) {
 	var results []*T
 
 	db, err := storm.Open(tableName)
@@ -58,12 +58,12 @@ func (r *StormRepository[T]) List(fieldName, likeValue, tableName string) ([]*T,
 	}
 
 	if likeValue == "" {
-		err = db.All(&results)
+		err = db.Select().OrderBy(orderBy).Find(&results)
 		defer db.Close()
 		return results, err
 	}
 
-	err = db.Select(q.Re(fieldName, likeValue)).Find(&results)
+	err = db.Select(q.Re(fieldName, likeValue)).OrderBy(orderBy).Find(&results)
 
 	defer db.Close()
 

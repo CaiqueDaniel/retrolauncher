@@ -169,7 +169,7 @@ func Test_it_should_list_data_from_storm_database(t *testing.T) {
 	sut.Save(testData, testDB)
 
 	// Act
-	data, err := sut.List("", "", testDB)
+	data, err := sut.List("", "", testDB, "")
 
 	// Assert
 	if err != nil {
@@ -202,7 +202,7 @@ func Test_it_should_search_data_from_storm_database(t *testing.T) {
 	}
 
 	// Act
-	data, err := sut.List("Name", "Test", testDB)
+	data, err := sut.List("Name", "Test", testDB, "")
 
 	// Assert
 	if err != nil {
@@ -226,6 +226,82 @@ func Test_it_should_search_data_from_storm_database(t *testing.T) {
 	}
 }
 
+func Test_it_should_return_all_ordered_data_from_storm_database(t *testing.T) {
+	// Arrange
+	sut := &shared_persistance.StormRepository[TestData]{}
+	testDB := "./tmp/test_storm.db"
+	testDatas := []*TestData{
+		{
+			Id:   "1",
+			Name: "Test Item",
+		}, {
+			Id:   "2",
+			Name: "Another Item",
+		},
+	}
+
+	for _, testData := range testDatas {
+		sut.Save(testData, testDB)
+	}
+
+	// Act
+	data, err := sut.List("Name", "", testDB, "Name")
+
+	if data[0].Name != "Another Item" {
+		t.Errorf("Expected 'Another Item', but got %s", data[0].Name)
+		return
+	}
+
+	// Assert
+	if err != nil {
+		t.Errorf("Expected no error, but got %v", err)
+		return
+	}
+
+	if len(data) == 0 {
+		t.Error("Expected data, but got empty list")
+		return
+	}
+}
+
+func Test_it_should_return_ordered_filtered_data_from_storm_database(t *testing.T) {
+	// Arrange
+	sut := &shared_persistance.StormRepository[TestData]{}
+	testDB := "./tmp/test_storm.db"
+	testDatas := []*TestData{
+		{
+			Id:   "1",
+			Name: "Test Item",
+		}, {
+			Id:   "2",
+			Name: "Another Item",
+		},
+	}
+
+	for _, testData := range testDatas {
+		sut.Save(testData, testDB)
+	}
+
+	// Act
+	data, err := sut.List("Name", "Item", testDB, "Name")
+
+	if data[0].Name != "Another Item" {
+		t.Errorf("Expected 'Another Item', but got %s", data[0].Name)
+		return
+	}
+
+	// Assert
+	if err != nil {
+		t.Errorf("Expected no error, but got %v", err)
+		return
+	}
+
+	if len(data) == 0 {
+		t.Error("Expected data, but got empty list")
+		return
+	}
+}
+
 func Test_it_should_return_empty_list_from_storm_database_given_nothing_was_found(t *testing.T) {
 	// Arrange
 	sut := &shared_persistance.StormRepository[TestData]{}
@@ -245,7 +321,7 @@ func Test_it_should_return_empty_list_from_storm_database_given_nothing_was_foun
 	}
 
 	// Act
-	data, err := sut.List("Name", "abc", testDB)
+	data, err := sut.List("Name", "abc", testDB, "")
 
 	// Assert
 	if err != nil {
