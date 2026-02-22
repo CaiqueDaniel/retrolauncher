@@ -12,7 +12,7 @@ func (f *gameFinderFactory) CreateFrom(platformName string) application.GameFind
 	switch platformName {
 	case "nes":
 		return NewNESGameFinderService()
-	case "snes", "sfc":
+	case "sfc":
 		return NewSNESGameFinderService()
 	case "gb", "gbc":
 		return NewGBGameFinderService()
@@ -20,7 +20,7 @@ func (f *gameFinderFactory) CreateFrom(platformName string) application.GameFind
 		return NewN64GameFinderService()
 	case "sms":
 		return NewSMSGameFinderService()
-	case "psx", "cue":
+	case "cue":
 		return NewPSXGameFinderService()
 	default:
 		return nil

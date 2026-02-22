@@ -13,14 +13,12 @@ func Test_GameFinderFactory_CreateFrom(t *testing.T) {
 		expectedResult bool
 	}{
 		{"nes", true},
-		{"snes", true},
 		{"sfc", true},
 		{"gb", true},
 		{"gbc", true},
 		{"n64", true},
 		{"z64", true},
 		{"sms", true},
-		{"psx", true},
 		{"cue", true},
 		{"unknown", false},
 		{"", false},
