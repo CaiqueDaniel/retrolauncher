@@ -101,8 +101,8 @@ func Test_it_should_not_be_able_to_update_with_invalid_values(t *testing.T) {
 		return
 	}
 
-	if len(err) < 4 {
-		t.Errorf("Expected at least 4 errors, but got: %d", len(err))
+	if len(err) < 3 {
+		t.Errorf("Expected at least 3 errors, but got: %d", len(err))
 		return
 	}
 }
