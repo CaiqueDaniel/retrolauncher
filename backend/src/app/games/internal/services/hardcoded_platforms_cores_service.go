@@ -13,10 +13,8 @@ func (s *hardcodedPlatformsCoresService) GetPlatformsCores() (map[string]string,
 	return map[string]string{
 		"nes": "mesen",
 		"gb":  "sameboy",
-		"gbc": "sameboy",
 		"sfc": "snes",
 		"n64": "mupen",
-		"z64": "mupen",
 		"sms": "smsplus",
 		"cue": "mednafen",
 	}, nil

@@ -17,10 +17,8 @@ func Test_HardcodedPlatformsCoresService_GetPlatformsCores(t *testing.T) {
 	expectedCores := map[string]string{
 		"nes": "mesen",
 		"gb":  "sameboy",
-		"gbc": "sameboy",
 		"sfc": "snes",
 		"n64": "mupen",
-		"z64": "mupen",
 		"sms": "smsplus",
 		"cue": "mednafen",
 	}
