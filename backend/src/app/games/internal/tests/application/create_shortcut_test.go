@@ -57,14 +57,17 @@ func Test_it_should_not_be_able_to_create_a_shortcut_when_game_not_exists(t *tes
 }
 
 type mockShortcutService struct {
-	shortcutGameId string
+	shortcutGameId   string
+	shortcutGameName string
 }
 
-func (m *mockShortcutService) CreateDesktopShortcut(gameId string) error {
+func (m *mockShortcutService) CreateDesktopShortcut(gameId, gameName string) error {
 	m.shortcutGameId = gameId
+	m.shortcutGameName = gameName
 	return nil
 }
 
 func (m *mockShortcutService) Clear() {
 	m.shortcutGameId = ""
+	m.shortcutGameName = ""
 }

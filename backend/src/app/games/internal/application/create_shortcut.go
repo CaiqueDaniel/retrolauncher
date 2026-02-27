@@ -30,5 +30,5 @@ func (c *createShortcut) Execute(gameId string) error {
 		return application.NotFoundError(fmt.Sprintf("game %s not found", gameId))
 	}
 
-	return c.shortcutService.CreateDesktopShortcut(gameId)
+	return c.shortcutService.CreateDesktopShortcut(game.GetId().String(), game.GetName())
 }
