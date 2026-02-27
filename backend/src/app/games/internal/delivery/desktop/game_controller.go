@@ -1,4 +1,4 @@
-package game_controller
+package desktop
 
 import (
 	"retrolauncher/backend/src/app/games/internal/application"

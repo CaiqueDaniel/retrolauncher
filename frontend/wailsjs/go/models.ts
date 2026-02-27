@@ -63,25 +63,6 @@ export namespace application {
 
 export namespace desktop {
 	
-	export class SaveSettingsInputDto {
-	    retroarchFolderPath: string;
-	    romsFolderPath: string;
-	
-	    static createFrom(source: any = {}) {
-	        return new SaveSettingsInputDto(source);
-	    }
-	
-	    constructor(source: any = {}) {
-	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.retroarchFolderPath = source["retroarchFolderPath"];
-	        this.romsFolderPath = source["romsFolderPath"];
-	    }
-	}
-
-}
-
-export namespace game_controller {
-	
 	export class CreateInputDto {
 	    name: string;
 	    platformType: string;
@@ -124,6 +105,20 @@ export namespace game_controller {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.name = source["name"];
+	    }
+	}
+	export class SaveSettingsInputDto {
+	    retroarchFolderPath: string;
+	    romsFolderPath: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new SaveSettingsInputDto(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.retroarchFolderPath = source["retroarchFolderPath"];
+	        this.romsFolderPath = source["romsFolderPath"];
 	    }
 	}
 	export class UpdateInputDto {

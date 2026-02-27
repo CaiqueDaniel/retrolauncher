@@ -1,5 +1,5 @@
 import { Game, GameRepository } from "../domain/Game";
-import { Create, Update, List, Get, GetPlatformTypes, StartGame, AutoIndexGames } from "~/../wailsjs/go/game_controller/GameController";
+import { Create, Update, List, Get, GetPlatformTypes, StartGame, AutoIndexGames } from "~/../wailsjs/go/desktop/GameController";
 import { GameQueryRepository } from "../repositories/GameQueryRepository";
 import { PlatformTypesService } from "../services/PlatformTypesService";
 import { StartGameService } from "../services/StartGameService";

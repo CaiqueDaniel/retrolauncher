@@ -3,7 +3,7 @@ package games
 import (
 	"retrolauncher/backend/src/app/games/internal/adapters"
 	"retrolauncher/backend/src/app/games/internal/application"
-	"retrolauncher/backend/src/app/games/internal/delivery/desktop/game_controller"
+	"retrolauncher/backend/src/app/games/internal/delivery/desktop"
 	game_factories "retrolauncher/backend/src/app/games/internal/factories"
 	"retrolauncher/backend/src/app/games/internal/persistance"
 	"retrolauncher/backend/src/app/games/internal/services"
@@ -13,7 +13,7 @@ import (
 )
 
 type GamesModule struct {
-	GameController *game_controller.GameController
+	GameController *desktop.GameController
 }
 
 func NewGamesModule() *GamesModule {
@@ -26,7 +26,7 @@ func NewGamesModule() *GamesModule {
 	settingsGateway := adapters.NewSettingsAdapter(settings.NewSettingsGateway())
 
 	return &GamesModule{
-		GameController: game_controller.New(
+		GameController: desktop.New(
 			application.NewCreateGame(gameFactory, gameRepository, imageUploader),
 			application.NewUpdateGame(gameRepository, imageUploader),
 			application.NewGetGame(gameRepository),
