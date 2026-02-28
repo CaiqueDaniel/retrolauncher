@@ -61,7 +61,7 @@ type mockShortcutService struct {
 	shortcutGameName string
 }
 
-func (m *mockShortcutService) CreateDesktopShortcut(gameId, gameName string) error {
+func (m *mockShortcutService) CreateDesktopShortcut(gameId, gameName, gameCover string) error {
 	m.shortcutGameId = gameId
 	m.shortcutGameName = gameName
 	return nil
