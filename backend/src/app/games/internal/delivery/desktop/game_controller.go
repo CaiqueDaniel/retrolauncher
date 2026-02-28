@@ -5,13 +5,14 @@ import (
 )
 
 type GameController struct {
-	createGame       application.CreateGame
-	updateGame       application.UpdateGame
-	listGames        application.ListGames
-	getGame          application.GetGame
-	getPlatformTypes application.GetPlatformTypes
-	startGame        application.StartGame
-	autoIndexGames   application.AutoIndexGames
+	createGame            application.CreateGame
+	updateGame            application.UpdateGame
+	listGames             application.ListGames
+	getGame               application.GetGame
+	getPlatformTypes      application.GetPlatformTypes
+	startGame             application.StartGame
+	autoIndexGames        application.AutoIndexGames
+	createDesktopShortcut application.CreateShortcut
 }
 
 func New(
@@ -22,15 +23,17 @@ func New(
 	getPlatformTypes application.GetPlatformTypes,
 	startGame application.StartGame,
 	autoIndexGames application.AutoIndexGames,
+	createDesktopShortcut application.CreateShortcut,
 ) *GameController {
 	return &GameController{
-		createGame:       createGame,
-		updateGame:       updateGame,
-		listGames:        listGames,
-		getGame:          getGame,
-		getPlatformTypes: getPlatformTypes,
-		startGame:        startGame,
-		autoIndexGames:   autoIndexGames,
+		createGame:            createGame,
+		updateGame:            updateGame,
+		listGames:             listGames,
+		getGame:               getGame,
+		getPlatformTypes:      getPlatformTypes,
+		startGame:             startGame,
+		autoIndexGames:        autoIndexGames,
+		createDesktopShortcut: createDesktopShortcut,
 	}
 }
 
@@ -95,6 +98,10 @@ func (gc *GameController) StartGame(input GetInputDto) error {
 
 func (gc *GameController) AutoIndexGames() error {
 	return gc.autoIndexGames.Execute()
+}
+
+func (gc *GameController) CreateDesktopShortcut(input GetInputDto) error {
+	return gc.createDesktopShortcut.Execute(input.Id)
 }
 
 type CreateInputDto struct {

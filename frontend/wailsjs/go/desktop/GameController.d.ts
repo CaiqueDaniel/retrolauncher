@@ -7,6 +7,8 @@ export function AutoIndexGames():Promise<void>;
 
 export function Create(arg1:desktop.CreateInputDto):Promise<Array<string>>;
 
+export function CreateDesktopShortcut(arg1:desktop.GetInputDto):Promise<void>;
+
 export function Get(arg1:desktop.GetInputDto):Promise<application.GetGameOutput>;
 
 export function GetPlatformTypes():Promise<Array<string>>;

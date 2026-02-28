@@ -10,6 +10,10 @@ export function Create(arg1) {
   return window['go']['desktop']['GameController']['Create'](arg1);
 }
 
+export function CreateDesktopShortcut(arg1) {
+  return window['go']['desktop']['GameController']['CreateDesktopShortcut'](arg1);
+}
+
 export function Get(arg1) {
   return window['go']['desktop']['GameController']['Get'](arg1);
 }
