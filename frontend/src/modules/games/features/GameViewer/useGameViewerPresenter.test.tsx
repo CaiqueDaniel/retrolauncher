@@ -17,18 +17,21 @@ import { EventBus } from "~/modules/shared/infra/services/EventBus";
 import { RouteNavigator } from "~/modules/shared/application/RouteNavigator";
 import { StartGameService } from "../../services/StartGameService";
 import { GameShortcutService } from "../../services/GameShortcutService";
+import { Alert } from "~/modules/shared/application/Alert";
 
 describe("useGameViewerPresenter", () => {
   const eventBus = EventBus.getInstance();
   let routeNavigate: Mocked<RouteNavigator>;
   let startGameService: Mocked<StartGameService>;
   let gameShortcutService: Mocked<GameShortcutService>;
+  let alert: Mocked<Alert>;
 
   beforeEach(() => {
     eventBus.clear();
     routeNavigate = { navigateTo: vi.fn() };
     startGameService = { startGame: vi.fn() };
     gameShortcutService = { createDesktopShortcut: vi.fn() };
+    alert = { error: vi.fn(), success: vi.fn() };
   });
 
   afterEach(() => {
@@ -204,6 +207,7 @@ describe("useGameViewerPresenter", () => {
   });
 
   it('should be able to create a shortcut for a game', async () => {
+    gameShortcutService.createDesktopShortcut.mockResolvedValue();
     const mockGame: GameQueryRepository.Output = {
       id: "1",
       name: "Super Mario 64",
@@ -250,6 +254,7 @@ describe("useGameViewerPresenter", () => {
           routeNavigate: routeNavigate,
           startGameService: startGameService,
           gameShortcutService: gameShortcutService,
+          alert,
         }}
       >
         {children}

@@ -4,6 +4,7 @@ import { RouteNavigator } from "~/modules/shared/application/RouteNavigator";
 import { useContextHandler } from "~/modules/shared/infra/hooks/useContextHandler";
 import { StartGameService } from "../../services/StartGameService";
 import { GameShortcutService } from "../../services/GameShortcutService";
+import { Alert } from "~/modules/shared/application/Alert";
 
 export const GameViewerContext = createContext<Context | undefined>(undefined);
 
@@ -16,4 +17,5 @@ type Context = {
   routeNavigate: RouteNavigator;
   startGameService: StartGameService;
   gameShortcutService: GameShortcutService;
+  alert: Alert
 };

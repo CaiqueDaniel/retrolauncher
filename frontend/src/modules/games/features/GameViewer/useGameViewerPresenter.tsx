@@ -5,7 +5,7 @@ import { GameQueryRepository } from "../../repositories/GameQueryRepository";
 import { useState } from "react";
 
 export function useGameViewerPresenter() {
-  const { busSubscriber, routeNavigate, startGameService, gameShortcutService } =
+  const { busSubscriber, routeNavigate, startGameService, gameShortcutService, alert } =
     useGameViewerContext();
   const [game, setGame] = useState<GameQueryRepository.Output | null>(null);
 
@@ -21,7 +21,9 @@ export function useGameViewerPresenter() {
 
   const onClickCreateShortcut = () => {
     if (!game) return;
-    gameShortcutService.createDesktopShortcut(game.id);
+    gameShortcutService.createDesktopShortcut(game.id)
+      .then(() => alert.success("Atalho criado com sucesso!"))
+      .catch(alert.error);
   };
 
   useBusSubscriber({

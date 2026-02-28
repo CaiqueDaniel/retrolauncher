@@ -26,6 +26,7 @@ export function GameProviders({ children }: PropsWithChildren) {
           routeNavigate: useReactRouterRouteNavigator(),
           startGameService: gameGateway,
           gameShortcutService: gameGateway,
+          alert: toast,
         }}
       >
         <GameFormContext.Provider
