@@ -88,3 +88,7 @@ func (m *MockFileSystem) ListFilesForTest() []string {
 func (m *MockFileSystem) GetFileName(path string) string {
 	return filepath.Base(path)
 }
+
+func (m *MockFileSystem) GetFileExtension(path string) string {
+	return filepath.Ext(path)
+}

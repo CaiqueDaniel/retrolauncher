@@ -110,3 +110,12 @@ func Test_it_should_get_file_name(t *testing.T) {
 		t.Errorf("Expected test.txt, but got %s", fileName)
 	}
 }
+
+func Test_it_should_get_file_extension(t *testing.T) {
+	sut := shared_services.NewLocalFileSystem()
+	fileExtension := sut.GetFileExtension("./tmp/test.txt")
+
+	if fileExtension != ".txt" {
+		t.Errorf("Expected .txt, but got %s", fileExtension)
+	}
+}

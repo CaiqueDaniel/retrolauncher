@@ -8,4 +8,5 @@ type FileSystem interface {
 	RemoveFile(path string) error
 	ListFiles(path string) ([]string, error)
 	GetFileName(path string) string
+	GetFileExtension(path string) string
 }
