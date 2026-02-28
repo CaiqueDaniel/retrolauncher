@@ -5,7 +5,7 @@ import { GameQueryRepository } from "../../repositories/GameQueryRepository";
 import { useState } from "react";
 
 export function useGameViewerPresenter() {
-  const { busSubscriber, routeNavigate, startGameService } =
+  const { busSubscriber, routeNavigate, startGameService, gameShortcutService } =
     useGameViewerContext();
   const [game, setGame] = useState<GameQueryRepository.Output | null>(null);
 
@@ -19,6 +19,11 @@ export function useGameViewerPresenter() {
     startGameService.startGame(game.id);
   };
 
+  const onClickCreateShortcut = () => {
+    if (!game) return;
+    gameShortcutService.createDesktopShortcut(game.id);
+  };
+
   useBusSubscriber({
     bus: busSubscriber,
     eventName: GameEvents.GAME_SELECTED,
@@ -29,5 +34,6 @@ export function useGameViewerPresenter() {
     game,
     onClickEdit,
     onClickStart,
+    onClickCreateShortcut,
   };
 }

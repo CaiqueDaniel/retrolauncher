@@ -1,9 +1,10 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useGameViewerPresenter } from "./useGameViewerPresenter";
 import { HideImage } from "@mui/icons-material";
+import ShortcutIcon from '@mui/icons-material/Shortcut';
 
 export function GameViewer() {
-  const { game, onClickEdit, onClickStart } = useGameViewerPresenter();
+  const { game, onClickEdit, onClickStart, onClickCreateShortcut } = useGameViewerPresenter();
 
   if (!game) return <></>;
 
@@ -24,6 +25,9 @@ export function GameViewer() {
               Iniciar
             </Button>
             <Button onClick={onClickEdit}>Editar</Button>
+            <IconButton onClick={onClickCreateShortcut} title="Criar atalho na área de trabalho">
+              <ShortcutIcon />
+            </IconButton>
           </Box>
         </Box>
       </Box>

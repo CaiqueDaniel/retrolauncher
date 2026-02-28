@@ -1,16 +1,18 @@
 import { Game, GameRepository } from "../domain/Game";
-import { Create, Update, List, Get, GetPlatformTypes, StartGame, AutoIndexGames } from "~/../wailsjs/go/desktop/GameController";
+import { Create, Update, List, Get, GetPlatformTypes, StartGame, AutoIndexGames, CreateDesktopShortcut } from "~/../wailsjs/go/desktop/GameController";
 import { GameQueryRepository } from "../repositories/GameQueryRepository";
 import { PlatformTypesService } from "../services/PlatformTypesService";
 import { StartGameService } from "../services/StartGameService";
 import { IndexGamesService } from "../services/IndexGamesService";
+import { GameShortcutService } from "../services/GameShortcutService";
 
 export class LocalGameGateway implements
     GameRepository,
     GameQueryRepository.Repository,
     PlatformTypesService,
     StartGameService,
-    IndexGamesService {
+    IndexGamesService,
+    GameShortcutService {
     async save(game: Game): Promise<void> {
         if (game.id) {
             const errors = await Update({ ...game, id: game.id });
@@ -59,5 +61,9 @@ export class LocalGameGateway implements
 
     indexGames(): Promise<void> {
         return AutoIndexGames()
+    }
+
+    createDesktopShortcut(gameId: string): Promise<void> {
+        return CreateDesktopShortcut({ id: gameId })
     }
 }

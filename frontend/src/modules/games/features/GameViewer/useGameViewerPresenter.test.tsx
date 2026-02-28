@@ -16,16 +16,19 @@ import { GameQueryRepository } from "../../repositories/GameQueryRepository";
 import { EventBus } from "~/modules/shared/infra/services/EventBus";
 import { RouteNavigator } from "~/modules/shared/application/RouteNavigator";
 import { StartGameService } from "../../services/StartGameService";
+import { GameShortcutService } from "../../services/GameShortcutService";
 
 describe("useGameViewerPresenter", () => {
   const eventBus = EventBus.getInstance();
   let routeNavigate: Mocked<RouteNavigator>;
   let startGameService: Mocked<StartGameService>;
+  let gameShortcutService: Mocked<GameShortcutService>;
 
   beforeEach(() => {
     eventBus.clear();
     routeNavigate = { navigateTo: vi.fn() };
     startGameService = { startGame: vi.fn() };
+    gameShortcutService = { createDesktopShortcut: vi.fn() };
   });
 
   afterEach(() => {
@@ -200,6 +203,45 @@ describe("useGameViewerPresenter", () => {
     expect(startGameService.startGame).toHaveBeenCalledWith(mockGame.id);
   });
 
+  it('should be able to create a shortcut for a game', async () => {
+    const mockGame: GameQueryRepository.Output = {
+      id: "1",
+      name: "Super Mario 64",
+      platform: "Nintendo 64",
+      cover: "/path/to/cover.jpg",
+    };
+
+    const { result } = renderHook(() => useGameViewerPresenter(), {
+      wrapper,
+    });
+
+    await act(async () => {
+      eventBus.dispatch(GameEvents.GAME_SELECTED, mockGame);
+    });
+
+    await waitFor(() => {
+      expect(result.current.game).toEqual(mockGame);
+    });
+
+    act(() => {
+      result.current.onClickCreateShortcut();
+    });
+
+    expect(gameShortcutService.createDesktopShortcut).toHaveBeenCalledWith(mockGame.id);
+  });
+
+  it('should not be able to create a shortcut for a game not selected', async () => {
+    const { result } = renderHook(() => useGameViewerPresenter(), {
+      wrapper,
+    });
+
+    act(() => {
+      result.current.onClickCreateShortcut();
+    });
+
+    expect(gameShortcutService.createDesktopShortcut).not.toHaveBeenCalled();
+  });
+
   function wrapper({ children }: { children: ReactNode }) {
     return (
       <GameViewerContext.Provider
@@ -207,6 +249,7 @@ describe("useGameViewerPresenter", () => {
           busSubscriber: eventBus,
           routeNavigate: routeNavigate,
           startGameService: startGameService,
+          gameShortcutService: gameShortcutService,
         }}
       >
         {children}
