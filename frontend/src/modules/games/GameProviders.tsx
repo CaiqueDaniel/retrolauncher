@@ -25,6 +25,7 @@ export function GameProviders({ children }: PropsWithChildren) {
           busSubscriber: EventBus.getInstance(),
           routeNavigate: useReactRouterRouteNavigator(),
           startGameService: gameGateway,
+          gameShortcutService: gameGateway,
         }}
       >
         <GameFormContext.Provider
@@ -35,7 +36,11 @@ export function GameProviders({ children }: PropsWithChildren) {
             routeNavigator: useReactRouterRouteNavigator(),
           }}
         >
-          <IndexGamesButtonContext.Provider value={{ indexGamesService: gameGateway, alert: toast, busDispatcher: EventBus.getInstance() }}>
+          <IndexGamesButtonContext.Provider value={{
+            indexGamesService: gameGateway,
+            alert: toast,
+            busDispatcher: EventBus.getInstance()
+          }}>
             {children}
           </IndexGamesButtonContext.Provider>
         </GameFormContext.Provider>

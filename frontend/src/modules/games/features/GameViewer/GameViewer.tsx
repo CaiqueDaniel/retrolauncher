@@ -1,7 +1,9 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { useGameViewerPresenter } from "./useGameViewerPresenter";
 import { HideImage } from "@mui/icons-material";
 import ShortcutIcon from '@mui/icons-material/Shortcut';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import EditIcon from '@mui/icons-material/Edit';
 
 export function GameViewer() {
   const { game, onClickEdit, onClickStart, onClickCreateShortcut } = useGameViewerPresenter();
@@ -21,11 +23,13 @@ export function GameViewer() {
             {game?.name}
           </Typography>
           <Box display="flex" gap={1}>
-            <Button variant="contained" color="success" onClick={onClickStart}>
-              Iniciar
-            </Button>
-            <Button onClick={onClickEdit}>Editar</Button>
-            <IconButton onClick={onClickCreateShortcut} title="Criar atalho na área de trabalho">
+            <IconButton color="success" onClick={onClickStart} title="Iniciar jogo">
+              <PlayArrowIcon />
+            </IconButton>
+            <IconButton color="secondary" onClick={onClickEdit} title="Editar jogo">
+              <EditIcon />
+            </IconButton>
+            <IconButton color="secondary" onClick={onClickCreateShortcut} title="Criar atalho na área de trabalho">
               <ShortcutIcon />
             </IconButton>
           </Box>
