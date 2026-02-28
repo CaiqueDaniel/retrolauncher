@@ -1,6 +1,9 @@
 package persistance
 
 import (
+	"os"
+	"path/filepath"
+
 	"github.com/asdine/storm"
 	"github.com/asdine/storm/q"
 )
@@ -8,7 +11,13 @@ import (
 type StormRepository[T any] struct{}
 
 func (r *StormRepository[T]) Save(data interface{}, tableName string) error {
-	db, err := storm.Open(tableName)
+	tablePath, err := r.getTablePath(tableName)
+
+	if err != nil {
+		return err
+	}
+
+	db, err := storm.Open(tablePath)
 
 	if err != nil {
 		if db != nil {
@@ -25,7 +34,13 @@ func (r *StormRepository[T]) Save(data interface{}, tableName string) error {
 
 func (r *StormRepository[T]) Get(id string, tableName string) (*T, error) {
 	var result T
-	db, err := storm.Open(tableName)
+	tablePath, err := r.getTablePath(tableName)
+
+	if err != nil {
+		return nil, err
+	}
+
+	db, err := storm.Open(tablePath)
 
 	if err != nil {
 		if db != nil {
@@ -48,7 +63,13 @@ func (r *StormRepository[T]) Get(id string, tableName string) (*T, error) {
 func (r *StormRepository[T]) List(fieldName, likeValue, tableName, orderBy string) ([]*T, error) {
 	var results []*T
 
-	db, err := storm.Open(tableName)
+	tablePath, err := r.getTablePath(tableName)
+
+	if err != nil {
+		return nil, err
+	}
+
+	db, err := storm.Open(tablePath)
 
 	if err != nil {
 		if db != nil {
@@ -72,4 +93,14 @@ func (r *StormRepository[T]) List(fieldName, likeValue, tableName, orderBy strin
 	}
 
 	return results, err
+}
+
+func (r *StormRepository[T]) getTablePath(tableName string) (string, error) {
+	binPath, err := os.Executable()
+
+	if err != nil {
+		return "", err
+	}
+
+	return filepath.Join(filepath.Dir(binPath), tableName), nil
 }
