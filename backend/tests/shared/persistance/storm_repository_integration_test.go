@@ -2,14 +2,16 @@ package shared_persistance_test
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 
 	shared_persistance "retrolauncher/backend/src/shared/persistance"
 )
 
 func TestMain(m *testing.M) {
+	binPath, _ := os.Executable()
 	// Setup: Create tmp directory
-	if err := os.MkdirAll("./tmp", 0755); err != nil {
+	if err := os.MkdirAll(filepath.Join(filepath.Dir(binPath), "tmp"), 0755); err != nil {
 		panic("Failed to create tmp directory: " + err.Error())
 	}
 
@@ -17,7 +19,7 @@ func TestMain(m *testing.M) {
 	code := m.Run()
 
 	// Cleanup: Remove tmp directory
-	if err := os.RemoveAll("./tmp"); err != nil {
+	if err := os.RemoveAll(filepath.Join(filepath.Dir(binPath), "tmp")); err != nil {
 		panic("Failed to remove tmp directory: " + err.Error())
 	}
 

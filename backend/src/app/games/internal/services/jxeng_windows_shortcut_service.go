@@ -5,6 +5,7 @@ import (
 	"os/user"
 	"path/filepath"
 	"retrolauncher/backend/src/app/games/internal/application"
+	shared_app "retrolauncher/backend/src/shared/application"
 
 	"github.com/jxeng/shortcut"
 )
@@ -42,13 +43,13 @@ func (s *jxengWindowsShortcutService) CreateDesktopShortcut(gameId, gameName, ga
 	binPath, err := s.getExecutablePath()
 
 	if err != nil {
-		return err
+		return shared_app.InfrastructureError(err.Error())
 	}
 
 	iconPath, err := s.imageToIcoService.CreateIcoFrom(gameCover)
 
 	if err != nil {
-		return err
+		return shared_app.InfrastructureError(err.Error())
 	}
 
 	shortcut := &shortcut.Shortcut{
@@ -65,7 +66,7 @@ func (s *jxengWindowsShortcutService) CreateDesktopShortcut(gameId, gameName, ga
 		err = s.createShortcutOnDesktop(gameName, shortcut)
 
 		if err != nil {
-			return err
+			return shared_app.InfrastructureError(err.Error())
 		}
 	}
 

@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"retrolauncher/backend/src/app/games/internal/services"
+	"retrolauncher/backend/src/shared/application"
 	"testing"
 )
 
@@ -55,8 +56,8 @@ func Test_it_should_escalate_error_from_ico_service(t *testing.T) {
 		t.Errorf("expected error, got nil")
 	}
 
-	if err != stubError {
-		t.Errorf("expected error %v, got %v", stubError, err)
+	if err != application.InfrastructureError(stubError.Error()) {
+		t.Errorf("expected error %v, got %v", application.InfrastructureError(stubError.Error()), err)
 	}
 }
 

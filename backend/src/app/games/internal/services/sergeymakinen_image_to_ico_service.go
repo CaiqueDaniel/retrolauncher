@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"retrolauncher/backend/src/shared/application"
+	shared_app "retrolauncher/backend/src/shared/application"
 
 	"github.com/sergeymakinen/go-ico"
 	"golang.org/x/image/draw"
@@ -29,7 +30,7 @@ func (s *sergeymakinenImageToIcoService) CreateIcoFrom(path string) (string, err
 	var img image.Image
 
 	if err != nil {
-		return "", err
+		return "", shared_app.InfrastructureError(err.Error())
 	}
 
 	if extension == ".png" {
@@ -41,7 +42,7 @@ func (s *sergeymakinenImageToIcoService) CreateIcoFrom(path string) (string, err
 	}
 
 	if err != nil {
-		return "", err
+		return "", shared_app.InfrastructureError(err.Error())
 	}
 
 	img = s.resizeIcon(img)
@@ -50,19 +51,24 @@ func (s *sergeymakinenImageToIcoService) CreateIcoFrom(path string) (string, err
 	icoPath, err := filepath.Abs(filepath.Join(internalImagePath, baseName+".ico"))
 
 	if err != nil {
-		return "", err
+		return "", shared_app.InfrastructureError(err.Error())
 	}
 
 	stream, err := os.Create(icoPath)
 
 	if err != nil {
-		return "", err
+		return "", shared_app.InfrastructureError(err.Error())
 	}
 
 	err = ico.Encode(stream, img)
 
 	defer stream.Close()
-	return icoPath, err
+
+	if err != nil {
+		return "", shared_app.InfrastructureError(err.Error())
+	}
+
+	return icoPath, nil
 }
 
 func (s *sergeymakinenImageToIcoService) resizeIcon(img image.Image) image.Image {

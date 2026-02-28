@@ -22,6 +22,7 @@ func Test_integration_it_should_convert_png_to_ico(t *testing.T) {
 	pngPath := filepath.Join(tmpDir, "cover.png")
 	if err := createTestPNG(pngPath); err != nil {
 		t.Fatalf("failed to create test PNG: %v", err)
+		return
 	}
 
 	fs := shared_services.NewLocalFileSystem()
@@ -30,6 +31,7 @@ func Test_integration_it_should_convert_png_to_ico(t *testing.T) {
 
 	if err != nil {
 		t.Fatalf("expected no error, got: %v", err)
+		return
 	}
 
 	assertIcoFileExists(t, icoPath, tmpDir)
