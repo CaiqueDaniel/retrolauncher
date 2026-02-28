@@ -7,6 +7,7 @@ import { useBusSubscriber } from "~/modules/shared/infra/hooks/useBusSubscriber"
 export function useGameListPresenter() {
   const { queryRepository, alert, busDispatcher, busSubscriber } = useGameListContext();
   const [games, setGames] = useState<GameQueryRepository.Output[]>([]);
+  const [selectedGameId, setSelectedGameId] = useState<string | null>(null);
   const [isLoading, setLoading] = useState(false);
   const [wasFirstLoaded, setWasFirstLoad] = useState(false);
 
@@ -14,6 +15,7 @@ export function useGameListPresenter() {
     const game = games.find((game) => game.id === id);
     if (!game) return;
     busDispatcher.dispatch(GameEvents.GAME_SELECTED, game);
+    setSelectedGameId(id);
   };
 
   useEffect(fetchGames, []);
@@ -28,6 +30,7 @@ export function useGameListPresenter() {
   return {
     games,
     isLoading,
+    selectedGameId,
     onClick,
   };
 

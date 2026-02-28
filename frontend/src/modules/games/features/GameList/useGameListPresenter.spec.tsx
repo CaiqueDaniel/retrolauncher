@@ -106,6 +106,10 @@ describe("useGameListPresenter", () => {
       platform: "NES",
       cover: "https://example.com/cover.jpg",
     });
+
+    await waitFor(() => {
+      expect(result.current.selectedGameId).toBe(id);
+    });
   });
 
   it('should be able to refresh list', async () => {
