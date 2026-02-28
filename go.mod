@@ -8,6 +8,7 @@ require (
 	github.com/jxeng/shortcut v1.0.2
 	github.com/sergeymakinen/go-ico v1.0.0
 	github.com/wailsapp/wails/v2 v2.11.0
+	golang.org/x/image v0.36.0
 )
 
 require (
@@ -42,7 +43,7 @@ require (
 	golang.org/x/crypto v0.33.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/sys v0.40.0 // indirect
-	golang.org/x/text v0.22.0 // indirect
+	golang.org/x/text v0.34.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 )
 

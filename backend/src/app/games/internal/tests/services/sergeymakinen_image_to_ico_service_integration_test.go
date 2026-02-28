@@ -32,7 +32,7 @@ func Test_integration_it_should_convert_png_to_ico(t *testing.T) {
 		t.Fatalf("expected no error, got: %v", err)
 	}
 
-	assertIcoFileExists(t, icoPath)
+	assertIcoFileExists(t, icoPath, tmpDir)
 }
 
 func Test_integration_it_should_convert_jpg_to_ico(t *testing.T) {
@@ -52,7 +52,7 @@ func Test_integration_it_should_convert_jpg_to_ico(t *testing.T) {
 		t.Fatalf("expected no error, got: %v", err)
 	}
 
-	assertIcoFileExists(t, icoPath)
+	assertIcoFileExists(t, icoPath, tmpDir)
 }
 
 func Test_integration_it_should_return_error_for_unreadable_file(t *testing.T) {
@@ -87,11 +87,15 @@ func setupWorkDir(t *testing.T, tmpDir string) {
 }
 
 // assertIcoFileExists verifica que o arquivo .ico foi criado e tem conteúdo.
-func assertIcoFileExists(t *testing.T, icoPath string) {
+func assertIcoFileExists(t *testing.T, icoPath, tmpDir string) {
 	t.Helper()
 
 	if icoPath == "" {
 		t.Fatal("expected a non-empty ico path, got empty string")
+	}
+
+	if icoPath != filepath.Join(tmpDir, "images", "cover.ico") {
+		t.Fatalf("expected ico path to be %q, got %q", filepath.Join(tmpDir, "images", "cover.ico"), icoPath)
 	}
 
 	info, err := os.Stat(icoPath)

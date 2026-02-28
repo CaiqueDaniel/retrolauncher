@@ -10,6 +10,7 @@ import (
 	"retrolauncher/backend/src/shared/application"
 
 	"github.com/sergeymakinen/go-ico"
+	"golang.org/x/image/draw"
 )
 
 const internalImagePath = "./images/"
@@ -25,35 +26,61 @@ func NewSergeymakinenImageToIcoService(fs application.FileSystem) *sergeymakinen
 func (s *sergeymakinenImageToIcoService) CreateIcoFrom(path string) (string, error) {
 	extension := s.fs.GetFileExtension(path)
 	data, err := s.fs.ReadFile(path)
-	var image image.Image
+	var img image.Image
 
 	if err != nil {
 		return "", err
 	}
 
 	if extension == ".png" {
-		image, err = png.Decode(bytes.NewReader(data))
+		img, err = png.Decode(bytes.NewReader(data))
 	}
 
 	if extension == ".jpg" || extension == ".jpeg" {
-		image, err = jpeg.Decode(bytes.NewReader(data))
+		img, err = jpeg.Decode(bytes.NewReader(data))
 	}
 
 	if err != nil {
 		return "", err
 	}
 
+	img = s.resizeIcon(img)
 	baseName := s.fs.GetFileName(path)
 	baseName = baseName[:len(baseName)-len(extension)]
-	icoPath := filepath.Join(internalImagePath, baseName+".ico")
+	icoPath, err := filepath.Abs(filepath.Join(internalImagePath, baseName+".ico"))
+
+	if err != nil {
+		return "", err
+	}
+
 	stream, err := os.Create(icoPath)
 
 	if err != nil {
 		return "", err
 	}
 
-	ico.Encode(stream, image)
-	defer stream.Close()
+	err = ico.Encode(stream, img)
 
-	return icoPath, nil
+	defer stream.Close()
+	return icoPath, err
+}
+
+func (s *sergeymakinenImageToIcoService) resizeIcon(img image.Image) image.Image {
+	bounds := img.Bounds()
+
+	if bounds.Dx() > 256 || bounds.Dy() > 256 {
+		ratio := float64(bounds.Dx()) / float64(bounds.Dy())
+		newW := 256
+		newH := int(256 / ratio)
+		if newH > 256 {
+			newH = 256
+			newW = int(256 * ratio)
+		}
+
+		dst := image.NewRGBA(image.Rect(0, 0, newW, newH))
+		draw.CatmullRom.Scale(dst, dst.Rect, img, bounds, draw.Over, nil)
+		img = dst
+	}
+
+	return img
 }
