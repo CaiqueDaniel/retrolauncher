@@ -2,6 +2,8 @@ package services
 
 import (
 	"os"
+	"os/user"
+	"path/filepath"
 	"retrolauncher/backend/src/app/games/internal/application"
 
 	"github.com/jxeng/shortcut"
@@ -9,20 +11,13 @@ import (
 
 type JxengWindowsShortcutService interface {
 	application.ShortcutService
-	GetLastShortcutCreate() *lastShortcutCreate
+	GetLastShortcutCreate() *shortcut.Shortcut
 }
 
 type jxengWindowsShortcutService struct {
 	imageToIcoService    application.ImageToIcoService
 	allowCreateOnDesktop bool
-	lastShortcutCreate   *lastShortcutCreate
-}
-
-type lastShortcutCreate struct {
-	GameId    string
-	GameName  string
-	GameCover string
-	BinPath   string
+	lastShortcutCreate   *shortcut.Shortcut
 }
 
 func NewJxengWindowsShortcutService(
@@ -44,7 +39,7 @@ func NewJxengWindowsShortcutServiceForTesting(
 }
 
 func (s *jxengWindowsShortcutService) CreateDesktopShortcut(gameId, gameName, gameCover string) error {
-	binPath, err := os.Executable()
+	binPath, err := s.getExecutablePath()
 
 	if err != nil {
 		return err
@@ -56,24 +51,52 @@ func (s *jxengWindowsShortcutService) CreateDesktopShortcut(gameId, gameName, ga
 		return err
 	}
 
+	shortcut := &shortcut.Shortcut{
+		Target:           binPath,
+		IconLocation:     iconPath,
+		Arguments:        gameId,
+		Description:      gameName,
+		Hotkey:           "",
+		WindowStyle:      "1",
+		WorkingDirectory: "",
+	}
+
 	if s.allowCreateOnDesktop {
-		err = shortcut.CreateDesktopShortcut(gameName, binPath, iconPath)
+		err = s.createShortcutOnDesktop(gameName, shortcut)
 
 		if err != nil {
 			return err
 		}
 	}
 
-	s.lastShortcutCreate = &lastShortcutCreate{
-		GameId:    gameId,
-		GameName:  gameName,
-		GameCover: gameCover,
-		BinPath:   binPath,
-	}
+	s.lastShortcutCreate = shortcut
 
 	return nil
 }
 
-func (s *jxengWindowsShortcutService) GetLastShortcutCreate() *lastShortcutCreate {
+func (s *jxengWindowsShortcutService) GetLastShortcutCreate() *shortcut.Shortcut {
 	return s.lastShortcutCreate
+}
+
+func (s *jxengWindowsShortcutService) getExecutablePath() (string, error) {
+	const startExecutableName = "start-game.exe"
+	binPath, err := os.Executable()
+
+	if err != nil {
+		return "", err
+	}
+
+	return filepath.Join(filepath.Dir(binPath), startExecutableName), nil
+}
+
+func (s *jxengWindowsShortcutService) createShortcutOnDesktop(name string, shortcutConfig *shortcut.Shortcut) error {
+	u, err := user.Current()
+
+	if err != nil {
+		return err
+	}
+
+	shortcutPath := filepath.Join(u.HomeDir, "Desktop", name+".lnk")
+	shortcutConfig.ShortcutPath = shortcutPath
+	return shortcut.Create(*shortcutConfig)
 }
