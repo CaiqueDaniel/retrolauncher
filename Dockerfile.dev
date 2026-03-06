@@ -1,5 +1,6 @@
 FROM ubuntu:latest
 RUN apt update
+RUN apt install wget -y
 RUN apt install nodejs -y
 RUN apt install npm -y
 RUN apt install make -y
