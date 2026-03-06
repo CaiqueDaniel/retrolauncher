@@ -5,7 +5,7 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - retrolauncher-data:/retrolauncher
+      - .:/retrolauncher
     working_dir: /retrolauncher
     container_name: "retrolauncher_dev_env"
     stdin_open: true
@@ -17,5 +17,3 @@ services:
 networks:
   app-network:
     driver: bridge
-volumes:
-  retrolauncher-data:
