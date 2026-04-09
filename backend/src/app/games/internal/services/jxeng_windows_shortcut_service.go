@@ -1,3 +1,5 @@
+//go:build windows
+
 package services
 
 import (
@@ -10,12 +12,7 @@ import (
 	"github.com/jxeng/shortcut"
 )
 
-type JxengWindowsShortcutService interface {
-	application.ShortcutService
-	GetLastShortcutCreate() *shortcut.Shortcut
-}
-
-type jxengWindowsShortcutService struct {
+type JxengWindowsShortcutService struct {
 	imageToIcoService    application.ImageToIcoService
 	allowCreateOnDesktop bool
 	lastShortcutCreate   *shortcut.Shortcut
@@ -23,8 +20,8 @@ type jxengWindowsShortcutService struct {
 
 func NewJxengWindowsShortcutService(
 	imageToIcoService application.ImageToIcoService,
-) JxengWindowsShortcutService {
-	return &jxengWindowsShortcutService{
+) application.ShortcutService {
+	return &JxengWindowsShortcutService{
 		imageToIcoService:    imageToIcoService,
 		allowCreateOnDesktop: true,
 	}
@@ -32,14 +29,14 @@ func NewJxengWindowsShortcutService(
 
 func NewJxengWindowsShortcutServiceForTesting(
 	imageToIcoService application.ImageToIcoService,
-) JxengWindowsShortcutService {
-	return &jxengWindowsShortcutService{
+) *JxengWindowsShortcutService {
+	return &JxengWindowsShortcutService{
 		imageToIcoService:    imageToIcoService,
 		allowCreateOnDesktop: false,
 	}
 }
 
-func (s *jxengWindowsShortcutService) CreateDesktopShortcut(gameId, gameName, gameCover string) error {
+func (s *JxengWindowsShortcutService) CreateDesktopShortcut(gameId, gameName, gameCover string) error {
 	binPath, err := s.getExecutablePath()
 
 	if err != nil {
@@ -75,11 +72,11 @@ func (s *jxengWindowsShortcutService) CreateDesktopShortcut(gameId, gameName, ga
 	return nil
 }
 
-func (s *jxengWindowsShortcutService) GetLastShortcutCreate() *shortcut.Shortcut {
+func (s *JxengWindowsShortcutService) GetLastShortcutCreate() *shortcut.Shortcut {
 	return s.lastShortcutCreate
 }
 
-func (s *jxengWindowsShortcutService) getExecutablePath() (string, error) {
+func (s *JxengWindowsShortcutService) getExecutablePath() (string, error) {
 	const startExecutableName = "start-game.exe"
 	binPath, err := os.Executable()
 
@@ -90,7 +87,7 @@ func (s *jxengWindowsShortcutService) getExecutablePath() (string, error) {
 	return filepath.Join(filepath.Dir(binPath), startExecutableName), nil
 }
 
-func (s *jxengWindowsShortcutService) createShortcutOnDesktop(name string, shortcutConfig *shortcut.Shortcut) error {
+func (s *JxengWindowsShortcutService) createShortcutOnDesktop(name string, shortcutConfig *shortcut.Shortcut) error {
 	u, err := user.Current()
 
 	if err != nil {
