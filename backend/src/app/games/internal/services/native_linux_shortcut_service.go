@@ -36,6 +36,10 @@ func NewNativeLinuxShortcutServiceForTesting() *NativeLinuxShortcutService {
 	return &NativeLinuxShortcutService{allowCreateOnDesktop: false}
 }
 
+func NewShortcutService(imageToIcoService application.ImageToIcoService) application.ShortcutService {
+	return NewNativeLinuxShortcutService()
+}
+
 func (s *NativeLinuxShortcutService) CreateDesktopShortcut(gameId, gameName, gameCover string) error {
 	binPath, err := s.getExecutablePath()
 	if err != nil {

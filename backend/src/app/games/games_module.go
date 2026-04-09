@@ -25,7 +25,7 @@ func NewGamesModule() *GamesModule {
 	platformsCoresService := services.NewHardcodedPlatformsCoresService()
 	settingsGateway := adapters.NewSettingsAdapter(settings.NewSettingsGateway())
 	imageToIcoService := services.NewSergeymakinenImageToIcoService(fileSystem)
-	windowsShortcutService := services.NewJxengWindowsShortcutService(imageToIcoService)
+	shortcutService := services.NewShortcutService(imageToIcoService)
 
 	return &GamesModule{
 		GameController: desktop.New(
@@ -43,7 +43,7 @@ func NewGamesModule() *GamesModule {
 				gameFinderServiceFactory,
 				gameFactory,
 			),
-			application.NewCreateShortcut(gameRepository, windowsShortcutService),
+			application.NewCreateShortcut(gameRepository, shortcutService),
 		),
 	}
 }

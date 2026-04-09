@@ -36,6 +36,10 @@ func NewJxengWindowsShortcutServiceForTesting(
 	}
 }
 
+func NewShortcutService(imageToIcoService application.ImageToIcoService) application.ShortcutService {
+	return NewJxengWindowsShortcutService(imageToIcoService)
+}
+
 func (s *JxengWindowsShortcutService) CreateDesktopShortcut(gameId, gameName, gameCover string) error {
 	binPath, err := s.getExecutablePath()
 
