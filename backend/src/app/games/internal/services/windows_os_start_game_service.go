@@ -1,13 +1,20 @@
-package os_start_game_service
+//go:build windows
+
+package services
 
 import (
 	"os/exec"
 	"path/filepath"
+	"retrolauncher/backend/src/app/games/internal/application"
 )
 
 type OSStartGameService struct{}
 
-func New() *OSStartGameService {
+func NewStartGameService() application.StartGameService {
+	return NewWindowsOSStartGameService()
+}
+
+func NewWindowsOSStartGameService() application.StartGameService {
 	return &OSStartGameService{}
 }
 

@@ -4,7 +4,7 @@ import (
 	"retrolauncher/backend/src/app/games/internal/application"
 	"retrolauncher/backend/src/app/games/internal/delivery/cli"
 	"retrolauncher/backend/src/app/games/internal/persistance"
-	"retrolauncher/backend/src/app/games/internal/services/os_start_game_service"
+	"retrolauncher/backend/src/app/games/internal/services"
 )
 
 type GamesCLIModule struct {
@@ -13,7 +13,7 @@ type GamesCLIModule struct {
 
 func NewGamesCLIModule() *GamesCLIModule {
 	gameRepository := &persistance.StormGameRepository{}
-	startGameUseCase := application.NewStartGame(gameRepository, os_start_game_service.New())
+	startGameUseCase := application.NewStartGame(gameRepository, services.NewStartGameService())
 
 	return &GamesCLIModule{
 		StartGameCommand: cli.NewStartGameCommand(startGameUseCase),

@@ -8,7 +8,6 @@ import (
 	game_factories "retrolauncher/backend/src/app/games/internal/factories"
 	"retrolauncher/backend/src/app/games/internal/persistance"
 	"retrolauncher/backend/src/app/games/internal/services"
-	"retrolauncher/backend/src/app/games/internal/services/os_start_game_service"
 	"retrolauncher/backend/src/app/settings"
 	shared_services "retrolauncher/backend/src/shared/services"
 )
@@ -35,7 +34,7 @@ func NewGamesModule() *GamesModule {
 			application.NewGetGame(gameRepository),
 			application.NewListGames(gameRepository, imageUploader),
 			application.NewGetPlatformTypes(),
-			application.NewStartGame(gameRepository, os_start_game_service.New()),
+			application.NewStartGame(gameRepository, services.NewStartGameService()),
 			application.NewAutoIndexGames(
 				gameRepository,
 				settingsGateway,
