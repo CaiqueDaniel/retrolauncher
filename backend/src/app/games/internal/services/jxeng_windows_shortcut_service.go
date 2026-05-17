@@ -36,7 +36,7 @@ func NewJxengWindowsShortcutServiceForTesting(
 	}
 }
 
-func NewShortcutService(imageToIcoService application.ImageToIcoService) application.ShortcutService {
+func NewShortcutService(imageToIcoService application.ImageToIcoService, currentUserLanguage string) application.ShortcutService {
 	return NewJxengWindowsShortcutService(imageToIcoService)
 }
 

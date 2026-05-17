@@ -11,7 +11,7 @@ import (
 )
 
 func Test_it_should_create_desktop_shortcut_on_linux(t *testing.T) {
-	sut := services.NewNativeLinuxShortcutServiceForTesting()
+	sut := services.NewNativeLinuxShortcutServiceForTesting("en_US.UTF-8")
 	err := sut.CreateDesktopShortcut("game-id-123", "My Game", "/path/to/cover.png")
 
 	if err != nil {
@@ -49,5 +49,33 @@ func Test_it_should_create_desktop_shortcut_on_linux(t *testing.T) {
 
 	if !strings.Contains(content, "Categories=Game;") {
 		t.Errorf("expected shortcut content to contain 'Categories=Game;', got:\n%s", content)
+	}
+}
+
+func Test_it_should_create_shortcut_on_desktop_given_user_language_is_english(t *testing.T) {
+	sut := services.NewNativeLinuxShortcutServiceForTesting("en_US.UTF-8")
+	err := sut.CreateDesktopShortcut("game-id-123", "My Game", "/path/to/cover.png")
+
+	if err != nil {
+		t.Errorf("expected no error, got %v", err)
+		return
+	}
+
+	if !strings.Contains(sut.GetLastShortcutPath(), "Desktop") {
+		t.Errorf("expected shortcut path to contain 'Desktop', got: %s", sut.GetLastShortcutPath())
+	}
+}
+
+func Test_it_should_create_shortcut_on_desktop_given_user_language_is_portuguese(t *testing.T) {
+	sut := services.NewNativeLinuxShortcutServiceForTesting("pt_BR.UTF-8")
+	err := sut.CreateDesktopShortcut("game-id-123", "My Game", "/path/to/cover.png")
+
+	if err != nil {
+		t.Errorf("expected no error, got %v", err)
+		return
+	}
+
+	if !strings.Contains(sut.GetLastShortcutPath(), "Área de trabalho") {
+		t.Errorf("expected shortcut path to contain 'Área de trabalho', got: %s", sut.GetLastShortcutPath())
 	}
 }

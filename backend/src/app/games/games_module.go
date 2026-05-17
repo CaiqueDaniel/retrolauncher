@@ -1,6 +1,7 @@
 package games
 
 import (
+	"os"
 	"retrolauncher/backend/src/app/games/internal/adapters"
 	"retrolauncher/backend/src/app/games/internal/application"
 	"retrolauncher/backend/src/app/games/internal/delivery/desktop"
@@ -25,7 +26,7 @@ func NewGamesModule() *GamesModule {
 	platformsCoresService := services.NewHardcodedPlatformsCoresService()
 	settingsGateway := adapters.NewSettingsAdapter(settings.NewSettingsGateway())
 	imageToIcoService := services.NewSergeymakinenImageToIcoService(fileSystem)
-	shortcutService := services.NewShortcutService(imageToIcoService)
+	shortcutService := services.NewShortcutService(imageToIcoService, os.Getenv("LANG"))
 
 	return &GamesModule{
 		GameController: desktop.New(
