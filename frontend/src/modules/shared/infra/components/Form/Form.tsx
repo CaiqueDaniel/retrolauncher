@@ -9,6 +9,7 @@ export function Form<I extends Record<string, any>>({
 }: Props<I>) {
   return (
     <Formik<I>
+      enableReinitialize
       initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={validationSchema}

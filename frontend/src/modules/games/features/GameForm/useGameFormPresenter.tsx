@@ -50,7 +50,7 @@ export function useGameFormPresenter(props: Props) {
       .get(props.id)
       .then(setInitialValues)
       .catch(() => alert.error("Erro ao buscar jogo"))
-      .finally(() => setTimeout(() => setIsLoadingGame(false), 10));
+      .finally(() => setIsLoadingGame(false));
   }
 
   function fetchPlatforms() {
@@ -59,7 +59,7 @@ export function useGameFormPresenter(props: Props) {
       .getPlatformTypes()
       .then(setPlatforms)
       .catch(() => alert.error("Erro ao listar tipos de plataformas"))
-      .finally(() => setTimeout(() => setIsLoadingPlatform(false), 10));
+      .finally(() => setIsLoadingPlatform(false));
   }
 }
 

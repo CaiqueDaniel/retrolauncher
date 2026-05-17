@@ -2,7 +2,7 @@ test:
 	go test ./... -v
 
 dev:
-	xvfb-run wails dev -tags webkit2_41
+	wails dev -tags webkit2_41
 
 build-gui:
 	wails build
