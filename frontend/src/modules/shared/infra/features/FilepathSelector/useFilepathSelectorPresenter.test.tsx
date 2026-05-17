@@ -40,6 +40,19 @@ describe('useFilepathSelectorPresenter', () => {
         });
     });
 
+    it('should sync internal value when props.value changes', () => {
+        const { result, rerender } = renderHook((props: { value: string }) => useFilepathSelectorPresenter(props), {
+            initialProps: { value: 'initial' },
+            wrapper
+        });
+
+        expect(result.current.value).toBe('initial');
+
+        rerender({ value: 'updated' });
+
+        expect(result.current.value).toBe('updated');
+    });
+
     function wrapper({ children }: { children: ReactNode }) {
         return (
             <FilepathSelectorContext.Provider value={{ filepathSelectionService: service }}>
