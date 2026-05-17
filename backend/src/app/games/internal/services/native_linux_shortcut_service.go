@@ -50,7 +50,6 @@ func (s *NativeLinuxShortcutService) CreateDesktopShortcut(gameId, gameName, gam
 	}
 
 	desktopDir, err := s.getDesktopDir()
-	fmt.Println("DESKTOP: ", desktopDir)
 
 	if err != nil {
 		return shared_app.InfrastructureError(err.Error())
@@ -64,7 +63,6 @@ func (s *NativeLinuxShortcutService) CreateDesktopShortcut(gameId, gameName, gam
 
 	if s.allowCreateOnDesktop {
 		if err := os.WriteFile(shortcutPath, []byte(content), 0755); err != nil {
-			fmt.Println("ERROR: ", err)
 			return shared_app.InfrastructureError(err.Error())
 		}
 	}
