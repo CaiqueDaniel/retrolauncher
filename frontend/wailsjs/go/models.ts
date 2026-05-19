@@ -25,6 +25,7 @@ export namespace application {
 	export class GetSettingsOutput {
 	    RetroarchFolderPath: string;
 	    RomsFolderPath: string;
+	    RetroachivementsUsername: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new GetSettingsOutput(source);
@@ -34,6 +35,7 @@ export namespace application {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.RetroarchFolderPath = source["RetroarchFolderPath"];
 	        this.RomsFolderPath = source["RomsFolderPath"];
+	        this.RetroachivementsUsername = source["RetroachivementsUsername"];
 	    }
 	}
 	export class ListGamesOutput {
@@ -110,6 +112,9 @@ export namespace desktop {
 	export class SaveSettingsInputDto {
 	    retroarchFolderPath: string;
 	    romsFolderPath: string;
+	    retroachivementsUsername: string;
+	    retroachivementsPassword: string;
+	    retroachivementsApiKey: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new SaveSettingsInputDto(source);
@@ -119,6 +124,9 @@ export namespace desktop {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.retroarchFolderPath = source["retroarchFolderPath"];
 	        this.romsFolderPath = source["romsFolderPath"];
+	        this.retroachivementsUsername = source["retroachivementsUsername"];
+	        this.retroachivementsPassword = source["retroachivementsPassword"];
+	        this.retroachivementsApiKey = source["retroachivementsApiKey"];
 	    }
 	}
 	export class UpdateInputDto {

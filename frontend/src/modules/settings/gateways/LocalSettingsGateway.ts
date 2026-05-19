@@ -12,6 +12,9 @@ export class LocalSettingsGateway implements SettingsService {
     return {
       romsFolderPath: settings.RomsFolderPath,
       retroarchFolderPath: settings.RetroarchFolderPath,
+      retroachivementsUsername: settings.RetroachivementsUsername,
+      retroachivementsPassword: "",
+      retroachivementsApiKey: "",
     };
   }
 }

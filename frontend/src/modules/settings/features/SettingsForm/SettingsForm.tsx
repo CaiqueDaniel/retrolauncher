@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import { FastField } from "formik";
 import { Form } from "~/modules/shared/infra/components/Form/Form";
 import { SettingsFormData } from "../../services/SettingsGateway";
@@ -49,6 +49,32 @@ export function SettingsForm() {
             fullWidth
             helperText={errors.romsFolderPath}
             error={Boolean(errors.romsFolderPath)}
+            sx={{ mb: 2 }}
+          />
+
+          <FastField
+            as={TextField}
+            name="retroachivementsUsername"
+            label="Nome de usuário do RetroAchivements"
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+
+          <FastField
+            as={TextField}
+            name="retroachivementsPassword"
+            label="Senha do RetroAchivements"
+            type="password"
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+
+          <FastField
+            as={TextField}
+            name="retroachivementsApiKey"
+            label="Chave de API do RetroAchivements"
+            type="password"
+            fullWidth
             sx={{ mb: 2 }}
           />
 

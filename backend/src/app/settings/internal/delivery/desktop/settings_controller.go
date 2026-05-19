@@ -39,6 +39,9 @@ func (sc *settingsController) Get() (*application.GetSettingsOutput, error) {
 }
 
 type SaveSettingsInputDto struct {
-	RetroarchFolderPath string `json:"retroarchFolderPath"`
-	RomsFolderPath      string `json:"romsFolderPath"`
+	RetroarchFolderPath      string `json:"retroarchFolderPath"`
+	RomsFolderPath           string `json:"romsFolderPath"`
+	RetroachivementsUsername string `json:"retroachivementsUsername"`
+	RetroachivementsPassword string `json:"retroachivementsPassword"`
+	RetroachivementsApiKey   string `json:"retroachivementsApiKey"`
 }

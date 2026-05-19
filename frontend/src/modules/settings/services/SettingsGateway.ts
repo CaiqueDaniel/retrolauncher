@@ -7,5 +7,8 @@ export interface SettingsService {
 export type SettingsFormData = {
     romsFolderPath: string;
     retroarchFolderPath: string;
+    retroachivementsUsername: string;
+    retroachivementsPassword: string;
+    retroachivementsApiKey: string;
 };
 

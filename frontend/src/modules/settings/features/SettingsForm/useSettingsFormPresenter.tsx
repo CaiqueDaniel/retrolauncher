@@ -8,6 +8,9 @@ export function useSettingsFormPresenter() {
   const [initialValues, setInitialValues] = useState<SettingsFormData>({
     romsFolderPath: "",
     retroarchFolderPath: "",
+    retroachivementsUsername: "",
+    retroachivementsPassword: "",
+    retroachivementsApiKey: "",
   });
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -66,4 +69,10 @@ const validationSchema = Yup.object().shape({
   retroarchFolderPath: Yup.string().required(
     "Caminho do Retroarch é obrigatório",
   ),
+  retroachivementsUsername: Yup.string()
+    .max(100, "Máximo de 100 caracteres excedido"),
+  retroachivementsPassword: Yup.string()
+    .max(100, "Máximo de 100 caracteres excedido"),
+  retroachivementsApiKey: Yup.string()
+    .max(255, "Máximo de 255 caracteres excedido"),
 });
