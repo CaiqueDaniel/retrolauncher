@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"retrolauncher/backend/src/app/settings/internal/application"
 
 	"github.com/godbus/dbus/v5"
 )
@@ -28,7 +29,7 @@ type keyringCredentialsManager struct {
 
 // NewKeyringCredentialsManager creates a new CredentialsManager backed by the
 // system's Secret Service (GNOME Keyring, KWallet, etc.) via D-Bus.
-func NewKeyringCredentialsManager() (*keyringCredentialsManager, error) {
+func NewKeyringCredentialsManager() (application.CredentialsManager, error) {
 	conn, err := dbus.SessionBus()
 
 	if err != nil {
@@ -44,8 +45,8 @@ func NewKeyringCredentialsManager() (*keyringCredentialsManager, error) {
 	return &keyringCredentialsManager{conn: conn, session: sessionPath}, nil
 }
 
-// NewKeyringCredentialsManagerWithConn is used by tests to inject a mock connection.
-func NewKeyringCredentialsManagerWithConn(conn DBusConn, session dbus.ObjectPath) *keyringCredentialsManager {
+// NewKeyringCredentialsManagerWithConnForTests is used by tests to inject a mock connection.
+func NewKeyringCredentialsManagerWithConnForTests(conn DBusConn, session dbus.ObjectPath) *keyringCredentialsManager {
 	return &keyringCredentialsManager{conn: conn, session: session}
 }
 

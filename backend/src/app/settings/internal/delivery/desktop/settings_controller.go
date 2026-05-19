@@ -23,8 +23,11 @@ func NewSettingsController(saveSettings application.SaveSettings, getSettings ap
 
 func (sc *settingsController) Save(input SaveSettingsInputDto) string {
 	err := sc.saveSettings.Execute(application.SaveSettingsInput{
-		RetroarchFolderPath: input.RetroarchFolderPath,
-		RomsFolderPath:      input.RomsFolderPath,
+		RetroarchFolderPath:      input.RetroarchFolderPath,
+		RomsFolderPath:           input.RomsFolderPath,
+		RetroachivementsUsername: input.RetroachivementsUsername,
+		RetroachivementsPassword: input.RetroachivementsPassword,
+		RetroachivementsApiKey:   input.RetroachivementsApiKey,
 	})
 
 	if err == nil {

@@ -26,6 +26,8 @@ export namespace application {
 	    RetroarchFolderPath: string;
 	    RomsFolderPath: string;
 	    RetroachivementsUsername: string;
+	    RetroachivementsPassword: string;
+	    RetroachivementsApiKey: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new GetSettingsOutput(source);
@@ -36,6 +38,8 @@ export namespace application {
 	        this.RetroarchFolderPath = source["RetroarchFolderPath"];
 	        this.RomsFolderPath = source["RomsFolderPath"];
 	        this.RetroachivementsUsername = source["RetroachivementsUsername"];
+	        this.RetroachivementsPassword = source["RetroachivementsPassword"];
+	        this.RetroachivementsApiKey = source["RetroachivementsApiKey"];
 	    }
 	}
 	export class ListGamesOutput {
