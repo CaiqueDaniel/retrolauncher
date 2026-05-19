@@ -28,7 +28,8 @@ func Test_it_should_be_able_to_save_retorarch_settings(t *testing.T) {
 func Test_it_should_be_able_to_save_retroachivements_settings(t *testing.T) {
 	fs := game_doubles_test.NewMockFileSystem()
 	credentialsManager := &credentialsManagerMock{items: make(map[string]string)}
-	sut := application.NewSaveSettings(&settingsDAOMock{}, fs, credentialsManager)
+	dao := &settingsDAOMock{}
+	sut := application.NewSaveSettings(dao, fs, credentialsManager)
 
 	fs.SaveFile("/path/to/retroarch", []byte("data"))
 	fs.SaveFile("/path/to/roms", []byte("data"))
@@ -45,7 +46,7 @@ func Test_it_should_be_able_to_save_retroachivements_settings(t *testing.T) {
 		t.Error("Expected no error, got", err)
 	}
 
-	if credentialsManager.items["retroachivementsUsername"] == "" {
+	if dao.savedSettings.RetroAchievementsUsername == "" {
 		t.Error("Expected saved credentials, got empty username")
 	}
 
@@ -61,7 +62,8 @@ func Test_it_should_be_able_to_save_retroachivements_settings(t *testing.T) {
 func Test_it_should_be_able_to_save_retroachivements_username(t *testing.T) {
 	fs := game_doubles_test.NewMockFileSystem()
 	credentialsManager := &credentialsManagerMock{items: make(map[string]string)}
-	sut := application.NewSaveSettings(&settingsDAOMock{}, fs, credentialsManager)
+	dao := &settingsDAOMock{}
+	sut := application.NewSaveSettings(dao, fs, credentialsManager)
 
 	fs.SaveFile("/path/to/retroarch", []byte("data"))
 	fs.SaveFile("/path/to/roms", []byte("data"))
@@ -78,7 +80,7 @@ func Test_it_should_be_able_to_save_retroachivements_username(t *testing.T) {
 		t.Error("Expected no error, got", err)
 	}
 
-	if credentialsManager.items["retroachivementsUsername"] == "" {
+	if dao.savedSettings.RetroAchievementsUsername == "" {
 		t.Error("Expected saved credentials, got empty username")
 	}
 
@@ -94,7 +96,8 @@ func Test_it_should_be_able_to_save_retroachivements_username(t *testing.T) {
 func Test_it_should_be_able_to_save_retroachivements_password(t *testing.T) {
 	fs := game_doubles_test.NewMockFileSystem()
 	credentialsManager := &credentialsManagerMock{items: make(map[string]string)}
-	sut := application.NewSaveSettings(&settingsDAOMock{}, fs, credentialsManager)
+	dao := &settingsDAOMock{}
+	sut := application.NewSaveSettings(dao, fs, credentialsManager)
 
 	fs.SaveFile("/path/to/retroarch", []byte("data"))
 	fs.SaveFile("/path/to/roms", []byte("data"))
@@ -111,7 +114,7 @@ func Test_it_should_be_able_to_save_retroachivements_password(t *testing.T) {
 		t.Error("Expected no error, got", err)
 	}
 
-	if credentialsManager.items["retroachivementsUsername"] != "" {
+	if dao.savedSettings.RetroAchievementsUsername != "" {
 		t.Error("Expected no username")
 	}
 
@@ -127,7 +130,8 @@ func Test_it_should_be_able_to_save_retroachivements_password(t *testing.T) {
 func Test_it_should_be_able_to_save_retroachivements_api_key(t *testing.T) {
 	fs := game_doubles_test.NewMockFileSystem()
 	credentialsManager := &credentialsManagerMock{items: make(map[string]string)}
-	sut := application.NewSaveSettings(&settingsDAOMock{}, fs, credentialsManager)
+	dao := &settingsDAOMock{}
+	sut := application.NewSaveSettings(dao, fs, credentialsManager)
 
 	fs.SaveFile("/path/to/retroarch", []byte("data"))
 	fs.SaveFile("/path/to/roms", []byte("data"))
@@ -144,7 +148,7 @@ func Test_it_should_be_able_to_save_retroachivements_api_key(t *testing.T) {
 		t.Error("Expected no error, got", err)
 	}
 
-	if credentialsManager.items["retroachivementsUsername"] != "" {
+	if dao.savedSettings.RetroAchievementsUsername != "" {
 		t.Error("Expected no username")
 	}
 

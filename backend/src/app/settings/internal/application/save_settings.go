@@ -2,7 +2,6 @@ package application
 
 import (
 	"errors"
-	"fmt"
 	"retrolauncher/backend/src/app/settings/internal/domain"
 	"retrolauncher/backend/src/app/settings/internal/domain/settings"
 	"retrolauncher/backend/src/shared/application"
@@ -39,14 +38,6 @@ func (uc *useCase) Execute(input SaveSettingsInput) error {
 		return errors.New("roms folder not found")
 	}
 
-	if input.RetroachivementsUsername != "" {
-		err := uc.credentialsManager.SaveCredentials("retroachivementsUsername", input.RetroachivementsUsername)
-		fmt.Println("err1", err)
-		if err != nil {
-			return err
-		}
-	}
-
 	if input.RetroachivementsPassword != "" {
 		err := uc.credentialsManager.SaveCredentials("retroachivementsPassword", input.RetroachivementsPassword)
 		if err != nil {
@@ -62,8 +53,9 @@ func (uc *useCase) Execute(input SaveSettingsInput) error {
 	}
 
 	return uc.dao.SaveSettings(&settings.Settings{
-		RetroarchFolderPath: input.RetroarchFolderPath,
-		RomsFolderPath:      input.RomsFolderPath,
+		RetroarchFolderPath:       input.RetroarchFolderPath,
+		RomsFolderPath:            input.RomsFolderPath,
+		RetroAchievementsUsername: input.RetroachivementsUsername,
 	})
 }
 

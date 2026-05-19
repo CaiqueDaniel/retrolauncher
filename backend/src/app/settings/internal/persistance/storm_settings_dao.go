@@ -31,21 +31,24 @@ func (s *stormSettingsDAO) GetSettings() (*settings.Settings, error) {
 	}
 
 	return &settings.Settings{
-		RetroarchFolderPath: model.RetroarchFolderPath,
-		RomsFolderPath:      model.RomsFolderPath,
+		RetroarchFolderPath:       model.RetroarchFolderPath,
+		RomsFolderPath:            model.RomsFolderPath,
+		RetroAchievementsUsername: model.RetroAchievementsUsername,
 	}, nil
 }
 
 func (s *stormSettingsDAO) SaveSettings(settings *settings.Settings) error {
 	return s.driver.Save(&model{
-		Id:                  id,
-		RetroarchFolderPath: settings.RetroarchFolderPath,
-		RomsFolderPath:      settings.RomsFolderPath,
+		Id:                        id,
+		RetroarchFolderPath:       settings.RetroarchFolderPath,
+		RomsFolderPath:            settings.RomsFolderPath,
+		RetroAchievementsUsername: settings.RetroAchievementsUsername,
 	}, tableName)
 }
 
 type model struct {
-	Id                  string `storm:"id"`
-	RetroarchFolderPath string
-	RomsFolderPath      string
+	Id                        string `storm:"id"`
+	RetroarchFolderPath       string
+	RomsFolderPath            string
+	RetroAchievementsUsername string
 }

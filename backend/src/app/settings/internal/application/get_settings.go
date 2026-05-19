@@ -1,7 +1,6 @@
 package application
 
 import (
-	"fmt"
 	"retrolauncher/backend/src/app/settings/internal/domain"
 )
 
@@ -39,24 +38,16 @@ func (uc *getSettings) Execute() (*GetSettingsOutput, error) {
 		return nil, err
 	}
 
-	fmt.Println("settings", settings)
-	fmt.Println("credentials", credentials)
-
 	return &GetSettingsOutput{
 		RetroarchFolderPath:      settings.RetroarchFolderPath,
 		RomsFolderPath:           settings.RomsFolderPath,
-		RetroachivementsUsername: credentials.Username,
+		RetroachivementsUsername: settings.RetroAchievementsUsername,
 		RetroachivementsPassword: credentials.Password,
 		RetroachivementsApiKey:   credentials.ApiKey,
 	}, nil
 }
 
 func (uc *getSettings) getRetroAchievementsCredentials() *retroAchievementsCredentials {
-	username, err := uc.credentialsManager.GetCredentials("retroachivementsUsername")
-	if err != nil {
-		username = ""
-	}
-
 	password, err := uc.credentialsManager.GetCredentials("retroachivementsPassword")
 	if err != nil {
 		password = ""
@@ -68,7 +59,6 @@ func (uc *getSettings) getRetroAchievementsCredentials() *retroAchievementsCrede
 	}
 
 	return &retroAchievementsCredentials{
-		Username: username,
 		Password: password,
 		ApiKey:   apiKey,
 	}
@@ -83,7 +73,6 @@ type GetSettingsOutput struct {
 }
 
 type retroAchievementsCredentials struct {
-	Username string
 	Password string
 	ApiKey   string
 }

@@ -1,6 +1,7 @@
 package settings
 
 type Settings struct {
-	RetroarchFolderPath string
-	RomsFolderPath      string
+	RetroarchFolderPath       string
+	RomsFolderPath            string
+	RetroAchievementsUsername string
 }
