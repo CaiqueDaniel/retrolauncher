@@ -119,3 +119,34 @@ func Test_it_should_get_file_extension(t *testing.T) {
 		t.Errorf("Expected .txt, but got %s", fileExtension)
 	}
 }
+
+func Test_it_should_get_file_md5_hash(t *testing.T) {
+	sut := shared_services.NewLocalFileSystem()
+	content := []byte("Hello, World!")
+	// MD5 of "Hello, World!" is 65a8e27d8879283831b664bd8b7f0ad4
+	expectedHash := "65a8e27d8879283831b664bd8b7f0ad4"
+
+	sut.SaveFile("./tmp/test.txt", content)
+	hash, err := sut.GetFileMD5Hash("./tmp/test.txt")
+
+	if err != nil {
+		t.Errorf("Expected no error, but got %v", err)
+	}
+
+	if hash != expectedHash {
+		t.Errorf("Expected %s, but got %s", expectedHash, hash)
+	}
+
+	// Test nonexistent file should return empty string and an error
+	fallbackHash, err := sut.GetFileMD5Hash("./tmp/nonexistent.txt")
+
+	if err == nil {
+		t.Error("Expected an error for nonexistent file, but got nil")
+	}
+
+	if fallbackHash != "" {
+		t.Errorf("Expected empty hash for nonexistent file, but got %s", fallbackHash)
+	}
+
+	os.RemoveAll("./tmp")
+}

@@ -13,7 +13,7 @@ func Test_it_should_be_able_to_update_a_game(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
 	fileSystem := game_doubles_test.NewMockFileSystem()
 	imageUploader := shared_services.NewLocalImageUploader(fileSystem)
-	factory := &game_factories.DefaultGameFactory{}
+	factory := game_factories.NewDefaultGameFactory(fileSystem)
 
 	fileSystem.SaveFile("/path/to/updated/test/cover.jpg", []byte("cover image data"))
 

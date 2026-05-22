@@ -9,4 +9,5 @@ type FileSystem interface {
 	ListFiles(path string) ([]string, error)
 	GetFileName(path string) string
 	GetFileExtension(path string) string
+	GetFileMD5Hash(path string) (string, error)
 }

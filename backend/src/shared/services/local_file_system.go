@@ -1,6 +1,8 @@
 package shared_services
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"os"
 	"path"
 	"path/filepath"
@@ -77,4 +79,16 @@ func (fs *localFileSystem) GetFileName(path string) string {
 
 func (fs *localFileSystem) GetFileExtension(path string) string {
 	return filepath.Ext(path)
+}
+
+func (fs *localFileSystem) GetFileMD5Hash(path string) (string, error) {
+	data, err := fs.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	if len(data) == 0 {
+		return "", nil
+	}
+	hash := md5.Sum(data)
+	return hex.EncodeToString(hash[:]), nil
 }

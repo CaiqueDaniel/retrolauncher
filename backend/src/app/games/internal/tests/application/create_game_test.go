@@ -10,9 +10,9 @@ import (
 )
 
 func Test_it_should_be_able_to_create_a_game(t *testing.T) {
-	factory := &game_factories.DefaultGameFactory{}
 	repository := &game_doubles_test.MemoryGameRepository{}
 	fileSystem := game_doubles_test.NewMockFileSystem()
+	factory := game_factories.NewDefaultGameFactory(fileSystem)
 	imageUploader := shared_services.NewLocalImageUploader(fileSystem)
 
 	fileSystem.SaveFile("/path/to/test/cover.jpg", []byte("cover image data"))
@@ -44,9 +44,9 @@ func Test_it_should_be_able_to_create_a_game(t *testing.T) {
 }
 
 func Test_it_should_rollback_copied_image_if_game_creation_fails(t *testing.T) {
-	factory := &game_factories.DefaultGameFactory{}
 	repository := &game_doubles_test.MemoryGameRepository{}
 	fileSystem := game_doubles_test.NewMockFileSystem()
+	factory := game_factories.NewDefaultGameFactory(fileSystem)
 	imageUploader := shared_services.NewLocalImageUploader(fileSystem)
 	fileSystem.SaveFile("/path/to/test/cover.png", []byte("cover image data"))
 

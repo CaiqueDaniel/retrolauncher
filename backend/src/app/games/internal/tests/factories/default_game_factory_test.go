@@ -3,11 +3,13 @@ package game_factories_test
 import (
 	"retrolauncher/backend/src/app/games/internal/domain/platform"
 	game_factories "retrolauncher/backend/src/app/games/internal/factories"
+	game_doubles_test "retrolauncher/backend/src/app/games/internal/tests/doubles"
 	"testing"
 )
 
 func Test_it_should_be_able_to_create_a_game(t *testing.T) {
-	factory := &game_factories.DefaultGameFactory{}
+	fs := game_doubles_test.NewMockFileSystem()
+	factory := game_factories.NewDefaultGameFactory(fs)
 	game, _ := factory.CreateGame("Test Game", platform.New(platform.TypeRetroArch, "/path"), "/path/to/test/game", "/path/to/test/cover.jpg")
 
 	if game == nil {

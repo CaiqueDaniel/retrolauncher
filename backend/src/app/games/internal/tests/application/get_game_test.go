@@ -11,7 +11,8 @@ import (
 
 func Test_it_should_be_able_to_get_a_game(t *testing.T) {
 	repository := &game_doubles_test.MemoryGameRepository{}
-	factory := &game_factories.DefaultGameFactory{}
+	fs := game_doubles_test.NewMockFileSystem()
+	factory := game_factories.NewDefaultGameFactory(fs)
 
 	// Create and save a game first
 

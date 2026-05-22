@@ -1,6 +1,8 @@
 package game_doubles_test
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"path/filepath"
 	"sync"
 )
@@ -81,4 +83,16 @@ func (m *MockFileSystem) GetFileName(path string) string {
 
 func (m *MockFileSystem) GetFileExtension(path string) string {
 	return filepath.Ext(path)
+}
+
+func (m *MockFileSystem) GetFileMD5Hash(path string) (string, error) {
+	data, err := m.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	if len(data) == 0 {
+		return "", nil
+	}
+	hash := md5.Sum(data)
+	return hex.EncodeToString(hash[:]), nil
 }
