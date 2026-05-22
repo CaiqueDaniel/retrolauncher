@@ -13,9 +13,10 @@ type Game struct {
 	platformType *platform.Platform
 	cover        string
 	path         string
+	hash         string
 }
 
-func New(Name string, PlatformType *platform.Platform, Path, Cover string) (*Game, []error) {
+func New(Name string, PlatformType *platform.Platform, Path, Cover, Hash string) (*Game, []error) {
 	err := make([]error, 0)
 	game := &Game{id: uuid.New()}
 
@@ -23,17 +24,19 @@ func New(Name string, PlatformType *platform.Platform, Path, Cover string) (*Gam
 	game.setPlatformType(PlatformType, &err)
 	game.setPath(Path, &err)
 	game.setCover(Cover)
+	game.setHash(Hash, &err)
 
 	return game, err
 }
 
-func Hydrate(Id uuid.UUID, Name string, PlatformType *platform.Platform, Path, Cover string) *Game {
+func Hydrate(Id uuid.UUID, Name string, PlatformType *platform.Platform, Path, Cover, Hash string) *Game {
 	return &Game{
 		id:           Id,
 		name:         Name,
 		platformType: PlatformType,
 		cover:        Cover,
 		path:         Path,
+		hash:         Hash,
 	}
 }
 
@@ -53,6 +56,7 @@ func (g *Game) GetName() string                     { return g.name }
 func (g *Game) GetPlatformType() *platform.Platform { return g.platformType }
 func (g *Game) GetCover() string                    { return g.cover }
 func (g *Game) GetPath() string                     { return g.path }
+func (g *Game) GetHash() string                     { return g.hash }
 
 func (g *Game) setName(value string, err *[]error) {
 	if value == "" {
@@ -82,4 +86,12 @@ func (g *Game) setPath(value string, err *[]error) {
 		return
 	}
 	g.path = value
+}
+
+func (g *Game) setHash(value string, err *[]error) {
+	if value == "" {
+		*err = append(*err, errors.New("hash cannot be empty"))
+		return
+	}
+	g.hash = value
 }

@@ -23,6 +23,7 @@ func (r *StormGameRepository) Save(entity *game.Game) error {
 		PlatformPath: entity.GetPlatformType().GetPath(),
 		Cover:        entity.GetCover(),
 		Path:         entity.GetPath(),
+		Hash:         entity.GetHash(),
 	}, table_name)
 }
 
@@ -65,6 +66,7 @@ func toDomain(model *model) *game.Game {
 		platform,
 		model.Path,
 		model.Cover,
+		model.Hash,
 	)
 }
 
@@ -75,4 +77,5 @@ type model struct {
 	PlatformPath string
 	Cover        string
 	Path         string
+	Hash         string
 }

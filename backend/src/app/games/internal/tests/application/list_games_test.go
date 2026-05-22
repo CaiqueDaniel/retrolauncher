@@ -16,7 +16,7 @@ func Test_it_should_be_able_to_list_games(t *testing.T) {
 
 	expectedBase64 := "ZmFrZSBpbWFnZSBkYXRh"
 
-	value, _ := game.New("Name", platform.New(platform.TypeRetroArch, "/path"), "Path", "Cover")
+		value, _ := game.New("Name", platform.New(platform.TypeRetroArch, "/path"), "Path", "Cover", "some-hash")
 	fs.SaveFile(value.GetCover(), []byte("fake image data"))
 
 	repository.Save(value)
@@ -47,8 +47,8 @@ func Test_it_should_be_able_to_list_games_by_name(t *testing.T) {
 	fs := game_doubles_test.NewMockFileSystem()
 	imageUploader := shared_services.NewLocalImageUploader(fs)
 
-	expectedGame, _ := game.New("Name", platform.New(platform.TypeRetroArch, "/path"), "Path", "Cover.jpg")
-	currentGame, _ := game.New("Test", platform.New(platform.TypeRetroArch, "/path"), "Path", "Cover.jpg")
+	expectedGame, _ := game.New("Name", platform.New(platform.TypeRetroArch, "/path"), "Path", "Cover.jpg", "some-hash")
+	currentGame, _ := game.New("Test", platform.New(platform.TypeRetroArch, "/path"), "Path", "Cover.jpg", "another-hash")
 	expectedBase64 := "ZmFrZSBpbWFnZSBkYXRh"
 
 	fs.SaveFile(expectedGame.GetCover(), []byte("fake image data"))

@@ -35,6 +35,7 @@ func Test_it_should_start_a_game(t *testing.T) {
 		platform.New(platform.TypeRetroArch, "/path/to/game"),
 		"/path/to/game",
 		"/path/to/platform",
+		"some-hash",
 	)
 
 	repository.Save(game)
