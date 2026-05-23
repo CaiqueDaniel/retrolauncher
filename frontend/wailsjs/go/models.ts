@@ -1,5 +1,25 @@
 export namespace application {
 	
+	export class Achievement {
+	    ID: number;
+	    Title: string;
+	    Description: string;
+	    Points: number;
+	    DateEarned?: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Achievement(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.ID = source["ID"];
+	        this.Title = source["Title"];
+	        this.Description = source["Description"];
+	        this.Points = source["Points"];
+	        this.DateEarned = source["DateEarned"];
+	    }
+	}
 	export class GetGameOutput {
 	    Id: string;
 	    Name: string;

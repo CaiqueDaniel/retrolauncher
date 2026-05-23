@@ -18,6 +18,10 @@ export function Get(arg1) {
   return window['go']['desktop']['GameController']['Get'](arg1);
 }
 
+export function GetAchievements(arg1) {
+  return window['go']['desktop']['GameController']['GetAchievements'](arg1);
+}
+
 export function GetPlatformTypes() {
   return window['go']['desktop']['GameController']['GetPlatformTypes']();
 }

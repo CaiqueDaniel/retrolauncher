@@ -11,6 +11,8 @@ export function CreateDesktopShortcut(arg1:desktop.GetInputDto):Promise<void>;
 
 export function Get(arg1:desktop.GetInputDto):Promise<application.GetGameOutput>;
 
+export function GetAchievements(arg1:desktop.GetInputDto):Promise<Array<application.Achievement>>;
+
 export function GetPlatformTypes():Promise<Array<string>>;
 
 export function List(arg1:desktop.ListInputDto):Promise<Array<application.ListGamesOutput>>;
