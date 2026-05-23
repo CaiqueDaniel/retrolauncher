@@ -1,6 +1,7 @@
 package games
 
 import (
+	"net/http"
 	"os"
 	"retrolauncher/backend/src/app/games/internal/adapters"
 	"retrolauncher/backend/src/app/games/internal/application"
@@ -26,6 +27,12 @@ func NewGamesModule() *GamesModule {
 	settingsGateway := adapters.NewSettingsAdapter(settings.NewSettingsGateway())
 	imageToIcoService := services.NewSergeymakinenImageToIcoService(fileSystem)
 	shortcutService := services.NewShortcutService(imageToIcoService, os.Getenv("LANG"))
+	retroAchievementsGamesCache := services.NewLocalRetroAchievementsGamesCache(fileSystem)
+	retroAchievementsGateway := services.NewHTTPRetroAchievementsGateway(
+		http.DefaultClient,
+		"https://retroachievements.org",
+		retroAchievementsGamesCache,
+	)
 
 	return &GamesModule{
 		GameController: desktop.New(
@@ -44,6 +51,11 @@ func NewGamesModule() *GamesModule {
 				gameFactory,
 			),
 			application.NewCreateShortcut(gameRepository, shortcutService),
+			application.NewListAchievementsFromGame(
+				gameRepository,
+				retroAchievementsGateway,
+				settingsGateway,
+			),
 		),
 	}
 }

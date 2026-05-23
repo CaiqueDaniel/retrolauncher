@@ -13,6 +13,7 @@ type GameController struct {
 	startGame             application.StartGame
 	autoIndexGames        application.AutoIndexGames
 	createDesktopShortcut application.CreateShortcut
+	listAchievements      application.ListAchievementsFromGame
 }
 
 func New(
@@ -24,6 +25,7 @@ func New(
 	startGame application.StartGame,
 	autoIndexGames application.AutoIndexGames,
 	createDesktopShortcut application.CreateShortcut,
+	listAchievements application.ListAchievementsFromGame,
 ) *GameController {
 	return &GameController{
 		createGame:            createGame,
@@ -34,6 +36,7 @@ func New(
 		startGame:             startGame,
 		autoIndexGames:        autoIndexGames,
 		createDesktopShortcut: createDesktopShortcut,
+		listAchievements:      listAchievements,
 	}
 }
 
@@ -102,6 +105,12 @@ func (gc *GameController) AutoIndexGames() error {
 
 func (gc *GameController) CreateDesktopShortcut(input GetInputDto) error {
 	return gc.createDesktopShortcut.Execute(input.Id)
+}
+
+func (gc *GameController) GetAchievements(input GetInputDto) ([]application.Achievement, error) {
+	return gc.listAchievements.Execute(application.ListAchievementsFromGameInput{
+		Id: input.Id,
+	})
 }
 
 type CreateInputDto struct {
