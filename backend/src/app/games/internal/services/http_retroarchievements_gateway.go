@@ -11,28 +11,22 @@ import (
 type httpRetroAchievementsGateway struct {
 	httpClient *http.Client
 	baseURL    string
-	username   string
-	apiKey     string
 	cache      caches.RetroAchievementsGamesCache
 }
 
 func NewHTTPRetroAchievementsGateway(
 	httpClient *http.Client,
 	baseURL string,
-	username string,
-	apiKey string,
 	cache caches.RetroAchievementsGamesCache,
 ) application.RetroAchievementsService {
 	return &httpRetroAchievementsGateway{
 		httpClient: httpClient,
 		baseURL:    baseURL,
-		username:   username,
-		apiKey:     apiKey,
 		cache:      cache,
 	}
 }
 
-func (g *httpRetroAchievementsGateway) GetAchivementsByHash(gameHash string) ([]application.Achievement, error) {
+func (g *httpRetroAchievementsGateway) GetAchivementsByHash(gameHash, username, apiKey string) ([]application.Achievement, error) {
 	gameId := g.cache.GetCachedGameRelation()[gameHash]
 
 	if gameId == "" {
@@ -40,7 +34,7 @@ func (g *httpRetroAchievementsGateway) GetAchivementsByHash(gameHash string) ([]
 	}
 
 	url := fmt.Sprintf("%s/API_GetGameInfoAndUserProgress.php?u=%sy=%s&g=%s",
-		g.baseURL, g.username, g.apiKey, gameId)
+		g.baseURL, username, apiKey, gameId)
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

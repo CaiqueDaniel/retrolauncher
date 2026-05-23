@@ -5,6 +5,8 @@ type SettingsService interface {
 }
 
 type Settings struct {
-	RetroarchFolderPath string
-	RomsFolderPath      string
+	RetroarchFolderPath       string
+	RomsFolderPath            string
+	RetroAchievementsUsername string
+	RetroAchievementsApiKey   string
 }

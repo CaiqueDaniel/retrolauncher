@@ -1,7 +1,7 @@
 package application
 
 type RetroAchievementsService interface {
-	GetAchivementsByHash(hash string) ([]Achievement, error)
+	GetAchivementsByHash(hash string, username string, apiKey string) ([]Achievement, error)
 }
 
 type Achievement struct {
