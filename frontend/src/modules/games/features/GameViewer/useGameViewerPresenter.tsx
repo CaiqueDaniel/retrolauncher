@@ -35,12 +35,14 @@ export function useGameViewerPresenter() {
   });
 
   useEffect(() => {
+    setAchievements([]);
+
     if (!game) return;
 
     achievementsService.listAchievementsFromGame(game.id)
       .then(setAchievements)
       .catch(alert.error);
-  }, [game]);
+  }, [game?.id]);
 
   return {
     game,
