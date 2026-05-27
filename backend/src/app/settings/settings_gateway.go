@@ -37,8 +37,11 @@ func (s *settingsGateway) GetSettings() (*Settings, error) {
 	}
 
 	return &Settings{
-		RetroarchFolderPath: result.RetroarchFolderPath,
-		RomsFolderPath:      result.RomsFolderPath,
+		RetroarchFolderPath:      result.RetroarchFolderPath,
+		RomsFolderPath:           result.RomsFolderPath,
+		RetroachivementsUsername: result.RetroachivementsUsername,
+		RetroachivementsApiKey:   result.RetroachivementsApiKey,
+		RetroachivementsPassword: result.RetroachivementsPassword,
 	}, nil
 }
 

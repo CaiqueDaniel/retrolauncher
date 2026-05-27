@@ -3,6 +3,7 @@ package games
 import (
 	"net/http"
 	"os"
+	"path/filepath"
 	"retrolauncher/backend/src/app/games/internal/adapters"
 	"retrolauncher/backend/src/app/games/internal/application"
 	"retrolauncher/backend/src/app/games/internal/delivery/desktop"
@@ -27,7 +28,9 @@ func NewGamesModule() *GamesModule {
 	settingsGateway := adapters.NewSettingsAdapter(settings.NewSettingsGateway())
 	imageToIcoService := services.NewSergeymakinenImageToIcoService(fileSystem)
 	shortcutService := services.NewShortcutService(imageToIcoService, os.Getenv("LANG"))
-	retroAchievementsGamesCache := services.NewLocalRetroAchievementsGamesCache(fileSystem)
+	binPath, _ := os.Executable()
+	execPath := filepath.Dir(binPath)
+	retroAchievementsGamesCache := services.NewLocalRetroAchievementsGamesCache(fileSystem, execPath)
 	retroAchievementsGateway := services.NewHTTPRetroAchievementsGateway(
 		http.DefaultClient,
 		"https://retroachievements.org",

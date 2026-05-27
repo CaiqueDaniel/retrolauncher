@@ -12,12 +12,14 @@ import (
 type localRetroAchievementsGamesCache struct {
 	gameRelation map[string]string
 	fs           shared_application.FileSystem
+	basePath     string
 }
 
-func NewLocalRetroAchievementsGamesCache(fs shared_application.FileSystem) caches.RetroAchievementsGamesCache {
+func NewLocalRetroAchievementsGamesCache(fs shared_application.FileSystem, basePath string) caches.RetroAchievementsGamesCache {
 	return &localRetroAchievementsGamesCache{
 		gameRelation: make(map[string]string),
 		fs:           fs,
+		basePath:     basePath,
 	}
 }
 
@@ -31,8 +33,8 @@ func (c *localRetroAchievementsGamesCache) GetCachedGameRelation() map[string]st
 
 func (c *localRetroAchievementsGamesCache) loadDataFromFilesIntoCache() {
 	const folderPath = "resources/retroachievements"
-
-	files, err := c.fs.ListFiles(folderPath)
+	dir := filepath.Join(c.basePath, folderPath)
+	files, err := c.fs.ListFiles(dir)
 
 	if err != nil {
 		return
@@ -40,7 +42,7 @@ func (c *localRetroAchievementsGamesCache) loadDataFromFilesIntoCache() {
 
 	for _, file := range files {
 		if strings.HasSuffix(file, ".json") {
-			data, err := c.fs.ReadFile(filepath.Join(folderPath, file))
+			data, err := c.fs.ReadFile(file)
 
 			if err != nil {
 				continue

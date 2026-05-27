@@ -33,10 +33,17 @@ func (g *httpRetroAchievementsGateway) GetAchivementsByHash(gameHash, username, 
 		return nil, fmt.Errorf("game not found in cache with hash: %s", gameHash)
 	}
 
-	url := fmt.Sprintf("%s/API_GetGameInfoAndUserProgress.php?u=%sy=%s&g=%s",
+	url := fmt.Sprintf("%s/API/API_GetGameInfoAndUserProgress.php?u=%s&y=%s&g=%s",
 		g.baseURL, username, apiKey, gameId)
 
 	req, err := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Accept-Language", "pt-BR,pt;q=0.9,en;q=0.8")
+	req.Header.Add("Accept-Charset", "utf-8")
+	req.Header.Add("User-Agent", "RetroLauncher/1.0")
+
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}

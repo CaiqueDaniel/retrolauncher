@@ -22,7 +22,9 @@ func (a *settingsAdapter) GetSettings() (*application.Settings, error) {
 	}
 
 	return &application.Settings{
-		RetroarchFolderPath: result.RetroarchFolderPath,
-		RomsFolderPath:      result.RomsFolderPath,
+		RetroarchFolderPath:       result.RetroarchFolderPath,
+		RomsFolderPath:            result.RomsFolderPath,
+		RetroAchievementsUsername: result.RetroachivementsUsername,
+		RetroAchievementsApiKey:   result.RetroachivementsApiKey,
 	}, nil
 }

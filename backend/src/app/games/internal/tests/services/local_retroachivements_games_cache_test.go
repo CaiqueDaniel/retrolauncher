@@ -7,6 +7,8 @@ import (
 	"testing"
 )
 
+const cacheFolder = "resources/retroachievements"
+
 // stubFileSystem is a local test double that correctly simulates
 // directory listing (returning only filenames, not full paths).
 type stubFileSystem struct {
@@ -26,7 +28,7 @@ func newStubFileSystem() *stubFileSystem {
 }
 
 func (s *stubFileSystem) addFile(dir, name string, content []byte) {
-	s.dirFiles[dir] = append(s.dirFiles[dir], name)
+	s.dirFiles[dir] = append(s.dirFiles[dir], cacheFolder+"/"+name)
 	s.fileContents[dir+"/"+name] = content
 }
 
@@ -45,13 +47,13 @@ func (s *stubFileSystem) ReadFile(path string) ([]byte, error) {
 	return data, nil
 }
 
-func (s *stubFileSystem) SaveFile(path string, data []byte) error       { return nil }
-func (s *stubFileSystem) ExistsFile(path string) bool                   { return false }
-func (s *stubFileSystem) CopyFile(src string, dst string) error         { return nil }
-func (s *stubFileSystem) RemoveFile(path string) error                  { return nil }
-func (s *stubFileSystem) GetFileName(path string) string                { return path }
-func (s *stubFileSystem) GetFileExtension(path string) string           { return "" }
-func (s *stubFileSystem) GetFileMD5Hash(path string) (string, error)   { return "", nil }
+func (s *stubFileSystem) SaveFile(path string, data []byte) error    { return nil }
+func (s *stubFileSystem) ExistsFile(path string) bool                { return false }
+func (s *stubFileSystem) CopyFile(src string, dst string) error      { return nil }
+func (s *stubFileSystem) RemoveFile(path string) error               { return nil }
+func (s *stubFileSystem) GetFileName(path string) string             { return path }
+func (s *stubFileSystem) GetFileExtension(path string) string        { return "" }
+func (s *stubFileSystem) GetFileMD5Hash(path string) (string, error) { return "", nil }
 
 // helpers
 
@@ -69,15 +71,13 @@ func marshalEntries(t *testing.T, entries []cacheEntry) []byte {
 	return data
 }
 
-const cacheFolder = "resources/retroachievements"
-
 // -------------------------------------------------------------------
 // Tests
 // -------------------------------------------------------------------
 
 func Test_LocalRetroAchievementsGamesCache_GetCachedGameRelation_ReturnsEmptyMap_WhenNoFilesExist(t *testing.T) {
 	fs := newStubFileSystem()
-	sut := services.NewLocalRetroAchievementsGamesCache(fs)
+	sut := services.NewLocalRetroAchievementsGamesCache(fs, "")
 
 	result := sut.GetCachedGameRelation()
 
@@ -89,7 +89,7 @@ func Test_LocalRetroAchievementsGamesCache_GetCachedGameRelation_ReturnsEmptyMap
 func Test_LocalRetroAchievementsGamesCache_GetCachedGameRelation_ReturnsEmptyMap_WhenListFilesErrors(t *testing.T) {
 	fs := newStubFileSystem()
 	fs.listFilesErr = errors.New("permission denied")
-	sut := services.NewLocalRetroAchievementsGamesCache(fs)
+	sut := services.NewLocalRetroAchievementsGamesCache(fs, "")
 
 	result := sut.GetCachedGameRelation()
 
@@ -105,7 +105,7 @@ func Test_LocalRetroAchievementsGamesCache_GetCachedGameRelation_ParsesSingleJso
 		{ID: 2, Hashes: []string{"ghi789"}},
 	}))
 
-	sut := services.NewLocalRetroAchievementsGamesCache(fs)
+	sut := services.NewLocalRetroAchievementsGamesCache(fs, "")
 
 	result := sut.GetCachedGameRelation()
 
@@ -135,7 +135,7 @@ func Test_LocalRetroAchievementsGamesCache_GetCachedGameRelation_ParsesMultipleJ
 		{ID: 20, Hashes: []string{"snes_hash_1", "snes_hash_2"}},
 	}))
 
-	sut := services.NewLocalRetroAchievementsGamesCache(fs)
+	sut := services.NewLocalRetroAchievementsGamesCache(fs, "")
 
 	result := sut.GetCachedGameRelation()
 
@@ -157,7 +157,7 @@ func Test_LocalRetroAchievementsGamesCache_GetCachedGameRelation_SkipsNonJsonFil
 		{ID: 5, Hashes: []string{"valid_hash"}},
 	}))
 
-	sut := services.NewLocalRetroAchievementsGamesCache(fs)
+	sut := services.NewLocalRetroAchievementsGamesCache(fs, "")
 
 	result := sut.GetCachedGameRelation()
 
@@ -175,7 +175,7 @@ func Test_LocalRetroAchievementsGamesCache_GetCachedGameRelation_DoesNotReloadFi
 		{ID: 99, Hashes: []string{"hash_a"}},
 	}))
 
-	sut := services.NewLocalRetroAchievementsGamesCache(fs)
+	sut := services.NewLocalRetroAchievementsGamesCache(fs, "")
 
 	// First call loads from files.
 	first := sut.GetCachedGameRelation()
