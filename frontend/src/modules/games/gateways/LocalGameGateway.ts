@@ -1,10 +1,11 @@
 import { Game, GameRepository } from "../domain/Game";
-import { Create, Update, List, Get, GetPlatformTypes, StartGame, AutoIndexGames, CreateDesktopShortcut } from "~/../wailsjs/go/desktop/GameController";
+import { Create, Update, List, Get, GetPlatformTypes, StartGame, AutoIndexGames, CreateDesktopShortcut, GetAchievements } from "~/../wailsjs/go/desktop/GameController";
 import { GameQueryRepository } from "../repositories/GameQueryRepository";
 import { PlatformTypesService } from "../services/PlatformTypesService";
 import { StartGameService } from "../services/StartGameService";
 import { IndexGamesService } from "../services/IndexGamesService";
 import { GameShortcutService } from "../services/GameShortcutService";
+import { Achievement, AchievementsService } from "../services/AchivementsService";
 
 export class LocalGameGateway implements
     GameRepository,
@@ -12,7 +13,8 @@ export class LocalGameGateway implements
     PlatformTypesService,
     StartGameService,
     IndexGamesService,
-    GameShortcutService {
+    GameShortcutService,
+    AchievementsService {
     async save(game: Game): Promise<void> {
         if (game.id) {
             const errors = await Update({ ...game, id: game.id });
@@ -65,5 +67,16 @@ export class LocalGameGateway implements
 
     createDesktopShortcut(gameId: string): Promise<void> {
         return CreateDesktopShortcut({ id: gameId })
+    }
+
+    async listAchievementsFromGame(gameId: string): Promise<Achievement[]> {
+        const result = await GetAchievements({ id: gameId })
+        return result.map((achievement) => ({
+            id: achievement.ID,
+            title: achievement.Title,
+            description: achievement.Description,
+            points: achievement.Points,
+            dateEarned: achievement.DateEarned
+        }))
     }
 }

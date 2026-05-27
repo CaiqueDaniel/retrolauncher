@@ -2,12 +2,14 @@ import { useBusSubscriber } from "~/modules/shared/infra/hooks/useBusSubscriber"
 import { useGameViewerContext } from "./GameViewerContext";
 import { GameEvents } from "../../GameEvents";
 import { GameQueryRepository } from "../../repositories/GameQueryRepository";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Achievement } from "../../services/AchivementsService";
 
 export function useGameViewerPresenter() {
-  const { busSubscriber, routeNavigate, startGameService, gameShortcutService, alert } =
+  const { busSubscriber, routeNavigate, startGameService, gameShortcutService, alert, achievementsService } =
     useGameViewerContext();
   const [game, setGame] = useState<GameQueryRepository.Output | null>(null);
+  const [achivements, setAchievements] = useState<Achievement[]>([]);
 
   const onClickEdit = () => {
     if (!game) return;
@@ -32,8 +34,17 @@ export function useGameViewerPresenter() {
     handler: setGame,
   });
 
+  useEffect(() => {
+    if (!game) return;
+
+    achievementsService.listAchievementsFromGame(game.id)
+      .then(setAchievements)
+      .catch(alert.error);
+  }, [game]);
+
   return {
     game,
+    achivements,
     onClickEdit,
     onClickStart,
     onClickCreateShortcut,

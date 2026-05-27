@@ -39,7 +39,7 @@ export function GameHome() {
         <Paper sx={{ height: "100%", overflow: "auto" }}>
           <GameList />
         </Paper>
-        <Paper>
+        <Paper sx={{ height: "100%", overflow: "hidden" }}>
           <GameViewer />
         </Paper>
       </Box>

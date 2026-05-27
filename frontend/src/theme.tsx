@@ -25,5 +25,14 @@ export const theme = createTheme({
             lineHeight: '1.5rem',
             fontWeight: '500',
         },
+    },
+    components: {
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: "#1a1a1a",
+                }
+            }
+        }
     }
 })

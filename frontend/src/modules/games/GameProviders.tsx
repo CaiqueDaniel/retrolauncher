@@ -27,6 +27,7 @@ export function GameProviders({ children }: PropsWithChildren) {
           startGameService: gameGateway,
           gameShortcutService: gameGateway,
           alert: toast,
+          achievementsService: gameGateway,
         }}
       >
         <GameFormContext.Provider

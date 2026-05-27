@@ -5,6 +5,7 @@ import { useContextHandler } from "~/modules/shared/infra/hooks/useContextHandle
 import { StartGameService } from "../../services/StartGameService";
 import { GameShortcutService } from "../../services/GameShortcutService";
 import { Alert } from "~/modules/shared/application/Alert";
+import { AchievementsService } from "../../services/AchivementsService";
 
 export const GameViewerContext = createContext<Context | undefined>(undefined);
 
@@ -18,4 +19,5 @@ type Context = {
   startGameService: StartGameService;
   gameShortcutService: GameShortcutService;
   alert: Alert
+  achievementsService: AchievementsService;
 };

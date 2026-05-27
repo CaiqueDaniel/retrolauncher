@@ -18,12 +18,14 @@ import { RouteNavigator } from "~/modules/shared/application/RouteNavigator";
 import { StartGameService } from "../../services/StartGameService";
 import { GameShortcutService } from "../../services/GameShortcutService";
 import { Alert } from "~/modules/shared/application/Alert";
+import { AchievementsService } from "../../services/AchivementsService";
 
 describe("useGameViewerPresenter", () => {
   const eventBus = EventBus.getInstance();
   let routeNavigate: Mocked<RouteNavigator>;
   let startGameService: Mocked<StartGameService>;
   let gameShortcutService: Mocked<GameShortcutService>;
+  let achievementsService: Mocked<AchievementsService>;
   let alert: Mocked<Alert>;
 
   beforeEach(() => {
@@ -31,6 +33,7 @@ describe("useGameViewerPresenter", () => {
     routeNavigate = { navigateTo: vi.fn() };
     startGameService = { startGame: vi.fn() };
     gameShortcutService = { createDesktopShortcut: vi.fn() };
+    achievementsService = { listAchievementsFromGame: vi.fn() };
     alert = { error: vi.fn(), success: vi.fn() };
   });
 
@@ -254,6 +257,7 @@ describe("useGameViewerPresenter", () => {
           routeNavigate: routeNavigate,
           startGameService: startGameService,
           gameShortcutService: gameShortcutService,
+          achievementsService: achievementsService,
           alert,
         }}
       >
