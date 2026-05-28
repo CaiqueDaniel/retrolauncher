@@ -106,8 +106,8 @@ func Test_it_should_get_file_name(t *testing.T) {
 	sut := shared_services.NewLocalFileSystem()
 	fileName := sut.GetFileName("./tmp/test.txt")
 
-	if fileName != "test.txt" {
-		t.Errorf("Expected test.txt, but got %s", fileName)
+	if fileName != "test" {
+		t.Errorf("Expected test, but got %s", fileName)
 	}
 }
 

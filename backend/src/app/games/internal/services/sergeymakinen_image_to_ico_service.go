@@ -47,7 +47,6 @@ func (s *sergeymakinenImageToIcoService) CreateIcoFrom(path string) (string, err
 
 	img = s.resizeIcon(img)
 	baseName := s.fs.GetFileName(path)
-	baseName = baseName[:len(baseName)-len(extension)]
 	icoPath, err := filepath.Abs(filepath.Join(internalImagePath, baseName+".ico"))
 
 	if err != nil {

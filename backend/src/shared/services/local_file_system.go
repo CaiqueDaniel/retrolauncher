@@ -74,7 +74,9 @@ func (fs *localFileSystem) ListFiles(path string) ([]string, error) {
 }
 
 func (fs *localFileSystem) GetFileName(path string) string {
-	return filepath.Base(path)
+	filename := filepath.Base(path)
+	extension := filepath.Ext(filename)
+	return filename[:len(filename)-len(extension)]
 }
 
 func (fs *localFileSystem) GetFileExtension(path string) string {
