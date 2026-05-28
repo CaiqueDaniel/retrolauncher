@@ -2,18 +2,20 @@ package desktop
 
 import (
 	"retrolauncher/backend/src/app/games/internal/application"
+	"retrolauncher/backend/src/shared/cache"
 )
 
 type GameController struct {
-	createGame            application.CreateGame
-	updateGame            application.UpdateGame
-	listGames             application.ListGames
-	getGame               application.GetGame
-	getPlatformTypes      application.GetPlatformTypes
-	startGame             application.StartGame
-	autoIndexGames        application.AutoIndexGames
-	createDesktopShortcut application.CreateShortcut
-	listAchievements      application.ListAchievementsFromGame
+	createGame                 application.CreateGame
+	updateGame                 application.UpdateGame
+	listGames                  application.ListGames
+	getGame                    application.GetGame
+	getPlatformTypes           application.GetPlatformTypes
+	startGame                  application.StartGame
+	autoIndexGames             application.AutoIndexGames
+	createDesktopShortcut      application.CreateShortcut
+	listAchievements           application.ListAchievementsFromGame
+	gamesAchievementsListCache cache.Cache[string, []application.Achievement]
 }
 
 func New(
@@ -26,17 +28,19 @@ func New(
 	autoIndexGames application.AutoIndexGames,
 	createDesktopShortcut application.CreateShortcut,
 	listAchievements application.ListAchievementsFromGame,
+	gamesAchievementsListCache cache.Cache[string, []application.Achievement],
 ) *GameController {
 	return &GameController{
-		createGame:            createGame,
-		updateGame:            updateGame,
-		listGames:             listGames,
-		getGame:               getGame,
-		getPlatformTypes:      getPlatformTypes,
-		startGame:             startGame,
-		autoIndexGames:        autoIndexGames,
-		createDesktopShortcut: createDesktopShortcut,
-		listAchievements:      listAchievements,
+		createGame:                 createGame,
+		updateGame:                 updateGame,
+		listGames:                  listGames,
+		getGame:                    getGame,
+		getPlatformTypes:           getPlatformTypes,
+		startGame:                  startGame,
+		autoIndexGames:             autoIndexGames,
+		createDesktopShortcut:      createDesktopShortcut,
+		listAchievements:           listAchievements,
+		gamesAchievementsListCache: gamesAchievementsListCache,
 	}
 }
 
@@ -108,9 +112,23 @@ func (gc *GameController) CreateDesktopShortcut(input GetInputDto) error {
 }
 
 func (gc *GameController) GetAchievements(input GetInputDto) ([]application.Achievement, error) {
-	return gc.listAchievements.Execute(application.ListAchievementsFromGameInput{
+	achievements := gc.gamesAchievementsListCache.Get(input.Id)
+
+	if len(achievements) > 0 {
+		return achievements, nil
+	}
+
+	achievements, err := gc.listAchievements.Execute(application.ListAchievementsFromGameInput{
 		Id: input.Id,
 	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	gc.gamesAchievementsListCache.Set(input.Id, achievements)
+
+	return achievements, nil
 }
 
 type CreateInputDto struct {

@@ -31,6 +31,7 @@ func NewGamesModule() *GamesModule {
 	binPath, _ := os.Executable()
 	execPath := filepath.Dir(binPath)
 	retroAchievementsGamesCache := services.NewLocalRetroAchievementsGamesCache(fileSystem, execPath)
+	gamesAchievementsListCache := services.NewGamesAchievementsListCache()
 	retroAchievementsGateway := services.NewHTTPRetroAchievementsGateway(
 		http.DefaultClient,
 		"https://retroachievements.org",
@@ -59,6 +60,7 @@ func NewGamesModule() *GamesModule {
 				retroAchievementsGateway,
 				settingsGateway,
 			),
+			gamesAchievementsListCache,
 		),
 	}
 }
