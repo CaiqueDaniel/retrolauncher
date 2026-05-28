@@ -33,7 +33,7 @@ describe("useGameViewerPresenter", () => {
     routeNavigate = { navigateTo: vi.fn() };
     startGameService = { startGame: vi.fn() };
     gameShortcutService = { createDesktopShortcut: vi.fn() };
-    achievementsService = { listAchievementsFromGame: vi.fn() };
+    achievementsService = { listAchievementsFromGame: vi.fn().mockResolvedValue([]) };
     alert = { error: vi.fn(), success: vi.fn() };
   });
 

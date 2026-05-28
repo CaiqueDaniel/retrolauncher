@@ -98,7 +98,6 @@ export function GameForm(props: Props) {
             as={FilepathSelector}
             name="cover"
             label="Capa"
-            required
             fullWidth
             helperText={errors.cover}
             error={Boolean(errors.cover)}

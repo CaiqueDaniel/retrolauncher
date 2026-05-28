@@ -76,7 +76,6 @@ const validationSchema = yup.object({
   platformType: yup.string().required("Plataforma é obrigatória"),
   platformPath: yup.string().required("Caminho da plataforma é obrigatório"),
   path: yup.string().required("Caminho é obrigatório"),
-  cover: yup.string().required("Capa é obrigatória"),
 });
 
 type Props = {
