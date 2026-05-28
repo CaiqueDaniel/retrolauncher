@@ -34,7 +34,7 @@ func (u *updateGame) Execute(input UpdateGameInput) []error {
 		return []error{errors.New("game not found")}
 	}
 
-	coverPath, coverCopyError := u.imageUploader.CopyImageToInternal(input.Cover)
+	coverPath, coverCopyError := u.saveCoverPath(input.Cover)
 
 	if coverCopyError != nil {
 		return []error{coverCopyError}
@@ -60,6 +60,20 @@ func (u *updateGame) Execute(input UpdateGameInput) []error {
 	}
 
 	return nil
+}
+
+func (u *updateGame) saveCoverPath(cover string) (string, error) {
+	if cover == "" {
+		return "", nil
+	}
+
+	coverPath, coverCopyError := u.imageUploader.CopyImageToInternal(cover)
+
+	if coverCopyError != nil {
+		return "", coverCopyError
+	}
+
+	return coverPath, nil
 }
 
 type UpdateGameInput struct {

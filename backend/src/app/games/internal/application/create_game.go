@@ -29,7 +29,7 @@ func NewCreateGame(
 }
 
 func (c *createGame) Execute(input CreateGameInput) []error {
-	coverPath, coverCopyError := c.imageUploader.CopyImageToInternal(input.Cover)
+	coverPath, coverCopyError := c.saveCover(input.Cover)
 
 	if coverCopyError != nil {
 		return []error{coverCopyError}
@@ -43,18 +43,36 @@ func (c *createGame) Execute(input CreateGameInput) []error {
 	)
 
 	if game == nil || len(gameErrors) > 0 {
-		c.imageUploader.RollbackCopy(coverPath)
+		if coverPath != "" {
+			c.imageUploader.RollbackCopy(coverPath)
+		}
 		return gameErrors
 	}
 
 	repoErr := c.repository.Save(game)
 
 	if repoErr != nil {
-		c.imageUploader.RollbackCopy(coverPath)
+		if coverPath != "" {
+			c.imageUploader.RollbackCopy(coverPath)
+		}
 		return []error{repoErr}
 	}
 
 	return nil
+}
+
+func (c *createGame) saveCover(cover string) (string, error) {
+	if cover == "" {
+		return "", nil
+	}
+
+	coverPath, coverCopyError := c.imageUploader.CopyImageToInternal(cover)
+
+	if coverCopyError != nil {
+		return "", coverCopyError
+	}
+
+	return coverPath, nil
 }
 
 type CreateGameInput struct {
