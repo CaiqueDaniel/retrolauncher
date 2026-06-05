@@ -16,15 +16,7 @@ type StormGameRepository struct {
 }
 
 func (r *StormGameRepository) Save(entity *game.Game) error {
-	return r.driver.Save(&model{
-		Id:           entity.GetId().String(),
-		Name:         entity.GetName(),
-		PlatformType: entity.GetPlatformType().GetPlatformType(),
-		PlatformPath: entity.GetPlatformType().GetPath(),
-		Cover:        entity.GetCover(),
-		Path:         entity.GetPath(),
-		Hash:         entity.GetHash(),
-	}, table_name)
+	return r.driver.Save(toModel(entity), table_name)
 }
 
 func (r *StormGameRepository) Get(id string) (*game.Game, error) {
@@ -56,6 +48,10 @@ func (r *StormGameRepository) List(input domain.ListGamesParams) []*game.Game {
 	return games
 }
 
+func (r *StormGameRepository) Remove(entity *game.Game) error {
+	return r.driver.Delete(toModel(entity), table_name)
+}
+
 func toDomain(model *model) *game.Game {
 	gameId, _ := uuid.Parse(model.Id)
 	platform := platform.New(model.PlatformType, model.PlatformPath)
@@ -68,6 +64,18 @@ func toDomain(model *model) *game.Game {
 		model.Cover,
 		model.Hash,
 	)
+}
+
+func toModel(entity *game.Game) *model {
+	return &model{
+		Id:           entity.GetId().String(),
+		Name:         entity.GetName(),
+		PlatformType: entity.GetPlatformType().GetPlatformType(),
+		PlatformPath: entity.GetPlatformType().GetPath(),
+		Cover:        entity.GetCover(),
+		Path:         entity.GetPath(),
+		Hash:         entity.GetHash(),
+	}
 }
 
 type model struct {

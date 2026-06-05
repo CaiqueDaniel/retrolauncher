@@ -33,6 +33,11 @@ func (r *MemoryGameRepository) List(input domain.ListGamesParams) []*game.Game {
 	return result
 }
 
+func (r *MemoryGameRepository) Remove(entity *game.Game) error {
+	delete(r.games, entity.GetId().String())
+	return nil
+}
+
 func (r *MemoryGameRepository) Size() int {
 	return len(r.games)
 }
