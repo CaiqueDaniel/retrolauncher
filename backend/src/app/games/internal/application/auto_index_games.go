@@ -48,34 +48,13 @@ func (uc *useCase) Execute() error {
 		return err
 	}
 
+	foundGamesFiles := make([]string, 0)
+
 	currentGames := uc.getGames()
 	currentGamesFiles := uc.getCurrentGamesFiles(currentGames)
-	foundGamesFiles := make([]string, 0)
-	gamesToRemove := make([]*game.Game, 0)
 
-	platformsCores, _ := uc.platformsCoresService.GetPlatformsCores()
-	coresFiles := uc.getCoresFiles(settings)
-
-	for platformExtension, coreSufix := range platformsCores {
-		gamesFiles := uc.gameFinderFactory.CreateFrom(platformExtension).GetFilesFrom(settings.RomsFolderPath)
-		foundGamesFiles = append(foundGamesFiles, gamesFiles...)
-
-		uc.saveGames(uc.getNewGamesInstances(currentGamesFiles, gamesFiles, coresFiles, coreSufix))
-	}
-
-	for _, game := range currentGames {
-		if !slices.Contains(foundGamesFiles, game.GetPath()) {
-			gamesToRemove = append(gamesToRemove, game)
-		}
-	}
-
-	for _, game := range gamesToRemove {
-		if game.GetCover() != "" {
-			uc.fs.RemoveFile(game.GetCover())
-		}
-
-		uc.repository.Remove(game)
-	}
+	uc.findAndAddNewGames(settings, &currentGamesFiles, &foundGamesFiles)
+	uc.removeGames(uc.findUnavaliableGamesForRemoval(currentGames, &foundGamesFiles))
 
 	return nil
 }
@@ -112,13 +91,47 @@ func (uc *useCase) getCurrentGamesFiles(games []*game.Game) map[string]bool {
 	return result
 }
 
+func (uc *useCase) findAndAddNewGames(settings *Settings, currentGamesFiles *map[string]bool, foundGamesFiles *[]string) {
+	platformsCores, _ := uc.platformsCoresService.GetPlatformsCores()
+	coresFiles := uc.getCoresFiles(settings)
+
+	for platformExtension, coreSufix := range platformsCores {
+		gamesFiles := uc.gameFinderFactory.CreateFrom(platformExtension).GetFilesFrom(settings.RomsFolderPath)
+		*foundGamesFiles = append(*foundGamesFiles, gamesFiles...)
+
+		uc.saveGames(uc.getNewGamesInstances(currentGamesFiles, gamesFiles, coresFiles, coreSufix))
+	}
+}
+
+func (uc *useCase) findUnavaliableGamesForRemoval(currentGames []*game.Game, foundGamesFiles *[]string) []*game.Game {
+	gamesToRemove := make([]*game.Game, 0)
+
+	for _, game := range currentGames {
+		if !slices.Contains(*foundGamesFiles, game.GetPath()) {
+			gamesToRemove = append(gamesToRemove, game)
+		}
+	}
+
+	return gamesToRemove
+}
+
+func (uc *useCase) removeGames(gamesToRemove []*game.Game) {
+	for _, game := range gamesToRemove {
+		if game.GetCover() != "" {
+			uc.fs.RemoveFile(game.GetCover())
+		}
+
+		uc.repository.Remove(game)
+	}
+}
+
 func (uc *useCase) getCoresFiles(settings *Settings) []string {
 	coresFiles, _ := uc.fs.ListFiles(filepath.Join(settings.RetroarchFolderPath, "cores"))
 	return coresFiles
 }
 
 func (uc *useCase) getNewGamesInstances(
-	currentGamesFiles map[string]bool,
+	currentGamesFiles *map[string]bool,
 	gamesFiles []string,
 	coresFiles []string,
 	coreSufix string,
@@ -126,7 +139,7 @@ func (uc *useCase) getNewGamesInstances(
 	result := make([]*game.Game, 0)
 
 	for _, gameFile := range gamesFiles {
-		if currentGamesFiles[gameFile] {
+		if (*currentGamesFiles)[gameFile] {
 			continue
 		}
 
