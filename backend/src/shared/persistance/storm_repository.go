@@ -95,6 +95,28 @@ func (r *StormRepository[T]) List(fieldName, likeValue, tableName, orderBy strin
 	return results, err
 }
 
+func (r *StormRepository[T]) Delete(data interface{}, tableName string) error {
+	tablePath, err := r.getTablePath(tableName)
+
+	if err != nil {
+		return err
+	}
+
+	db, err := storm.Open(tablePath)
+
+	if err != nil {
+		if db != nil {
+			defer db.Close()
+		}
+		return err
+	}
+
+	err = db.DeleteStruct(data)
+
+	defer db.Close()
+	return err
+}
+
 func (r *StormRepository[T]) getTablePath(tableName string) (string, error) {
 	binPath, err := os.Executable()
 

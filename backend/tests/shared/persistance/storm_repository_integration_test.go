@@ -336,3 +336,23 @@ func Test_it_should_return_empty_list_from_storm_database_given_nothing_was_foun
 		return
 	}
 }
+
+func Test_it_should_delete_data_from_storm_database(t *testing.T) {
+	// Arrange
+	sut := &shared_persistance.StormRepository[TestData]{}
+	testDB := "./tmp/test_storm.db"
+	testData := &TestData{
+		Id:   "1",
+		Name: "Test Item",
+	}
+	sut.Save(testData, testDB)
+
+	// Act
+	err := sut.Delete(testData, testDB)
+
+	// Assert
+	if err != nil {
+		t.Errorf("Expected no error, but got %v", err)
+		return
+	}
+}
