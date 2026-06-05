@@ -6,6 +6,7 @@ import (
 	"retrolauncher/backend/src/app/games/internal/domain/game"
 	"retrolauncher/backend/src/app/games/internal/domain/platform"
 	"retrolauncher/backend/src/shared/application"
+	"slices"
 	"strings"
 )
 
@@ -47,15 +48,33 @@ func (uc *useCase) Execute() error {
 		return err
 	}
 
-	currentGamesFiles := uc.getCurrentGamesFiles()
+	currentGames := uc.getGames()
+	currentGamesFiles := uc.getCurrentGamesFiles(currentGames)
+	foundGamesFiles := make([]string, 0)
+	gamesToRemove := make([]*game.Game, 0)
+
 	platformsCores, _ := uc.platformsCoresService.GetPlatformsCores()
 	coresFiles := uc.getCoresFiles(settings)
 
 	for platformExtension, coreSufix := range platformsCores {
-		gameFinder := uc.gameFinderFactory.CreateFrom(platformExtension)
-		gamesFiles := gameFinder.GetFilesFrom(settings.RomsFolderPath)
+		gamesFiles := uc.gameFinderFactory.CreateFrom(platformExtension).GetFilesFrom(settings.RomsFolderPath)
+		foundGamesFiles = append(foundGamesFiles, gamesFiles...)
 
 		uc.saveGames(uc.getNewGamesInstances(currentGamesFiles, gamesFiles, coresFiles, coreSufix))
+	}
+
+	for _, game := range currentGames {
+		if !slices.Contains(foundGamesFiles, game.GetPath()) {
+			gamesToRemove = append(gamesToRemove, game)
+		}
+	}
+
+	for _, game := range gamesToRemove {
+		if game.GetCover() != "" {
+			uc.fs.RemoveFile(game.GetCover())
+		}
+
+		uc.repository.Remove(game)
 	}
 
 	return nil
@@ -79,8 +98,11 @@ func (uc *useCase) getSettings() (*Settings, error) {
 	return settings, nil
 }
 
-func (uc *useCase) getCurrentGamesFiles() map[string]bool {
-	games := uc.repository.List(domain.ListGamesParams{})
+func (uc *useCase) getGames() []*game.Game {
+	return uc.repository.List(domain.ListGamesParams{})
+}
+
+func (uc *useCase) getCurrentGamesFiles(games []*game.Game) map[string]bool {
 	result := make(map[string]bool)
 
 	for _, game := range games {

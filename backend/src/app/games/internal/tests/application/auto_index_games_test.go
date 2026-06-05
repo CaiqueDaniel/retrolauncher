@@ -410,3 +410,65 @@ func Test_it_should_index_games_from_multiple_platforms(t *testing.T) {
 		t.Errorf("Expected 2 games from 2 platforms, but got %d", repository.Size())
 	}
 }
+
+func Test_it_should_remove_a_game_that_no_longer_exists(t *testing.T) {
+	repository := &game_doubles_test.MemoryGameRepository{}
+	fileSystem := game_doubles_test.NewMockFileSystem()
+	factory := game_factories.NewDefaultGameFactory(fileSystem)
+
+	fileSystem.SaveFile("/retroarch/cores/snes9x_libretro.dll", []byte("core"))
+
+	settingsService := &mockSettingsService{
+		settings: &application.Settings{
+			RetroarchFolderPath: "/retroarch",
+			RomsFolderPath:      "/roms",
+		},
+	}
+
+	platformsCoresService := &mockPlatformsCoresService{
+		cores: map[string]string{
+			".sfc": "snes9x",
+		},
+	}
+
+	gameFinderFactory := &mockGameFinderFactory{
+		finders: map[string]*mockGameFinderService{
+			".sfc": {files: []string{"/roms/game1.sfc", "/roms/game2.sfc"}},
+		},
+	}
+
+	sut := application.NewAutoIndexGames(
+		repository,
+		settingsService,
+		fileSystem,
+		platformsCoresService,
+		gameFinderFactory,
+		factory,
+	)
+
+	err := sut.Execute()
+
+	if err != nil {
+		t.Errorf("Expected no error, but got: %v", err)
+		return
+	}
+
+	if repository.Size() != 2 {
+		t.Errorf("Expected 2 games to be indexed, but got %d", repository.Size())
+	}
+
+	gameFinderFactory.finders = map[string]*mockGameFinderService{
+		".sfc": {files: []string{"/roms/game1.sfc"}},
+	}
+
+	err = sut.Execute()
+
+	if err != nil {
+		t.Errorf("Expected no error, but got: %v", err)
+		return
+	}
+
+	if repository.Size() != 1 {
+		t.Errorf("Expected 1 game to be indexed, but got %d", repository.Size())
+	}
+}
