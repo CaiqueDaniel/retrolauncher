@@ -6,7 +6,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import EditIcon from '@mui/icons-material/Edit';
 
 export function GameViewer() {
-  const { game, achivements, onClickEdit, onClickStart, onClickCreateShortcut } = useGameViewerPresenter();
+  const { game, achivements, isAchievementsUnavailable, onClickEdit, onClickStart, onClickCreateShortcut } = useGameViewerPresenter();
 
   if (!game) return <></>;
 
@@ -37,24 +37,34 @@ export function GameViewer() {
       </Box>
 
       <Box mt={2} display="grid" gridTemplateColumns="1fr 1fr" gap={3} overflow="scroll" height="100%">
-        {
-          achivements.map((achievement) => (
-            <Card variant="outlined" sx={{
-              opacity: achievement.dateEarned ? 1 : 0.3,
-              overflow: "visible"
-            }}>
-              <CardContent>
-                <Box key={achievement.id} display="flex" alignItems="center" gap={1}>
-                  <Typography variant="body1" fontWeight="bold">{achievement.points}</Typography>
-                  <Box>
-                    <Typography variant="body1" fontWeight="bold">{achievement.title}</Typography>
-                    <Typography variant="body2">{achievement.description}</Typography>
+        <>
+          {
+            isAchievementsUnavailable && (
+              <Box>
+                <Typography variant="body1" fontWeight="bold">Nenhuma conquista disponível</Typography>
+              </Box>
+            )
+          }
+
+          {
+            achivements.map((achievement) => (
+              <Card variant="outlined" sx={{
+                opacity: achievement.dateEarned ? 1 : 0.3,
+                overflow: "visible"
+              }}>
+                <CardContent>
+                  <Box key={achievement.id} display="flex" alignItems="center" gap={1}>
+                    <Typography variant="body1" fontWeight="bold">{achievement.points}</Typography>
+                    <Box>
+                      <Typography variant="body1" fontWeight="bold">{achievement.title}</Typography>
+                      <Typography variant="body2">{achievement.description}</Typography>
+                    </Box>
                   </Box>
-                </Box>
-              </CardContent>
-            </Card>
-          ))
-        }
+                </CardContent>
+              </Card>
+            ))
+          }
+        </>
       </Box>
 
     </Box>

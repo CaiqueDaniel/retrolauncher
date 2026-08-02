@@ -10,6 +10,7 @@ export function useGameViewerPresenter() {
     useGameViewerContext();
   const [game, setGame] = useState<GameQueryRepository.Output | null>(null);
   const [achivements, setAchievements] = useState<Achievement[]>([]);
+  const [isAchievementsUnavailable, setIsAchievementsUnavailable] = useState(false)
 
   const onClickEdit = () => {
     if (!game) return;
@@ -36,17 +37,22 @@ export function useGameViewerPresenter() {
 
   useEffect(() => {
     setAchievements([]);
+    setIsAchievementsUnavailable(false);
 
     if (!game) return;
 
     achievementsService.listAchievementsFromGame(game.id)
       .then(setAchievements)
-      .catch(alert.error);
+      .catch((error) => {
+        console.error(error);
+        setIsAchievementsUnavailable(true)
+      });
   }, [game?.id]);
 
   return {
     game,
     achivements,
+    isAchievementsUnavailable,
     onClickEdit,
     onClickStart,
     onClickCreateShortcut,
