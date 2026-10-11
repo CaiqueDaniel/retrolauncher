@@ -8,10 +8,10 @@ test:
 	go test ./... -v
 
 dev:
-	wails dev -tags webkit2_41
+	wails dev
 
 build-gui:
-	wails build -tags webkit2_41
+	wails build
 
 build-start-game-cli:
 	go build -o build/bin/$(BIN_NAME) entrypoints/cli/games/main.go
